@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
+	<insert id="insertMember"
+		parameterType="kr.co.nft.lms.vo.Member">
+		INSERT INTO member(
+		member_id memberId
+		,member_pw memberPw
+		,member_pw_update_date memberPwUpdateDate
+		,member_phone_no memberPhoneNo
+		,member_level memberLevel
+		,member_last_login_date memberLastLoginDate
+		,member_create_date memberCreateDate
+		,member_update_date memberUpdateDate
+		) VALUES (
+		#{memberId}
+		,#{memberPw}
+		,#{memberPwUpdateDate}
+		,#{memberPhoneNo}
+		,#{memberLevel}
+		,NOW()
+		,NOW()
+		,NOW()
+		)
+	</insert>
+	<insert id="insertManager"
+			parameterType="kr.co.nft.lms.vo.Manager">
+		
+	</insert>
+
+</mapper>
