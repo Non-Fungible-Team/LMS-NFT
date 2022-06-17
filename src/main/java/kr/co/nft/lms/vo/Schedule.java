@@ -1,5 +1,8 @@
 package kr.co.nft.lms.vo;
 
+import lombok.Data;
+
+@Data
 public class Schedule {
 	private int scheduleNo;
 	private String scheduleTitle;
