@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.LectureMapper">
+	<!-- 1.강의목록(상세보기) -->
+	<select id="selectLectureByPage"
+				resultType="kr.co.nft.lms.vo.Lecture"
+				parameterType="java.util.Map">
+	select 
+		l.lecture_no lectureNo,s.subject_name subject,lecture_name lectureName, lecture_start_date lectureStartDate, lecture_end_date lectureEndDate
+		, lr.lecture_room_name lectureroomName, lecture_create_date lectureCreateDate  
+	from lecture l
+	INNER JOIN subject s
+		ON l.subject_no = s.subject_no
+	INNER JOIN lecture_room lr
+		ON l.lecture_room_name = lr.lecture_room_name
+	ORDER BY lecture_no
+	LIMIT #{startRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 2.강의 삽입 -->
+	<insert id="insertLecture" parameterType="kr.co.nft.lms.vo.Lecture">
+		insert into lecture(
+			subject_no
+			,lecture_name
+			,lecture_start_date
+			,lecture_end_date
+			,lecture_create_date
+			,lecture_update_date
+			,lecture_room_name
+		)
+		values(
+			#{subjectNo}
+			,#{lectureName}
+			,#{lectureStartDate}
+			,#{lectureEndDate}
+			,NOW()
+			,NOW()
+			,#{lectureroomName}
+		)
+		
+	</insert>
+	<!-- insert -> 기본키 받아서 강사 추가 -->
+	
+	<!-- 3.강의수정 -->
+	<!-- updateForm -->
+	<select id="updateLectureForm" 
+					parameterType="int"
+					resultType="kr.co.nft.lms.vo.Lecture">
+	select 
+		l.lecture_no lectureNo,s.subject_name subject,lecture_name lectureName
+		, lecture_start_date lectureStartDate, lecture_end_date lectureEndDate
+		, lr.lecture_room_name lectureroomName 
+	from lecture l
+	INNER JOIN subject s
+		ON l.subject_no = s.subject_no
+	INNER JOIN lecture_room lr
+		ON l.lecture_room_name = lr.lecture_room_name
+	where lecture_no =#{lectureNo}
+	</select>
+	<!-- updateAction -->
+	<update id="updateLecture" parameterType="kr.co.nft.lms.vo.Lecture">
+		update lecture
+		set 
+			subject_name =#{subjectName}
+			,lecture_name = #{lectureName}
+			,lecture_start_date=#{lectureStartDate}
+			,lecture_end_date=#{lectureEndDate}
+			,lecture_room_name =#{lectureroomName}
+	</update>
+	<!--4. 강의 삭제 -->
+	<delete id="deleteLecture" parameterType="int">
+		delete from lecture where lecture_no =#{lectureNo}
+	</delete>
+	<!-- 5.학생_강의 목록 -->
+	
+	<!-- 6.학생 수강목록 -->
+	
+	<!-- 7.전체 행수 -->
+	<select id="selectLectureCount" 
+					resultType="java.util.List"
+					parameterType="java.util.Map">
+		select count(*) from lecture
+	
+	</select>
+</mapper>

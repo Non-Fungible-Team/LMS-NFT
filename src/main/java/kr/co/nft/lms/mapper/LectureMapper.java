@@ -33,4 +33,7 @@ public interface LectureMapper {
 	//List로 반환, 키값으로 데이터 전달받음.
 	List<Lecture> selectStudentLecture(Map<String, Object> map);
 	
+	//7.전체 행수
+	List<Lecture> selectLectureCount();
+	
 }
