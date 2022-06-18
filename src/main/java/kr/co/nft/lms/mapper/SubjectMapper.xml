@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.SubjectMapper">
+
+	<select id="selectSubjectList"
+			resultType="kr.co.nft.lms.vo.Subject">
+		SELECT 
+			subject_no
+			, subject_name
+			, subject_content
+			, subject_create_date
+			, subject_update_date
+		FROM subject
+	</select>
+	
+	<insert id="insertSubjectOne"
+			parameterType="kr.co.nft.lms.vo.Subject">
+		INSERT INTO subject (
+			subject_name
+			, subject_content
+			, subject_create_date
+			, subject_update_date
+		) VALUES (
+			#{ subjectName }
+			, #{ subjectContent }
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<delete id="deleteSubjectOne"
+			parameterType="int">
+		DELETE FROM subject
+		WHERE subject_no = #{ subjectNo }
+	</delete>
+	
+</mapper>
