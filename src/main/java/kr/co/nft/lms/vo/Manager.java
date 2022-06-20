@@ -5,12 +5,11 @@ import lombok.Data;
 @Data
 public class Manager {
 	private String memberId;
-	private String memberEntryDate;
-	private String memberResugnDate;
-	private String memberName;
-	private String memberBirth;
-	private String memberGender;
-	private String memberEmail;
+	private String managerEntryDate;
+	private String managerName;
+	private String managerBirth;
+	private String managerGender;
+	private String managerEmail;
 	private int photoNo;
 	private String addressDetail;
 }

@@ -12,4 +12,8 @@ public class Member {
 	private String memberLastLoginDate;
 	private String memberCreateDate;
 	private String memberUpdateDate;
+	
+	//테이블에 없는 vo
+	private String roadAddr;
+	private String photoName;
 }
