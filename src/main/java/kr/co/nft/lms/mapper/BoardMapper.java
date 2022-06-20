@@ -21,4 +21,10 @@ public interface BoardMapper {
 	//상세보기
 	Board selectBoardOne(int boardNo);
 	
+	//update
+	int updateBoard(Board board);
+	
+	//delete
+	int deleteBoard(int boardNo);
+	
 }
