@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.SurveyMapper">
+		<select id="selectSurveyListByPage"
+				parameterType="java.util.Map"
+				resultType="kr.co.nft.lms.vo.Survey">
+			SELECT
+				survey_no surveyNo
+				,survey_title surveyTitle
+				,survey_content surveyContent
+				,survey_create_date surveyCreateDate
+				,survey_update_date surveyUpdateDate
+				,survey_startline_date surveyStartlineDate
+				,survey_deadline_date surveyDeadlineDate
+				,lecture_no lectureNo
+				,member_id memberId
+				FROM survey
+				ORDER BY survey_no
+				LIMIT #{beginRow}, #{rowPerPage}
+		</select>
+		
+		<select id="countSurvey" resultType="int">
+			SELECT count(*) from survey
+		</select>
+		
+		<select id="selectSurveyQuestionListByPage"
+				parameterType="java.util.Map"
+				resultType="kr.co.nft.lms.vo.SurveyQuestionList">
+			SELECT survey_question_list
+				survey_question_list_no surveyQuestionListNo
+				,survey_question_list_name surveyQuestionListName
+				,survey_question_list_content surveyQuestionListContent
+				,survey_question_list_create_date surveyQuestionListCreateDate
+				,survey_question_list_update_date surveyQuestionListUpdateDate
+				FROM survey_question_list
+				ORDER BY survey_question_list_no
+				LIMIT #{beginRow}, #{rowPerPage}
+		
+		</select>
+		
+		<select id="countSurveyList" resultType="int">
+			select count(*) from surveyquestionlist
+		</select>
+		
+		<insert id="insertSurvey"
+				parameterType="kr.co.nft.lms.vo.Survey">
+			INSERT INTO survey(
+				survey_title surveyTitle
+				,survey_content surveyContent
+				,survey_create_date
+				,survey_update_date
+				,survey_startline_date surveyStartlineDate
+				,survey_deadline_date surveyDeadlineDate
+			) VALUES (
+				#{surveyTitle}
+				,#{surveyContent}
+				,NOW()
+				,NOW()
+				,#{surveyStartlineDate}
+				,#{surveyDeadlineDate}
+			)
+		</insert>
+		
+		<insert id="">
+		
+		</insert>
+</mapper>
