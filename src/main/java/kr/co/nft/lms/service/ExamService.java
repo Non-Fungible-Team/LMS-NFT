@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.ExamMapper;
 import kr.co.nft.lms.util.A;
-import kr.co.nft.lms.vo.Exam;
-import lombok.extern.slf4j.Slf4j;
+import kr.co.nft.lms.vo.*;
+import lombok.extern.slf4j.Slf4j;	
 
 @Slf4j
 @Service
@@ -33,10 +33,10 @@ public class ExamService {
 	
 			// 2) 메퍼 반환값 가공
 			List<Exam> examList = examMapper.selectExamListByPage(paramMap);
-			log.debug("[ExamService.getExamListByPage.mapper] examList :"+examList);
+			log.debug(A.C + "[ExamService.getExamListByPage.mapper] examList : "+examList + A.R);
 			Map<String, Object> returnMap = new HashMap<>();
-			int examTotalCount = examMapper.countExam(); 
-			log.debug("[ExamService.getExamListByPage.ExamMapper] examTotalCount :"+examTotalCount);
+			int examTotalCount = examMapper.countExam();
+			log.debug(A.C + "[ExamService.getExamListByPage.ExamMapper] examTotalCount :"+examTotalCount + A.R);
 			int examLastPage = examTotalCount / (int)(rowPerPage);
 			if(examTotalCount % (int)(rowPerPage) != 0) {
 					examLastPage += 1; // ++commentLastPage, commentLastPage++
@@ -45,4 +45,56 @@ public class ExamService {
 			returnMap.put("examLastPage", examLastPage); 
 			return returnMap;
 	}
+	
+	// 시험 상세보기
+	public Map<String, Object> getExamOne(int examNo) {
+			log.debug(A.C + "[ExamService.getExamOne.param] examNo: " + examNo + A.R);
+			
+			List<Exam> examOneList = examMapper.selectExamOne(examNo);
+			
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			log.debug(A.C + "[ExamService.getExamOne.Mapper] paramMap : " + paramMap + A.R);
+			paramMap.put("examOneList",examOneList);
+			return paramMap;
+			}
+	
+	// 시험문제 상세보기
+	public Map<String, Object> getExamQuestionOne(int examNo) {
+		log.debug(A.C + "[ExamService.getExamOne.param] examNo: " + examNo + A.R);
+		
+		List<Exam> examQuestionOneList = examMapper.selectExamQuestionOne(examNo);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		log.debug(A.C + "[ExamService.getExamOne.Mapper] returnMap : " + returnMap + A.R);
+		returnMap.put("examQuestionOneList",examQuestionOneList);
+		return returnMap;
+	}
+	// 시험보기 상세보기
+	public Map<String, Object> getExamExampleOne(int examNo) {
+			log.debug(A.C + "[ExamService.getExamOne.param] examNo: " + examNo + A.R);
+			
+			List<Exam> examExampleOneList = examMapper.selectExamQuestionOne(examNo);
+			
+			Map<String, Object> returnMap = new HashMap<String, Object>();
+			log.debug(A.C + "[ExamService.getExamOne.Mapper] returnMap : " + returnMap + A.R);
+			returnMap.put("examExampleOneList",examExampleOneList);
+			return returnMap;
+	}
+	
+	// 시험문제 등록
+	public void addExam(Exam exam) {
+			log.debug(A.C + "[ExamService.addExam.param] exam :"+ exam + A.R);
+			
+			// ExamMapper
+			exam.setExamTitle(exam.getExamTitle());
+			exam.setExamCount(exam.getExamCount());
+			exam.setExamMaxScore(exam.getExamMaxScore());
+			exam.setExamStartDate(exam.getExamStartDate());
+			exam.setExamEndDate(exam.getExamEndDate());
+			// notice.getNoticeId() --> 0
+			int row = examMapper.insertExam(exam);
+			// insert시 입력된 autoincrement값이 출력됨
+			log.debug(A.C + "[ExamService.addExam.param] examNo :"+ exam.getExamNo() + A.R);
+			
+			}
 }
