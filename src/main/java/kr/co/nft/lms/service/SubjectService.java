@@ -32,12 +32,14 @@ public class SubjectService {
 	}
 	
 	// subject 테이블 데이터 입력
-	public void insertSubjectOne(Subject subject) {
+	public int addSubjectOne(Subject subject) {
 		
 		// controller에서 넘어온 매개변수 값 디버깅
-		log.debug(A.A + "[SubjectService.insertSubjectOne.param] subject : " + subject + A.R);
+		log.debug(A.A + "[SubjectService.addSubjectOne.param] subject : " + subject + A.R);
 		
 		int row = subjectMapper.insertSubjectOne(subject);
+		
+		return row;
 	}
 	
 	// subject 테이블 데이터 삭제

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Lecture;
+import kr.co.nft.lms.vo.TeacherLecture;
 @Mapper
 public interface LectureMapper {
 	//1.강의 목록(상세보기)- 전체 강의에 대한
@@ -15,6 +16,9 @@ public interface LectureMapper {
 	//2.강의 삽입 - action
 	//int형으로 반환, notice 객체 값? 전달받음
 	int insertLecture(Lecture lecture);
+	
+	//2-2 강의_강사 삽입
+	int insertLectureByTeacher(Map<String,Object> map);
 	
 	//3.강의 수정 - form, action
 	//form : Lecture 객체타입으로 반환, 번호값 전달받음
@@ -29,9 +33,11 @@ public interface LectureMapper {
 	
 	//student-lecture -> 뷰만 다름(가져오는 값이 다름)
 	//5.학생_강의 목록 - 강의별 학생의 목록(운영자,강사)
-	//6.학생 수강목록 - 학생이 자기가 듣는 수강하는 강의 목록
 	//List로 반환, 키값으로 데이터 전달받음.
 	List<Lecture> selectStudentLecture(Map<String, Object> map);
+	
+	//6.학생 수강목록 - 학생이 자기가 듣는 수강하는 강의 목록
+	List<Lecture> selectStudentLectureByStudent(Map<String, Object> map);
 	
 	//7.전체 행수
 	List<Lecture> selectLectureCount();
