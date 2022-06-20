@@ -2,20 +2,27 @@ package kr.co.nft.lms.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
+import kr.co.nft.lms.vo.Student;
+import kr.co.nft.lms.vo.Teacher;
 
 @Mapper
 public interface MemberMapper {
 	//회원가입(멤버)
-	String insertMember(Member member);
+	int insertMember(Member member);
 	
 	//회원가입(학생)
-	String insertStudent(Member member);
+	int insertStudent(Student student);
 	
 	//회원가입(강사)
-	String insertTeacher(Member member);
+	int insertTeacher(Teacher teacher);
 	
 	//회원가입(운영자)
-	String insertManager(Member member);
+	int insertManager(Manager manager);
+	
+	//id체크
+	int selectIdCheck(Member member);
+
 	
 }
