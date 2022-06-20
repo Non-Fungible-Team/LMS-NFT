@@ -14,8 +14,14 @@
 				,exam_start_date 	examStartDate
 				,exam_end_date 		examEndDate
 			FROM exam
-			ORDER BY exam_no DESC
+			ORDER BY exam_no ASC
 			LIMIT #{beginRow}, #{rowPerPage};
+	</select>
+<!--  시험문제 수 -->
+	<select id="countExam"
+			resultType="int">
+		SELECT count(*) 
+		FROM exam
 	</select>
 	
 <!-- 시험문제 상세보기  -->		 	
