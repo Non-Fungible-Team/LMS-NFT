@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.LectureService;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping("/lecture")
 public class LectureController {
 	
 	@Autowired
@@ -26,7 +28,7 @@ public class LectureController {
 	private SubjectService subjectService;
 	
 	// form - subject 테이블 전체 리스트, subject 테이블 데이터 입력
-	@GetMapping("/lecture/subjectList")
+	@GetMapping("/subjectList")
 	public String subjectList(Model model) {
 		
 		List<Subject> subjectList = subjectService.getSubjectList();
