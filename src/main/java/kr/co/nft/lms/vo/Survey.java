@@ -9,6 +9,8 @@ public class Survey {
 	private String surveyContent;
 	private String surveyCreateDate;
 	private String surveyUpdateDate;
+	private String surveyStartlineDate;
+	private String surveyDeadlineDate;
 	private int lectureNo;
 	private String memberId;
 }
