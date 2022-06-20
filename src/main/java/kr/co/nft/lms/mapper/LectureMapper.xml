@@ -19,7 +19,7 @@
 	INNER JOIN lecture_room lr
 		ON l.lecture_room_name = lr.lecture_room_name
 	ORDER BY lecture_no
-	LIMIT #{startRow}, #{rowPerPage}
+	LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 2.강의 삽입 -->
@@ -108,7 +108,7 @@
 		INNER JOIN student s
 			ON sl.member_id = s.member_id
 		ORDER BY lectureName ASC, studentLectureLegistrationDate DESC
-		LIMIT #{startRow}, #{rowPerPage}
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 5-2. 학생-강의 삽입 -->
