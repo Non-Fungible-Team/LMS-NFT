@@ -6,8 +6,8 @@ import lombok.Data;
 public class StudentLecture {
 	private int lectureNo;
 	private String memberId;
-	private String memberLectureJob;
-	private String memberLectureLegistrationDate;
-	private String memberLectureEndDate;
-	private int memberLectureScore;
+	private String studentLectureJob;
+	private String studentLectureLegistrationDate;
+	private String studentLectureEndDate;
+	private int studentLectureScore;
 }
