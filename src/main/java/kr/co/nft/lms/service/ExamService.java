@@ -33,10 +33,10 @@ public class ExamService {
 	
 			// 2) 메퍼 반환값 가공
 			List<Exam> examList = examMapper.selectExamListByPage(paramMap);
-			log.debug("[noticeService.getNoticeListByPage.mapper] noticeList :"+examList);
+			log.debug("[ExamService.getExamListByPage.mapper] examList :"+examList);
 			Map<String, Object> returnMap = new HashMap<>();
 			int examTotalCount = examMapper.countExam(); 
-			log.debug("[noticeService.getNoticeListByPage.noticemapper] noticeTotalCount :"+examTotalCount);
+			log.debug("[ExamService.getExamListByPage.ExamMapper] examTotalCount :"+examTotalCount);
 			int examLastPage = examTotalCount / (int)(rowPerPage);
 			if(examTotalCount % (int)(rowPerPage) != 0) {
 					examLastPage += 1; // ++commentLastPage, commentLastPage++
