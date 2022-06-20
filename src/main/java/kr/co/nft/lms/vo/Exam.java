@@ -8,6 +8,10 @@ public class Exam {
 	private String memberId;
 	private String lectureNo;
 	private String examTitle;
+	private int examCount;
+	private int examMaxScore;
+	private String examStartDate;
+	private String examEndDate;
 	private String examCreateDate;
 	private String examUpdateDate;
 }

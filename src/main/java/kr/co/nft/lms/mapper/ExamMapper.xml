@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.ExamMapper">
+
+<!-- 시험문제 리스트  -->	
+	<select id="selectExamListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Exam">
+			SELECT 
+				exam_no 			examNo
+				,exam_title 		examTitle
+				,exam_count 		examCount
+				,exam_max_score 	examMaxScore
+				,exam_start_date 	examStartDate
+				,exam_end_date 		examEndDate
+			FROM exam
+			ORDER BY exam_no DESC
+			LIMIT #{beginRow}, #{rowPerPage};
+	</select>
+	
+<!-- 시험문제 상세보기  -->		 	
+	<select id="selectExamOne"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Exam">
+			SELECT	e.lecture_no			lectureNo
+					,e.member_id			memberId
+					,e.exam_no				examNo
+					,e.exam_title			examTitle
+					,e.exam_count			examCount
+					,e.exam_max_score		examMaxScore
+					,e.exam_start_date		examStartDate
+					,e.exam_end_date		examEndDate
+					,eq.exam_question_no	examQuestionNo
+					,eq.exam_content		examContent
+					,eq.exam_correct_answer	examCorrectAnswer
+					,eq.exam_point			examPoint
+					,eq.exam_type			examType
+					,ee.example_no			exampleNo
+					,ee.example_content		exampleContent
+			FROM exam e
+			LEFT JOIN  exam_question eq
+			ON e.exam_no = eq.exam_no
+			LEFT JOIN exam_example ee
+			ON eq.exam_question_no = ee.exam_question_no
+			WHERE exam_no = #{examNo};
+	</select>
+	
+<!-- 시험문제 등록  -->
+	<insert id="insertExam"
+			parameterType="kr.co.nft.lms.vo.Exam">
+			INSERT INTO exam(
+			exam_no examNo
+			,member_id memberId
+			,lecture_no lectureNo
+			,exam_title examTitle
+			,exam_count examCount
+			,exam_max_score examMaxScore
+			,exam_start_date examStartDate
+			,exam_end_date examEndDate
+			,exam_create_date examCreateDate
+			,exam_Update_date examUpdateDate
+			) VALUES (
+			#{examNo}
+			,#{memberId}
+			,#{lectureNo}
+			,#{examTitle}
+			,#{examCount}
+			,#{examMaxScore}
+			,#{examStartDate}
+			,#{examEndDate}
+			,NOW()
+			,NOW()
+			)
+	</insert>
+	
+
+			
+			
+		
+	
+
+</mapper>
+	
