@@ -58,4 +58,41 @@ public class BoardController {
 		model.addAttribute("board", getBoardOne);
 		return "/board/getBoardOne";
 	}
+	
+	//Notice 수정폼
+	@GetMapping("/modifyBoard")
+	public String modifyBoard(Model model
+							,@RequestParam(name="boardNo") int boardNo) {
+		log.debug(A.S + "BoardController.modifyBoard.param boardNo : "+ boardNo + A.R);
+		Board board = boardService.getBoardOne(boardNo);
+		model.addAttribute("board", board);
+		return "/board/modifyBoard";
+	}
+	
+	//Notice 수정 액션
+	@PostMapping("/modifyBoard")
+	public String modifyBoard(Board board) {
+		int row = boardService.modifyBoard(board);
+		log.debug(A.S + "BoardController.modifyBoard.row : "+ row + A.R);
+		return "redirect:/board/getBoardOne?boardNo=" + board.getBoardNo();
+	}
+	
+	/*
+	 * //Notice 삭제 폼
+	 * 
+	 * @GetMapping("/removeBoard") public String removeBoard(Model model
+	 * ,@RequestParam(name="boardNo") int boardNo) { log.debug(A.S +
+	 * "BoardController.removeBoard.param.boardNo : "+ boardNo + A.R); Board board =
+	 * boardService.getBoardOne(boardNo); model.addAttribute("board", board); return
+	 * "/board/removeBoard"; }
+	 */
+	
+	//Notice 삭제 액션
+	@GetMapping("/removeBoard")
+	public String removeBoard(int boardNo) {
+		int row = boardService.removeBoard(boardNo);
+		
+		log.debug(A.S + "BoardController.removeBoard.row : "+ row + A.R);
+		return "redirect:/board/getBoardByPage";
+	}
 }
