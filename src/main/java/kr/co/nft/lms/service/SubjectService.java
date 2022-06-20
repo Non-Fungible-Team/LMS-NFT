@@ -26,7 +26,7 @@ public class SubjectService {
 		
 		// subjectMapper에서 반환된 값(전체 리스트)을 가공 controller에 반환
 		List<Subject> subjectList = subjectMapper.selectSubjectList();
-		log.debug(A.A + "[SubjectService.selectSubjectList.param] subjectList : " + subjectList + A.R);
+		log.debug(A.A + "[SubjectService.getSubjectList] subjectList : " + subjectList + A.R);
 				
 		return subjectList;
 	}
@@ -35,7 +35,7 @@ public class SubjectService {
 	public int addSubjectOne(Subject subject) {
 		
 		// controller에서 넘어온 매개변수 값 디버깅
-		log.debug(A.A + "[SubjectService.addSubjectOne.param] subject : " + subject + A.R);
+		log.debug(A.A + "[SubjectService.addSubjectOne] subject : " + subject + A.R);
 		
 		int row = subjectMapper.insertSubjectOne(subject);
 		
@@ -46,7 +46,7 @@ public class SubjectService {
 	public int deleteSubjectOne(int subjectNo) {
 		
 		// controller에서 넘어온 매개변수 값 디버깅
-		log.debug(A.A + "[SubjectService.deleteSubjectOne.param] subjectNo : " + subjectNo + A.R);
+		log.debug(A.A + "[SubjectService.deleteSubjectOne] subjectNo : " + subjectNo + A.R);
 		
 		int row = subjectMapper.deleteSubjectOne(subjectNo);
 		
