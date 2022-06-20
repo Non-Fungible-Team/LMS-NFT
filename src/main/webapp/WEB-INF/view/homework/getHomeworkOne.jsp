@@ -15,8 +15,7 @@
 	<p><label>작성자</label> <input type="text" name="memberId" value="${homeworkOne.memberId }" readonly="readonly"></p>
 	<label>내용</label> <textarea name=homeworkContent rows ="8" cols="70"  readonly="readonly">${homeworkOne.homeworkContent}</textarea><br>
 	<p><label>날짜</label> <input type="text" name="homeworkCreateDate" size="15" value = "${homeworkOne.homeworkCreateDate}"readonly="readonly"><p>
-	
-	
 	</div>
+	<button><a href="${pageContext.request.contextPath}/homework/getHomeworkListByPage">과제 목록</a></button>
 </body>
 </html>

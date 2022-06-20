@@ -1,6 +1,7 @@
 package kr.co.nft.lms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/lecture")
 public class LectureController {
 	
-	@Autowired
-	private LectureService lectureService;
-	
-	@Autowired
-	private SubjectService subjectService;
+	@Autowired private LectureService lectureService;
+	@Autowired private SubjectService subjectService;
 	
 	// form - subject 테이블 전체 리스트, subject 테이블 데이터 입력
 	@GetMapping("/subjectList")
@@ -76,4 +74,24 @@ public class LectureController {
 		
 		return "redirect:/lecture/subjectList";
 	}
+	
+	////////////* 강의 *////////////
+	//1. 강의 목록(상세보기)
+	@GetMapping("/getLectureByPage")
+	public String getLectureByPage(Model model
+			,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
+			,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+		Map<String,Object> map = lectureService.getLectureByPage(currentPage, rowPerPage); //강의목록 서비스 호출
+		 //서비스에 저장된 값 가져오서 모델객체에 저장
+		model.addAttribute("lectureList", map.get("lectureList"));
+		model.addAttribute("currentPage", map.get("currentPage"));
+		model.addAttribute("lastPage",map.get("lastPage") );
+		log.debug(A.W +"[LectureController.getLectureByPage.model] model.lectureList : " +map.get("lectureList") +A.R);
+		log.debug(A.W +"[LectureController.getLectureByPage.model] model.currentPage : " +map.get("currentPage") +A.R);
+		log.debug(A.W +"[LectureController.getLectureByPage.model] model.lastPage : " +map.get("lastPage") +A.R);
+		
+		return "lecture/getLectureByPage"; //jsp로 이동
+		
+	}
+	
 }

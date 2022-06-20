@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.LectureScheduleMapper">
+
+	<select id="selectLectureScheduleListByLectureNo"
+			parameterType="int">
+		SELECT 
+			lecture_schedule_date lectureScheduleDate
+			, lecture_no lectureNo
+			, lecture_schedule_start_date lectureScheduleStartDate
+			, lecture_schedule_end_date lectureScheduleEndDate
+			, lecture_schedule_create_date lectureScheduleCreateDate
+		FROM lecture_schedule
+		WHERE lecture_no = #{ lectureNo };
+	</select>
+	
+	<insert id="insertLectureSchedule">
+		INSERT INTO lecture_schedule (
+			lecture_schedule_date
+			, lecture_no
+			, lecture_schedule_start_date
+			, lecture_schedule_end_date
+			, lecture_schedule_create_date
+		) VALUES (
+			#{ lectureScheduleDate }
+			, #{ lectureNo }
+			, #{ lectureScheduleStartDate }
+			, #{ lectureScheduleEndDate }
+			, NOW()
+		)
+	</insert>
+	<!-- 
+	<insert id="insertLectureScheduleOne">
+		INSERT INTO lecture_schedule (
+			lecture_schedule_date
+			, lecture_no
+			, lecture_schedule_start_date
+			, lecture_schedule_end_date
+			, lecture_schedule_create_date
+		) VALUES (
+			#{ lectureScheduleDate }
+			, #{ lectureNo }
+			, #{ lectureScheduleStartDate }
+			, #{ lectureScheduleEndDate }
+			, NOW()
+		)
+	</insert>
+	 -->
+	<delete id="deleteLectureScheduleOne">
+		DELETE FROM lecture_schedule
+		WHERE lecture_schedule_date = #{ lectureScheduleDate }
+		AND lecture_no = #{ lectureNo }
+	</delete>
+</mapper>

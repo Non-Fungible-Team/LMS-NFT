@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
+
+	<select id="selectMemberOne"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT 
+			member_id memberId
+			, member_level memberLevel
+		FROM member	
+		WHERE member_id = #{memberId} and member_pw = password(#{memberPw})
+	</select>
+
 	<insert id="insertMember"
-		parameterType="int">
+			parameterType="int">
 		INSERT INTO member(
 			member_id memberId
 			,member_pw memberPw
@@ -23,6 +34,7 @@
 			,NOW()
 		)
 	</insert>
+	
 	<insert id="insertManager"
 			parameterType="int">
 		INSERT INTO manager(

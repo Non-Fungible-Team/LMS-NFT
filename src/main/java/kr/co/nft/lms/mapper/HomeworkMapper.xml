@@ -36,17 +36,42 @@
 	
 	<insert id="insertHomework"
 			parameterType="kr.co.nft.lms.vo.Homework">
-	
+		INSERT INTO homework(
+			member_id
+			,lecture_no
+			,homework_title
+			,homework_content
+			,homework_start_date
+			,homework_end_date
+			,homework_create_date
+			,homework_update_date 
+		)VALUES(			
+			#{memberId}
+			,#{lectureNo}
+			,#{homeworkTitle}
+			,#{homeworkContent}
+			,#{homeworkStartDate}
+			,#{homeworkEndDate}
+			,NOW()
+			,NOW()
+		);
 	</insert>
 	
 	<update id="updateHomework"
 			parameterType="kr.co.nft.lms.vo.Homework">
-	
+		UPDATE homework SET
+			homework_title = #{homeworkTitle}
+			,homework_content = #{homeworkContent}
+			,homework_start_date = #{homeworkStartDate}
+			,homework_end_date = #{homeworkEndDate}
+			,homework_update_date = NOW()
+		WHERE homework_no = #{homeworkNo}
 	</update>
 	
 	<delete id="deleteHomework"
 			parameterType="int">
-	
+		DELETE FROM homework
+		WHERE homework_no = #{homeworkNo}
 	</delete>
 
 	<select id="selectTotalCount"
