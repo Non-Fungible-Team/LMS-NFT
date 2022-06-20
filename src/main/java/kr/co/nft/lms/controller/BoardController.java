@@ -40,14 +40,22 @@ public class BoardController {
 	public String getBoardByPage(Model model
 								,@RequestParam(name= "currnetPage", defaultValue = "1") int currentPage
 								,@RequestParam(name= "rowPerPage", defaultValue = "10") int rowPerPage) {
-		Map<String, Object> map = boardService.getBoardByPage(currentPage, rowPerPage);
+		Map<String, Object> returnMap = boardService.getBoardByPage(currentPage, rowPerPage);
 		/*log.debug(A.S + "BoardController.BoardGetByPage.param : ", currnetPage + A.R);*/
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("boardList", returnMap.get("boardList"));
+		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		
 		return "/board/getBoardByPage";
 	}
 	
 	//Notice 상세보기
+	@GetMapping("/getBoardOne")
+	public String getBoardOne(Model model
+							,@RequestParam(name="boardNo") int boardNo) {
+		log.debug(A.S + "BoardController.getBoardOne.param boardNo : "+ boardNo + A.R);
+		Board getBoardOne = boardService.getBoardOne(boardNo);
+		model.addAttribute("board", getBoardOne);
+		return "/board/getBoardOne";
+	}
 }

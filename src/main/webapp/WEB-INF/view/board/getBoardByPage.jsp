@@ -19,10 +19,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="b" items="${list}">
+				<c:forEach var="b" items="${boardList}">
 					<tr>
 						<td>${b.boardNo}</td>
-						<td><a href="${pageContext.request.contextPath}/getBoardOne?boardNo=${b.boardNo}">${b.boardTitle}</a></td>
+						<td><a href="${pageContext.request.contextPath}/board/getBoardOne?boardNo=${b.boardNo}">${b.boardTitle}</a></td>
 						<td>${b.memberId}</td>
 						<td>${b.boardCreateDate}</td>
 					</tr>

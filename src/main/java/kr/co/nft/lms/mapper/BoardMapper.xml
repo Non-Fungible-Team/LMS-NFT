@@ -60,7 +60,8 @@
 		INNER JOIN board b
 		ON n.board_no = b.board_no
 		WHERE b.board_privilege= 0
-		AND b.board_blind = 'N';	
+		AND b.board_blind = 'N'
+		AND n.board_no = ${boardNo};	
 	</select>
 	
 </mapper>

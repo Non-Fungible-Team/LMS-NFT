@@ -29,19 +29,22 @@ public class BoardService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("startRow", startRow);
-		List<Board> list = boardMapper.selectBoardByPage(map);
+		List<Board> boardList = boardMapper.selectBoardByPage(map);
 		
 		//2) 매퍼에서 반환된 값을 가공, controller에 반환
 		int totalCount = boardMapper.selectTotalCount();
 		int lastPage = (int)Math.ceil((double)totalCount/(double)rowPerPage);
 		
 		Map<String,Object> returnMap = new HashMap<>();
-		returnMap.put("list", list);
+		returnMap.put("boardList", boardList);
 		returnMap.put("lastPage", lastPage);
 		return returnMap;
 	}
 	
 	//Notice 상세보기
+	public Board getBoardOne(int boardNo){
+		return boardMapper.selectBoardOne(boardNo);
+	}
 	
 	
 }
