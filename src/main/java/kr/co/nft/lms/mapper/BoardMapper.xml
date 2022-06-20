@@ -53,6 +53,7 @@
 			, b.board_content boardContent			
 			, b.board_blind boardBlind
 			, b.member_id memberId
+			, b.board_category boardCategory
 			, b.board_privilege boardPrivilege
 			, b.board_create_date boardCreateDate
 			, b.board_update_date boardUpdateDate
@@ -61,7 +62,23 @@
 		ON n.board_no = b.board_no
 		WHERE b.board_privilege= 0
 		AND b.board_blind = 'N'
-		AND n.board_no = ${boardNo};	
+		AND n.board_no = #{boardNo};	
 	</select>
+	<!-- 수정 -->
+	<update id="updateBoard"
+			parameterType="kr.co.nft.lms.vo.Board">
+		UPDATE board
+		SET board_title = #{boardTitle}
+			, board_content = #{boardContent}
+		WHERE board_no = #{boardNo};
+	</update>
+	
+	<!-- 삭제(블라인드로 변경) -->
+	<update id="deleteBoard"
+			parameterType="int">
+		UPDATE board
+		SET board_blind = 'Y'
+		WHERE board_no = #{boardNo};
+	</update>
 	
 </mapper>

@@ -41,9 +41,19 @@ public class BoardService {
 		return returnMap;
 	}
 	
-	//Notice 상세보기
+	//Notice 상세보기 + 삭제폼
 	public Board getBoardOne(int boardNo){
 		return boardMapper.selectBoardOne(boardNo);
+	}
+	
+	//Notice 수정액션
+	public int modifyBoard(Board board) {
+		return boardMapper.updateBoard(board);
+	}
+	
+	//Notice 삭제(블라인드로 변경)
+	public int removeBoard(int boardNo) {
+		return boardMapper.deleteBoard(boardNo);
 	}
 	
 	

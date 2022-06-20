@@ -44,9 +44,9 @@
 			</tr>
 		</table>
 		<ul class="pager">
-	      <li><a href="${pageContext.request.contextPath}/modifyBoard?boardNo=${board.boardNo}">수정</a></li>
-	      <li><a href="${pageContext.request.contextPath}/removeBoard?oardNo=${board.boardNo}">삭제</a></li>
-	      <li><a href="${pageContext.request.contextPath}/getBoardByPage?boardNo=${board.boardNo}">목록으로</a></li>
+	      <li><a href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${board.boardNo}">수정</a></li>
+	      <li><a href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${board.boardNo}">삭제</a></li>
+	      <li><a href="${pageContext.request.contextPath}/board/getBoardByPage?boardNo=${board.boardNo}">목록으로</a></li>
 	   </ul>
 	</div>
 </body>

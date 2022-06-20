@@ -5,6 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>시험 리스트</title>
+<!-- bootstrap을 사용하기 위한 CDN주소 -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -31,34 +45,14 @@
                    <td>${e.examMaxScore}</td>
                    <td>${e.examStartDate}</td>
                    <td>${e.examEndDate}</td>
-                   <td><a href="${pageContext.request.contextPath}/getExamOne?examNo=${e.examNo}">문제보기</a></td>
+                   <td><a href="${pageContext.request.contextPath}/exam/getExamOne?examNo=${e.examNo}">문제보기</a></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-    
-    <h1>문제등록</h1>
-    <form method="post" id="addForm" action="${pageContext.request.contextPath}/addExamOne">
-	    <table>
-	    	<tr>
-	    		<td>시험 이름 : </td>
-	    		<td><input type="text" name="examTitle" id="examTitle"></td>
-	    	</tr>
-	    	<tr>
-	    		<td>시험 문항 수 : </td>
-	    		<td><input type="text" name="examCount" id="examCount"></td>
-	    	</tr>
-	    	<tr>
-	    		<td>만점: </td>
-	    		<td><input type="text" name="examMaxScore" id="examMaxScore"></td>
-	    	</tr>
-	    	<tr>
-	    		<td>시험 내용 : </td>
-	    		<td><input type="text" name="examContent" id="examContent"></td>
-	    	</tr>
-	    </table>
-	    <div>
-			<button type="button" class="btn btn-default" id="addExam">시험등록</button>
+    <form>
+			<button type="button" class="btn btn-default" id="addExam">
+			<a href="${pageContext.request.contextPath}/exam/addExam">시험등록</a></button>
 		</div>
     </form>
 </body>
