@@ -5,11 +5,11 @@
 	<select id="selectSubjectList"
 			resultType="kr.co.nft.lms.vo.Subject">
 		SELECT 
-			subject_no
-			, subject_name
-			, subject_content
-			, subject_create_date
-			, subject_update_date
+			subject_no subjectNo
+			, subject_name subjectName
+			, subject_content subjectContent
+			, subject_create_date subjectCreateDate
+			, subject_update_date subjectUpdateDate
 		FROM subject
 	</select>
 	

@@ -1,9 +1,13 @@
 package kr.co.nft.lms.mapper;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Subject;
 
+@Mapper
 public interface SubjectMapper {
 	
 	// subject 테이블 전체 리스트
