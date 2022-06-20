@@ -9,13 +9,19 @@ import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.Teacher;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Service
 @Transactional
 public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
+	
+	public Member getMemberOne(Member member) {
+		return memberMapper.selectMemberOne(member);
+	}
+	
 	// 운영자 가입
 	public void insertManager(Member member, Manager manager){
 		memberMapper.insertMember(member);
