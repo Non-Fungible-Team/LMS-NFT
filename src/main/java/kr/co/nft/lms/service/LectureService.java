@@ -22,9 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 public class LectureService {
 	//Mapper 변수 생성
 	@Autowired private LectureMapper lectureMapper;
-	@Autowired private StudentLecture studentLecture;
-	@Autowired private ManagerLecture managerLecture;
-	@Autowired private TeacherLecture teacherLecture;
 	
 	//1.강의목록(상세보기) + 전체 행 수
 	public Map<String,Object> getLectureByPage(int currentPage, int rowPerPage){ //controller 로 넘겨줄 값

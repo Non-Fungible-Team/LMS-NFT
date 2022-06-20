@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.nft.lms.mapper.LectureMapper">
 	<!-- 1.강의목록(상세보기) -->
 	<select id="selectLectureByPage"
-				resultType="java.util.List"
+				resultType="kr.co.nft.lms.vo.Lecture"
 				parameterType="java.util.Map">
 	SELECT 
 		l.lecture_no lectureNo
@@ -169,13 +169,13 @@
 	
 	<!-- 7.강의 전체 행수 -->
 	<select id="selectLectureCount" 
-					resultType="java.util.List">
+					resultType="int">
 		SELECT COUNT(*) FROM lecture
 	</select>
 	
 	<!-- 7-2.학생목록 전체 행 -->
 	<select id="selectStudentLectureCount"
-				resultType="java.util.List">
+				resultType="int">
 		SELECT COUNT(*) FROM student_lecture
 	</select>
 	

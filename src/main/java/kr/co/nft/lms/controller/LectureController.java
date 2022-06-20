@@ -22,10 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/lecture")
 public class LectureController {
 	
-	@Autowired
-	private LectureService lectureService;
-	@Autowired
-	private SubjectService subjectService;
+	@Autowired private LectureService lectureService;
+	@Autowired private SubjectService subjectService;
 	
 	// form - subject 테이블 전체 리스트, subject 테이블 데이터 입력
 	@GetMapping("/subjectList")
@@ -92,8 +90,7 @@ public class LectureController {
 		log.debug(A.W +"[LectureController.getLectureByPage.model] model.currentPage : " +map.get("currentPage") +A.R);
 		log.debug(A.W +"[LectureController.getLectureByPage.model] model.lastPage : " +map.get("lastPage") +A.R);
 		
-		
-		return "LectureList"; //jsp로 이동
+		return "lecture/getLectureByPage"; //jsp로 이동
 		
 	}
 	
