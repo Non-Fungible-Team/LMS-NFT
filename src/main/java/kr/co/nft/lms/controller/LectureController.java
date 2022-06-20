@@ -26,7 +26,7 @@ public class LectureController {
 	private SubjectService subjectService;
 	
 	// form - subject 테이블 전체 리스트, subject 테이블 데이터 입력
-	@GetMapping("/subjectList")
+	@GetMapping("/lecture/subjectList")
 	public String subjectList(Model model) {
 		
 		List<Subject> subjectList = subjectService.getSubjectList();
@@ -35,7 +35,7 @@ public class LectureController {
 		
 		model.addAttribute("subjectList", subjectList);
 		
-		return "subjectList";
+		return "/lecture/subjectList";
 	}
 	
 	// action - subject 테이블 데이터 입력
@@ -57,7 +57,7 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.addSubjectOne.param] subject 입력 실패" + A.R);
 		}
 		
-		return "redirect:/subjectList";
+		return "redirect:/lecture/subjectList";
 	}
 	
 	// action - subject 테이블 데이터 삭제
@@ -72,6 +72,6 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.removeSubjectOne.param] subject 삭제 실패" + A.R);
 		}
 		
-		return "redirect:/subjectList";
+		return "redirect:/lecture/subjectList";
 	}
 }
