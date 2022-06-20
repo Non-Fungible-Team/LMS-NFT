@@ -50,4 +50,35 @@ public class HomeworkService {
 		
 		return returnMap;
 	}
+	
+	// 과제 입력
+	public int addHomework(Homework homework) {
+		return homeworkMapper.insertHomework(homework);
+	}
+	
+	// 과제 수정
+	public int modifyHomework(Homework homework) {
+		
+		return homeworkMapper.updateHomework(homework);
+	}
+	
+	// 과제 삭제
+	public int removeHomework(int homeworkNo) {
+		return homeworkMapper.deleteHomework(homeworkNo);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
