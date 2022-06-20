@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.HomeworkMapper">
+
+	<select id="selectHomeworkListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Homework">
+		SELECT
+			homework_no homeworkNo
+			,member_id memberId
+			,lecture_no lectureNo
+			,homework_title homeworkTitle
+			,homework_content homeworkContent
+			,homework_start_date homeworkStartDate
+			,homework_end_date homeworkEndDate
+			,homework_create_date homeworkCreateDate
+			,homework_update_date homeworkUpdateDate
+		FROM homework
+		ORDER BY homework_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<select id="selectHomeworkOne"
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.Homework">
+		SELECT
+			homework_no homeworkNo
+			,homework_title homeworkTitle
+			,member_id memberId
+			,homework_content homeworkContent
+			,homework_create_date homeworkCreateDate
+		FROM homework
+		WHERE homework_no = #{homeworkNo}
+			
+	</select>
+	
+	<insert id="insertHomework"
+			parameterType="kr.co.nft.lms.vo.Homework">
+	
+	</insert>
+	
+	<update id="updateHomework"
+			parameterType="kr.co.nft.lms.vo.Homework">
+	
+	</update>
+	
+	<delete id="deleteHomework"
+			parameterType="int">
+	
+	</delete>
+
+	<select id="selectTotalCount"
+			resultType="int">
+		SELECT COUNT(*) FROM homework
+	
+	</select>
+
+</mapper>
