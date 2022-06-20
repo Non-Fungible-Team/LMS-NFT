@@ -9,10 +9,10 @@
 		l.lecture_no lectureNo
 		,s.subject_name subject
 		,lecture_name lectureName
-		, lecture_start_date lectureStartDate
-		, lecture_end_date lectureEndDate
-		, lr.lecture_room_name lectureroomName
-		, lecture_create_date lectureCreateDate  
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureroomName
+		,lecture_create_date lectureCreateDate  
 	FROM lecture l
 	INNER JOIN subject s
 		ON l.subject_no = s.subject_no
@@ -46,8 +46,8 @@
 			,#{lectureroomName}
 		)
 	</insert>
-	<!-- insert -> 기본키 받아서 강사 추가 -->
-	<insert id="insertLectureByTeacher" parameterType="java.util.Map">
+	<!--2-2 강의-강사 삽입 -->
+	<insert id="insertTeacherLecture" parameterType="kr.co.nft.lms.vo.TeacherLecture">
 		INSERT INTO teacher_lecutre(member_id, lecture_no) 
 		VALUES(
 			#{memberId}
@@ -64,9 +64,9 @@
 		l.lecture_no lectureNo
 		,s.subject_name subject
 		,lecture_name lectureName
-		, lecture_start_date lectureStartDate
-		, lecture_end_date lectureEndDate
-		, lr.lecture_room_name lectureroomName 
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureroomName 
 	FROM lecture l
 	INNER JOIN subject s
 		ON l.subject_no = s.subject_no
@@ -86,18 +86,19 @@
 		WHERE lecture_no_no =#{lectureNo}
 		AND member_id = #{memberId}
 	</update>
+	
 	<!--4. 강의 삭제 -->
 	<delete id="deleteLecture" parameterType="int">
 		DELETE FROM lecture 
 		WHERE lecture_no =#{lectureNo} 
 		AND member_id = #{memberId}
 	</delete>
-	<!-- 5.학생_강의 목록 -->
+	<!-- 5/6.학생_강의 목록: 강의명 누르면 나오는 화면 -->
 	<select id="selectStudentLecture"
 				parameterType="java.util.Map"
 				resultType="java.util.List">
 		SELECT 
-			l.lecture_name lectureName, s.member_id studentId
+			 s.member_id memberId
 			,s.student_name studentName, student_lecture_legistration_date studentLectureLegistrationDate
 			,student_lecture_end_date studentLectureEndDate, student_lecture_score studentLectureScore
 			,student_lecture_job  studentLectureJob 
@@ -110,24 +111,84 @@
 		LIMIT #{startRow}, #{rowPerPage}
 	</select>
 	
-	<!-- 6.학생 수강목록 -->
-	<select id="selectStudentLectureByStudent"
-				parameterType="java.util.Map"
-				resultType="java.util.List">
-	SELECT 
-		l.lecture_name lectureName, student_lecture_legistration_date studentLectureLegistrationDate
-		,student_lecture_end_date studentLectureEndDate, student_lecture_score studentLectureScore
-		,student_lecture_job  studentLectureJob   
-	FROM student_lecture sl
-	INNER JOIN lecture l
-		ON l.lecture_no = sl.lecture_no
-	ORDER BY studentLectureLegistrationDate
-	LIMIT #{startRow}, #{rowPerPage}
+	<!-- 5-2. 학생-강의 삽입 -->
+	<insert id="insertStudentLecture" parameterType="kr.co.nft.lms.vo.StudentLecture">
+		INSERT INTO student_lecture(
+			lecture_no
+			,member_id
+			,student_lecture_job
+			,student_lecture_legistration_date
+			,student_lecture_end_date
+			,student_lecture_score
+		)VALUES(
+			#{lectureNo}
+			,#{memberId}
+			,#{studentLectureJob}
+			,#{studentLectureLegistrationDate}
+			,#{studentLectureEndDate}
+			,#{studentLectureScore}
+		)
+	</insert>
+	<!-- 5-3.학생-강의 목록 수정폼 -->
+	<select id="updateStudentLectureForm" 
+				parameterType="int"
+				resultType="kr.co.nft.lms.vo.StudentLecture">
+		SELECT 
+			s.student_name studentName
+			,student_lecture_legistration_date studentLectureLegistrationDate
+			,student_lecture_end_date studentLectureEndDate
+			,student_lecture_score studentLectureScore
+			,student_lecture_job studentLectureJob 
+		FROM student_lecture sl
+		INNER JOIN lecture l
+			ON l.lecture_no = sl.lecture_no
+		INNER JOIN student s
+			ON sl.member_id = s.member_id
+		WHERE member_id = #{memberId}
 	</select>
-	<!-- 7.전체 행수 -->
+	
+	<!--5-3.학생-강의 목록 수정액션  -->
+	<update id="updateStudentLecture">
+		UPDATE student_lecture
+		SET lecture_no =#{lectureNo}
+			,member_id = #{memberId}
+			,student_lecture_job =#{studentLectureJob}
+			,student_lecture_legistration_date =#{studentLectureLegistrationDate}
+			,student_lecture_end_date = #{studentLectureEndDate}
+			,#{student_lecture_score} =#{studentLectureScore}
+		WHERE member_id = #{memberId}
+	</update>
+	
+	<!-- 5-4.학생-강의 목록 삭제 -->
+	<delete id="deleteStudentLecture"
+				parameterType="int">
+		DELETE FROM student_lecture
+		WHERE lecture_no = #{lectureNo} 
+		AND member_id = #{memberId}
+	</delete>
+	
+	<!-- 7.강의 전체 행수 -->
 	<select id="selectLectureCount" 
-					resultType="java.util.List"
-					parameterType="java.util.Map">
+					resultType="java.util.List">
 		SELECT COUNT(*) FROM lecture
 	</select>
+	
+	<!-- 7-2.학생목록 전체 행 -->
+	<select id="selectStudentLectureCount"
+				resultType="java.util.List">
+		SELECT COUNT(*) FROM student_lecture
+	</select>
+	
+	<!-- 8.운영자-강의 삽입 -->
+	<insert id="insertManagerLecture"
+			parameterType="kr.co.nft.lms.vo.ManagerLecture">
+		INSERT INTO manager_lecture(
+			lecture_no
+			,member_id
+		)VALUES(
+			#{lectureNo}
+			,#{memberId}
+		)
+	</insert>
+	
 </mapper>
