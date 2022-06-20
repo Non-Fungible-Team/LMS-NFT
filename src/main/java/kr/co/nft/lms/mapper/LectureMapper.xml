@@ -7,7 +7,7 @@
 				parameterType="java.util.Map">
 	SELECT 
 		l.lecture_no lectureNo
-		,s.subject_name subject
+		,s.subject_name subjectName
 		,lecture_name lectureName
 		,lecture_start_date lectureStartDate
 		,lecture_end_date lectureEndDate
@@ -62,7 +62,7 @@
 					resultType="kr.co.nft.lms.vo.Lecture">
 	SELECT 
 		l.lecture_no lectureNo
-		,s.subject_name subject
+		,s.subject_name subjectName
 		,lecture_name lectureName
 		,lecture_start_date lectureStartDate
 		,lecture_end_date lectureEndDate

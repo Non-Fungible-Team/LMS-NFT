@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/lecture")
 public class LectureController {
 	
 	@Autowired private LectureService lectureService;
@@ -77,7 +76,7 @@ public class LectureController {
 	
 	////////////* 강의 *////////////
 	//1. 강의 목록(상세보기)
-	@GetMapping("/getLectureByPage")
+	@GetMapping("/teacher/lecture/getLectureByPage")
 	public String getLectureByPage(Model model
 			,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
 			,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
