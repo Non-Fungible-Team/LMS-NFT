@@ -61,4 +61,17 @@ public class LectureController {
 	}
 	
 	// action - subject 테이블 데이터 삭제
+	@GetMapping("/removeSubjectOne")
+	public String removeSubjectOne(@RequestParam(name = "subjectNo") int subjectNo) {
+		
+		int row = subjectService.deleteSubjectOne(subjectNo);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.removeSubjectOne.param] subject 삭제 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.removeSubjectOne.param] subject 삭제 실패" + A.R);
+		}
+		
+		return "redirect:/subjectList";
+	}
 }

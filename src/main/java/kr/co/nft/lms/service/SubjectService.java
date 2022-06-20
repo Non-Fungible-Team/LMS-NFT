@@ -43,11 +43,13 @@ public class SubjectService {
 	}
 	
 	// subject 테이블 데이터 삭제
-	public void deleteSubjectOne(int subjectNo) {
+	public int deleteSubjectOne(int subjectNo) {
 		
 		// controller에서 넘어온 매개변수 값 디버깅
 		log.debug(A.A + "[SubjectService.deleteSubjectOne.param] subjectNo : " + subjectNo + A.R);
 		
 		int row = subjectMapper.deleteSubjectOne(subjectNo);
+		
+		return row;
 	}
 }

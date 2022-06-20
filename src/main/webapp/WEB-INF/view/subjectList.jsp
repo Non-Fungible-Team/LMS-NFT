@@ -45,7 +45,7 @@
                    <td>${s.subjectContent}</td>
                    <td>${s.subjectCreateDate}</td>
                    <td>${s.subjectUpdateDate}</td>
-                   <td><a href="${pageContext.request.contextPath}/#######?subjectNo=${s.subjectNo}">삭제</a></td>
+                   <td><a href="${pageContext.request.contextPath}/removeSubjectOne?subjectNo=${s.subjectNo}">삭제</a></td>
                 </tr>
             </c:forEach>
         </tbody>
