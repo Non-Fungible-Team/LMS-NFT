@@ -24,7 +24,7 @@
 		FROM exam
 	</select>
 	
-<!-- 시험문제 상세보기  -->		 	
+<!-- 시험 상세보기 		 	 -->
 	<select id="selectExamOne"
 			parameterType="java.util.Map"
 			resultType="kr.co.nft.lms.vo.Exam">
@@ -36,47 +36,99 @@
 					,e.exam_max_score		examMaxScore
 					,e.exam_start_date		examStartDate
 					,e.exam_end_date		examEndDate
-					,eq.exam_question_no	examQuestionNo
-					,eq.exam_content		examContent
-					,eq.exam_correct_answer	examCorrectAnswer
-					,eq.exam_point			examPoint
-					,eq.exam_type			examType
-					,ee.example_no			exampleNo
-					,ee.example_content		exampleContent
 			FROM exam e
-			LEFT JOIN  exam_question eq
-			ON e.exam_no = eq.exam_no
-			LEFT JOIN exam_example ee
-			ON eq.exam_question_no = ee.exam_question_no
-			WHERE exam_no = #{examNo};
+			GROUP BY e.exam_no
+			HAVING e.exam_no = #{examNo};
+	</select>
+<!-- 	문제보기 상세보기  -->
+	<select id="selectExamQuestionOne"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.ExamQuestion">
+			SELECT	 eq.exam_question_no 		examQuestionNo
+					,eq.exam_content 			examQuestionContent
+					,eq.exam_correct_answer 	examCorrectAnswer
+					,eq.exam_point 				examPoint
+					,eq.exam_type 				examType
+					,eq.exam_no 				examNo
+			FROM exam_question eq
+			HAVING eq.exam_no = #{examNo};
+		</select>
+			
+<!-- 	보기 상세보기  -->
+	<select id="selectExamExampleOne"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.ExamExample">
+			SELECT	 exam_question_no 		examQuestionNo
+					,example_no				exampleNo
+					,example_content			exampleContent
+					,exam_no					examNo
+			FROM exam_example
+			WHERE exam_no = #{examNo} and exam_question_no = #{examQuestionNo};
+			
 	</select>
 	
 <!-- 시험문제 등록  -->
 	<insert id="insertExam"
 			parameterType="kr.co.nft.lms.vo.Exam">
+			SET AUTOCOMMIT = FALSE;
 			INSERT INTO exam(
-			exam_no examNo
-			,member_id memberId
-			,lecture_no lectureNo
-			,exam_title examTitle
-			,exam_count examCount
-			,exam_max_score examMaxScore
-			,exam_start_date examStartDate
-			,exam_end_date examEndDate
-			,exam_create_date examCreateDate
-			,exam_Update_date examUpdateDate
+								exam_no 			examNo
+								,member_id 			memberId
+								,lecture_no 		lectureNo
+								,exam_title 		examTitle
+								,exam_count 		examCount
+								,exam_max_score 	examMaxScore
+								,exam_start_date 	examStartDate
+								,exam_end_date 		examEndDate
+								,exam_create_date 	examCreateDate
+								,exam_Update_date 	examUpdateDate
 			) VALUES (
-			#{examNo}
-			,#{memberId}
-			,#{lectureNo}
-			,#{examTitle}
-			,#{examCount}
-			,#{examMaxScore}
-			,#{examStartDate}
-			,#{examEndDate}
-			,NOW()
-			,NOW()
+								#{examNo}
+								,#{memberId}
+								,#{lectureNo}
+								,#{examTitle}
+								,#{examCount}
+								,#{examMaxScore}
+								,#{examStartDate}
+								,#{examEndDate}
+								,NOW()
+								,NOW()
 			)
+			INSERT INTO exam_question(
+										exam_no 				examNo
+										,exam_question_no 		examQuestionNo
+										,exam_content 			examContent
+										,exam_correct_answer 	examCorrectAnswer
+										,exam_point 			examPoint
+										,exam_type 				examType
+										,exam_create_date 		examCreateDate
+										,exam_update_date 		examUpdateDate
+			VALUES( 
+										#{examNo}
+										,#{examQuestionNo}
+										,#{examContent}
+										,#{examCorrectAnswer}
+										,#{examPoint}
+										,#{examType}
+										,NOW()
+										,NOW()
+			)
+			INSERT INTO exam_example(
+										exam_no 				examNo
+										,exam_question_no 		examQuestionNo
+										,example_no 			exampleNo
+										,example_content 		exampleContent
+										,example_create_date 	exampleCreateDate
+										,example_update_date 	exampleUpdateDate
+			VALUES( 	
+										#{examNo}
+										,#{examQuestionNo}
+										,#{exampleNo}
+										,#{exampleContent}
+										,NOW()
+										,NOW()
+			}
+			SET AUTOCOMMIT = TRUE;
 	</insert>
 	
 
