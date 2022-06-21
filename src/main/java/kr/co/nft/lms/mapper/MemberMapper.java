@@ -10,6 +10,9 @@ import kr.co.nft.lms.vo.Teacher;
 @Mapper
 public interface MemberMapper {
 	
+	// 학생 회원가입 
+	int insertStudent(Member member, Student student);
+	
 	// 로그인
 	Member selectMemberOne(Member member);
 	

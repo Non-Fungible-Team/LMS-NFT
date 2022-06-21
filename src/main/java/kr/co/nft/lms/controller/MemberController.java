@@ -11,18 +11,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Member;
+import kr.co.nft.lms.vo.Student;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-// `MemberController` 이런 이름 대신에 /member 이렇게 이름을 받겠다. 
-@RequestMapping("/member")
 public class MemberController {
 	
 	@Autowired MemberService memberService;
 	
+	// 학생 회원가입 
+	@PostMapping("/member/addStudent")
+	public String addStudent(Member member
+							,Student student) {
+		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
+		
+		int row = memberService.addStudent(member, student);
+		log.debug(A.Z+"[MemberController.addStudent] row : "+row+A.R);
+		
+		return "/member/memberLogin";
+	}
+	
+	// 학생 회원가입 
+	@GetMapping("/member/addStudent") 
+	public String addStudent() {
+		return "/member/addStudent";
+	}
+	
+	
 	// 로그아웃 
-	@GetMapping("/logout")
+	@GetMapping("/all/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "/member/memberLogin";
@@ -44,18 +63,18 @@ public class MemberController {
 		
 		log.debug(A.Z+"MemberController.login.param : member : "+member+A.R);
 		
-		Member loginMember = memberService.getMemberOne(member);
-		log.debug(A.Z+"MemberController.login.loginMember : "+loginMember+A.R);
+		Member sessionLoginMember = memberService.getMemberOne(member);
+		log.debug(A.Z+"MemberController.login.loginMember : "+sessionLoginMember+A.R);
 			
 		// 계정 정보 없으면 로그인 실패 
-		if(loginMember == null) {
+		if(sessionLoginMember == null) {
 			log.debug(A.Z+"MemberController.login : "+"로그인 실패"+A.R);
 			// member/memberLogin.jsp 
 			return "/member/memberLogin";
 		}
 		
 		// 로그인 성공 
-		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLoginMember", sessionLoginMember);
 		return "home";
 	}
 	

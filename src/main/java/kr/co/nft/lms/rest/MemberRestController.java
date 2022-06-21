@@ -13,6 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class MemberRestController {
 	
+	@PostMapping("/idCheck")
+	public String idCheck(@RequestParam(value="id") String id) {
+		if(id.equals("admin")) {
+			return "false";
+		}
+		return id;
+	}
+	
 	@GetMapping("/managerLoginForm")
 	public Map<String, Object> managerLoginForm() {
 		Map<String, Object> map = new HashMap<>();
@@ -37,13 +45,5 @@ public class MemberRestController {
 		return map;
 	}
 	
-	@PostMapping("/memberInsert")
-	public String idCheck(@RequestParam(value="memberId") String memberId) {
-		
-		
-		if(memberId != null) {
-			return "false";
-		} 
-		return memberId;
-	}
+	
 }

@@ -18,6 +18,10 @@ public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
 	
+	public int addStudent(Member member, Student student) {
+		return memberMapper.insertStudent(member, student);
+	}
+	
 	public Member getMemberOne(Member member) {
 		return memberMapper.selectMemberOne(member);
 	}
