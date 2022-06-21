@@ -31,7 +31,7 @@ public interface LectureMapper {
 	
 	//4.강의 삭제 - action
 	//int형으로 반환, 번호값 전달받음
-	int deleteLecture(int lectureNo);
+	int deleteLecture(Lecture lecture);
 	
 	//5.학생-강의 목록 - 강의별 학생의 목록(운영자,강사)
 	//List로 반환, 키값으로 데이터 전달받음.
