@@ -8,82 +8,90 @@
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+   crossorigin="anonymous">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+   integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+   crossorigin="anonymous">
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+   crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-	<div class="container">
-		<h1>문제보기</h1>
-		<a href="${pageContext.request.contextPath}/exam/getExamListByPage"
-			class="btn">이전으로</a>
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th class="text-center">시험 번호</th>
-				<th class="text-center">시험 제목</th>
-				<th class="text-center">시험 문항수</th>
-				<th class="text-center">만점</th>
-				<th class="text-center">시험 시작 일시</th>
-				<th class="text-center">시험 종료 일시</th>
-			</tr>
-			</thead>
-			<tbody>
-			<c:forEach var="e" items="${examOneList}">
-			<tr>
-				<td>${e.examNo}</td>
-				<td>${e.examTitle}</td>
-				<td>${e.examCount}</td>
-				<td>${e.examMaxScore}</td>
-				<td>${e.examStartDate}</td>
-				<td>${e.examEndDate}</td>
-			</tr>
-			</c:forEach>
-			</tbody>
-		</table>
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th class="text-center">문제 번호</th>
-				<th class="text-center">보기 번호</th>
-				<th class="text-center">보기 내용</th>
-				<th class="text-center">정답</th>
-			</tr>
-			</thead>
-			<tbody>
-			<c:forEach var="q" items="${examQuestionOneList}">
-			<tr>
-				<td>${q.examQuestionNo}</td>
-				<td>${q.examContent}</td>
-				<td>${q.examPoint}</td>
-				<td>${q.examPoint}</td>
-				<td>${q.examType}</td>
-				<td>${q.examCorrectAnswer}</td>
-			</tr>
-			</c:forEach>
-			<c:forEach var="a" items="${examExampleOneList}">
-			<tr>
-				<td>${a.exampleNo}</td>
-				<td>${a.exampleContent}</td>
-							</tr>
-			</c:forEach>
-			</tbody>
-		</table>
-		<div style="float: right">
-			<a class="btn btn-info"
-				href="${pageContext.request.contextPath}/updateExam?examNo=${examNo}">수정</a>
-			<a class="btn btn-danger"
-				href="${pageContext.request.contextPath}/deleteExam?examNo=${examNo}">삭제</a>
-		</div>
-	</div>
+   <div class="container">
+      <h1>문제보기</h1>
+      <a href="${pageContext.request.contextPath}/exam/getExamListByPage"
+         class="btn">이전으로</a>
+      <table class="table table-striped">
+         <thead>
+         <tr>
+            <th class="text-center">시험 번호</th>
+            <th class="text-center">시험 제목</th>
+            <th class="text-center">시험 문항수</th>
+            <th class="text-center">만점</th>
+            <th class="text-center">시험 시작 일시</th>
+            <th class="text-center">시험 종료 일시</th>
+         </tr>
+         </thead>
+         <tbody>
+         <c:forEach var="e" items="${examOneList}">
+         <tr>
+            <td class="text-center">${e.examNo}</td>
+            <td class="text-center">${e.examTitle}</td>
+            <td class="text-center">${e.examCount}</td>
+            <td class="text-center">${e.examMaxScore}</td>
+            <td class="text-center">${e.examStartDate}</td>
+            <td class="text-center">${e.examEndDate}</td>
+         </tr>
+         </c:forEach>
+         </tbody>
+      </table>
+      <table class="table table-striped">
+         <thead>
+         <tr>
+            <th class="text-center">문제 번호</th>
+            <th class="text-center">문제 내용</th>
+            <th class="text-center">배점</th>
+            <th class="text-center">문제유형</th>
+            <th class="text-center">정답</th>
+         </tr>
+         </thead>
+         <tbody>
+         <c:forEach var="q" items="${examQuestionOneList}">
+         <tr>
+            <td class="text-center">${q.examQuestionNo}</td>
+            <td class="text-center">${q.examContent}</td>
+            <td class="text-center">${q.examPoint}</td>
+            <td class="text-center">${q.examType}</td>
+            <td class="text-center">${q.examCorrectAnswer}</td>
+         </tr>
+         </c:forEach>
+      </table>
+      <table class="table table-striped">
+         <c:forEach var="a" items="${examExampleOneList}">
+         <tr>
+            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
+            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
+            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
+            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
+            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
+            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
+            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
+            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
+         </tr>
+         </c:forEach>
+         </tbody>
+      </table>
+      <div style="float: right">
+         <a class="btn btn-info"
+            href="${pageContext.request.contextPath}/updateExam?examNo=${examNo}">수정</a>
+         <a class="btn btn-danger"
+            href="${pageContext.request.contextPath}/deleteExam?examNo=${examNo}">삭제</a>
+      </div>
+   </div>
 </body>
 </html>

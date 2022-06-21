@@ -3,23 +3,34 @@
 <mapper namespace="kr.co.nft.lms.mapper.BoardMapper">
 	<insert id="insertBoard"
 			parameterType="kr.co.nft.lms.vo.Board">
-		INSER INTO board(
+		INSERT INTO board(
 			board_title
 			,board_content
-			,board_blind
+			,board_category
 			,member_id
 			,board_privilege
+			,board_blind
 			,board_create_date
 			,board_update_date
 		) VALUES (
 			#{boardTitle}
 			,#{boardContent}
-			,N
-			,#{member_id}
+			,#{boardCategory}
+			,#{memberId}
 			,0
-			,now()
-			,now()
+			,'N'
+			,NOW()
+			,NOW()
 		)	
+	</insert>
+	
+	<!-- Notice 테이블 -->
+	<insert id="insertNotice"
+			parameterType="kr.co.nft.lms.vo.Notice">
+		INSERT IGNORE INTO notice(board_no)
+		SELECT board_no 
+		FROM board
+		WHERE board_category='공지';
 	</insert>
 	
 	<select id="selectTotalCount"
