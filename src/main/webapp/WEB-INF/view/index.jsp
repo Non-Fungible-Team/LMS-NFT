@@ -15,12 +15,16 @@
 <link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 <link href="dist/css/style.min.css" rel="stylesheet">
+<script src="assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
-	<jsp:include page="./test.jsp"></jsp:include>
+	<div id="test"></div>
 
 	<!-- main화면 body start -->
 	<!-- 첫번쨰 문단 -->
@@ -60,7 +64,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            <h4 class="card-title">타이틀</h4>
 		            <div style="height:294px;">
 		            	<!-- 내용입력 칸 ex) 테이블 및 폼 -->
-		            	<form class="mt-4" method="get/post" action="#">
+		            	<form class="mt-4" method="" action="#">
                             <div class="form-group">
                                입력 : <input type="text" class="form-control">
                                비번 : <input type="password" class="form-control" id="passtext" placeholder="Password">
@@ -78,19 +82,15 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </div>
 </body>
-	<!-- script -->
-	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- apps -->
-    <!-- apps -->
+	<script>
+    	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
+  	</script>
+
     <script src="dist/js/app-style-switcher.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
     <script src="dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
     <script src="dist/js/custom.min.js"></script>
-    <!--This page JavaScript -->
     <script src="assets/extra-libs/c3/d3.min.js"></script>
     <script src="assets/extra-libs/c3/c3.min.js"></script>
     <script src="assets/libs/chartist/dist/chartist.min.js"></script>
@@ -98,4 +98,5 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
     <script src="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
     <script src="dist/js/pages/dashboards/dashboard1.min.js"></script>
+    
 </html>
