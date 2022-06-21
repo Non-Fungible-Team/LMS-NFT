@@ -45,7 +45,7 @@
 			parameterType="java.util.Map"
 			resultType="kr.co.nft.lms.vo.ExamQuestion">
 			SELECT	 eq.exam_question_no 		examQuestionNo
-					,eq.exam_content 			examQuestionContent
+					,eq.exam_content 			examContent
 					,eq.exam_correct_answer 	examCorrectAnswer
 					,eq.exam_point 				examPoint
 					,eq.exam_type 				examType

@@ -71,9 +71,9 @@ public class ExamService {
 	}
 	// 시험보기 상세보기
 	public Map<String, Object> getExamExampleOne(int examNo) {
-			log.debug(A.C + "[ExamService.getExamOne.param] examNo: " + examNo + A.R);
+			log.debug(A.C + "[ExamService.getExamExampleOne.param] examNo: " + examNo + A.R);
 			
-			List<Exam> examExampleOneList = examMapper.selectExamQuestionOne(examNo);
+			List<Exam> examExampleOneList = examMapper.selectExamExampleOne(examNo);
 			
 			Map<String, Object> returnMap = new HashMap<String, Object>();
 			log.debug(A.C + "[ExamService.getExamOne.Mapper] returnMap : " + returnMap + A.R);
