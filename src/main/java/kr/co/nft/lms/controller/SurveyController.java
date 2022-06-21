@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.SurveyService;
@@ -15,10 +15,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/survey")
 public class SurveyController {
 	@Autowired private SurveyService surveyService;
-	@GetMapping("/getSurveyListByPage")
+	
+	
+	
+	@GetMapping("/manager/insertSurveyList")
+	public String insertSurveyList() {
+		return "/survey/insertSurveyList";
+	}
+	
+	
+	
+	@GetMapping("/all/getSurveyListByPage") // 설문조사 페이지
 	public String getSurveyListByPage(Model model,
 			@RequestParam(name = "currentPage",defaultValue="1")int currentPage,
 			@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {// 디폴트 값 설정
@@ -33,7 +42,7 @@ public class SurveyController {
 		return "/survey/getSurveyListByPage";
 	}
 	
-	@GetMapping("/getSurveyQuestionListByPage")
+	@GetMapping("/manager/getSurveyQuestionListByPage") // 설문조사 항목 리스트 페이지
 	public String getSurveyQuestionListByPage(Model model,
 			@RequestParam(name = "currentPage",defaultValue="1")int currentPage,
 			@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {// 디폴트 값 설정

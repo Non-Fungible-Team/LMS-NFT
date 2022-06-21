@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.SurveyMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.SurveyQuestionList;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,6 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
+	
+	public int insertMultipleSurbeyList(SurveyQuestionList surveyQuestionList) {
+		
+		return surveyMapper.insertSurveyList(surveyQuestionList);
+	}
 	
 	public Map<String,Object> getSurveyListByPage(int currentPage, int rowPerPage) {
 		int beginRow = (currentPage - 1)*rowPerPage;

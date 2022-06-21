@@ -82,19 +82,8 @@ public class ExamService {
 	}
 	
 	// 시험문제 등록
-	public void addExam(Exam exam) {
+	public int addExam(Exam exam) {
 			log.debug(A.C + "[ExamService.addExam.param] exam :"+ exam + A.R);
-			
-			// ExamMapper
-			exam.setExamTitle(exam.getExamTitle());
-			exam.setExamCount(exam.getExamCount());
-			exam.setExamMaxScore(exam.getExamMaxScore());
-			exam.setExamStartDate(exam.getExamStartDate());
-			exam.setExamEndDate(exam.getExamEndDate());
-			// notice.getNoticeId() --> 0
-			int row = examMapper.insertExam(exam);
-			// insert시 입력된 autoincrement값이 출력됨
-			log.debug(A.C + "[ExamService.addExam.param] examNo :"+ exam.getExamNo() + A.R);
-			
-			}
+			return examMapper.insertExam(exam);
+	}
 }

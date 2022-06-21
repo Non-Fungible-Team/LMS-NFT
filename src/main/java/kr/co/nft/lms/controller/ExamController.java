@@ -42,9 +42,9 @@ public class ExamController {
 	@GetMapping("/getExamOne")
 	public String getExamOne(Model model ,@RequestParam(name="examNo") int examNo) {
 		log.debug(A.C + "[ExamController.getExamOne.param] examNo: " + examNo + A.R);
-		Map<String, Object> map1 = examService.getExamOne(examNo);
-		Map<String, Object> map2 = examService.getExamQuestionOne(examNo);
-		Map<String, Object> map3 = examService.getExamExampleOne(examNo);
+		Map<String, Object> map1 = examService.getExamOne(examNo); // 시험 정보 호출
+		Map<String, Object> map2 = examService.getExamQuestionOne(examNo); // 시험 문제 정보 호출
+		Map<String, Object> map3 = examService.getExamExampleOne(examNo); // 시험 보기 정보 호출
 		
 		model.addAttribute("examOneList", map1.get("examOneList"));
 		model.addAttribute("examQuestionOneList", map2.get("examQuestionOneList"));

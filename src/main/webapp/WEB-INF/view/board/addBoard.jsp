@@ -19,10 +19,6 @@
 	    			<th>내용</th>
 	    			<td><input type="text" name="boardContent" value="${board.boardContent}"></td>
 	    		</tr>
-	    		<tr>
-	    			<th>맴버ID</th>
-	    			<td><input type="text" name="memberId" value="${board.memberId}"></td>
-	    		</tr>
 	    		<%-- <tr>
 	    			<th>읽기권한</th>
 	    			<td><input type="checkbox" name="boardBlind" value="${board.boardPrivilege}"></td>

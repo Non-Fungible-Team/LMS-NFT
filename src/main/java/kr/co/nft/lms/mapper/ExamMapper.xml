@@ -66,7 +66,10 @@
 			WHERE exam_no = #{examNo} and exam_question_no = #{examQuestionNo};
 			
 	</select>
-	
+
+<!-- SET AUTOCOMMIT = TRUE; 오토커밋 설정-->
+<!-- SET AUTOCOMMIT = FALSE; 오토커밋 해제-->
+<!-- show variables like 'autocommit%';	오토커밋 상태확인 -->
 <!-- 시험문제 등록  -->
 	<insert id="insertExam"
 			parameterType="kr.co.nft.lms.vo.Exam">
