@@ -61,11 +61,11 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.addSubjectOne] subject 입력 실패" + A.R);
 		}
 		
-		return "redirect:/subjectList";
+		return "redirect:/teacher/subjectList";
 	}
 	
 	// action - subject 테이블 데이터 삭제
-	@GetMapping("/removeSubjectOne")
+	@GetMapping("/teacher/removeSubjectOne")
 	public String removeSubjectOne(@RequestParam(name = "subjectNo") int subjectNo) {
 		
 		log.debug(A.A + "[LectureController.removeSubjectOne] subjectNo : " + subjectNo + A.R);
@@ -80,7 +80,7 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.removeSubjectOne] subject 삭제 실패" + A.R);
 		}
 		
-		return "redirect:/subjectList";
+		return "redirect:/teacher/subjectList";
 	}
 
 	////////////* 강의 *////////////
