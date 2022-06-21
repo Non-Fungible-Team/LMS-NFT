@@ -8,19 +8,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>getHomeworkListByPage</h1>
+	<h1>과제 목록</h1>
 
-	<table border="1">
+	<table>
 		<thead>
 			<tr>
 				<th>순번</th>
-				<th>lectureNo</th>
-				<th>homeworkTitle</th>
-				<th><input type="hidden" value ="homeworkContent"></th>
+				<th>강의번호</th>
+				<th>과제</th>
 				<th>제출 기간</th>
 				<th>작성자</th>
 				<th>homeworkCreateDate</th>
 				<th>homeworkUpdateDate</th>
+				<th><input type="hidden" value ="homeworkContent"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,11 +29,11 @@
 					<td>${h.homeworkNo }</td>
 					<td>${h.lectureNo }</td>
 					<td><a href="${pageContext.request.contextPath}/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
-					<td><input type="hidden" value="${h.homeworkContent }"></td>
 					<td>${h.homeworkStartDate } ~ ${h.homeworkEndDate }</td>
 					<td>${h.memberId }</td>
 					<td>${h.homeworkCreateDate }</td>
 					<td>${h.homeworkUpdateDate }</td>
+					<td><input type="hidden" value="${h.homeworkContent }"></td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -8,8 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>addHomework</h1>
-	<form method="post">
+<h1>과제 입력</h1>
+	
+	<form action="addHomework"method="post">
 		<p><label>작성자</label><input type="text" name="memberId"></p>	
 		<p><label>강의번호</label><input type="text" name="lectureNo"></p>	
 		<p><label>과제제목</label><input type="text" name="homeworkTitle"></p>	
