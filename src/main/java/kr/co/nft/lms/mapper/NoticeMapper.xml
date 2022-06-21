@@ -30,9 +30,10 @@
 	<!-- Notice 테이블에 insert -->
 	<insert id="insertNotice"
 			parameterType="kr.co.nft.lms.vo.Notice">
-		INSERT  INTO notice(notice_no
-		)VALUES(
-		#{noticeNo}
+		INSERT  INTO notice(
+			notice_no
+		) VALUES (
+			#{noticeNo}
 		)
 	</insert>
 	
