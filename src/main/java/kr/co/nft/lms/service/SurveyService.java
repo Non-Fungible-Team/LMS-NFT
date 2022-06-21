@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.SurveyMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,9 +20,19 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
-	public int insertMultipleSurbeyList(SurveyQuestionList surveyQuestionList) {
+	public int insertSurveyQuestion(SurveyQuestion surveyQuestion) {
+		
+		
+		
+		return surveyMapper.insertSurveyQuestion(surveyQuestion);
+	}
+	
+	public int insertSurveyList(SurveyQuestionList surveyQuestionList) {
+		
+		log.debug(A.D+"[SurveyService.getSurveyListByPage] surveyQuestionList : " + surveyQuestionList + A.R);
 		
 		return surveyMapper.insertSurveyList(surveyQuestionList);
+		
 	}
 	
 	public Map<String,Object> getSurveyListByPage(int currentPage, int rowPerPage) {

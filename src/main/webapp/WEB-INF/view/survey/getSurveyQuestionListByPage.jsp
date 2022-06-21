@@ -34,17 +34,17 @@
 		<ul>
 		<c:if test="${currentPage>1}">
 			<li><a
-				href="${pageContext.request.contextPath}/manager/getSurveyQuestionListByPage?currentPage=${currentPage-1}">이전</a></li>
+				href="${pageContext.request.contextPath}/survey/getSurveyQuestionListByPage?currentPage=${currentPage-1}">이전</a></li>
 		</c:if>
 		<c:if test="${currentPage<lastPage}">
 			<li><a
-				href="${pageContext.request.contextPath}/manager/getSurveyQuestionListByPage?currentPage=${currentPage+1}">다음</a></li>
+				href="${pageContext.request.contextPath}/survey/getSurveyQuestionListByPage?currentPage=${currentPage+1}">다음</a></li>
 		</c:if>
 		</ul>
 
 		<div>
 			<a class="btn btn-default"
-				href="${pageContext.request.contextPath}/manager/insertSurveyList">항목 입력</a>
+				href="${pageContext.request.contextPath}/survey/insertSurveyList">항목 입력</a>
 		</div>
 	</div>
 </body>
