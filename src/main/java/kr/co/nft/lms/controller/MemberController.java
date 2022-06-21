@@ -27,8 +27,10 @@ public class MemberController {
 		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
 		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
 		
-		int row = memberService.addStudent(member, student);
-		log.debug(A.Z+"[MemberController.addStudent] row : "+row+A.R);
+		int rowOfMember = memberService.addStudent(member);
+		log.debug(A.Z+"[MemberController.addStudent] rowOfMember : "+rowOfMember+A.R);
+		int rowOfStudent = memberService.addStudent(student);
+		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
 		
 		return "/member/memberLogin";
 	}
@@ -50,7 +52,7 @@ public class MemberController {
 	// 로그인 폼 
 	@GetMapping("/login")
 	public String login(HttpSession session) {
-		if(session.getAttribute("loginMember") != null) {
+		if(session.getAttribute("sessionLoginMember") != null) {
 			return "home";
 		}
 		return "/member/memberLogin";
@@ -64,7 +66,7 @@ public class MemberController {
 		log.debug(A.Z+"MemberController.login.param : member : "+member+A.R);
 		
 		Member sessionLoginMember = memberService.getMemberOne(member);
-		log.debug(A.Z+"MemberController.login.loginMember : "+sessionLoginMember+A.R);
+		log.debug(A.Z+"MemberController.login.sessionLoginMember : "+sessionLoginMember+A.R);
 			
 		// 계정 정보 없으면 로그인 실패 
 		if(sessionLoginMember == null) {
@@ -73,15 +75,12 @@ public class MemberController {
 			return "/member/memberLogin";
 		}
 		
+		
 		// 로그인 성공 
 		session.setAttribute("sessionLoginMember", sessionLoginMember);
+		session.setAttribute("sessionLectureNo", "");
 		return "home";
 	}
 	
-	// 회원가입 폼 
-	@GetMapping("/memberInsert")
-	public String memberInsert() {
-		return "/member/memberInsert";
-	}
 	
 }

@@ -11,22 +11,13 @@ import kr.co.nft.lms.vo.Teacher;
 public interface MemberMapper {
 	
 	// 학생 회원가입 
-	int insertStudent(Member member, Student student);
+	int insertStudentByStudentVo(Student student);
+	
+	// 학생 회원가입 
+	int insertStudentByMemberVo(Member member);
 	
 	// 로그인
 	Member selectMemberOne(Member member);
-	
-	//회원가입(멤버)
-	int insertMember(Member member);
-	
-	//회원가입(학생)
-	int insertStudent(Student student);
-	
-	//회원가입(강사)
-	int insertTeacher(Teacher teacher);
-	
-	//회원가입(운영자)
-	int insertManager(Manager manager);
 	
 	//id체크
 	int selectIdCheck(Member member);
