@@ -22,9 +22,9 @@
 			<p><label>날짜</label> <input type="text" name="homeworkCreateDate" size="15" value = "${homeworkOne.homeworkCreateDate}"readonly="readonly"><p>
 		</div>
 	<form action="removeHomework" method="post">
-	<input type="hidden" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly">
-	<button><a href="${pageContext.request.contextPath}/homework/getHomeworkListByPage">과제 목록</a></button>
-	<button><a href="${pageContext.request.contextPath}/homework/modifyHomework?homeworkNo=${homeworkOne.homeworkNo}">과제 수정</a></button>
+		<input type="hidden" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly">
+		<button><a href="${pageContext.request.contextPath}/homework/getHomeworkListByPage">과제 목록</a></button>
+		<button><a href="${pageContext.request.contextPath}/homework/modifyHomework?homeworkNo=${homeworkOne.homeworkNo}">과제 수정</a></button>
 		<button type="submit">과제 삭제</button>
 	</form>
 </body>

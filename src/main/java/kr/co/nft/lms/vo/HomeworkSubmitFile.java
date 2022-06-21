@@ -6,7 +6,6 @@ import lombok.Data;
 public class HomeworkSubmitFile {
 	private int homeworkSubmitFileNo;
 	private int homeworkSubmitNo;
-	private String memberId;
 	private String HomeworkSubmitFileOriginal;
 	private int homeworkSubmitFileNoSize;
 	private String HomeworkSubmitFileType;
