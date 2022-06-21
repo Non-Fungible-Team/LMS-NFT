@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.NoticeMapper">
+	<insert id="insertNoticeInBoard"
+			parameterType="kr.co.nft.lms.vo.Notice">
+		<selectKey resultType="int" keyProperty="board_no" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey> 
+		INSERT INTO board(
+			board_title
+			,board_content
+			,board_category
+			,member_id
+			,board_privilege
+			,board_blind
+			,board_create_date
+			,board_update_date
+		) VALUES (
+			#{noticeTitle}
+			,#{noticeContent}
+			,'공지'
+			,#{memberId}
+			,0
+			,'N'
+			,NOW()
+			,NOW()
+		)	
+	</insert>
+	
+	<!-- Notice 테이블에 insert -->
+	<insert id="insertNotice"
+			parameterType="kr.co.nft.lms.vo.Notice">
+		INSERT  INTO notice(notice_no
+		)VALUES(
+		#{noticeNo}
+		)
+	</insert>
+	
+	<!-- 목록보기 -->
+	<select id="selectNoticeListByPage"
+			resultType="kr.co.nft.lms.vo.Notice"
+			parameterType="java.util.Map">
+		SELECT 
+			n.board_no noticeNo
+			, b.board_title noticeTitle
+			, b.member_id memberId
+			, b.board_create_date noticeCreateDate
+		FROM notice n
+		INNER JOIN board b
+		ON n.board_no = b.board_no
+		WHERE b.board_privilege= #{noticePrivilege}
+		AND b.board_blind = 'N'
+		LIMIT #{beginRow}, #{rowPerPage}	
+	</select>
+	
+	<select id="selectNoticeListTotalCount"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM notice n
+		INNER JOIN board b
+		ON n.board_no = b.board_no
+		WHERE b.board_blind = 'N'; 
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectNoticeOne"
+			resultType="kr.co.nft.lms.vo.Notice"
+			parameterType="int">
+		SELECT 
+			n.notice_no noticeNo
+			, b.board_title noticeTitle
+			, b.board_content noticeContent			
+			, b.board_blind noticeBlind
+			, b.member_id memberId
+			, b.board_category noticeCategory
+			, b.board_privilege noticePrivilege
+			, b.board_create_date noticeCreateDate
+			, b.board_update_date noticeUpdateDate
+		FROM notice n
+		INNER JOIN board b
+		ON n.board_no = b.board_no
+		WHERE b.board_privilege= 0
+		AND b.board_blind = 'N'
+		AND n.board_no = #{boardNo};	
+	</select>
+	<!-- 수정 -->
+	<update id="updateNoticeInBoard"
+			parameterType="kr.co.nft.lms.vo.Notice">
+		UPDATE board
+		SET board_title = #{noticeTitle}
+			, board_content = #{noticeContent}
+		WHERE board_no = #{noticeNo};
+	</update>
+	
+	<!-- 삭제(블라인드로 변경) -->
+	<update id="deleteNotice"
+			parameterType="int">
+		UPDATE board
+		SET board_blind = 'Y'
+		WHERE board_no = #{noticeNo};
+	</update>
+</mapper>

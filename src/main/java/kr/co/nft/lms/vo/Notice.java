@@ -4,5 +4,13 @@ import lombok.Data;
 
 @Data
 public class Notice {
-	private int boardNo;
+	private int noticeNo;
+	private String noticeTitle;
+	private String noticeContent;
+	private String noticeCategory;
+	private String memberId;
+	private String noticePrivilege;
+	private String noticeBlind;
+	private String noticeCreateDate;
+	private String noticeUpdateDate;
 }

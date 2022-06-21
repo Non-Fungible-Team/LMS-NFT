@@ -1,4 +1,4 @@
-package kr.co.nft.lms.controller;
+/*package kr.co.nft.lms.controller;
 
 import java.util.Map;
 
@@ -7,32 +7,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.co.nft.lms.service.BoardService;
+import kr.co.nft.lms.service.NoticeService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Board;
+import kr.co.nft.lms.vo.Notice;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/board")
-public class BoardController {
-	@Autowired BoardService boardService;
+public class NoticeController {
+	@Autowired NoticeService noticeService;
 	
-	//Board 입력폼
-	@GetMapping("/addBoard")
+	//Notice입력폼
+	@GetMapping("/manager/notice/addNotice")
 	public String addBoard() {
 		return "/board/addBoard";
 	}
 	//Board 입력 액션
-	@PostMapping("/addBoard")
-	public String addBoard(Board board) {
-		log.debug(A.S + "BoardController.addBoard.param : "+ board + A.R);
-		int row = boardService.addBoard(board);
-		log.debug(A.S + "BoardController.addBoard.row : "+ row + A.R);
-		return "redirect:/getBoardByPage";
+	@PostMapping("/manager/addNotice")
+	public String addNotice(Notice notice) {
+		log.debug(A.S + "NoticeController.addBoard.param : "+ notice + A.R);
+		int row = noticeService.addNotice(notice);
+		log.debug(A.S + "NoticeController.addNotice.row : "+ row + A.R);
+		//row가 0 이면 입력 실패
+		if(row==0) {
+			log.debug(A.S + "[NoticeController.addNotice.param] 입력실패"+ A.R);
+			return "redirect:/manager/notice/addNotice?msg=fail";
+		}
+		//입력성공 했을 경우
+		log.debug(A.S + "[NoticeController.addNotice.param] 입력성공"+ A.R);
+		return "redirect:/all/notice/getNoticeListByPage";
 	}
 	
 	//Notice 목록보기
@@ -41,7 +47,7 @@ public class BoardController {
 								,@RequestParam(name= "currnetPage", defaultValue = "1") int currentPage
 								,@RequestParam(name= "rowPerPage", defaultValue = "10") int rowPerPage) {
 		Map<String, Object> returnMap = boardService.getBoardByPage(currentPage, rowPerPage);
-		/*log.debug(A.S + "BoardController.BoardGetByPage.param : ", currnetPage + A.R);*/
+		log.debug(A.S + "BoardController.BoardGetByPage.param : ", currnetPage + A.R);
 		model.addAttribute("boardList", returnMap.get("boardList"));
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
@@ -77,7 +83,7 @@ public class BoardController {
 		return "redirect:/board/getBoardOne?boardNo=" + board.getBoardNo();
 	}
 	
-	/*
+	
 	 * //Notice 삭제 폼
 	 * 
 	 * @GetMapping("/removeBoard") public String removeBoard(Model model
@@ -85,7 +91,7 @@ public class BoardController {
 	 * "BoardController.removeBoard.param.boardNo : "+ boardNo + A.R); Board board =
 	 * boardService.getBoardOne(boardNo); model.addAttribute("board", board); return
 	 * "/board/removeBoard"; }
-	 */
+	 
 	
 	//Notice 삭제 액션
 	@GetMapping("/removeBoard")
@@ -95,4 +101,4 @@ public class BoardController {
 		log.debug(A.S + "BoardController.removeBoard.row : "+ row + A.R);
 		return "redirect:/board/getBoardByPage";
 	}
-}
+}*/
