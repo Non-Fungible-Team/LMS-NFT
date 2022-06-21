@@ -19,10 +19,9 @@
 <body>
 <div class="container">
    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+       <!-- header, aside 링크추가 -->
+       
        <div class="page-wrapper">
-           <!-- ============================================================== -->
-           <!-- Bread crumb and right sidebar toggle -->
-           <!-- ============================================================== -->
            <div class="page-breadcrumb">
                <div class="row">
                    <div class="col-7 align-self-center">
@@ -30,10 +29,8 @@
                    </div>
                </div>
            </div>
-           
            <div class="container-fluid">
                <!-- Start Page Content -->
-				
                <div class="row">
                    <div class="col-12">
                        <div class="card"> 
