@@ -9,19 +9,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	let flag = true;
+	var maxAppend = 1;
+	
 	$('#selectTypeButton').click(function(){
-		if($('#selectType').val() == 'multipleSurvey') {
-			//jquery api 사용
-			$('#surveyListForm').append("<form action='${pageContext.request.contextPath}/manager/insertSurveyList'><table><tr><td>질문 제목</td><td><input type='text' id='multipleSurveyQuestionListName'  name='multiplesurveyQuestionListName' ><span id='multipleNameHelper' class='helper'></span></td><tr><td>질문 내용</td><td><input type='text' name='multipleSurveyQuestionListContent' id='multipleSurveyQuestionListContent'><span id='multipleContentHelper' class='helper'></span></td></table><div><button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button></div></form>");
-			
-		} else if($('#selectType').val() == 'shortSurvey') {
-			//jquery api 사용
-			$('#surveyListForm').append("<form action='${pageContext.request.contextPath}/manager/insertSurveyList'><table><tr><td>질문 제목</td><td><input type='text' id='shortSurveyQuestionListName'  name='shortsurveyQuestionListName' ><span id='shortNameHelper' class='helper'></span></td><tr><td>질문 내용</td><td><input type='text' name='shortSurveyQuestionListContent' id='shortSurveyQuestionListContent'><span id='shortContentHelper' class='helper'></span></td></table><div><button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button></div></form>");
-			
-		} else {
-			alert('선택 실패');
-		}
+		if (maxAppend >= 2) return; 
+			if($('#selectType').val() == 'multipleSurvey') {
+				//jquery api 사용
+				$('#surveyListForm').append("<form action='${pageContext.request.contextPath}/manager/insertSurveyList'><table><tr><td>객관식 질문 리스트</td></tr><tr><td>질문 제목</td><td><input type='text' id='multipleSurveyQuestionListName'  name='multiplesurveyQuestionListName' ><span id='multipleNameHelper' class='helper'></span></td><tr><td>질문 내용</td><td><input type='text' name='multipleSurveyQuestionListContent' id='multipleSurveyQuestionListContent'><span id='multipleContentHelper' class='helper'></span></td></table><div><button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button></div></form>");
+				maxAppend++;
+			} else if($('#selectType').val() == 'shortSurvey') {
+				//jquery api 사용
+				$('#surveyListForm').append("<form action='${pageContext.request.contextPath}/manager/insertSurveyList'><table><tr><td>주관식 질문 리스트</td></tr><tr><td>질문 제목</td><td><input type='text' id='shortSurveyQuestionListName'  name='shortsurveyQuestionListName' ><span id='shortNameHelper' class='helper'></span></td><tr><td>질문 내용</td><td><input type='text' name='shortSurveyQuestionListContent' id='shortSurveyQuestionListContent'><span id='shortContentHelper' class='helper'></span></td></table><div><button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button></div></form>");
+				maxAppend++;
+			} else {
+				alert('선택 실패');
+			}
+		
+		
+	});
+	
+	$('#deleteTypeButton').click(function(){
+		$('#surveyListForm').empty();
+		maxAppend--;
 	});
 	
 	$('#insertQuestionList').click(function(){
@@ -64,7 +73,8 @@ $(document).ready(function(){
 			<option value="multipleSurvey">객관식</option>
 		   	<option value="shortSurvey">주관식</option>
  	  	</select>
-		<button type="button" id="selectTypeButton" name="selectTypeButton">선택</button></div>
+		<button type="button" id="selectTypeButton" name="selectTypeButton">선택</button>
+		<button type="button" id="deleteTypeButton" name="deleteTypeButton">삭제</button></div>
 	<div id="surveyListForm">
 		</div>
 	

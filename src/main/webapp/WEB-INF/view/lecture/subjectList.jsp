@@ -45,14 +45,14 @@
                    <td>${s.subjectContent}</td>
                    <td>${s.subjectCreateDate}</td>
                    <td>${s.subjectUpdateDate}</td>
-                   <td><a href="${pageContext.request.contextPath}/lecture/removeSubjectOne?subjectNo=${s.subjectNo}">삭제</a></td>
+                   <td><a href="${pageContext.request.contextPath}/teacher/removeSubjectOne?subjectNo=${s.subjectNo}">삭제</a></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
     
     <h1>subject add</h1>
-    <form method="post" id="addForm" action="${pageContext.request.contextPath}/lecture/addSubjectOne">
+    <form method="post" id="addForm" action="${pageContext.request.contextPath}/teacher/addSubjectOne">
 	    <table>
 	    	<tr>
 	    		<td>과목 이름 : </td>

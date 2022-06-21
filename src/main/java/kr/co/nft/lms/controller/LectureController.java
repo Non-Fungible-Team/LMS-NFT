@@ -23,53 +23,64 @@ public class LectureController {
 	@Autowired private SubjectService subjectService;
 	
 	// form - subject 테이블 전체 리스트, subject 테이블 데이터 입력
-	@GetMapping("/subjectList")
+	@GetMapping("/teacher/subjectList")
 	public String subjectList(Model model) {
 		
 		List<Subject> subjectList = subjectService.getSubjectList();
 		
-		log.debug(A.A + "[LectureController.subjectList.param] subjectList : " + subjectList + A.R);
+		log.debug(A.A + "[LectureController.subjectList] subjectList : " + subjectList + A.R);
 		
 		model.addAttribute("subjectList", subjectList);
+		
+		log.debug(A.A + "[LectureController.subjectList] model : " + model + A.R);
 		
 		return "/lecture/subjectList";
 	}
 	
 	// action - subject 테이블 데이터 입력
-	@PostMapping("/addSubjectOne")
+	@PostMapping("/teacher/addSubjectOne")
 	public String addSubjectOne(@RequestParam(name = "subjectName") String subjectName
 								, @RequestParam(name = "subjectContent") String subjectContent) {
+		
+		log.debug(A.A + "[LectureController.addSubjectOne] subjectName : " + subjectName + A.R);
+		log.debug(A.A + "[LectureController.addSubjectOne] subjectContent : " + subjectContent + A.R);
 		
 		Subject subject = new Subject();
 		subject.setSubjectName(subjectName);
 		subject.setSubjectContent(subjectContent);
 		
-		log.debug(A.A + "[LectureController.addSubjectOne.param] subject : " + subject + A.R);
+		log.debug(A.A + "[LectureController.addSubjectOne] subject : " + subject + A.R);
 		
 		int row = subjectService.addSubjectOne(subject);
 		
+		log.debug(A.A + "[LectureController.addSubjectOne] row : " + row + A.R);
+		
 		if(row == 1) {
-			log.debug(A.A + "[LectureController.addSubjectOne.param] subject 입력 성공" + A.R);
+			log.debug(A.A + "[LectureController.addSubjectOne] subject 입력 성공" + A.R);
 		} else {
-			log.debug(A.A + "[LectureController.addSubjectOne.param] subject 입력 실패" + A.R);
+			log.debug(A.A + "[LectureController.addSubjectOne] subject 입력 실패" + A.R);
 		}
 		
-		return "redirect:/subjectList";
+		return "redirect:/teacher/subjectList";
 	}
 	
 	// action - subject 테이블 데이터 삭제
-	@GetMapping("/removeSubjectOne")
+	@GetMapping("/teacher/removeSubjectOne")
 	public String removeSubjectOne(@RequestParam(name = "subjectNo") int subjectNo) {
+		
+		log.debug(A.A + "[LectureController.removeSubjectOne] subjectNo : " + subjectNo + A.R);
 		
 		int row = subjectService.deleteSubjectOne(subjectNo);
 		
+		log.debug(A.A + "[LectureController.removeSubjectOne] row : " + row + A.R);
+		
 		if(row == 1) {
-			log.debug(A.A + "[LectureController.removeSubjectOne.param] subject 삭제 성공" + A.R);
+			log.debug(A.A + "[LectureController.removeSubjectOne] subject 삭제 성공" + A.R);
 		} else {
-			log.debug(A.A + "[LectureController.removeSubjectOne.param] subject 삭제 실패" + A.R);
+			log.debug(A.A + "[LectureController.removeSubjectOne] subject 삭제 실패" + A.R);
 		}
 		
-		return "redirect:/subjectList";
+		return "redirect:/teacher/subjectList";
 	}
 
 	////////////* 강의 *////////////
