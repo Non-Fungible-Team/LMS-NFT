@@ -1,4 +1,3 @@
-
 package kr.co.nft.lms.mapper;
 
 import java.util.List;
@@ -15,11 +14,8 @@ public interface SurveyMapper {
 	// 설문조사 생성
 	int insertSurvey(Survey survey);
 	
-	// 설문조사 리스트 생성 (객관)
-	int insertMultipleSurbeyList(SurveyQuestionList surveyQuestionList);
-	
-	// 설문조사 리스트 생성 (주관)
-	int insertShortSurbeyList(SurveyQuestionList surveyQuestionList);
+	// 설문조사 리스트 생성
+	int insertSurveyList(SurveyQuestionList surveyQuestionList);
 	
 	// 설문조사 리스트 페이지
 	List selectSurveyQuestionListByPage(Map<String, Integer> map);

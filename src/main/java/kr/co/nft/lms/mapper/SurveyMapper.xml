@@ -61,7 +61,18 @@
 			)
 		</insert>
 		
-		<insert id="">
-		
+		<insert id="insertSurveyList"
+				parameterType="kr.co.nft.lms.vo.Survey">
+			INSERT survey_question_list(
+				survey_question_list_name surveyQuestionListName
+				,survey_question_list_content surveyQuestionListContent
+				,survey_question_list_create_date surveyQuestionListCreateDate
+				,survey_question_list_update_date surveyQuestionListUpdateDate
+			) VALUES (
+				#{surveyQuestionListName}
+				,#{surveyQuestionListCreateDate}
+				,NOW()
+				,NOW()
+			)
 		</insert>
 </mapper>
