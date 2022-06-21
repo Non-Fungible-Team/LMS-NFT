@@ -23,7 +23,7 @@ public interface ExamMapper {
 	List<Exam> selectExamQuestionOne(int examNo);
 	
 	// 시험보기 상세보기
-	List<Exam> selectExamExampleOne(int examNo);
+	List<Exam> selectExamExampleOne(int examNo,int examQuestionNo);
 	
 	// 시험문제 등록
 	int insertExam(Exam exam);

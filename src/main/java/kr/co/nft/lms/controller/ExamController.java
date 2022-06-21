@@ -44,11 +44,12 @@ public class ExamController {
 		log.debug(A.C + "[ExamController.getExamOne.param] examNo: " + examNo + A.R);
 		Map<String, Object> map1 = examService.getExamOne(examNo); // 시험 정보 호출
 		Map<String, Object> map2 = examService.getExamQuestionOne(examNo); // 시험 문제 정보 호출
-		Map<String, Object> map3 = examService.getExamExampleOne(examNo); // 시험 보기 정보 호출
+//		Map<String, Object> map3 = examService.getExamQuestionOne(examNo); // 시험 보기 정보 호출
 		
 		model.addAttribute("examOneList", map1.get("examOneList"));
 		model.addAttribute("examQuestionOneList", map2.get("examQuestionOneList"));
-		model.addAttribute("examExampleOneList", map3.get("examExampleOneList"));
+		model.addAttribute("examExampleOneList", map2.get("examExampleOneList"));
+		log.debug(A.C + "[ExamController.getExamOne.param] examExampleOneList: " + map2.get("examExampleOneList") + A.R);
 		return "/exam/getExamOne";
 	}
 		
@@ -65,6 +66,23 @@ public class ExamController {
 		examService.addExam(exam);
 		return "redirect:/exam/addExam";
 	}
+	
+	
+	
+	
+	// 시험문제 삭제
+	@PostMapping("/removeExam")
+	public String removeExam(@RequestParam(name="examNo") int examNo) {
+		log.debug(A.C+"ExamController.removeExam.param.examNo : "+ examNo +A.R);
+		int row = examService.removeExam(examNo);
+		if(row == 1) {
+			log.debug(A.C+"ExamController.removeHomework. 과제 삭제 성공"+A.R);
+		} else {
+			log.debug(A.C+"ExamController.removeHomework. 과제 삭제 실패"+A.R);
+		}
+	return "redirect:/exam/getExamListByPage";
+	}
+
 	
 	
 	

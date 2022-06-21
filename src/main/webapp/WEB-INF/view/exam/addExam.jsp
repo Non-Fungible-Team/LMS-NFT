@@ -22,9 +22,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-  <h1>문제등록</h1>
-    <form method="post" id="addForm" action="${pageContext.request.contextPath}/addExamOne">
+  <h1>시험등록</h1>
+    <form method="post" id="addExam" action="${pageContext.request.contextPath}/exam/addExam">
 	    <table>
+<!-- 	    시험등록 -->
 	    	<tr>
 	    		<td>시험 이름 : </td>
 	    		<td><input type="text" name="examTitle" id="examTitle"></td>
@@ -45,10 +46,7 @@
 	    		<td>시험종료일시: </td>
 	    		<td><input type="text" name="examEndDate" id="examEndDate"></td>
 	    	</tr>
-	    	<tr>
-	    		<td>시험 내용 : </td>
-	    		<td><input type="text" name="examContent" id="examContent"></td>
-	    	</tr>
+<!--	   	문제 등록 -->
 	    	<tr>
 	    		<td>시험 문제 번호 : </td>
 	    		<td><input type="text" name="examQuestionNo" id="examQuestionNo"></td>
@@ -69,6 +67,7 @@
 	    		<td>시험 문제 타입 : </td>
 	    		<td><input type="text" name="examType" id="examType"></td>
 	    	</tr>
+<!--    	보기 등록 -->
 	    	<tr>
 	    		<td>보기 번호 : </td>
 	    		<td><input type="text" name="exampleNo" id="exampleNo"></td>
@@ -77,6 +76,20 @@
 	    		<td>보기 내용 : </td>
 	    		<td><input type="text" name="exampleContent" id="exampleContent"></td>
 	    	</tr>
+	    	<div>
+			<button type="button" id="addExamExample">보기 추가</button>
+			<div id="ExampleSection">
+				<!-- example input 태그가 추가될 영역 -->
+				<tr>
+	    		<td>보기 번호 : </td>
+	    		<td><input type="text" name="exampleNo" id="exampleNo"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>보기 내용 : </td>
+	    		<td><input type="text" name="exampleContent" id="exampleContent"></td>
+	    	</tr>
+			</div>
+		</div>
 	    </table>
 	    <div>
 			<button type="button" class="btn btn-default" id="addExam">시험등록</button>

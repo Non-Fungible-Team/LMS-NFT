@@ -1,5 +1,6 @@
 package kr.co.nft.lms.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.ExamMapper;
 import kr.co.nft.lms.util.A;
-import kr.co.nft.lms.vo.*;
+import kr.co.nft.lms.vo.Exam;
 import lombok.extern.slf4j.Slf4j;	
 
 @Slf4j
@@ -63,27 +64,42 @@ public class ExamService {
 		log.debug(A.C + "[ExamService.getExamOne.param] examNo: " + examNo + A.R);
 		
 		List<Exam> examQuestionOneList = examMapper.selectExamQuestionOne(examNo);
+		Map<String,Object> examExampleOneList = new HashMap<>();
+		for(int i=1; i <= examQuestionOneList.size() ;i = i+1 ) {
+			examExampleOneList.put("a"+i, examMapper.selectExamExampleOne(examNo,i));
+		}
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		log.debug(A.C + "[ExamService.getExamOne.Mapper] returnMap : " + returnMap + A.R);
 		returnMap.put("examQuestionOneList",examQuestionOneList);
+		returnMap.put("examExampleOneList",examExampleOneList);
 		return returnMap;
 	}
-	// 시험보기 상세보기
-	public Map<String, Object> getExamExampleOne(int examNo) {
-			log.debug(A.C + "[ExamService.getExamExampleOne.param] examNo: " + examNo + A.R);
-			
-			List<Exam> examExampleOneList = examMapper.selectExamExampleOne(examNo);
-			
-			Map<String, Object> returnMap = new HashMap<String, Object>();
-			log.debug(A.C + "[ExamService.getExamOne.Mapper] returnMap : " + returnMap + A.R);
-			returnMap.put("examExampleOneList",examExampleOneList);
-			return returnMap;
+
+	/*
+	 * // 시험보기 상세보기 public Map<String, Object> getExamExampleOne(int examNo) {
+	 * log.debug(A.C + "[ExamService.getExamExampleOne.param] examNo: " + examNo +
+	 * A.R);
+	 * 
+	 * 
+	 * 
+	 * Map<String, Object> returnMap = new HashMap<String, Object>(); log.debug(A.C
+	 * + "[ExamService.getExamOne.Mapper] returnMap : " + returnMap + A.R);
+	 * returnMap.put("examExampleOneList",examExampleOneList); return returnMap;
 	}
+	 */
 	
 	// 시험문제 등록
 	public int addExam(Exam exam) {
 			log.debug(A.C + "[ExamService.addExam.param] exam :"+ exam + A.R);
 			return examMapper.insertExam(exam);
+	}
+	
+	
+	// 시험문제 삭제
+	public int removeExam(int examNo) {
+		log.debug(A.C + "[ExamService.removeExam.param] examNo :"+ examNo + A.R);
+		//exam.setExamNo(exam.getExamNo());
+		return examMapper.deleteExam(examNo);
 	}
 }

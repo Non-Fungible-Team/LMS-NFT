@@ -50,48 +50,74 @@
          </c:forEach>
          </tbody>
       </table>
-      <table class="table table-striped">
-         <thead>
-         <tr>
-            <th class="text-center">문제 번호</th>
-            <th class="text-center">문제 내용</th>
-            <th class="text-center">배점</th>
-            <th class="text-center">문제유형</th>
-            <th class="text-center">정답</th>
-         </tr>
-         </thead>
-         <tbody>
-         <c:forEach var="q" items="${examQuestionOneList}">
-         <tr>
-            <td class="text-center">${q.examQuestionNo}</td>
-            <td class="text-center">${q.examContent}</td>
-            <td class="text-center">${q.examPoint}</td>
-            <td class="text-center">${q.examType}</td>
-            <td class="text-center">${q.examCorrectAnswer}</td>
-         </tr>
-         </c:forEach>
-      </table>
-      <table class="table table-striped">
-         <c:forEach var="a" items="${examExampleOneList}">
-         <tr>
-            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
-            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
-            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
-            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
-            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
-            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
-            <th class="text-center">보기 번호</th> <td>${a.exampleNo}</td>
-            <th class="text-center">보기 내용</th> <td>${a.exampleContent}</td>
-         </tr>
-         </c:forEach>
-         </tbody>
-      </table>
-      <div style="float: right">
-         <a class="btn btn-info"
-            href="${pageContext.request.contextPath}/updateExam?examNo=${examNo}">수정</a>
-         <a class="btn btn-danger"
-            href="${pageContext.request.contextPath}/deleteExam?examNo=${examNo}">삭제</a>
-      </div>
-   </div>
+      <c:forEach var="q" items="${examQuestionOneList}" varStatus="status">
+	      <table class="table table-striped">
+	      	<thead>
+		    	<tr>
+		        	<th class="text-center">문제 번호</th>
+		            <th class="text-center">문제 내용</th>
+		            <th class="text-center">배점</th>
+		            <th class="text-center">문제유형</th>
+		            <th class="text-center">정답</th>
+		            <th class="text-center">보기</th>
+		         </tr>
+	        </thead>
+	        <tbody>
+				<tr>
+			        <td class="text-center">${q.examQuestionNo}</td>
+			        <td class="text-center">${q.examContent}</td>
+			        <td class="text-center">${q.examPoint}</td>
+			        <td class="text-center">${q.examType}</td>
+			        <td class="text-center">${q.examCorrectAnswer}</td>
+					<td class="text-center">
+								<table>
+								<thead>
+									<tr>
+										<th class="text-center">보기 번호</th>
+										<th class="text-center">보기 내용</th>
+									</tr>
+								</thead>
+								<c:forEach var="a" items="${examExampleOneList}">
+									<tbody>
+										<tr>
+											<td class="text-center">${a.exampleContent}</td>
+											<td class="text-center">${a.exampleContent}</td>
+										</tr>
+									</tbody>
+								</c:forEach>
+								</table>
+					</td>
+				</tr>
+<!-- 	        <table class="table table-striped"> -->
+<!-- 	        	<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th class="text-center">보기 번호</th><th class="text-center">보기 내용</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<%-- 		        	<c:forEach var="a" items="${examExampleOneList}" > --%>
+<!-- 			        	<tbody> -->
+<!-- 				         		<tr> -->
+<%-- 					         		<td class="text-center">${a.exampleNo}</td> <th class="text-center">${a.exampleContent}</td> --%>
+<!-- 					         	</tr> -->
+<!-- 			         	</tbody> -->
+<%-- 			      	</c:forEach> --%>
+<!-- 	    	  	</table> -->
+	      </table>
+      </c:forEach>
+      
+      
+      
+<!--       <div style="float: right"> -->
+<!--          <a class="btn btn-info" -->
+<%--             href="${pageContext.request.contextPath}/exam/updateExam?examNo=${examNo}">수정</a> --%>
+<!--          <a class="btn btn-danger" -->
+<%--             href="${pageContext.request.contextPath}/exam/removeExam?examNo=${examNo}">삭제</a> --%>
+         
+<!--          <form method="post" action="removeExam" >  -->
+<%--         	 <span><input type="text" name="examNo" value="${examNo}"></span> --%>
+<!-- 			 <button type="submit">삭제</button> -->
+<!--          </form> -->
+<!--       </div> -->
+<!--    </div> -->
 </body>
 </html>
