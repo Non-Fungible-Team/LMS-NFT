@@ -1,19 +1,24 @@
 package kr.co.nft.lms.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.service.HomeworkService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Homework;
+import kr.co.nft.lms.vo.HomeworkSubmit;
+import kr.co.nft.lms.vo.HomeworkSubmitFile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -120,5 +125,38 @@ public class HomeworkController {
 		}
 	return "redirect:/homework/getHomeworkListByPage";
 	}
+	
+	// 학생 과제 제출 입력
+	@PostMapping()
+	public String addHomeworkSubmit(HttpServletRequest request, HomeworkSubmit homeworkSubmit) {
+		
+		String path = request.getServletContext().getRealPath("/homeworkFile/");
+		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path"+ path +A.R);
+		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit"+ homeworkSubmit +A.R);
+		
+		List<MultipartFile> homeworkFileList = homeworkSubmit.getHomeworkSubmitfileList();
+		if(homeworkFileList != null && homeworkFileList.get(0).getSize() > 0) {
+			for(MultipartFile mf : homeworkFileList ) {
+				log.debug(A.Q+"HomeworkController.addHomeworkSubmit filename :" + mf.getOriginalFilename() + A.R);
+			}
+		}
+		homeworkService.addHomeworkSubmit(homeworkSubmit, path);
+		
+		
+		return"redirect:/homework/getHomeworkOne?homeworkNo=\" + homework.getHomeworkNo()";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

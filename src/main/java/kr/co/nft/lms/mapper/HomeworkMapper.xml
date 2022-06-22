@@ -36,7 +36,7 @@
 	
 	<insert id="insertHomework"
 			parameterType="kr.co.nft.lms.vo.Homework">
-			<selectKey resultType="int" keyProperty="homework_no" order="AFTER">
+			<selectKey resultType="int" keyProperty="homeworkNo" order="AFTER">
 				SELECT LAST_INSERT_ID()
 			</selectKey>
 		INSERT INTO homework(
@@ -87,7 +87,7 @@
 	
 	<insert id="insertHomeworkSubmit"
 			parameterType="kr.co.nft.lms.vo.HomeworkSubmit">
-			<selectKey resultType="int" keyProperty="homework_submit_no" order="AFTER">
+			<selectKey resultType="int" keyProperty="homeworkSubmitNo" order="AFTER">
 				SELECT LAST_INSERT_ID()
 			</selectKey>
 		INSERT INTO Homework_submit(
@@ -95,8 +95,8 @@
 			,member_id
 			,homework_submit_title
 			,homework_submit_content
-			,homework_submit_score
-			,homework_submit_feedback
+			<!-- ,homework_submit_score
+			,homework_submit_feedback -->
 			,homework_submit_create_date
 			,homework_submit_update_date
 		) VALUES (
@@ -104,19 +104,24 @@
 			,#{memberId}
 			,#{homeworkSubmitTitle}
 			,#{homeworkSubmitContent}
-			,#{homeworkSubmitScore}
-			,#{homeworkSubmitFeedback
+			<!-- ,#{homeworkSubmitScore}
+			,#{homeworkSubmitFeedback -->
 			,NOW()
 			,NOW()
 		)
 				
 	</insert>
+	<!-- 과제 점수와 피드백을 위한 쿼리 -->
+	<update id="">
+	
+	</update>
 	
 	<insert id="insertHomeworkSubmitFile"
 			parameterType="kr.co.nft.lms.vo.HomeworkSubmitFile">
 		INSERT INTO Homework_submit_file(
 			homework_submit_no
 			,homework_submit_file_original
+			,homework_submit_file_name
 			,homework_submit_file_size
 			,homework_submit_file_type
 			,homework_submit_file_create_date
@@ -124,6 +129,7 @@
 		) VALUES (
 			#{homeworkSubmitNo}
 			,#{homeworkSubmitFileOriginal}
+			,#{homeworkSubmitFileName}
 			,#{homeworkSubmitFileSize}
 			,#{homeworkSubmitFileType}
 			,NOW()

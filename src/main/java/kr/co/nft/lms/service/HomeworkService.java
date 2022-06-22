@@ -1,16 +1,21 @@
 package kr.co.nft.lms.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.mapper.HomeworkMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Homework;
+import kr.co.nft.lms.vo.HomeworkSubmit;
+import kr.co.nft.lms.vo.HomeworkSubmitFile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -74,6 +79,67 @@ public class HomeworkService {
 		return homeworkMapper.deleteHomework(homeworkNo);
 		
 	}
+	
+	// 학생 과제 제출
+	public void addHomeworkSubmit(HomeworkSubmit homeworkSubmit, String path) {
+		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param homeworkSubmit : " + homeworkSubmit+ A.R);
+		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param path : " + path + A.R);
+		
+		int row =homeworkMapper.insertHomeworkSubmit(homeworkSubmit);
+		
+		if(homeworkSubmit.getHomeworkSubmitfileList() != null && homeworkSubmit.getHomeworkSubmitfileList().get(0).getSize() > 0 && row ==1) {
+			log.debug(A.Q+"HomeworkService.addHomeworkSubmit :"+"첨부된 파일이 있습니다."+A.R);
+			for(MultipartFile mf : homeworkSubmit.getHomeworkSubmitfileList()) {
+				HomeworkSubmitFile homeworkSubmitFile = new HomeworkSubmitFile();
+				
+				String originName = mf.getOriginalFilename();
+				
+				// originName에서 마지막 .문자열 위치
+				String ext = originName.substring(originName.lastIndexOf("."));
+				
+				// 파일을 저장할때 사용할 중복되지않는 새로운 이름 필요(UUID API사용)
+				String fileName = UUID.randomUUID().toString();
+				
+				fileName = fileName + ext;
+				
+				homeworkSubmitFile.setHomeworkSubmitNo(homeworkSubmit.getHomeworkSubmitNo());
+				homeworkSubmitFile.setHomeworkSubmitFileOriginal(fileName);
+				homeworkSubmitFile.setHomeworkSubmitFileName(mf.getOriginalFilename());
+				homeworkSubmitFile.setHomeworkSubmitFileType(mf.getContentType());
+				homeworkSubmitFile.setHomeworkSubmitFileSize(mf.getSize());
+				
+				homeworkMapper.insertHomeworkSubmitFile(homeworkSubmitFile);
+				try {
+					mf.transferTo(new File(path + fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException();
+					
+				}
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
