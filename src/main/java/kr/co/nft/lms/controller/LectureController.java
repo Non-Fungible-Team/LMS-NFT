@@ -1,4 +1,5 @@
 package kr.co.nft.lms.controller;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.service.SubjectService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.Subject;
+import kr.co.nft.lms.vo.TeacherLecture;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -95,7 +98,7 @@ public class LectureController {
 		log.debug(A.W +"[LectureController.teacher.lecture.getLectureByPage.rowPerPage] rowPerPage : " +rowPerPage +A.R);
 		
 		Map<String,Object> map = lectureService.getLectureByPage(currentPage, rowPerPage); //강의목록 서비스 호출해서 map객체에 저장
-		 //서비스에 저장된 값 가져오서 모델객체에 저장
+		 //서비스에 저장된 값 가져와서 모델객체에 저장
 		model.addAttribute("lectureList", map.get("lectureList")); //강의목록
 		model.addAttribute("currentPage", map.get("currentPage")); //현재페이지
 		model.addAttribute("lastPage",map.get("lastPage") ); //마지막페이지
@@ -108,5 +111,56 @@ public class LectureController {
 		return "lecture/getLectureByPage"; //jsp로 이동
 		
 	}
+	
+	//2.강의 / 강의-강사 삽입
+	@GetMapping("/manager/lecture/addLecture")
+	public String addLecture() {
+		return "lecture/addLecture"; //jsp로 이동
+	}
+	
+	@PostMapping("/manager/lecture/addLecture")
+	public String addLecture(Lecture lecture,TeacherLecture teacherLecture) {
+		log.debug(A.W +"[LectureController.manager.lecture/addLecture.lecture] lecture : " + lecture +A.R);
+		log.debug(A.W +"[LectureController.manager.lecture/addLecture.teacherLecture] teacherLecture : " + teacherLecture +A.R);
+		
+		int row = lectureService.addLecture(lecture, teacherLecture);
+		log.debug(A.W +"[LectureController.manager.lecture/addLecture.row] row : " + row +A.R);
+		
+		return "redirect:/teacher/lecture/getLectureByPage"; //addLecture로 이동
+	}
+	
+	//3. 강의 수정 폼
+	@GetMapping("/teacher/lecture/modifyLecture")
+	public String modifyLecture(Model model
+								,@RequestParam(name="lectureNo") int lectureNo) {
+		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.param] lectureNo : " + lectureNo +A.R);
+		//받아온 값 저장 객체 생성
+		Map<String,Object> map = new HashMap<>();
+		map.put("lectureNo", lectureNo); //번호 값 저장
+		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.map] map : " + map +A.R);
+		
+		//결과값 저장 객체 생성 -> 서비스에 저장된 값 가져와서 모델객체에 저장
+		Map<String,Object> returnMap =lectureService.modifyLectureForm(map);
+		model.addAttribute("lecture",returnMap.get("lecture")); 
+		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.returnMap] returnMap : " + returnMap +A.R);
+		
+		return "lecture/modifyLecture";
+	}
+	//수정 액션
+	@PostMapping("/teacher/lecture/modifyLecture")
+	public String modifyLecture(Lecture lecture) {
+		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.lecture] lecture : " + lecture +A.R);
+		
+		int row = lectureService.modifyLecture(lecture);
+		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.row] row : " + row +A.R);
+		
+		return "redirect:/teacher/lecture/getLectureByPage";
+
+	}
+	
+	//4.강의 삭제
+	
+	
+	
 	
 }
