@@ -49,7 +49,7 @@
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_privilege= #{noticePrivilege}
+		WHERE b.board_privilege= 0
 		AND b.board_blind = 'N'
 		LIMIT #{beginRow}, #{rowPerPage}	
 	</select>

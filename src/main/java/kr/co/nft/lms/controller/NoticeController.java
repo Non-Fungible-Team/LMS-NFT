@@ -22,7 +22,7 @@ public class NoticeController {
 	//Notice입력폼
 	@GetMapping("/manager/notice/addNotice")
 	public String addNotice() {
-		return "/notice/addNtice";
+		return "/notice/addNotice";
 	}
 	//Notice 입력 액션
 	@PostMapping("/manager/notice/addNotice")
@@ -43,7 +43,7 @@ public class NoticeController {
 	//Notice 목록보기
 	@GetMapping("/all/notice/getNoticeListByPage")
 	public String getNoticeListByPage(Model model
-									,@RequestParam(name= "currnetPage", defaultValue = "1") int currentPage
+									,@RequestParam(name= "currentPage", defaultValue = "1") int currentPage
 									,@RequestParam(name= "rowPerPage", defaultValue = "10") int rowPerPage) {
 		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] currentPage : " + currentPage + A.R);
 		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] rowPerPage : " + rowPerPage + A.R);

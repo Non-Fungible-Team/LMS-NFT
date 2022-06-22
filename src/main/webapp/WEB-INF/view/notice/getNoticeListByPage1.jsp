@@ -38,7 +38,7 @@
 				</c:if>
 			</form>
 	    <div>
-	        <a href="${pageContext.request.contextPath}/manager/notice/addnotice">게시판 입력</a>
+	        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">게시판 입력</a>
 	    </div>
 	</div>
 </body>
