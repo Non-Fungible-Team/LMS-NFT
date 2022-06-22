@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.LectureMapper;
+import kr.co.nft.lms.mapper.LectureRoomMapper;
 import kr.co.nft.lms.mapper.SubjectMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
@@ -26,6 +27,7 @@ public class LectureService {
 	//Mapper 변수 생성
 	@Autowired private LectureMapper lectureMapper;
 	@Autowired private SubjectMapper subjectMapper;
+	@Autowired private LectureRoomMapper lectureRoomMapper;
 	
 	//1.강의목록(상세보기) + 전체 행 수
 	public Map<String,Object> getLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
@@ -69,13 +71,13 @@ public class LectureService {
 	public Map<String,Object> addLectureForm(){
 		
 		List<Subject> subjectList = subjectMapper.selectSubjectList();
-		//List<LectureRoom> lectureRoomList = 
+		List<LectureRoom> lectureRoomList = lectureRoomMapper.selectLectureRoomList();
 		log.debug(A.W +"[LectureService.addLectureForm.subjectList] subjectList : " +subjectList +A.R);//디버깅코드
 		
 		//결과값 반환 객체생성
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("subjectList", subjectList); //과목목록 값
-		//returnMap.put("lectureList", lectureList); //강의실목록 값
+		returnMap.put("lectureRoomList", lectureRoomList); //강의실목록 값
 		
 		return returnMap;
 	}
