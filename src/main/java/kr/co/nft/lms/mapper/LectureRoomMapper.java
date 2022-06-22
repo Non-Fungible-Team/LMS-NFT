@@ -9,17 +9,19 @@ import kr.co.nft.lms.vo.LectureRoom;
 
 @Mapper
 public interface LectureRoomMapper {
-	//1.강의실 목록, List 값 전달 받음, map형 반환
-	List<LectureRoom> selectLectureRoom(Map<String, Object> map);
-	//2.강의실 삽입, vo 값 전달 받음, int형 반환
-	int insertLectureRoom(LectureRoom lectureRoom);
-	//3.강의실 수정
-	//form :lectureRoomName 값 전달받음, vo객체로 반환
-	LectureRoom updateLectureRoomForm(String lectureRoomName);
-	//action : 강의실이름 전달받음, int형 반환
-	int updateLectureRoomAction(LectureRoom lectureRoom);
 	
-	//4.강의실 삭제
-	//action : 강의실명 값 전달 받음, int 반환
+	// lecture_room 테이블 전체 리스트
+	List<LectureRoom> selectLectureRoomList();
+	
+	// lecture_room 테이블 상세보기
+	LectureRoom selectLectureRoomOne(String lectureRoomName);
+
+	// lecture_room 테이블 입력
+	int insertLectureRoom(LectureRoom lectureRoom);
+
+	// lecture_room 테이블 수정
+	int updateLectureRoom(LectureRoom lectureRoom);
+	
+	// lecture_room 테이블 삭제
 	int deleteLectureRoom(String lectureRoomName);
 }
