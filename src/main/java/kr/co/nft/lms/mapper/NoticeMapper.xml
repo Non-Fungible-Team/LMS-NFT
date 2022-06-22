@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.nft.lms.mapper.NoticeMapper">
 	<insert id="insertNoticeInBoard"
 			parameterType="kr.co.nft.lms.vo.Notice">
-		<selectKey resultType="int" keyProperty="board_no" order="AFTER">
+		<selectKey resultType="int" keyProperty="noticeNo" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey> 
 		INSERT INTO board(
@@ -20,7 +20,7 @@
 			,#{noticeContent}
 			,'공지'
 			,#{memberId}
-			,0
+			,#{noticePrivilege}
 			,'N'
 			,NOW()
 			,NOW()
@@ -31,7 +31,7 @@
 	<insert id="insertNotice"
 			parameterType="kr.co.nft.lms.vo.Notice">
 		INSERT  INTO notice(
-			notice_no
+			board_no
 		) VALUES (
 			#{noticeNo}
 		)
@@ -49,8 +49,9 @@
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_privilege= 0
+		WHERE b.board_privilege= '4'
 		AND b.board_blind = 'N'
+		ORDER BY n.board_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}	
 	</select>
 	
@@ -68,7 +69,7 @@
 			resultType="kr.co.nft.lms.vo.Notice"
 			parameterType="int">
 		SELECT 
-			n.notice_no noticeNo
+			n.board_no noticeNo
 			, b.board_title noticeTitle
 			, b.board_content noticeContent			
 			, b.board_blind noticeBlind
@@ -80,7 +81,7 @@
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_privilege= 0
+		WHERE b.board_privilege= '4'
 		AND b.board_blind = 'N'
 		AND n.board_no = #{boardNo};	
 	</select>

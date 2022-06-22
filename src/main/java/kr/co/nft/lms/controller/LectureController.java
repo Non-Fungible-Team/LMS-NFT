@@ -2,13 +2,15 @@ package kr.co.nft.lms.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.co.nft.lms.service.LectureRoomService;
 import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.service.SubjectService;
 import kr.co.nft.lms.util.A;
@@ -26,8 +28,10 @@ public class LectureController {
   
 	@Autowired private SubjectService subjectService;
 	
+	@Autowired private LectureRoomService lectureRoomService;
+	
 	// form - subject 테이블 전체 리스트, subject 테이블 데이터 입력
-	@GetMapping("/teacher/subjectList")
+	@GetMapping("/teacher/lecture/subjectList")
 	public String subjectList(Model model) {
 		
 		List<Subject> subjectList = subjectService.getSubjectList();
@@ -65,7 +69,7 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.addSubjectOne] subject 입력 실패" + A.R);
 		}
 		
-		return "redirect:/teacher/subjectList";
+		return "redirect:/teacher/lecture/subjectList";
 	}
 	
 	// action - subject 테이블 데이터 삭제
@@ -84,7 +88,7 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.removeSubjectOne] subject 삭제 실패" + A.R);
 		}
 		
-		return "redirect:/teacher/subjectList";
+		return "redirect:/teacher/lecture/subjectList";
 	}
 
 	////////////* 강의 *////////////
@@ -214,4 +218,67 @@ public class LectureController {
 		
 		return "";
 	}*/
+	
+	// ------------------------------------------------ lecture_room
+	// form - lecture_room 테이블 전체 리스트, lecture_room 테이블 데이터 입력
+	@GetMapping("/teacher/lecture/getLectureRoomList")
+	public String getLectureRoomList(Model model) {
+				
+		List<LectureRoom> lectureRoomList = lectureRoomService.getLectureRoomList();
+		
+		log.debug(A.A + "[LectureController.getLectureRoomList] lectureRoomList : " + lectureRoomList + A.R);
+		
+		model.addAttribute("lectureRoomList", lectureRoomList);
+		
+		log.debug(A.A + "[LectureController.getLectureRoomList] model : " + model + A.R);
+		
+		return "/lecture/getLectureRoomList";
+	}
+	
+	// action - lecture_room 테이블 데이터 입력
+	@PostMapping("/teacher/lecture/addLectureRoom")
+	public String addLectureRoom(@RequestParam(name = "lectureRoomName") String lectureRoomName
+								, @RequestParam(name = "lectureRoomLocation") String lectureRoomLocation
+								, @RequestParam(name = "lectureRoomPeople", defaultValue = "0") int lectureRoomPeople) {
+		
+		log.debug(A.A + "[LectureController.addLectureRoom] lectureRoomName : " + lectureRoomName + A.R);
+		log.debug(A.A + "[LectureController.addLectureRoom] lectureRoomLocation : " + lectureRoomLocation + A.R);
+		log.debug(A.A + "[LectureController.addLectureRoom] lectureRoomPeople : " + lectureRoomPeople + A.R);
+		
+		LectureRoom lectureRoom = new LectureRoom();
+		lectureRoom.setLectureRoomName(lectureRoomName);
+		lectureRoom.setLectureRoomLocation(lectureRoomLocation);
+		lectureRoom.setLectureRoomPeople(lectureRoomPeople);
+		
+		int row = lectureRoomService.addLectureRoom(lectureRoom);
+		
+		log.debug(A.A + "[LectureController.addLectureRoom] row : " + row + A.R);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.addLectureRoom] lecture_room 입력 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.addLectureRoom] lecture_room 입력 실패" + A.R);
+		}
+		
+		return "redirect:/teacher/lecture/getLectureRoomList";
+	}
+	
+	// action - lecture_room 테이블 데이터 삭제
+	@GetMapping("/teacher/lecture/removeLectureRoom")
+	public String removeLectureRoom(@RequestParam(name = "lectureRoomName") String lectureRoomName) {
+		
+		log.debug(A.A + "[LectureController.removeLectureRoom] lectureRoomName : " + lectureRoomName + A.R);
+		
+		int row = lectureRoomService.removeLectureRoom(lectureRoomName);
+		
+		log.debug(A.A + "[LectureController.removeLectureRoom] row : " + row + A.R);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.removeLectureRoom] lecture_room 입력 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.removeLectureRoom] lecture_room 입력 실패" + A.R);
+		}
+		
+		return "redirect:/teacher/lecture/getLectureRoomList";
+	}
 }

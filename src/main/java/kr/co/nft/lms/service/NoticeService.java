@@ -23,9 +23,8 @@ public class NoticeService {
 	//Notice 입력 액션 
 	public int addNotice(Notice notice) { 
 		log.debug(A.S + "[NoticeService.addNotice.param] notice : "+ notice + A.R); 
-		int boardNo = noticeMapper.insertNoticeInBoard(notice);
-		log.debug(A.S + "[NoticeService.addNotice.boardNo] boardNo : "+ boardNo + A.R); 
-		notice.setNoticeNo(boardNo);
+		int row1 = noticeMapper.insertNoticeInBoard(notice);
+		log.debug(A.S + "[NoticeService.addNotice.boardNo] boardNo : "+ row1 + A.R); 
 		int row = noticeMapper.insertNotice(notice);
 		log.debug(A.S + "[NoticeService.addNotice.param] row : "+ row + A.R); 
 		return row;

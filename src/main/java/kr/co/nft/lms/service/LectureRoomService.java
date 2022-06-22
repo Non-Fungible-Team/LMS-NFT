@@ -30,25 +30,25 @@ public class LectureRoomService {
 	}
 	
 	// lecture_room 테이블 입력
-	public int insertLectureRoom(LectureRoom lectureRoom) {
+	public int addLectureRoom(LectureRoom lectureRoom) {
 		
-		log.debug(A.A + "[LectureRoomService.insertLectureRoom] lectureRoom : " + lectureRoom + A.R);
+		log.debug(A.A + "[LectureRoomService.addLectureRoom] lectureRoom : " + lectureRoom + A.R);
 		
 		int row = lectureRoomMapper.insertLectureRoom(lectureRoom);
 		
-		log.debug(A.A + "[LectureRoomService.insertLectureRoom] row : " + row + A.R);
+		log.debug(A.A + "[LectureRoomService.addLectureRoom] row : " + row + A.R);
 		
 		return row;
 	}
 	
 	// lecture_room 테이블 삭제
-	public int deleteLectureRoom(String lectureRoomName) {
+	public int removeLectureRoom(String lectureRoomName) {
 		
-		log.debug(A.A + "[LectureRoomService.deleteLectureRoom] lectureRoomName : " + lectureRoomName + A.R);
+		log.debug(A.A + "[LectureRoomService.removeLectureRoom] lectureRoomName : " + lectureRoomName + A.R);
 		
 		int row = lectureRoomMapper.deleteLectureRoom(lectureRoomName);
 		
-		log.debug(A.A + "[LectureRoomService.deleteLectureRoom] row : " + row + A.R);
+		log.debug(A.A + "[LectureRoomService.removeLectureRoom] row : " + row + A.R);
 		
 		return row;
 	}
