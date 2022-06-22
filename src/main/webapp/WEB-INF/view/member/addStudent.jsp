@@ -62,14 +62,17 @@ table {
 				console.log(a)
 				var a2 = JSON.stringify(a);
 				var a3 = JSON.parse(a2);
-               console.log("▶▶▶a2 : "+a);
-               console.log("▶▶▶typeof(a3) : "+typeof(a3));
+            	console.log("▶▶▶a2 : "+a);
+                console.log("▶▶▶typeof(a3) : "+typeof(a3));
                
-               let arr = a3.results.juso; // 주소 배열
-               console.log("▶▶▶arr : "+arr);
+                // let 변수 선언 자리에 var 사용해도 상관 없다 
+                let arr = a3.results.juso; // 주소 배열
+                console.log("▶▶▶arr : "+arr);
                
+                let addressDetail = '';
 					for(var i=0; i<arr.length; i++){
-						  $('#addrList').append(`<option value="arr[i].roadAddr">`+arr[i].roadAddr+`</option>`);	
+						  $('#addrList').append(`<option id="addressDetail" name="addressDetail" value="arr[i].roadAddr">`+arr[i].roadAddr+`</option>`);
+						  addressDetail = arr[i].roadAddr;
 					}
 				}
 					
@@ -94,7 +97,7 @@ table {
 			
 			<tr>
 				<td>학생 아이디</td>
-				<td><input type="text" id="memberId" name="memberId" value="stud2"> <span
+				<td><input type="text" id="memberId" name="memberId" value="stud3"> <span
 					id="memberIdHelper" class="helper"></span></td>
 			</tr>
 			<tr>
@@ -104,7 +107,7 @@ table {
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input type="text" id="studentName" name="studentName" value="학생2">
+				<td><input type="text" id="studentName" name="studentName" value="학생3">
 					<span id="studentNameHelper" class="helper"></span></td>
 			</tr>
 			<tr>
@@ -123,14 +126,15 @@ table {
 			<tr>
 				<td>이메일</td>
 				<td>
-					<input type="text" id="studentEmailId" name="studentEmailId" value="stud2">
-					 @ 
+					<input type="text" id="studentEmailId" name="studentEmailId" value="stud3">
+					<span id="middle">@</span>
 					<select id="emailUrl" name="emailUrl">
 						<option value="">::선택::</option>
 						<option value="naver.com">네이버</option>
 						<option value="daum.net">다음</option>
 						<option value="gmail.com">지메일</option>
 					</select> 
+					<input type="hidden" id="studentEmail" name="studentEmail" value="">
 					<span id="studentEmailIdHelper" class="helper"></span>
 				</td>
 			</tr>
@@ -142,14 +146,18 @@ table {
 			</tr>
 			<tr>
 				<td>주소리스트</td>
-				<td><select id="addrList" name="roadAddr">
-				</select></td>
+				<td>
+					<select id="addrList" name="roadAddr">
+					
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>최종 학력</td>
-				<td><input type="text" id="studentEducation"
-					name="studentEducation" value="대졸"> <span id="studentEducationHelper"
-					class="helper"></span></td>
+				<td>
+					<input type="text" id="studentEducation" name="studentEducation" value="대졸"> 
+					<span id="studentEducationHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>전화번호</td>
@@ -157,8 +165,10 @@ table {
 					<span id="memberPhoneNoHelper" class="helper"></span></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
+				<td>레벨</td>
+				<td>
+					<input type="number" id="memberLevel" name="memberLevel" value="4" readonly="readonly">
+				</td>
 			</tr>
 			
 			<tr>
@@ -173,6 +183,24 @@ table {
 </body>
 
 <script>
+	
+	//이메일주소 가져오기
+	$("#studentEmailId").blur(function(){
+		email();	
+	});
+	
+	$("#emailUrl").change(function(){
+		email();	
+	});
+	
+	function email() {
+		const email = $("#studentEmailId").val();
+		const middle = $("#middle").text();
+		const address = $("#emailUrl").val();
+		if(email != "" && address != "") {
+			$("#studentEmail").val(email+middle+address);
+		}
+	};
 	
 	// 유효성 검사 
 	$('#signUp').click(function(){

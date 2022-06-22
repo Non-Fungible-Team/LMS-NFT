@@ -4,9 +4,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
@@ -19,6 +21,29 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	@Autowired MemberService memberService;
+	
+	// 학생 상세보기
+	@GetMapping("/student/getStudentOne")
+	public String getStudentOne(HttpSession session
+								,Member member) {
+		
+		log.debug(A.Z+"[MemberController.getStudentOne.param] member : "+member+A.R);
+		
+		Member sessionLoginMember = memberService.getMemberOne(member);
+		log.debug(A.Z+"MemberController.getStudentOne.sessionLoginMember : "+sessionLoginMember+A.R);
+		
+		// 계정 정보 없으면 로그인 실패 
+		if(sessionLoginMember == null) {
+			log.debug(A.Z+"MemberController.getStudentOne : "+"로그인 실패"+A.R);
+			// member/memberLogin.jsp 
+			return "/member/memberLogin";
+		}
+				
+		session.setAttribute("sessionLoginMember", sessionLoginMember);
+		session.setAttribute("sessionLectureNo", "");
+		
+		return "/student/getStudentOne";
+	}
 	
 	// 학생 회원가입 
 	@PostMapping("/member/addStudent")
@@ -37,7 +62,17 @@ public class MemberController {
 	
 	// 학생 회원가입 
 	@GetMapping("/member/addStudent") 
-	public String addStudent() {
+	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
+	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
+	public String addStudent(Model model
+							, Member member
+							, @RequestParam(value="memberLevel") int memberLevel) {
+		
+		log.debug(A.Z+"[MemberController.addStudent.param] model : "+model+A.R);
+		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addStudent.param] memberLevel : "+memberLevel+A.R);
+		
+		model.addAttribute("memberLevel", memberLevel);
 		return "/member/addStudent";
 	}
 	
