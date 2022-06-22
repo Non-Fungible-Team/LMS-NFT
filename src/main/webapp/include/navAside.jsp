@@ -9,12 +9,12 @@
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="static/assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
 <!-- CSS 링크 -->
-<link href="static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="static/dist/css/style.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
@@ -28,8 +28,8 @@
 					<!-- 로고 아이콘 -->
 					<a href=" "> <!-- 건들면 안됨.  -> http://lms-->
 					<b class="logo-icon"> 
-					<!-- 다크모드 아이콘 --> <img src="static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="width: 15%" />
-					<!-- 라이트 모드 아이콘 --> <img src="static/assets/images/logo-icon.png" alt="homepage" class="light-logo" style="width: 15%" />
+					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="width: 15%" />
+					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="light-logo" style="width: 15%" />
 					</b> 
 					<span class="logo-text"> LMS </span>
 					</a>
@@ -48,14 +48,14 @@
 					<!-- 프로필 -->
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-						<img src="static/assets/images/member.png" alt="user" class="rounded-circle" width="40"> 
+						<img src="${pageContext.request.contextPath}/static/assets/images/member.png" alt="user" class="rounded-circle" width="40"> 
 						<span class="ml-2 d-none d-lg-inline-block">
 							<span>환영합니다,</span> 
 							<span class="text-dark">${sessionLoginMember.memberId} 님</span> 
 							<i data-feather="chevron-down" class="svg-icon"></i>
 						</span>
 						</a>
-						<c:if test="${not empty param.memberLevel}">
+						
 						<div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
 							<a class="dropdown-item" href="javascript:void(0)"><i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
 							<div class="dropdown-divider"></div>
@@ -67,7 +67,7 @@
 								<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
 							</div>
 						</div>
-						</c:if>
+						
 					</li>
 					<!-- ============================================================== -->
 					<!-- User profile and search -->
