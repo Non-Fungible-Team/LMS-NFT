@@ -8,16 +8,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="static/assets/images/favicon.png">
 <title>Main Home</title>
 <!-- CSS 링크 -->
-<link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="dist/css/style.min.css" rel="stylesheet">
-<script src="assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="static/dist/css/style.min.css" rel="stylesheet">
+<script src="static/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -86,17 +86,17 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
     	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
   	</script>
 
-    <script src="dist/js/app-style-switcher.js"></script>
-    <script src="dist/js/feather.min.js"></script>
-    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="dist/js/sidebarmenu.js"></script>
-    <script src="dist/js/custom.min.js"></script>
-    <script src="assets/extra-libs/c3/d3.min.js"></script>
-    <script src="assets/extra-libs/c3/c3.min.js"></script>
-    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="dist/js/pages/dashboards/dashboard1.min.js"></script>
+    <script src="static/dist/js/app-style-switcher.js"></script>
+    <script src="static/dist/js/feather.min.js"></script>
+    <script src="static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="static/dist/js/sidebarmenu.js"></script>
+    <script src="static/dist/js/custom.min.js"></script>
+    <script src="static/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="static/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="static/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="static/dist/js/pages/dashboards/dashboard1.min.js"></script>
     
 </html>

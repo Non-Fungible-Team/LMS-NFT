@@ -51,29 +51,34 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		    <div class="card">
 		        <div class="card-body">
 		            <h4 class="card-title">강의 삽입</h4>
-		            <div style="height:294px;">
+		            <div style="height:auto;">
 		            	<form class="mt-4" method="post" id="addLectureForm" action="${pageContext.request.contextPath}/manager/lecture/addLecture">
                             <div class="form-group">
-                               과목명  
-                               <select id="subjectName">
-                               		<option value=" ">과목 선택</option>
-	                               	<c:forEach var="s" items="${subjectList}">
-	                               			<option value="${s.subjectName}">${s.subjectName}</option>
-	                               	</c:forEach>
-                               </select><br>
-                               강의명 
-                               <input type="text" id="lectureName" class="form-control" placeholder="강의명 입력해주세요"><br>
+                               <div>
+                               		과목명  
+	                               <select id="subjectName">
+	                               		<option value=" ">과목 선택</option>
+		                               	<c:forEach var="s" items="${subjectList}">
+		                               			<option value="${s.subjectName}">${s.subjectName}</option>
+		                               	</c:forEach>
+	                               </select>
+                               </div>
+                               <br>
+                               	강의명  <input type="text" id="lectureName" class="form-control" placeholder="강의명 입력해주세요"><br>
                             	개강일
                             	<input type="date" id="lectureStartDate" class="form-control"><br>
                             	수료일
                             	<input type="date" id="lectureEndDate" class="form-control"><br>
+                            	<div>
                             	강의실
                             	<select id="lectureRoom">
                                		<option value=" ">강의실 선택</option>
 	                               	<c:forEach var="l" items="${lectureRoomList}">
 	                               			<option value="${l.lectureRoom}">${l.lectureRoom}</option>
 	                               	</c:forEach>
-                               </select><br>
+                               </select>
+                               </div>
+                               <br>
                             	강사
                             	<input type="text" id="teacher" class="form-control"><br>             
                             </div>
