@@ -19,12 +19,13 @@
 	</properties>
 	<dependencies>
 	<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
-      <dependency>
+	<dependency>
           <groupId>org.apache.tomcat.embed</groupId>
           <artifactId>tomcat-embed-jasper</artifactId>
+          <scope>provided</scope>
       </dependency>
       <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-      <dependency>
+       <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>jstl</artifactId>
       </dependency>
