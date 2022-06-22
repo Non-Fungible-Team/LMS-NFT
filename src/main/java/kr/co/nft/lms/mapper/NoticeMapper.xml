@@ -61,7 +61,7 @@
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_blind = 'N'; 
+		WHERE b.board_blind = 'N'
 	</select>
 	
 	<!-- 상세보기 -->
@@ -83,7 +83,7 @@
 		ON n.board_no = b.board_no
 		WHERE b.board_privilege= '4'
 		AND b.board_blind = 'N'
-		AND n.board_no = #{boardNo};	
+		AND n.board_no = #{boardNo}
 	</select>
 	<!-- 수정 -->
 	<update id="updateNoticeInBoard"
@@ -91,7 +91,8 @@
 		UPDATE board
 		SET board_title = #{noticeTitle}
 			, board_content = #{noticeContent}
-		WHERE board_no = #{noticeNo};
+			, board_privilege =#{noticePrivilege}
+		WHERE board_no = #{noticeNo}
 	</update>
 	
 	<!-- 삭제(블라인드로 변경) -->
@@ -99,6 +100,6 @@
 			parameterType="int">
 		UPDATE board
 		SET board_blind = 'Y'
-		WHERE board_no = #{noticeNo};
+		WHERE board_no = #{noticeNo}
 	</update>
 </mapper>

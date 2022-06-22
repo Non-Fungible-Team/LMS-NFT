@@ -29,7 +29,7 @@ public class NoticeController {
 	public String addNotice(Notice notice) {
 		log.debug(A.S + "[NoticeController.addNotice.param] notice : "+ notice + A.R);
 		int row = noticeService.addNotice(notice);
-		log.debug(A.S + "[NoticeController.addNotice.row] row : "+ row + A.R);
+		log.debug(A.S + "[NoticeController.addNotice] row : "+ row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.addNotice.param] 입력실패"+ A.R);
@@ -48,13 +48,13 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] currentPage : " + currentPage + A.R);
 		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] rowPerPage : " + rowPerPage + A.R);
 		
-		Map<String, Object> returnMap = noticeService.getNoticeListByPage(currentPage, rowPerPage);
-		log.debug(A.S + "[NoticeController.getNoticeListByPage.returnMap] currentPage : " + currentPage + A.R);
-		log.debug(A.S + "[NoticeController.getNoticeListByPage.returnMap] rowPerPage : " + rowPerPage + A.R);
+		Map<String, Object> noticeRowReturnMap = noticeService.getNoticeListByPage(currentPage, rowPerPage);
+		log.debug(A.S + "[NoticeController.getNoticeListByPage] noticeRowReturnMap : " + noticeRowReturnMap + A.R);
 		
-		model.addAttribute("noticeList", returnMap.get("noticeList"));
-		model.addAttribute("lastPage", returnMap.get("lastPage"));
+		model.addAttribute("noticeList", noticeRowReturnMap.get("noticeList"));
+		model.addAttribute("lastPage", noticeRowReturnMap.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		log.debug(A.S + "[NoticeController.getNoticeListByPage] model : " + model + A.R);
 		
 		return "/notice/getNoticeListByPage";
 	}
@@ -65,7 +65,7 @@ public class NoticeController {
 							,@RequestParam(name="noticeNo") int noticeNo) {
 		log.debug(A.S + "[NoticeController.getNoticeOne.param] noticeNo : " + noticeNo + A.R);
 		Notice notice = noticeService.getNoticeOne(noticeNo);
-		log.debug(A.S + "[NoticeController.getNoticeOne.notice] notice : " + notice + A.R);
+		log.debug(A.S + "[NoticeController.getNoticeOne] notice : " + notice + A.R);
 		model.addAttribute("notice", notice);
 		return "/notice/getNoticeOne";
 	}
@@ -76,7 +76,7 @@ public class NoticeController {
 							,@RequestParam(name="noticeNo") int noticeNo) {
 		log.debug(A.S + "[NoticeController.modifyNotice.param] noticeNo : " + noticeNo + A.R);
 		Notice notice = noticeService.getNoticeOne(noticeNo);
-		log.debug(A.S + "[NoticeController.modifyNotice.notice] notice : " + notice + A.R);
+		log.debug(A.S + "[NoticeController.modifyNotice] notice : " + notice + A.R);
 		model.addAttribute("notice", notice);
 		return "/notice/modifyNotice";
 	}
@@ -86,7 +86,7 @@ public class NoticeController {
 	public String modifyNotice(Notice notice) {
 		log.debug(A.S + "[NoticeController.modifyNotice.param] notice : " + notice + A.R);
 		int row = noticeService.modifyNotice(notice);
-		log.debug(A.S + "[NoticeController.modifyNotice.row] row : " + row + A.R);
+		log.debug(A.S + "[NoticeController.modifyNotice] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.modifyNotice.param] 수정실패"+ A.R);
@@ -102,7 +102,7 @@ public class NoticeController {
 	public String removeNotice(int noticeNo) {
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
 		int row = noticeService.removeNotice(noticeNo);
-		log.debug(A.S + "[NoticeController.removeNotice.row] row : " + row + A.R);
+		log.debug(A.S + "[NoticeController.removeNoticex] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)실패"+ A.R);

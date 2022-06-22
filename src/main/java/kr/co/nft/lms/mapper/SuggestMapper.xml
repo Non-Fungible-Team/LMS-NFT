@@ -3,11 +3,109 @@
 <mapper namespace="kr.co.nft.lms.mapper.SuggestMapper">
 	<insert id="insertSuggestInBoard"
 			parameterType="kr.co.nft.lms.vo.Suggest">
-		<selectKey resultType="int" keyProperty="board_no" order="AFTER">
+		<selectKey resultType="int" keyProperty="suggestNo" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey> 
-	
-	
+		INSERT INTO board(
+			board_title
+			,board_content
+			,board_category
+			,member_id
+			,board_privilege
+			,board_blind
+			,board_create_date
+			,board_update_date
+		) VALUES (
+			#{suggestTitle}
+			,#{suggestContent}
+			,'건의'
+			,#{memberId}
+			,#{suggestPrivilege}
+			,'N'
+			,NOW()
+			,NOW()
+		)
 	</insert>
-
+	
+	<!-- Suggest 테이블에 insert -->
+	<insert id="insertSuggest"
+			parameterType="kr.co.nft.lms.vo.Suggest" >
+		INSERT INTO suggest(
+			board_no
+			,root
+			,suggest_secret
+			,suggest_status
+		) VALUES (
+			#{suggestNo}
+			,'공란'
+			,'N'
+			,'처리전'
+		)
+	</insert>
+	
+	<!-- 목록보기 -->
+	<select id="selectSuggestListByPage"
+			resultType="kr.co.nft.lms.vo.Suggest"
+			parameterType="java.util.Map">
+		SELECT
+			s.board_no suggestNo
+			,b.board_title suggestTitle
+			,b.member_id memberId
+			,b.board_create_date suggestCreateDate
+		FROM suggest s
+		INNER JOIN board b
+		ON s.board_no = b.board_no
+		WHERE b.board_privilege = '4'
+		AND b.board_blind = 'N'
+		ORDER BY s.board_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 전체 행 카운트 -->
+	<select id="selectSuggestListTotalCount"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM suggest s
+		INNER JOIN board b
+		ON s.board_no = b.board_no
+		WHERE b.board_blind = 'N'
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectSuggestOne"
+			resultType="kr.co.nft.lms.vo.Suggest"
+			parameterType="int">
+		SELECT 
+			s.board_no suggestNo
+			,b.board_title suggestTitle
+			,b.board_content suggestContent
+			,b.member_id memberId
+			,b.board_privilege suggestPrivilege
+			,b.board_create_date suggestCreateDate
+			,b.board_update_date suggestUpdateDate
+		FROM suggest s
+		INNER JOIN board b
+		ON s.board_no = b.board_no
+		WHERE b.board_privilege = '4'
+		AND b.board_blind = 'N'
+		AND s.board_no = #{suggestNo}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateSuggestInBoard"
+			parameterType="kr.co.nft.lms.vo.Suggest">
+		UPDATE board
+		SET board_title = #{suggestTitle}
+			,board_content = #{suggestCount}
+			,board_privilege = #{suggestPrivilege}
+		WHERE board_no = #{suggestNo}
+	</update>
+	
+	<!-- 삭제(블라인드처리) -->
+	<update id="deleteSuggest"
+			parameterType="int">
+		UPDATE board
+		SET board_bilnd = 'Y'
+		WHERE board_no = #{suggestNo}
+	</update>
 </mapper>
