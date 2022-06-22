@@ -27,7 +27,7 @@ public class AllLoginFilter implements Filter {
 			//로그인 정보가 없을시 로그인 contorller으로 redirect
 			if(session.getAttribute("sessionLoginMember") == null) {
 				log.debug(A.E+"[AllLoginFilter.doFilter] : 로그인 하지 않은 자의 요청 "+A.R);
-				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/login");
+				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/member/login");
 				return;
 			}
 			//로그인 정보가 있을시 Member 변수에 저장

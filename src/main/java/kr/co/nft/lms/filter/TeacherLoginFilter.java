@@ -30,6 +30,7 @@ public class TeacherLoginFilter implements Filter {
 			if(session.getAttribute("sessionLoginMember") == null) {
 				log.debug(A.E+"[TeacherLoginFilter.doFilter] : 로그인 하지 않은 자의 요청 "+A.R);
 				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/login");
+				return;
 			}
 			//로그인 정보가 있을시 Member 변수에 저장
 			Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
