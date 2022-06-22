@@ -1,4 +1,4 @@
-/*package kr.co.nft.lms.controller;
+package kr.co.nft.lms.controller;
 
 import java.util.Map;
 
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.NoticeService;
 import kr.co.nft.lms.util.A;
-import kr.co.nft.lms.vo.Board;
 import kr.co.nft.lms.vo.Notice;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,15 +21,15 @@ public class NoticeController {
 	
 	//Notice입력폼
 	@GetMapping("/manager/notice/addNotice")
-	public String addBoard() {
-		return "/board/addBoard";
+	public String addNotice() {
+		return "/notice/addNotice";
 	}
-	//Board 입력 액션
-	@PostMapping("/manager/addNotice")
+	//Notice 입력 액션
+	@PostMapping("/manager/notice/addNotice")
 	public String addNotice(Notice notice) {
-		log.debug(A.S + "NoticeController.addBoard.param : "+ notice + A.R);
+		log.debug(A.S + "[NoticeController.addNotice.param] notice : "+ notice + A.R);
 		int row = noticeService.addNotice(notice);
-		log.debug(A.S + "NoticeController.addNotice.row : "+ row + A.R);
+		log.debug(A.S + "[NoticeController.addNotice.row] row : "+ row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.addNotice.param] 입력실패"+ A.R);
@@ -42,63 +41,76 @@ public class NoticeController {
 	}
 	
 	//Notice 목록보기
-	@GetMapping("/getBoardByPage")
-	public String getBoardByPage(Model model
-								,@RequestParam(name= "currnetPage", defaultValue = "1") int currentPage
-								,@RequestParam(name= "rowPerPage", defaultValue = "10") int rowPerPage) {
-		Map<String, Object> returnMap = boardService.getBoardByPage(currentPage, rowPerPage);
-		log.debug(A.S + "BoardController.BoardGetByPage.param : ", currnetPage + A.R);
-		model.addAttribute("boardList", returnMap.get("boardList"));
+	@GetMapping("/all/notice/getNoticeListByPage")
+	public String getNoticeListByPage(Model model
+									,@RequestParam(name= "currentPage", defaultValue = "1") int currentPage
+									,@RequestParam(name= "rowPerPage", defaultValue = "10") int rowPerPage) {
+		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] currentPage : " + currentPage + A.R);
+		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] rowPerPage : " + rowPerPage + A.R);
+		
+		Map<String, Object> returnMap = noticeService.getNoticeListByPage(currentPage, rowPerPage);
+		log.debug(A.S + "[NoticeController.getNoticeListByPage.returnMap] currentPage : " + currentPage + A.R);
+		log.debug(A.S + "[NoticeController.getNoticeListByPage.returnMap] rowPerPage : " + rowPerPage + A.R);
+		
+		model.addAttribute("noticeList", returnMap.get("noticeList"));
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		
-		return "/board/getBoardByPage";
+		return "/notice/getNoticeListByPage";
 	}
 	
 	//Notice 상세보기
-	@GetMapping("/getBoardOne")
-	public String getBoardOne(Model model
-							,@RequestParam(name="boardNo") int boardNo) {
-		log.debug(A.S + "BoardController.getBoardOne.param boardNo : "+ boardNo + A.R);
-		Board getBoardOne = boardService.getBoardOne(boardNo);
-		model.addAttribute("board", getBoardOne);
-		return "/board/getBoardOne";
+	@GetMapping("/all/notice/getNoticeOne")
+	public String getNoticeOne(Model model
+							,@RequestParam(name="noticeNo") int noticeNo) {
+		log.debug(A.S + "[NoticeController.getNoticeOne.param] noticeNo : " + noticeNo + A.R);
+		Notice notice = noticeService.getNoticeOne(noticeNo);
+		log.debug(A.S + "[NoticeController.getNoticeOne.notice] notice : " + notice + A.R);
+		model.addAttribute("notice", notice);
+		return "/notice/getNoticeOne";
 	}
 	
 	//Notice 수정폼
-	@GetMapping("/modifyBoard")
-	public String modifyBoard(Model model
-							,@RequestParam(name="boardNo") int boardNo) {
-		log.debug(A.S + "BoardController.modifyBoard.param boardNo : "+ boardNo + A.R);
-		Board board = boardService.getBoardOne(boardNo);
-		model.addAttribute("board", board);
-		return "/board/modifyBoard";
+	@GetMapping("/manager/notice/modifyNotice")
+	public String modifyNotice(Model model
+							,@RequestParam(name="noticeNo") int noticeNo) {
+		log.debug(A.S + "[NoticeController.modifyNotice.param] noticeNo : " + noticeNo + A.R);
+		Notice notice = noticeService.getNoticeOne(noticeNo);
+		log.debug(A.S + "[NoticeController.modifyNotice.notice] notice : " + notice + A.R);
+		model.addAttribute("notice", notice);
+		return "/notice/modifyNotice";
 	}
 	
 	//Notice 수정 액션
-	@PostMapping("/modifyBoard")
-	public String modifyBoard(Board board) {
-		int row = boardService.modifyBoard(board);
-		log.debug(A.S + "BoardController.modifyBoard.row : "+ row + A.R);
-		return "redirect:/board/getBoardOne?boardNo=" + board.getBoardNo();
-	}
-	
-	
-	 * //Notice 삭제 폼
-	 * 
-	 * @GetMapping("/removeBoard") public String removeBoard(Model model
-	 * ,@RequestParam(name="boardNo") int boardNo) { log.debug(A.S +
-	 * "BoardController.removeBoard.param.boardNo : "+ boardNo + A.R); Board board =
-	 * boardService.getBoardOne(boardNo); model.addAttribute("board", board); return
-	 * "/board/removeBoard"; }
-	 
+	@PostMapping("/manager/notice/modifyNotice")
+	public String modifyNotice(Notice notice) {
+		log.debug(A.S + "[NoticeController.modifyNotice.param] notice : " + notice + A.R);
+		int row = noticeService.modifyNotice(notice);
+		log.debug(A.S + "[NoticeController.modifyNotice.row] row : " + row + A.R);
+		//row가 0 이면 입력 실패
+		if(row==0) {
+			log.debug(A.S + "[NoticeController.modifyNotice.param] 수정실패"+ A.R);
+			return "redirect:/manager/notice/modifyNotice?msg=fail";
+		}
+		//입력성공 했을 경우
+		log.debug(A.S + "[NoticeController.modifyNotice.param] 수정성공"+ A.R);
+		return "redirect:/all/notice/getNoticeOne?noticeNo=" + notice.getNoticeNo();
+	}		 
 	
 	//Notice 삭제 액션
-	@GetMapping("/removeBoard")
-	public String removeBoard(int boardNo) {
-		int row = boardService.removeBoard(boardNo);
-		
-		log.debug(A.S + "BoardController.removeBoard.row : "+ row + A.R);
-		return "redirect:/board/getBoardByPage";
+	@GetMapping("/manager/notice/removeNotice")
+	public String removeNotice(int noticeNo) {
+		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
+		int row = noticeService.removeNotice(noticeNo);
+		log.debug(A.S + "[NoticeController.removeNotice.row] row : " + row + A.R);
+		//row가 0 이면 입력 실패
+		if(row==0) {
+			log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)실패"+ A.R);
+			return "redirect:/manager/notice/removeNotice?msg=fail";
+		}
+		//입력성공 했을 경우
+		log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)성공"+ A.R);
+		return "redirect:/all/notice/getNoticeListByPage";
 	}
-}*/
+	
+}

@@ -14,5 +14,9 @@
 			${sessionLoginMember.memberId}님 반갑습니다. <a href="${pageContext.request.contextPath}/all/logout">로그아웃</a>
 		</c:if>
 	</div>
+	
+	<a href="${pageContext.request.contextPath}/student/getStudentOne">
+		학생 정보 상세보기 
+	</a>
 </body>
 </html>

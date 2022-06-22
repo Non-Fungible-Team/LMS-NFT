@@ -6,4 +6,13 @@ import lombok.Data;
 public class LectureBoard {
 	private int lectureNo;
 	private int boardNo;
+	
+	private String lectureBoardTitle;
+	private String lectureBoardContent;
+	private String lectureBoardCategory;
+	private String memberId;
+	private String lectureBoardPrivilege;
+	private String lectureBoardBlind;
+	private String lectureBoardCreateDate;
+	private String lectureBoardUpdateDate;
 }

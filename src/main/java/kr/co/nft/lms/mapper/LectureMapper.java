@@ -31,7 +31,7 @@ public interface LectureMapper {
 	
 	//4.강의 삭제 - action
 	//int형으로 반환, 번호값 전달받음
-	int deleteLecture(int lectureNo);
+	int deleteLecture(Lecture lecture);
 	
 	//5.학생-강의 목록 - 강의별 학생의 목록(운영자,강사)
 	//List로 반환, 키값으로 데이터 전달받음.
@@ -46,12 +46,14 @@ public interface LectureMapper {
 	//5-4. 학생-강의 목록 삭제
 	int deleteStudentLecture(int studentLectureNo);
 	
+	//6.운영자_강의 삽입
+	int insertManagerLecture(ManagerLecture managerLecture);
+	
 	//7.전체 행수 -강의
 	int selectLectureCount();
 	//7-2. 강의-학생 전체 행
 	int selectStudentLectureCount();
-	//8.운영자_강의 삽입
-	int insertManagerLecture(ManagerLecture managerLecture);
+	
 	
 	
 	

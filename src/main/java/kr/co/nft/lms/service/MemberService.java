@@ -18,30 +18,19 @@ public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
 	
-	public int addStudent(Member member, Student student) {
-		return memberMapper.insertStudent(member, student);
+	
+	// Student 테이블에 들어가는 학생 회원 가입 
+	public int addStudent(Student student) {
+		return memberMapper.insertStudentByStudentVo(student);
+	}
+	
+	// Member 테이블에 들어가는 학생 회원 가입 
+	public int addStudent(Member member) {
+		return memberMapper.insertStudentByMemberVo(member);
 	}
 	
 	public Member getMemberOne(Member member) {
 		return memberMapper.selectMemberOne(member);
-	}
-	
-	// 운영자 가입
-	public void insertManager(Member member, Manager manager){
-		memberMapper.insertMember(member);
-		memberMapper.insertManager(manager);
-	}
-	
-	// 강사 가입
-	public void insertTeacher(Member member, Teacher teacher) {
-		memberMapper.insertMember(member);
-		memberMapper.insertTeacher(teacher);
-	}
-	
-	// 학생 가입
-	public void insertStudent(Member member, Student student) {
-		memberMapper.insertMember(member);
-		memberMapper.insertStudent(student);
 	}
 	
 	public void selectIdCheck(Member member) {

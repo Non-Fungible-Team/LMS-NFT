@@ -2,8 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
-	<insert id="insertStudent"
-			parameterType="Map">
+	<insert id="insertStudentByStudentVo"
+			parameterType="kr.co.nft.lms.vo.Student">
+		INSERT INTO student (
+			member_id
+			, student_education
+			, student_name
+			, student_birth
+			, student_gender
+			, student_email 
+			, address_detail 
+		) VALUES (
+			#{memberId}
+			, #{studentEducation}
+			, #{studentName}
+			, #{studentBirth}
+			, #{studentGender}
+			, #{studentEmail}
+			, #{addressDetail}
+		)
+				
+	</insert>
+
+	<insert id="insertStudentByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member">
 			
 		INSERT INTO member(
 			member_id
@@ -16,7 +38,7 @@
 			, member_update_date 
 		) VALUES (
 			#{memberId}
-			,#{memberPw}
+			, password(#{memberPw})
 			,NOW()
 			,#{memberPhoneNo}
 			,#{memberLevel}
@@ -24,7 +46,6 @@
 			,NOW()
 			,NOW()
 		)
-		
 		
 	</insert>
 
