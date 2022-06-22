@@ -23,7 +23,7 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	
 	// 학생 정보 수정 
-	@PostMapping("/student/modifyStudent")
+	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
 								, Member member
 								, Student student) {
@@ -42,7 +42,7 @@ public class MemberController {
 	}
 	
 	// 학생 정보 수정 
-	@GetMapping("/student/modifyStudent")
+	@GetMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
 								, @RequestParam(value="memberId") String memberId
 								, Model model) {
@@ -72,7 +72,7 @@ public class MemberController {
 	}
 	
 	// 학생 상세보기
-	@GetMapping("/student/getStudentOne")
+	@GetMapping("/all/getStudentOne")
 	public String getStudentOne(HttpSession session
 			
 								, Model model) {
@@ -102,7 +102,7 @@ public class MemberController {
 	}
 	
 	// 학생 회원가입 
-	@PostMapping("/member/addStudent")
+	@PostMapping("/all/addStudent")
 	public String addStudent(Member member
 							,Student student) {
 		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
@@ -117,7 +117,7 @@ public class MemberController {
 	}
 	
 	// 학생 회원가입 
-	@GetMapping("/member/addStudent") 
+	@GetMapping("/all/addStudent") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
 	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
 	public String addStudent(Model model
