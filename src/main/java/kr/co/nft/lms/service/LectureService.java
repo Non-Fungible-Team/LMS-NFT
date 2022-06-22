@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.LectureMapper;
+import kr.co.nft.lms.mapper.SubjectMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
+import kr.co.nft.lms.vo.LectureRoom;
 import kr.co.nft.lms.vo.ManagerLecture;
 import kr.co.nft.lms.vo.StudentLecture;
+import kr.co.nft.lms.vo.Subject;
 import kr.co.nft.lms.vo.TeacherLecture;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LectureService {
 	//Mapper 변수 생성
 	@Autowired private LectureMapper lectureMapper;
+	@Autowired private SubjectMapper subjectMapper;
 	
 	//1.강의목록(상세보기) + 전체 행 수
 	public Map<String,Object> getLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
@@ -62,6 +66,20 @@ public class LectureService {
 	}
 	
 	//2.강의 / 강의-강사 삽입
+	public Map<String,Object> addLectureForm(){
+		
+		List<Subject> subjectList = subjectMapper.selectSubjectList();
+		//List<LectureRoom> lectureRoomList = 
+		log.debug(A.W +"[LectureService.addLectureForm.subjectList] subjectList : " +subjectList +A.R);//디버깅코드
+		
+		//결과값 반환 객체생성
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("subjectList", subjectList); //과목목록 값
+		//returnMap.put("lectureList", lectureList); //강의실목록 값
+		
+		return returnMap;
+	}
+	
 	public int addLecture(Lecture lecture,TeacherLecture teacherLecture) { //controller 넘겨오는 값
 		log.debug(A.W +"[LectureService.addLecture.lecture] lecture  : " + lecture +A.R);
 		log.debug(A.W +"[LectureService.addTeacherLecture.teacherLecture] teacherLecture  : " + teacherLecture +A.R);

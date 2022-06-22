@@ -116,10 +116,9 @@ public class LectureController {
 	//2.강의 / 강의-강사 삽입
 	@GetMapping("/manager/lecture/addLecture")
 	public String addLecture(Model model) {
-		List<Subject> subjectList = lectureService.addLectureForm();
-		//List<LectureRoom> lectureRoomList = 
-		model.addAttribute("subjectList",subjectList);
-		//model.addAttribute("lectureRoom",lectureRoomList);
+		Map<String,Object> returnMap = lectureService.addLectureForm(); 
+		model.addAttribute("returnMap",returnMap);
+		
 		return "lecture/addLecture"; //jsp로 이동
 	}
 	
