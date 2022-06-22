@@ -10,6 +10,12 @@ import kr.co.nft.lms.vo.Teacher;
 @Mapper
 public interface MemberMapper {
 	
+	// Member 테이블 활용하여 학생 정보 수정 
+	int updateStudentByMemberVo(Member member);
+	
+	// Student 테이블 활용하여 학생 정보 수정 
+	int updateStudentByStudentVo(Student student);
+	
 	// Member 테이블 활용하여 학생 상세보기 
 	Member selectStudentOneByMemberVo(Member member);
 	

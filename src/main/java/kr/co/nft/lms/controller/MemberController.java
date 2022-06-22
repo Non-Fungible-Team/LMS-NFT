@@ -22,22 +22,71 @@ public class MemberController {
 	
 	@Autowired MemberService memberService;
 	
-	// 학생 상세보기
-	@GetMapping("/student/getStudentOne")
-	public String getStudentOne(HttpSession session
+	// 학생 정보 수정 
+	@PostMapping("/student/modifyStudent")
+	public String modifyStudent(HttpSession session
+								, Member member
+								, Student student) {
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		
+		log.debug(A.Z+"[MemberController.modifyStudent.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.modifyStudent.param] student : "+student+A.R);
+		
+	    int rowOfMember = memberService.modifyStudent(member);
+	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfMember : "+rowOfMember+A.R);
+	    int rowOfStudent = memberService.modifyStudent(student);
+	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfStudent : "+rowOfStudent+A.R);
+		
+	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아가야 한다. 
+	    return "redirect:/student/getStudentOne";
+	}
+	
+	// 학생 정보 수정 
+	@GetMapping("/student/modifyStudent")
+	public String modifyStudent(HttpSession session
 								, @RequestParam(value="memberId") String memberId
 								, Model model) {
 		
-		log.debug(A.Z+"[MemberController.getStudentOne.param] memberId : "+memberId+A.R);
-
+		log.debug(A.Z+"[MemberController.modifyStudent.param] memberId : "+memberId+A.R);
+		
 		// 계정 정보 없으면 로그인 실패 
 		if(memberId == null) {
 			log.debug(A.Z+"MemberController.getStudentOne : "+"로그인 실패"+A.R);
 			// member/memberLogin.jsp 
 			return "/member/memberLogin";
 		}
-			
+		
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.modifyStudent] loginMember : "+loginMember+A.R);
+		
+		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
+		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
+		
+		model.addAttribute("getStudentOneByStudentVo", getStudentOneByStudentVo);
+		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
+		
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLectureNo", "");
+		
+		return "/member/modifyStudent";
+	}
+	
+	// 학생 상세보기
+	@GetMapping("/student/getStudentOne")
+	public String getStudentOne(HttpSession session
+			
+								, Model model) {
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.getStudentOne.param] memberId : "+loginMember+A.R);
+
+		// 계정 정보 없으면 로그인 실패 
+		if(loginMember == null) {
+			log.debug(A.Z+"MemberController.getStudentOne : "+"로그인 실패"+A.R);
+			// member/memberLogin.jsp 
+			return "/member/memberLogin";
+		}
+			
+		
 		log.debug(A.Z+"[MemberController.getStudentOne] loginMember : "+loginMember+A.R);
 		
 		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
@@ -88,7 +137,7 @@ public class MemberController {
 	@GetMapping("/all/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "/member/memberLogin";
+		return "redirect:/login";
 	}
 	
 	// 로그인 폼 

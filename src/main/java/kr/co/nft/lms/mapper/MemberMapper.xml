@@ -2,6 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<update id="updateStudentByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member">
+		UPDATE member SET 
+			member_pw = #{memberPw}
+			, member_phone_no = #{memberPhoneNo} 
+		WHERE member_id = #{memberId} 		
+	</update>
+
+	<update id="updateStudentByStudentVo"
+			parameterType="kr.co.nft.lms.vo.Student">
+		UPDATE student SET 
+			student_name = #{studentName}
+			, student_birth = #{studentBirth}
+			, student_gender = #{studentGender}
+			, student_email = #{studentEmail}
+			, student_education = #{studentEducation}
+		WHERE member_id = #{memberId} 
+				
+	</update>
+
 	<select id="selectStudentOneByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="kr.co.nft.lms.vo.Member">
@@ -9,6 +29,7 @@
 			member_id memberId
 			, member_phone_no memberPhoneNo
 			, member_last_login_date memberLastLoginDate
+			, member_pw memberPw 
 		FROM member 
 		WHERE member_id = #{memberId} 
 	</select>

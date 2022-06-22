@@ -18,6 +18,16 @@ public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
 	
+	// Member 테이블 활용하여 학생 수정 액션
+	public int modifyStudent(Member member) {
+		return memberMapper.updateStudentByMemberVo(member);
+	}
+	
+	// Student 테이블 활용하여 학생 수정 액션 
+	public int modifyStudent(Student student) {
+		return memberMapper.updateStudentByStudentVo(student);
+	}
+	
 	// Member 테이블 활용하여 학생 상세 조회 
 	public Member getStudentOneReturnMemberVo(Member member) {
 		return memberMapper.selectStudentOneByMemberVo(member);
