@@ -39,6 +39,8 @@ public class SubjectService {
 		
 		int row = subjectMapper.insertSubjectOne(subject);
 		
+		log.debug(A.A + "[SubjectService.addSubjectOne] row : " + row + A.R);
+		
 		return row;
 	}
 	
@@ -49,6 +51,8 @@ public class SubjectService {
 		log.debug(A.A + "[SubjectService.deleteSubjectOne] subjectNo : " + subjectNo + A.R);
 		
 		int row = subjectMapper.deleteSubjectOne(subjectNo);
+		
+		log.debug(A.A + "[SubjectService.deleteSubjectOne] row : " + row + A.R);
 		
 		return row;
 	}
