@@ -36,8 +36,8 @@
 			}else{
 				$('#addLectureForm').submit();
 			}
-		})
-	})
+		});
+	});
 </script>
 </head>
 

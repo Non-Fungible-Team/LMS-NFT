@@ -19,7 +19,6 @@
 <script src="static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
-
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
