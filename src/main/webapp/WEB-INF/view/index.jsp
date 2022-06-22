@@ -24,7 +24,7 @@
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
-	<div id="test"></div>
+	<div id="navAside"></div>
 
 	<!-- main화면 body start -->
 	<!-- 첫번쨰 문단 -->
@@ -83,7 +83,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </body>
 	<script>
-    	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
+    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
   	</script>
 
     <script src="static/dist/js/app-style-switcher.js"></script>
