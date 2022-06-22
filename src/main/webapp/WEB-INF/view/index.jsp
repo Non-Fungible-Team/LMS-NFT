@@ -34,7 +34,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		    <div class="card">
 		        <div class="card-body">
 		            <h4 class="card-title">수강목록</h4>
-		            <div class="mt-2" style="height:283px; width:100%;">
+		            <div class="mt-2" style="height:auto; width:auto;">
 		            <!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 		            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
 		            		<thead>
