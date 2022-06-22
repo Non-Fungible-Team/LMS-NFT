@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.SurveyService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyQuestionList;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,28 +22,28 @@ public class SurveyController {
 	@Autowired private SurveyService surveyService;
 	
 	@GetMapping("/survey/insertSurvey")
-	public String insertSurvey(Model model,
-			@RequestParam(name = "currentPage",defaultValue="1")int currentPage,
+	public String insertSurvey(Survey survey, Model model,
+			@RequestParam(name = "currentPage",defaultValue = "1") int currentPage,
 			@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {	
-		Map<String, Object> returnMap = surveyService.getSurveyQuestionListByPage(currentPage, rowPerPage);
-		log.debug(A.D+"[SurveyController.insertSurvey] returnMap : " + returnMap + A.R); // 디버깅
+		Map<String, Object> map = surveyService.selectSurveyQuestionList(currentPage, rowPerPage);
 		
-		model.addAttribute("SurveyQuestionList", returnMap.get("SurveyQuestionList")); // value를 object로 넘겨줌
-		model.addAttribute("lastPage", returnMap.get("lastPage"));
-		model.addAttribute("currentPage",currentPage);
+		log.debug(A.D+"[SurveyController.insertSurvey] map : " + map + A.R); // 디버깅
+		
+		model.addAttribute("QuestionList",map.get("QuestionList"));
 		
 		return "/survey/insertSurvey";
 	}
 	
 	
-	@GetMapping("/survey/insertSurveyList")
-	public String insertSurveyList() {
-		return "/survey/insertSurveyList";
+	@GetMapping("/survey/insertSurveyQuestionList")
+	public String insertSurveyQuestionList() {
+		return "/survey/insertSurveyQuestionList";
 	}
 	
 	@PostMapping("/survey/insertSurveyList")
 	public String insertSurveyList(SurveyQuestionList surveyQuestionList) {
 		log.debug(A.D+"[SurveyController.insertSurveyList] surveyQuestionList : " + surveyQuestionList.toString() + A.R); // 디버깅
+
 		
 		surveyService.insertSurveyList(surveyQuestionList);
 		return "redirect:/survey/getSurveyQuestionListByPage";

@@ -80,18 +80,17 @@ $(document).ready(function(){
 			</td>
 			
 			<tr>
-				<td>객관식 질문 리스트</td>
+				<td>객관식 질문</td>
 			</tr>
-			
 			<tr>
 				<td>질문 항목</td>
 				<td><select id="selectQuestionList">
 						<option>항목선택</option>
-						<c:forEach var="ql" items="SurveyQuestionList">
+						<c:forEach var="ql" items="${QuestionList}">
 							<option value="${ql.surveyQuestionListNo}">${ql.surveyQuestionListName}</option>
 						</c:forEach>
 					</select>
-					<input type="text" class="readonry" value="객관식">
+					<input type="text" value="객관식" readonly>
 					<span id='multipleNameHelper' class='helper'></span></td>
 			</tr>
 			<tr>

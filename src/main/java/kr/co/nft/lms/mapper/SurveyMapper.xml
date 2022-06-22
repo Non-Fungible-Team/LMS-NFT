@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.SurveyMapper">
+
 		<select id="selectSurveyListByPage"
 				parameterType="java.util.Map"
 				resultType="kr.co.nft.lms.vo.Survey">
@@ -43,6 +44,17 @@
 		</select>
 		
 		
+		<select id="selectSurveyQuestionList"
+				parameterType="java.util.List"
+				resultType="kr.co.nft.lms.vo.SurveyQuestionList">
+			SELECT
+				survey_question_list_no surveyQuestionListNo
+				,survey_question_list_name surveyQuestionListName
+				,survey_question_list_content surveyQuestionListContent
+				FROM survey_question_list
+				ORDER BY survey_question_list_no
+		</select>
+		
 		
 		<insert id="insertSurvey"
 				parameterType="kr.co.nft.lms.vo.Survey">
@@ -65,11 +77,11 @@
 		
 		<insert id="insertSurveyList"
 				parameterType="kr.co.nft.lms.vo.Survey">
-			INSERT survey_question_list(
-				survey_question_list_name surveyQuestionListName
-				,survey_question_list_content surveyQuestionListContent
-				,survey_question_list_create_date surveyQuestionListCreateDate
-				,survey_question_list_update_date surveyQuestionListUpdateDate
+			INSERT INTO survey_question_list(
+				survey_question_list_name
+				,survey_question_list_content
+				,survey_question_list_create_date
+				,survey_question_list_update_date
 			) VALUES (
 				#{surveyQuestionListName}
 				,#{surveyQuestionListContent}

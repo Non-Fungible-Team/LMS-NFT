@@ -9,7 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-
+	
 	$('#insertQuestionList').click(function(){
 		if($('#surveyQuestionListName').val() == '') {
 			$('#NameHelper').text('제목을 입력해주세요');
@@ -36,7 +36,7 @@ $(document).ready(function(){
 	<h1>설문조사 리스트 생성</h1>
 
 
-	<form action="${pageContext.request.contextPath}/survey/insertSurveyList" id="insertList" name="insertList">
+	<form method="post" action="${pageContext.request.contextPath}/survey/insertSurveyList" id="insertList" name="insertList">
 		<table>
 			<tr>
 				<td>질문 제목</td>

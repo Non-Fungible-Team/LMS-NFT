@@ -48,7 +48,7 @@
 
 		<div>
 			<a class="btn btn-default"
-				href="${pageContext.request.contextPath}/insertSurbey">공지사항 등록</a>
+				href="${pageContext.request.contextPath}/survey/insertSurvey">설문조사 등록</a>
 		</div>
 	</div>
 </body>

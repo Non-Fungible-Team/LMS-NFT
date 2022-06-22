@@ -1,5 +1,6 @@
 package kr.co.nft.lms.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.SurveyMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
 import lombok.extern.slf4j.Slf4j;
@@ -20,18 +22,39 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
+	public Map<String,Object> selectSurveyQuestionList(int currentPage, int rowPerPage) {
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("rowPerPage", rowPerPage);
+		
+		List QuestionList = surveyMapper.selectSurveyQuestionList(map);
+		
+		Map<String,Object> select = new HashMap<>();
+		select.put("QuestionList", QuestionList);
+		
+		
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] select : " + select + A.R);
+		
+		
+		
+		return select;
+	}
+	
+	public int insertSurbey(Survey survey) {
+		log.debug(A.D+"[SurveyService.insertSurbey] survey : " + survey + A.R);
+		return surveyMapper.insertSurvey(survey);
+	}
+	
 	public int insertSurveyQuestion(SurveyQuestion surveyQuestion) {
-		
-		
-		
+		log.debug(A.D+"[SurveyService.insertSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);
 		return surveyMapper.insertSurveyQuestion(surveyQuestion);
 	}
 	
 	public int insertSurveyList(SurveyQuestionList surveyQuestionList) {
+		log.debug(A.D+"[SurveyService.insertSurveyList] surveyQuestionList : " + surveyQuestionList + A.R);
 		
-		log.debug(A.D+"[SurveyService.getSurveyListByPage] surveyQuestionList : " + surveyQuestionList + A.R);
 		
-		return surveyMapper.insertSurveyList(surveyQuestionList);
+		return surveyMapper.insertSurveyQuestionList(surveyQuestionList);
 		
 	}
 	
