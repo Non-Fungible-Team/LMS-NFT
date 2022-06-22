@@ -25,24 +25,31 @@ public class MemberController {
 	// 학생 상세보기
 	@GetMapping("/student/getStudentOne")
 	public String getStudentOne(HttpSession session
-								,Member member) {
+								, @RequestParam(value="memberId") String memberId
+								, Model model) {
 		
-		log.debug(A.Z+"[MemberController.getStudentOne.param] member : "+member+A.R);
-		
-		Member sessionLoginMember = memberService.getMemberOne(member);
-		log.debug(A.Z+"MemberController.getStudentOne.sessionLoginMember : "+sessionLoginMember+A.R);
-		
+		log.debug(A.Z+"[MemberController.getStudentOne.param] memberId : "+memberId+A.R);
+
 		// 계정 정보 없으면 로그인 실패 
-		if(sessionLoginMember == null) {
+		if(memberId == null) {
 			log.debug(A.Z+"MemberController.getStudentOne : "+"로그인 실패"+A.R);
 			// member/memberLogin.jsp 
 			return "/member/memberLogin";
 		}
-				
-		session.setAttribute("sessionLoginMember", sessionLoginMember);
+			
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.getStudentOne] loginMember : "+loginMember+A.R);
+		
+		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
+		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
+		
+		model.addAttribute("getStudentOneByStudentVo", getStudentOneByStudentVo);
+		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
+		
+		session.setAttribute("loginMember", loginMember);
 		session.setAttribute("sessionLectureNo", "");
 		
-		return "/student/getStudentOne";
+		return "/member/getStudentOne";
 	}
 	
 	// 학생 회원가입 

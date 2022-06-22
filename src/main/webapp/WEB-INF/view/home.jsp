@@ -15,7 +15,7 @@
 		</c:if>
 	</div>
 	
-	<a href="${pageContext.request.contextPath}/student/getStudentOne">
+	<a href="${pageContext.request.contextPath}/student/getStudentOne?memberId=${sessionLoginMember.memberId}">
 		학생 정보 상세보기 
 	</a>
 </body>

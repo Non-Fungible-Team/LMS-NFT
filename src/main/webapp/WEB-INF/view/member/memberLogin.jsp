@@ -8,10 +8,10 @@
 <title>memberLogin</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-
 </script>
 </head>
 <body>
+	
 	<h1>로그인 페이지</h1>
 	<!-- 값을 Controller단에서 가공하고 Model로 값을 받았다면 level은 그냥 받을 수 있다.  -->
 	<!-- 값을 가공하지 않고 바로 받으려면 `param.level`과 같이 받으면 된다.  -->

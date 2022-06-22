@@ -2,6 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<select id="selectStudentOneByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT 
+			member_id memberId
+			, member_phone_no memberPhoneNo
+			, member_last_login_date memberLastLoginDate
+		FROM member 
+		WHERE member_id = #{memberId} 
+	</select>
+
+	<select id="selectStudentOneByStudentVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Student">
+		SELECT 
+			student_name studentName
+			, student_birth studentBirth
+			, student_gender studentGender
+			, student_email studentEmail 
+			, student_education studentEducation 
+		FROM student 
+		WHERE member_id = #{memberId} 
+	</select>
+		
 	<insert id="insertStudentByStudentVo"
 			parameterType="kr.co.nft.lms.vo.Student">
 		INSERT INTO student (
