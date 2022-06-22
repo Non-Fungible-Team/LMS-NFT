@@ -19,8 +19,33 @@
 <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <style type="text/css">textarea{width: 100%; height: 1000em; border: none; resize: none;}</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-
+	<script>
+		//유효성검사
+		$('document').ready(function(){
+			$('#uploadNotice').click(function(){
+					$('#noticeTitleHelper').text('');
+					$('#noticeContentHelper').text('');
+					$('#noticePrivilegeHelper').text('');
+					
+				if($('#noticeTitle').val() == ''){
+					$('#noticeTitleHelper').text('제목을 입력하세요');
+					$('#noticeTitle').focus();
+				} else if($('#noticeContent').val() == ''){
+					$('#noticeContentHelper').text('내용을 입력하세요');
+					$('#noticeContent').focus();
+				} else if($('#noticePrivilege').val() == '-1'){
+					$('#noticePrivilegeHelper').text('읽기권한을 선택하세요');
+					$('#noticePrivilege').focus();
+				} else {
+					$('#addNoticeForm').submit();
+				}
+			});
+		});
+		
+	</script>
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -33,34 +58,45 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		        <div class="card-body">
 		            <h4 class="card-title">addNotice</h4>
 		            <div class="mt-2" style="height:auto; width:100%;">
-		            	<form action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post">
+		            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post">
 			            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
 								<tr>
 					    			<th>제목</th>
-					    			<td><input type="text" name="noticeTitle" class="form-control"></td>
+					    			<td>
+					    				<input type="text" name="noticeTitle" id="noticeTitle" class="form-control">
+					    				<span id="noticeTitleHelper" class="helper"></span>
+					    			</td>
+					    		</tr>
+					    		<tr>
+					    			<th>작성자</th>
+					    			<td>
+					    				<input type="text" name="memberId" id="memberId" class="form-control" value="${sessionLoginMember.memberId}" readonly="readonly">
+					    				<span id="memberIdHelper" class="helper"></span>
+					    			</td>
 					    		</tr>
 					    		<tr>
 					    			<th>내용</th>
 					    			<td height= 500px>
-					    				<textarea placeholder="내용을 입력해 주세요." rows="20" Cols="10" name="noticeContent" class="form-control"></textarea>
+					    				<textarea rows="20" Cols="10" name="noticeContent" id="noticeContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+					    				<span id="noticeContentHelper" class="helper"></span>
 					    			</td>
-					    			  
 					    		</tr>
 					    		<tr>
 					    			<th>읽기권한</th>
 					    			<td>
-					    				<select name = "noticePrivilege">
+					    				<select name = "noticePrivilege" id="noticePrivilege">
 					    					<option value="-1">::읽기권한::</option>
 					    					<option value="4">학생이상</option>
 					    					<option value="5">강사이상</option>
 					    					<option value="6">운영자만</option>
 					    				</select>
+					    				<span id="noticePrivilegeHelper" class="helper"></span>
 					    			</td>
 					    		</tr>
 			            	</table>
 			            	
 			            	<div>
-			            		<button type="submit" class="btn btn-outline-success btn-rounded">등록</button>
+			            		<button type="button" id="uploadNotice" class="btn btn-outline-success btn-rounded">등록</button>
 						        <a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
 						        	<input type="button" class="btn btn-info" style="float: right" value="목록으로">
 						        </a>
@@ -74,6 +110,8 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </div>
 </body>
+
+
 	<script>
     	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
   	</script>
