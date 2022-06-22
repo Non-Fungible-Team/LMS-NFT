@@ -58,13 +58,16 @@
 		
 		<insert id="insertSurvey"
 				parameterType="kr.co.nft.lms.vo.Survey">
+			<selectKey resultType="int" keyProperty="surveyNo" order="AFTER">
+				SELECT last_insert_id()
+			</selectKey>
 			INSERT INTO survey(
-				survey_title surveyTitle
-				,survey_content surveyContent
+				survey_title
+				,survey_content
 				,survey_create_date
 				,survey_update_date
-				,survey_startline_date surveyStartlineDate
-				,survey_deadline_date surveyDeadlineDate
+				,survey_startline_date
+				,survey_deadline_date
 			) VALUES (
 				#{surveyTitle}
 				,#{surveyContent}
@@ -75,7 +78,7 @@
 			)
 		</insert>
 		
-		<insert id="insertSurveyList"
+		<insert id="insertSurveyQuestionList"
 				parameterType="kr.co.nft.lms.vo.Survey">
 			INSERT INTO survey_question_list(
 				survey_question_list_name
@@ -89,4 +92,39 @@
 				,NOW()
 			)
 		</insert>
+		
+		<insert id="insertSurveyQuestion"
+				parameterType="kr.co.nft.lms.vo.SurveyQuestion">
+			INSERT INTO survey_question(
+				survey_no
+				,survey_question_list_no
+				,survey_question_type
+				,survey_question_create_date
+				,survey_question_update_date
+			) VALUES(
+				#{surveyNo}
+				,#{surveyQuestionListNo}
+				,#{surveyQuestionType}
+				,NOW()
+				,NOW()
+			)
+		</insert>
+		
+		<select id="selectSurveyList"
+				parameterType="java.util.Map"
+				resultType="kr.co.nft.lms.vo.Survey">
+			SELECT
+				survey_no surveyNo
+				,survey_title surveyTitle
+				,survey_content surveyContent
+				,survey_create_date surveyCreateDate
+				,survey_update_date surveyUpdateDate
+				,survey_startline_date surveyStartlineDate
+				,survey_deadline_date surveyDeadlineDate
+				,lecture_no lectureNo
+				,member_id memberId
+				FROM survey
+				ORDER BY survey_no
+		</select>
+		
 </mapper>

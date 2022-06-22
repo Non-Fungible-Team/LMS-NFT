@@ -40,15 +40,25 @@ public class SurveyService {
 		return select;
 	}
 	
-	public int insertSurbey(Survey survey) {
+	public int insertSurbey(Survey survey,ArrayList<SurveyQuestion> surveyQuestion) {
 		log.debug(A.D+"[SurveyService.insertSurbey] survey : " + survey + A.R);
-		return surveyMapper.insertSurvey(survey);
+		int row = surveyMapper.insertSurvey(survey);
+		log.debug(A.D+"[SurveyService.insertSurbey] surveyNo : " + row+ A.R);
+		
+		
+		int row2 = 0;
+		for(SurveyQuestion s : surveyQuestion) {
+			s.setSurveyNo(survey.getSurveyNo());
+			row2 = row2 + surveyMapper.insertSurveyQuestion(s);
+			
+			log.debug(A.D+"[SurveyService.insertSurbey] row : " + row + A.R);
+		}
+		
+		
+		
+		return row2;
 	}
 	
-	public int insertSurveyQuestion(SurveyQuestion surveyQuestion) {
-		log.debug(A.D+"[SurveyService.insertSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);
-		return surveyMapper.insertSurveyQuestion(surveyQuestion);
-	}
 	
 	public int insertSurveyList(SurveyQuestionList surveyQuestionList) {
 		log.debug(A.D+"[SurveyService.insertSurveyList] surveyQuestionList : " + surveyQuestionList + A.R);

@@ -19,8 +19,8 @@ public interface SurveyMapper {
 	
 	// 설문조사 질문 생성
 	int insertSurveyQuestion(SurveyQuestion surveyQuestion);
-	
-	// 설문조사 질문 리스트 
+
+	// 설문조사 질문 리스트 목록 (제목과 내용만 페이징 없음)
 	List selectSurveyQuestionList(Map<String, Integer> map);
 	
 	// 설문조사 질문 리스트 페이지
@@ -29,10 +29,15 @@ public interface SurveyMapper {
 	// 설문조사 리스트 페이지 카운트
 	int countSurveyList();
 	
+	// 설문조사 리스트 (페이징 없는거)
+	List selectSurveyList(Map<String, Integer> map);
+	
 	// 전체 설문조사 페이지 (리스트 형식)
 	List selectSurveyListByPage(Map<String, Integer> map);
 	
 	// 전체 설문조사 페이지 카운트
 	int countSurvey();
+	
+	
 	
 }
