@@ -73,11 +73,13 @@ public class LectureService {
 		List<Subject> subjectList = subjectMapper.selectSubjectList();
 		List<LectureRoom> lectureRoomList = lectureRoomMapper.selectLectureRoomList();
 		log.debug(A.W +"[LectureService.addLectureForm.subjectList] subjectList : " +subjectList +A.R);//디버깅코드
+		log.debug(A.W +"[LectureService.addLectureForm.lectureRoomList] lectureRoomList : " +lectureRoomList +A.R);//디버깅코드
 		
 		//결과값 반환 객체생성
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("subjectList", subjectList); //과목목록 값
 		returnMap.put("lectureRoomList", lectureRoomList); //강의실목록 값
+		log.debug(A.W +"[LectureService.addLectureForm.returnMap] returnMap : " +returnMap +A.R);//디버깅코드
 		
 		return returnMap;
 	}
