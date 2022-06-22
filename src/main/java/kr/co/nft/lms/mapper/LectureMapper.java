@@ -46,12 +46,14 @@ public interface LectureMapper {
 	//5-4. 학생-강의 목록 삭제
 	int deleteStudentLecture(int studentLectureNo);
 	
+	//6.운영자_강의 삽입
+	int insertManagerLecture(ManagerLecture managerLecture);
+	
 	//7.전체 행수 -강의
 	int selectLectureCount();
 	//7-2. 강의-학생 전체 행
 	int selectStudentLectureCount();
-	//8.운영자_강의 삽입
-	int insertManagerLecture(ManagerLecture managerLecture);
+	
 	
 	
 	

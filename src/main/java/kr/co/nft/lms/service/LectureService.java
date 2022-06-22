@@ -77,7 +77,7 @@ public class LectureService {
 	}
 	
 	//3. 강의수정 폼
-	public Map<String,Object> modify(Map<String,Object> map) {
+	public Map<String,Object> modifyLectureForm(Map<String,Object> map) {
 		log.debug(A.W +"[LectureService.updateLectureForm.map] map  : " + map +A.R);
 		
 		//컨트롤러 입력된 값 가공
@@ -99,8 +99,7 @@ public class LectureService {
 		returnMap.put("lecture", lecture);
 		log.debug(A.W +"[LectureService.modifyLectureForm.returnMap] returnMap  : " + returnMap +A.R);
 		
-		return returnMap;
-		
+		return returnMap;	
 	}
 	//강의수정 액션
 	public int modifyLecture(Lecture lecture) {
@@ -162,5 +161,61 @@ public class LectureService {
 		return returnMap;
 	}
 	
-	//5-2.
+	//5-2.학생-강의 삽입
+	public int addStudentLecture(StudentLecture studentLecture) { //controller 넘겨오는 값
+	log.debug(A.W +"[LectureService.addStudentLecture.lecture] lecture  : " + studentLecture +A.R);
+	
+	//mapper 메소드 호출
+	int row = lectureMapper.insertStudentLecture(studentLecture);
+	log.debug(A.W +"[LectureService.addStudentLecture.row] row : " + row +A.R);
+	
+	return row; //입력된 행 반환 = 1
+	}
+	
+	//5-3. 학생-강의 목록 수정폼
+	public Map<String,Object> modifyStudentLectureForm(Map<String,Object> map) {
+		log.debug(A.W +"[LectureService.modifyStudentLectureForm.map] map  : " + map +A.R);
+		
+		//컨트롤러 입력된 값 가공
+		int lectureNo = (int)map.get("lectureNo"); //int형으로 번호 값 가져오기
+		log.debug(A.W +"[LectureService.modifyStudentLectureForm.lectureNo] lectureNo  : " + lectureNo +A.R);
+		
+		//가져온 번호 값 저장할 객체 생성
+		Map<String,Object> paramMap = new HashMap<>();
+		paramMap.put("lectureNo", lectureNo); //가져온 번호 값 저장
+		log.debug(A.W +"[LectureService.modifyStudentLectureForm.paramMap] paramMap  : " + paramMap +A.R);
+		
+		//매퍼 반환 값 가공해서 controller 넘겨줌
+		//수정폼 mapper 메소드 호출 및 저장객체 생성
+		StudentLecture studentLecture = lectureMapper.updateStudentLectureForm(lectureNo);
+		log.debug(A.W +"[LectureService.modifyStudentLectureForm.studentLecture] studentLecture  : " + studentLecture +A.R);
+		
+		//결과 값 저장
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("studentLecture", studentLecture);
+		log.debug(A.W +"[LectureService.modifyStudentLectureForm.returnMap] returnMap  : " + returnMap +A.R);
+		
+		return returnMap;
+	}
+	
+	//학생-강의 목록 수정액션
+	public int modifyStudentLecture(StudentLecture studentLecture) {
+		log.debug(A.W +"[LectureService.modifyStudentLecture.studentLecture] studentLecture  : " + studentLecture +A.R);
+		
+		int row = lectureMapper.updateStudentLecture(studentLecture);
+		log.debug(A.W +"[LectureService.modifyStudentLecture.row] row  : " + row +A.R);
+		
+		return row;
+	}
+	
+	//6. 운영자- 강의 삽입
+	public int addManagerLecture(ManagerLecture managerLecture) {
+		log.debug(A.W +"[LectureService.addManagerLecture.lecture] managerLecture  : " + managerLecture +A.R);
+		
+		//mapper 메소드 호출
+		int row = lectureMapper.insertManagerLecture(managerLecture);
+		log.debug(A.W +"[LectureService.addManagerLecture.row] row : " + row +A.R);
+		
+		return row; //입력된 행 반환 = 1
+	}
 }
