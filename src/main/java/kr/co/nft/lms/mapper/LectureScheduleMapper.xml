@@ -3,7 +3,8 @@
 <mapper namespace="kr.co.nft.lms.mapper.LectureScheduleMapper">
 
 	<select id="selectLectureScheduleListByLectureNo"
-			parameterType="int">
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.LectureSchedule">
 		SELECT 
 			lecture_schedule_date lectureScheduleDate
 			, lecture_no lectureNo
@@ -14,7 +15,8 @@
 		WHERE lecture_no = #{ lectureNo };
 	</select>
 	
-	<insert id="insertLectureSchedule">
+	<insert id="insertLectureSchedule"
+			parameterType="kr.co.nft.lms.vo.LectureSchedule">
 		INSERT INTO lecture_schedule (
 			lecture_schedule_date
 			, lecture_no
@@ -29,24 +31,9 @@
 			, NOW()
 		)
 	</insert>
-	<!-- 
-	<insert id="insertLectureScheduleOne">
-		INSERT INTO lecture_schedule (
-			lecture_schedule_date
-			, lecture_no
-			, lecture_schedule_start_date
-			, lecture_schedule_end_date
-			, lecture_schedule_create_date
-		) VALUES (
-			#{ lectureScheduleDate }
-			, #{ lectureNo }
-			, #{ lectureScheduleStartDate }
-			, #{ lectureScheduleEndDate }
-			, NOW()
-		)
-	</insert>
-	 -->
-	<delete id="deleteLectureScheduleOne">
+	
+	<delete id="deleteLectureSchedule"
+			parameterType="kr.co.nft.lms.vo.LectureSchedule">
 		DELETE FROM lecture_schedule
 		WHERE lecture_schedule_date = #{ lectureScheduleDate }
 		AND lecture_no = #{ lectureNo }

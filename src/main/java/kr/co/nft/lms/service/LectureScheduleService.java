@@ -25,9 +25,11 @@ public class LectureScheduleService {
 	private LectureScheduleMapper lectureScheduleMapper;
 	
 	// lecture_schedule 테이블 lecture_no에 따른 전체 리스트
-	public List<LectureSchedule> getLectureScheduleListByLectureNo() {
+	public List<LectureSchedule> getLectureScheduleListByLectureNo(int lectureNo) {
 		
-		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleListByLectureNo();
+		log.debug(A.A + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureNo : " + lectureNo + A.R);
+		
+		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleListByLectureNo(lectureNo);
 		log.debug(A.A + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureScheduleList : " + lectureScheduleList + A.R);
 		
 		return lectureScheduleList;
@@ -107,4 +109,15 @@ public class LectureScheduleService {
 	}
 	
 	// lecture_schedule 테이블 데이터 삭제
+	public int removeLectureSchedule(String lectureScheduleDate, int lectureNo) {
+		
+		log.debug(A.A + "[LectureScheduleService.removeLectureSchedule] lectureScheduleDate : " + lectureScheduleDate + A.R);
+		log.debug(A.A + "[LectureScheduleService.removeLectureSchedule] lectureNo : " + lectureNo + A.R);
+		
+		int row = lectureScheduleMapper.deleteLectureSchedule(lectureScheduleDate, lectureNo);
+		
+		log.debug(A.A + "[LectureScheduleService.removeLectureSchedule] row : " + row + A.R);
+		
+		return row;
+	}
 }
