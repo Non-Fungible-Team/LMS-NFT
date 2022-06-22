@@ -13,6 +13,7 @@ import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.service.SubjectService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
+import kr.co.nft.lms.vo.LectureRoom;
 import kr.co.nft.lms.vo.Subject;
 import kr.co.nft.lms.vo.TeacherLecture;
 import lombok.extern.slf4j.Slf4j;
@@ -114,7 +115,11 @@ public class LectureController {
 	
 	//2.강의 / 강의-강사 삽입
 	@GetMapping("/manager/lecture/addLecture")
-	public String addLecture() {
+	public String addLecture(Model model) {
+		List<Subject> subjectList = lectureService.addLectureForm();
+		//List<LectureRoom> lectureRoomList = 
+		model.addAttribute("subjectList",subjectList);
+		//model.addAttribute("lectureRoom",lectureRoomList);
 		return "lecture/addLecture"; //jsp로 이동
 	}
 	
@@ -184,30 +189,30 @@ public class LectureController {
 	}
 	*/
 	// 5-2.학생-강의 삽입
-	@PostMapping("")
+	/*@PostMapping("a")
 	public String addStudentLecture() {
 		
 		return "";
 	}
 	
 	// 5-3. 학생-강의 목록 수정 폼
-	@GetMapping("")
+	@GetMapping("b")
 	public String modifyStudentLectureForm() {
 		
 		return "";
 	}
 	
 	// 학생-강의 목록 수정 액션
-	@PostMapping("")
+	@PostMapping("c")
 	public String modifyStudentLecture() {
 		
 		return "";
 	}
 	
 	// 6. 운영자- 강의 삽입
-	@GetMapping("")
+	@GetMapping("d")
 	public String addManagerLecture() {
 		
 		return "";
-	}
+	}*/
 }
