@@ -10,6 +10,6 @@ public class ExamQuestion {
 	private String examCorrectAnswer;
 	private int examPoint;
 	private String examType;
-	private String examCreateDate;
-	private String examUpdateDate;
+	private String examQuestionCreateDate;
+	private String examQuestionUpdateDate;
 }

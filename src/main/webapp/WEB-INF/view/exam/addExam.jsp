@@ -40,11 +40,11 @@
 	    	</tr>
 	    	<tr>
 	    		<td>시험시작일시 : </td>
-	    		<td><input type="text" name="examStartDate" id="examStartDate"></td>
+	    		<td><input type="datetime-local" name="examStartDate" id="examStartDate"></td>
 	    	</tr>
 	    	<tr>
 	    		<td>시험종료일시: </td>
-	    		<td><input type="text" name="examEndDate" id="examEndDate"></td>
+	    		<td><input type="datetime-local" name="examEndDate" id="examEndDate"></td>
 	    	</tr>
 <!--	   	문제 등록 -->
 	    	<tr>
@@ -64,8 +64,11 @@
 	    		<td><input type="text" name="examPoint" id="examPoint"></td>
 	    	</tr>
 	    	<tr>
+	    	
 	    		<td>시험 문제 타입 : </td>
-	    		<td><input type="text" name="examType" id="examType"></td>
+			    <td><input type="radio" name="examType" id="examType" value="객관식">객관식
+      			<input type="radio" name="examType" id="examType" value="주관식">주관식
+			</td>
 	    	</tr>
 <!--    	보기 등록 -->
 	    	<tr>
@@ -76,23 +79,16 @@
 	    		<td>보기 내용 : </td>
 	    		<td><input type="text" name="exampleContent" id="exampleContent"></td>
 	    	</tr>
-	    	<div>
-			<button type="button" id="addExamExample">보기 추가</button>
-			<div id="ExampleSection">
 				<!-- example input 태그가 추가될 영역 -->
-				<tr>
-	    		<td>보기 번호 : </td>
-	    		<td><input type="text" name="exampleNo" id="exampleNo"></td>
-	    	</tr>
-	    	<tr>
-	    		<td>보기 내용 : </td>
-	    		<td><input type="text" name="exampleContent" id="exampleContent"></td>
-	    	</tr>
+			<div id="QuestionSection">
+			<button type="button" id="addExamQuestion">문제 추가</button>
 			</div>
-		</div>
+			<div id="ExampleSection">
+			<button type="button" id="addExamExample">보기 추가</button>
+			</div>
 	    </table>
 	    <div>
-			<button type="button" class="btn btn-default" id="addExam">시험등록</button>
+			<button type="submit" class="btn btn-default" id="addExam">시험등록</button>
 		</div>
     </form>
 

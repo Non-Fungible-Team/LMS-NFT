@@ -14,4 +14,13 @@ public class Exam {
 	private String examEndDate;
 	private String examCreateDate;
 	private String examUpdateDate;
+	private int examQuestionNo;
+	private String examContent;
+	private String examCorrectAnswer;
+	private int examPoint;
+	private String examType;
+	private int exampleNo;
+	private String exampleContent;
+	private String exampleCreateDate;
+	private String exampleUpdateDate;
 }

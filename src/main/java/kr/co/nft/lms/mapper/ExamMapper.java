@@ -25,11 +25,19 @@ public interface ExamMapper {
 	// 시험보기 상세보기
 	List<Exam> selectExamExampleOne(int examNo,int examQuestionNo);
 	
-	// 시험문제 등록
+	// 시험 등록
 	int insertExam(Exam exam);
+	// 문제 등록
+	int insertExamQuestion(ExamQuestion examQuestion);
+	// 보기 등록
+	int insertExamExample(ExamExample examExample);
 	
-	// 시험문제 수정
+	// 시험 수정
 	int updateExam(Exam exam);
+	// 문제 수정
+	int updateExamQuestion(ExamQuestion examQuestion);
+	// 보기 수정
+	int updateExamExample(ExamExample examExample);
 	
 	// 시험문제 삭제
 	int deleteExam(int examNo);

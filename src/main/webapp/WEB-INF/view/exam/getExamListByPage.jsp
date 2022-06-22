@@ -50,6 +50,10 @@
             </c:forEach>
         </tbody>
     </table>
+    <br>
+		<button><a href="${pageContext.request.contextPath}/exam/getExamListByPage?currentPage=${currentPage-1}">이전</a></button>
+		<button><a href="${pageContext.request.contextPath}/exam/getExamListByPage?currentPage=${currentPage+1}">다음</a></button>
+	<hr>
     <form>
 			<button type="button" class="btn btn-default" id="addExam">
 			<a href="${pageContext.request.contextPath}/exam/addExam">시험등록</a></button>

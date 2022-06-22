@@ -67,27 +67,23 @@
 	</select>
 
 
-<!-- SET AUTOCOMMIT = TRUE; 오토커밋 설정-->
-<!-- SET AUTOCOMMIT = FALSE; 오토커밋 해제-->
-<!-- show variables like 'autocommit%';	오토커밋 상태확인 -->
-<!-- 시험문제 등록  -->
+<!-- 시험 등록  -->
 	<insert id="insertExam"
 			parameterType="kr.co.nft.lms.vo.Exam">
-			SET AUTOCOMMIT = FALSE; <!-- 오토커밋 해제 -->
 <!--		시험 등록 -->
-			INSERT INTO exam(exam_no 		
-							,member_id 
+			INSERT INTO exam( 		
+							member_id 
 							,lecture_no
 							,exam_title
 							,exam_count
 							,exam_max_score
 							,exam_start_date
-							,exam_end_date 
+							,exam_end_date
 							,exam_create_date
 							,exam_Update_date
-			) VALUES (		#{examNo}
-							,#{memberId}
-							,#{lectureNo}
+			) VALUES (		
+							'wldnd'
+							,1
 							,#{examTitle}
 							,#{examCount}
 							,#{examMaxScore}
@@ -96,15 +92,21 @@
 							,NOW()
 							,NOW()		
 			);
-<!--		시험문제 등록 -->
-			INSERT INTO exam_question(	exam_no 			
+	</insert>
+<!-- 문제 등록  -->
+	<insert id="insertExamQuestion"
+			parameterType="kr.co.nft.lms.vo.Exam">
+			<selectKey resultType="int" keyProperty="examNo" order="BEFORE">
+				SELECT MAX(exam_no) FROM exam
+			</selectKey>
+			INSERT INTO exam_question(	 exam_no			
 										,exam_question_no
-										,exam_content 	
+										,exam_content
 										,exam_correct_answer
-										,exam_point 	
-										,exam_type 		
-										,exam_create_date
-										,exam_update_date
+										,exam_point
+										,exam_type
+										,exam_question_create_date
+										,exam_question_update_date
 			) VALUES(					#{examNo}
 										,#{examQuestionNo}
 										,#{examContent}
@@ -113,24 +115,63 @@
 										,#{examType}
 										,NOW()
 										,NOW()
-			);
-<!--		보기 등록 -->
-			INSERT INTO exam_example(	exam_no 		
+			);	
+	</insert>
+<!-- 보기 등록  -->
+	<insert id="insertExamExample"
+			parameterType="kr.co.nft.lms.vo.Exam">
+			<selectKey resultType="int" keyProperty="examNo" order="BEFORE">
+				SELECT MAX(exam_no) FROM exam
+			</selectKey>
+			INSERT INTO exam_example(	 exam_no		
 										,exam_question_no
-										,example_no 	
+										,example_no
 										,example_content
 										,example_create_date
-										,example_update_date 
+										,example_update_date
 			) VALUES( 					#{examNo}
 										,#{examQuestionNo}
 										,#{exampleNo}
 										,#{exampleContent}
 										,NOW()
 										,NOW()
-			);
-			SET AUTOCOMMIT = TRUE;
+			);	
 	</insert>
 	
+<!-- 시험 수정  -->
+	<update id="updateExam"
+			parameterType="kr.co.nft.lms.vo.Exam">
+		UPDATE exam SET
+			exam_title = #{examTitle}
+			,exam_count= #{examCount}
+			,exam_max_score= #{examMaxScore}
+			,exam_start_date = #{examStartDate}
+			,exam_end_date = #{examEndDate}
+			,exam_update_date = NOW()
+		WHERE exam_no = #{examNo}
+	</update>
+<!-- 문제 수정  -->
+	<update id="updateExamQuestion"
+			parameterType="kr.co.nft.lms.vo.ExamQuestion">
+		UPDATE exam_question SET
+			exam_question_no = #{examQuestionNo}
+			,exam_content = #{examContent}
+			,exam_correct_answer= #{examCorrectAnswer}
+			,exam_point= #{examPoint}
+			,exam_type = #{examType}
+			,exam_update_date = NOW()
+		WHERE exam_no = #{examNo}
+	</update>
+<!-- 보기 수정  -->
+	<update id="updateExamExample"
+			parameterType="kr.co.nft.lms.vo.ExamExample">
+		UPDATE exam_example SET
+			exam_question_no = #{examQuestionNo}
+			,example_no= #{exampleNo}
+			,example_content = #{exampleContent}
+			,example_update_date = NOW()
+		WHERE exam_no = #{examNo}
+	</update>
 	
 	
 	<delete id="deleteExam"
