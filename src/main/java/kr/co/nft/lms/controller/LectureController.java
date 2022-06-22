@@ -108,7 +108,7 @@ public class LectureController {
 		log.debug(A.W +"[LectureController.getLectureByPage.model] model.currentPage : " +map.get("currentPage") +A.R);
 		log.debug(A.W +"[LectureController.getLectureByPage.model] model.lastPage : " +map.get("lastPage") +A.R);
 		
-		return "lecture/getLectureByPage"; //jsp로 이동
+		return "/lecture/getLectureByPage"; //jsp로 이동
 		
 	}
 	
@@ -144,7 +144,7 @@ public class LectureController {
 		model.addAttribute("lecture",returnMap.get("lecture")); 
 		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.returnMap] returnMap : " + returnMap +A.R);
 		
-		return "lecture/modifyLecture";
+		return "/lecture/modifyLecture";
 	}
 	//수정 액션
 	@PostMapping("/teacher/lecture/modifyLecture")
@@ -157,10 +157,57 @@ public class LectureController {
 		return "redirect:/teacher/lecture/getLectureByPage";
 
 	}
-	
+	/*
 	//4.강의 삭제
+	@GetMapping("/teacher/lecture/removeLecture")
+	public String removeLecture(@RequestParam(name = "lectureNo") int lectureNo) {
+		log.debug(A.A + "[LectureController.teacher.lecture/removeLecture.lecture] lecture : " + lecture + A.R);
+		
+		int row = lectureService.removeLecture(lecture);
+		log.debug(A.A + "[LectureController.teacher.lecture/removeLecture.row] row : " + row + A.R);
+		
+		return "/lecture/getLectureByPage";
+	}
+	*/
+	/*
+	// 5 & 6.학생 강의 목록
+	@GetMapping("/teacher/lecture/getStudentLectureByPage")
+	public String getStudentLectureByPage(@RequestParam(name = "currentPage",defaultValue = "1") int currentPage
+										, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+		
+		log.debug(A.A + "[LectureController.getStudentLectureByPage] currentPage : " + currentPage + A.R);
+		log.debug(A.A + "[LectureController.getStudentLectureByPage] rowPerPage : " + rowPerPage + A.R);
+		
+		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(currentPage, rowPerPage);
+		// model.addAttribute("lecture",returnMap.get("lecture")); 
+		return "";
+	}
+	*/
+	// 5-2.학생-강의 삽입
+	@PostMapping("")
+	public String addStudentLecture() {
+		
+		return "";
+	}
 	
+	// 5-3. 학생-강의 목록 수정 폼
+	@GetMapping("")
+	public String modifyStudentLectureForm() {
+		
+		return "";
+	}
 	
+	// 학생-강의 목록 수정 액션
+	@PostMapping("")
+	public String modifyStudentLecture() {
+		
+		return "";
+	}
 	
-	
+	// 6. 운영자- 강의 삽입
+	@GetMapping("")
+	public String addManagerLecture() {
+		
+		return "";
+	}
 }
