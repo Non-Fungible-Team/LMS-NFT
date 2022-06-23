@@ -55,7 +55,19 @@ public class SurveyController {
 		return "redirect:/survey/getSurveyListByPage";
 	}
 	
-	
+	@GetMapping("/survey/getSurveyOne")
+	public String getSurveyOne(Model model
+			,@RequestParam(name="surveyNo") Map<String, Object> surveyNo) {
+		log.debug(A.D+"[SurveyController.insertSurvey] surveyNo : " + surveyNo + A.R); // 디버깅
+		
+		Map<String, Object> returnMap = surveyService.getSurveyOneAndQuestion(surveyNo);
+		
+		model.addAttribute("getSurveyOne",returnMap.get("getSurveyOne"));
+		model.addAttribute("SurveyQuestionList", returnMap.get("SurveyQuestionList"));
+		
+		
+		return"/survey/getSurveyOne";
+	}
 	
 	@GetMapping("/survey/insertSurveyQuestionList")
 	public String insertSurveyQuestionList() {
