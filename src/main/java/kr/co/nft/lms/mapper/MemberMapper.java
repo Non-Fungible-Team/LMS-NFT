@@ -10,6 +10,12 @@ import kr.co.nft.lms.vo.Teacher;
 @Mapper
 public interface MemberMapper {
 	
+	// Member 테이블의 학생 레코드 삭제 
+	int updateStudentOfMemberTbl(Member member);
+	
+	// Student 테이블의 학생 튜플 삭제 
+	int updateStudentOfStudentTbl(Member member);
+	
 	// Member 테이블 활용하여 학생 정보 수정 
 	int updateStudentByMemberVo(Member member);
 	

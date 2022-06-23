@@ -44,9 +44,9 @@
 	</table>
 	
 	<div>
-		<a href="${pageContext.request.contextPath}/student/modifyStudent?memberId=${loginMember.memberId}">학생 정보 수정</a>
+		<a href="${pageContext.request.contextPath}/all/modifyStudent?memberId=${loginMember.memberId}">학생 정보 수정</a>
 		
-		<a href="${pageContext.request.contextPath}/removeStudent?memberId=${loginMember.memberId}">학생 정보 삭제</a>
+		<a href="${pageContext.request.contextPath}/all/freezeStudent?memberId=${loginMember.memberId}">학생 정보 삭제</a>
 	</div>
 </body>
 </html>

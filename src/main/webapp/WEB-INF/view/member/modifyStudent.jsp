@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>modifyStudent</h1>
-	<form action="${pageContext.request.contextPath}/student/modifyStudent" method="post">
+	<form action="${pageContext.request.contextPath}/all/modifyStudent" method="post">
 		<table border="1">
 		
 			<tr>

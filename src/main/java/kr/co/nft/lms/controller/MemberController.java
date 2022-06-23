@@ -22,6 +22,44 @@ public class MemberController {
 	
 	@Autowired MemberService memberService;
 	
+	// 학생 정보 삭제
+	@PostMapping("/all/freezeStudent")
+	public String removeStudent(HttpSession session
+								, Member member) {
+		
+		log.debug(A.Z+"[MemberController.removeStudent.param] member : "+member+A.R);
+		
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.removeStudent.param] loginMember : "+loginMember+A.R);
+		
+		// int rowOfStudentTbl = memberService.freezeStudentOfStudentTbl(member);
+		// log.debug(A.Z+"[MemberController.removeStudent] rowOfStudentTbl : "+rowOfStudentTbl+A.R);
+		int rowOfMemberTbl = memberService.freezeStudentOfMemberTbl(member);
+		log.debug(A.Z+"[MemberController.removeStudent] rowOfMemberTbl : "+rowOfMemberTbl+A.R);
+		
+		return "redirect:/login";
+	}
+	
+	// 학생 정보 삭제 
+	@GetMapping("/all/freezeStudent")
+	public String removeStudent(HttpSession session) {
+		
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.removeStudent.param] loginMember : "+loginMember+A.R);
+		
+		// 계정 정보 없으면 로그인 실패 
+		if(loginMember == null) {
+			log.debug(A.Z+"MemberController.removeStudent : "+"로그인 실패"+A.R);
+			// member/memberLogin.jsp 
+			return "/member/memberLogin";
+		}
+		
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLectureNo", "");
+		
+		return "/member/freezeStudent";
+	}
+	
 	// 학생 정보 수정 
 	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
@@ -38,7 +76,7 @@ public class MemberController {
 	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfStudent : "+rowOfStudent+A.R);
 		
 	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아가야 한다. 
-	    return "redirect:/student/getStudentOne";
+	    return "redirect:/all/getStudentOne";
 	}
 	
 	// 학생 정보 수정 
@@ -170,7 +208,7 @@ public class MemberController {
 		// 로그인 성공 
 		session.setAttribute("sessionLoginMember", sessionLoginMember);
 		session.setAttribute("sessionLectureNo", "");
-		return "home";
+		return "redirect:/all/home";
 	}
 	
 	

@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<update id="updateStudentOfMemberTbl"
+			parameterType="kr.co.nft.lms.vo.Member">
+		UPDATE member SET 
+			member_level = -4
+		WHERE member_id = #{memberId}	
+	</update>
+
+	<update id="updateStudentOfStudentTbl"
+			parameterType="kr.co.nft.lms.vo.Member">
+		UPDATE student SET 
+			member_level = -4
+		WHERE member_id = #{memberId}
+	</update>
+
 	<update id="updateStudentByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 

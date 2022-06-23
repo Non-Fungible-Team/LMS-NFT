@@ -18,6 +18,16 @@ public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
 	
+	// Member 테이블의 학생 튜플 삭제, 삭제시 순서가 밀린다 
+	public int freezeStudentOfMemberTbl(Member member) {
+		return memberMapper.updateStudentOfMemberTbl(member);
+	}
+	
+	// Student 테이블의 학생 레코드 삭제, 삭제시 순서가 먼저 와야한다 
+	public int freezeStudentOfStudentTbl(Member member) {
+		return memberMapper.updateStudentOfStudentTbl(member);
+	}
+	
 	// Member 테이블 활용하여 학생 수정 액션
 	public int modifyStudent(Member member) {
 		return memberMapper.updateStudentByMemberVo(member);
