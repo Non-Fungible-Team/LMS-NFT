@@ -85,11 +85,11 @@ public class HomeworkService {
 		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param homeworkSubmit : " + homeworkSubmit+ A.R);
 		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param path : " + path + A.R);
 		
-		int row =homeworkMapper.insertHomeworkSubmit(homeworkSubmit);
-		
-		if(homeworkSubmit.getHomeworkSubmitfileList() != null && homeworkSubmit.getHomeworkSubmitfileList().get(0).getSize() > 0 && row ==1) {
+		int row = homeworkMapper.insertHomeworkSubmit(homeworkSubmit);
+		if(homeworkSubmit.getHomeworkSubmitFileList() != null && homeworkSubmit.getHomeworkSubmitFileList().get(0).getSize() > 0 && row ==1) {
 			log.debug(A.Q+"HomeworkService.addHomeworkSubmit :"+"첨부된 파일이 있습니다."+A.R);
-			for(MultipartFile mf : homeworkSubmit.getHomeworkSubmitfileList()) {
+			
+			for(MultipartFile mf : homeworkSubmit.getHomeworkSubmitFileList()) {
 				HomeworkSubmitFile homeworkSubmitFile = new HomeworkSubmitFile();
 				
 				String originName = mf.getOriginalFilename();
@@ -102,6 +102,7 @@ public class HomeworkService {
 				
 				fileName = fileName + ext;
 				
+				
 				homeworkSubmitFile.setHomeworkSubmitNo(homeworkSubmit.getHomeworkSubmitNo());
 				homeworkSubmitFile.setHomeworkSubmitFileOriginal(fileName);
 				homeworkSubmitFile.setHomeworkSubmitFileName(mf.getOriginalFilename());
@@ -109,17 +110,15 @@ public class HomeworkService {
 				homeworkSubmitFile.setHomeworkSubmitFileSize(mf.getSize());
 				
 				homeworkMapper.insertHomeworkSubmitFile(homeworkSubmitFile);
+				log.debug(A.Q+"HomeworkService.addHomeworkSubmit homeworkSubmitFile :"+ homeworkSubmitFile +A.R);
 				try {
 					mf.transferTo(new File(path + fileName));
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException();
-					
 				}
 			}
-			
 		}
-		
 	}
 	
 	

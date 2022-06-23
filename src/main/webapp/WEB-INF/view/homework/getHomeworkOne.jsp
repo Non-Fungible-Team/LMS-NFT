@@ -16,16 +16,20 @@
 	<h1>과제 상세보기</h1>
 		<div>
 			<p><label>번호</label> <input type="text" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly"></p>
+			<p><label>강의번호</label> <input type="text" name ="lectureNo" value ="${homeworkOne.lectureNo}" readonly="readonly"></p>
 			<p><label>제목</label> <input type="text" name ="homeworkTitle"  value ="${homeworkOne.homeworkTitle}" readonly="readonly"></p>
 			<p><label>작성자</label> <input type="text" name="memberId" value="${homeworkOne.memberId }" readonly="readonly"></p>
 			<label>내용</label> <textarea name=homeworkContent rows ="8" cols="70"  readonly="readonly">${homeworkOne.homeworkContent}</textarea><br>
 			<p><label>날짜</label> <input type="text" name="homeworkCreateDate" size="15" value = "${homeworkOne.homeworkCreateDate}"readonly="readonly"><p>
 		</div>
-	<form action="removeHomework" method="post">
+	<form action="${pageContext.request.contextPath}/homework/removeHomework" method="post">
 		<input type="hidden" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly">
-		<button><a href="${pageContext.request.contextPath}/homework/getHomeworkListByPage">과제 목록</a></button>
-		<button><a href="${pageContext.request.contextPath}/homework/modifyHomework?homeworkNo=${homeworkOne.homeworkNo}">과제 수정</a></button>
+			<button type="button" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'">과제 목록</button>
+			<button type="button" onclick="location.href='${pageContext.request.contextPath}/homework/modifyHomework?homeworkNo='+${homeworkOne.homeworkNo}">과제 수정</button>
 		<button type="submit">과제 삭제</button>
 	</form>
+		<div>
+			<button type="button" onclick="location.href='${pageContext.request.contextPath}/homework/addHomeworkSubmit?homeworkNo='+${homeworkOne.homeworkNo}">과제 제출</button>
+		</div>
 </body>
 </html>

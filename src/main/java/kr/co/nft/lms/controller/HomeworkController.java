@@ -18,7 +18,6 @@ import kr.co.nft.lms.service.HomeworkService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Homework;
 import kr.co.nft.lms.vo.HomeworkSubmit;
-import kr.co.nft.lms.vo.HomeworkSubmitFile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -126,24 +125,46 @@ public class HomeworkController {
 	return "redirect:/homework/getHomeworkListByPage";
 	}
 	
-	// 학생 과제 제출 입력
-	@PostMapping()
-	public String addHomeworkSubmit(HttpServletRequest request, HomeworkSubmit homeworkSubmit) {
+	
+	// 학생 과제 제출 입력 폼
+	@GetMapping("/homework/addHomeworkSubmit")
+	public String addHomeworkSubmit(Model model
+									,@RequestParam(name="homeworkNo") int homeworkNo) {
+		log.debug(A.Q+" HomeworkController.addHomeworkSubmit.param homeworkNo " + homeworkNo+A.R);
 		
+		Homework homework = new Homework();
+		homework.setHomeworkNo(homeworkNo);
+		
+		
+		HomeworkSubmit homeworkSubmit = new HomeworkSubmit();
+		homeworkSubmit.setHomeworkNo(homeworkNo);
+		
+		model.addAttribute("homeworkNo", homework.getHomeworkNo());
+		
+		return "/homework/addHomeworkSubmit";
+	}
+	
+	// 학생 과제 제출 입력 액션
+	@PostMapping("/homework/addHomeworkSubmit")
+	public String addHomeworkSubmit(HttpServletRequest request
+									,HomeworkSubmit homeworkSubmit
+									,@RequestParam(name="homeworkNo") int homeworkNo) {
 		String path = request.getServletContext().getRealPath("/homeworkFile/");
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path"+ path +A.R);
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit"+ homeworkSubmit +A.R);
+		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkNo :"+homeworkNo +A.R);
 		
-		List<MultipartFile> homeworkFileList = homeworkSubmit.getHomeworkSubmitfileList();
-		if(homeworkFileList != null && homeworkFileList.get(0).getSize() > 0) {
-			for(MultipartFile mf : homeworkFileList ) {
+
+		List<MultipartFile> homeworkSubmitFileList = homeworkSubmit.getHomeworkSubmitFileList();
+		if(homeworkSubmitFileList != null && homeworkSubmitFileList.get(0).getSize() > 0) {
+			for(MultipartFile mf : homeworkSubmitFileList ) {
 				log.debug(A.Q+"HomeworkController.addHomeworkSubmit filename :" + mf.getOriginalFilename() + A.R);
 			}
 		}
 		homeworkService.addHomeworkSubmit(homeworkSubmit, path);
 		
 		
-		return"redirect:/homework/getHomeworkOne?homeworkNo=\" + homework.getHomeworkNo()";
+		return"redirect:/homework/getHomeworkListByPage";
 	}
 	
 	

@@ -26,6 +26,7 @@
 		SELECT
 			homework_no homeworkNo
 			,homework_title homeworkTitle
+			,lecture_no lectureNo
 			,member_id memberId
 			,homework_content homeworkContent
 			,homework_create_date homeworkCreateDate
@@ -90,7 +91,7 @@
 			<selectKey resultType="int" keyProperty="homeworkSubmitNo" order="AFTER">
 				SELECT LAST_INSERT_ID()
 			</selectKey>
-		INSERT INTO Homework_submit(
+		INSERT INTO homework_submit(
 			homework_no
 			,member_id
 			,homework_submit_title
@@ -111,14 +112,17 @@
 		)
 				
 	</insert>
-	<!-- 과제 점수와 피드백을 위한 쿼리 -->
+	<!-- 과제 점수와 피드백 입력을 위한 쿼리 -->
 	<update id="">
 	
 	</update>
 	
 	<insert id="insertHomeworkSubmitFile"
 			parameterType="kr.co.nft.lms.vo.HomeworkSubmitFile">
-		INSERT INTO Homework_submit_file(
+			<selectKey resultType="int" keyProperty="homeworkSubmitFileNo" order="AFTER">
+				SELECT LAST_INSERT_ID()
+			</selectKey>
+		INSERT INTO homework_submit_file(
 			homework_submit_no
 			,homework_submit_file_original
 			,homework_submit_file_name

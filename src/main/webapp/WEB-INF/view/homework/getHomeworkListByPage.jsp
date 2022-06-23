@@ -39,11 +39,11 @@
 		</tbody>
 	</table>
 	<br>
-		<button><a href="${pageContext.request.contextPath}/homework/getHomeworkListByPage?currentPage=${currentPage-1}">이전</a></button>
-		<button><a href="${pageContext.request.contextPath}/homework/getHomeworkListByPage?currentPage=${currentPage+1}">다음</a></button>
+		<button type="button" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage?currentPage='+${currentPage-1}">이전</button>
+		<button type="button" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage?currentPage='+${currentPage+1}">다음</button>
 	<hr>
 	<div>
-        <button><a class="btn btn-default" href="${pageContext.request.contextPath}/homework/addHomework">과제 입력</a></button>
+		<button type="button" onclick="location.href='${pageContext.request.contextPath}/homework/addHomework'">과제 입력</button>
     </div>
 	
 </body>
