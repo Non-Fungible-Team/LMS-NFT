@@ -104,7 +104,7 @@ public class MemberController {
 		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
 		
 		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", "");
+		session.setAttribute("sessionLectureNo", 0);
 		
 		return "/member/modifyStudent";
 	}
@@ -134,7 +134,7 @@ public class MemberController {
 		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
 		
 		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", "");
+		session.setAttribute("sessionLectureNo", 0);
 		
 		return "/member/getStudentOne";
 	}
@@ -207,7 +207,7 @@ public class MemberController {
 		
 		// 로그인 성공 
 		session.setAttribute("sessionLoginMember", sessionLoginMember);
-		session.setAttribute("sessionLectureNo", "");
+		session.setAttribute("sessionLectureNo", 0);
 		return "redirect:/all/home";
 	}
 	
