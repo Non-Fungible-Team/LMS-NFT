@@ -29,26 +29,34 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 	<!-- main화면 body start -->
 	<!-- 첫번쨰 문단 -->
 	<div class="row">
-		<div class="col-lg-6 col-md-6">
+		<div class="col-lg-12 col-md-12">
 		    <div class="card">
 		        <div class="card-body">
 		            <h4 class="card-title">수강목록</h4>
+		            <h6>강의명을 클릭하시면 강의 페이지로 이동합니다</h6>
 		            <div class="mt-2" style="height:auto; width:auto;">
 		            <!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 		            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
 		            		<thead>
 	                            <tr>
-	                                <th>강의번호</th>
-	                                <th>과목</th>
+	                                <th>과목명</th>
 	                                <th>강의명</th>
+	                                <th>수강시작날짜</th>
+	                                <th>수료날짜</th>
+	                                <th>강의실</th>
 	                            </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="l" items="${lectureList}">
 				                <tr>
-				                   <td>내용</td>
-				                   <td>내용2</td>
-				                   <td>내용</td>
+				                   <td>${l.subjectName}</td>
+				                   <td><a href="${pageContext.request.contextPath}/all/lectureNoController?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
+				                   <td>${l.lectureStartDate}</td>
+				                   <td>${l.lectureEndDate}</td>
+				                   <td>${l.lectureroomName}</td>
 				                </tr>
+                            
+                            </c:forEach>
                             </tbody>
 		            	</table>
 		             </div>   

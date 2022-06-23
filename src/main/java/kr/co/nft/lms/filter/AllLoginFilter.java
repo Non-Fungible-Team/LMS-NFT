@@ -27,7 +27,7 @@ public class AllLoginFilter implements Filter {
 			//로그인 정보가 없을시 로그인 contorller으로 redirect
 			if(session.getAttribute("sessionLoginMember") == null) {
 				log.debug(A.E+"[AllLoginFilter.doFilter] : 로그인 하지 않은 자의 요청 "+A.R);
-				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/member/login");
+				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/login");
 				return;
 			}
 			//로그인 정보가 있을시 Member 변수에 저장
@@ -42,10 +42,12 @@ public class AllLoginFilter implements Filter {
 			}else if(sessionLoginMember.getMemberLevel() == -4 || sessionLoginMember.getMemberLevel() == -5 || sessionLoginMember.getMemberLevel() == -6) {
 				log.debug(A.E+"[AllLoginFilter.doFilter] : 휴면 계정의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
 				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/humanController?msg=humanAccount");///!!!! 꼭 명칭 변경 !!!!!
+				return;
 			//level이 -14,-15,-16인 경우 회원 탈퇴 메세지 출력
 			}else if(sessionLoginMember.getMemberLevel() == -14 || sessionLoginMember.getMemberLevel() == -15 || sessionLoginMember.getMemberLevel() == -16) {
 				log.debug(A.E+"[AllLoginFilter.doFilter] : 탈퇴회원의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
 				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/humanController?msg=humanAccount");///!!!! 꼭 명칭 변경 !!!!!
+				return;
 			} 
 			
 		} else {

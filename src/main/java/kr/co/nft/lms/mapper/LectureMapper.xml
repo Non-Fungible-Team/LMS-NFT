@@ -28,6 +28,52 @@
 	LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
+	<!-- 1-1. 수강 중인 강의목록 보기(학생) -->
+	<select id="selectLectureByStudent"
+				resultType="kr.co.nft.lms.vo.Lecture"
+				parameterType="String">
+	SELECT 
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureroomName
+		,lecture_create_date lectureCreateDate  
+	FROM lecture l
+	INNER JOIN subject s
+		ON l.subject_no = s.subject_no
+	INNER JOIN lecture_room lr
+		ON l.lecture_room_name = lr.lecture_room_name
+	INNER JOIN student_lecture sl
+		ON l.lecture_no = sl.lecture_no
+	WHERE sl.member_id = #{memberId}
+	ORDER BY l.lecture_no
+	</select>
+
+	<!-- 1-2. 수강 중인 강의목록 보기(강사) -->
+	<select id="selectLectureByTeacher"
+				resultType="kr.co.nft.lms.vo.Lecture"
+				parameterType="String">
+	SELECT 
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureroomName
+		,lecture_create_date lectureCreateDate  
+	FROM lecture l
+	INNER JOIN subject s
+		ON l.subject_no = s.subject_no
+	INNER JOIN lecture_room lr
+		ON l.lecture_room_name = lr.lecture_room_name
+	INNER JOIN teacher_lecture tl
+		ON l.lecture_no = tl.lecture_no
+	WHERE tl.member_id = #{memberId}
+	ORDER BY lecture_no
+	</select>
+	
 	<!-- 2.강의 삽입 -->
 	<insert id="insertLecture" parameterType="kr.co.nft.lms.vo.Lecture">
 		<selectKey resultType="int" keyProperty="lectureNo" order="AFTER">
@@ -198,5 +244,24 @@
 			,#{memberId}
 		)
 	</insert>
+	<!-- 9. 강의번호로 강의정보 가져오기 -->
+	<select id="selectLecturebyLectureNo"
+				resultType="kr.co.nft.lms.vo.Lecture"
+				parameterType="int">
+	SELECT 
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureroomName
+		,lecture_create_date lectureCreateDate  
+	FROM lecture l
+	INNER JOIN subject s
+		ON l.subject_no = s.subject_no
+	INNER JOIN lecture_room lr
+		ON l.lecture_room_name = lr.lecture_room_name
+	WHERE l.lecture_no = #{lectureNo}
+	</select>
 	
 </mapper>
