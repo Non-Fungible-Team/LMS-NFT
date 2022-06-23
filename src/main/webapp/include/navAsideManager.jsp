@@ -31,7 +31,12 @@
 					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="width: 15%" />
 					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="light-logo" style="width: 15%" />
 					</b> 
-					<span class="logo-text"> LMS </span>
+					<span class="logo-text">
+						<!-- dark Logo text -->
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS.png" alt="homepage" class="dark-logo" style="width: 88%"/>
+	                    <!-- Light Logo text -->
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS.png" class="light-logo" alt="homepage" />
+                    </span>
 					</a>
 				</div>
 				<!-- End Logo -->
@@ -93,6 +98,7 @@
 					<li class="nav-small-cap"><span class="hide-menu">Lecture</span></li>
 
 					<li class="sidebar-item"><a class="sidebar-link" href="##########.jsp" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Lecture List </span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/subjectList" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Subject List </span></a></li>
 					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Member Lecture </span></a>
 						<ul aria-expanded="false" class="collapse  first-level base-level-line">
 							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Student Lecture </span></a></li>
@@ -100,6 +106,10 @@
 							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager Lecture </span></a></li>
 						</ul></li>
 					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="##########.jsp" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Etc </span></a>
+						<ul aria-expanded="false" class="collapse  first-level base-level-line">
+							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><span class="hide-menu"> LectureRoom List </span></a></li>
+						</ul></li>
 
 					<li class="list-divider"></li>
 					<li class="nav-small-cap"><span class="hide-menu">Member</span></li>

@@ -25,9 +25,8 @@
 		<!-- header include(네비게이션바) -->
 		<div id="navAsideManager"></div>
 
-		<!-- main화면 body start -->
-		<!-- 첫번쨰 문단 -->
-		<div class="container p-5 my-5 border">
+<div class="page-wrapper">
+	<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12 col-md-6">
 					<div class="card">
@@ -56,7 +55,7 @@
 												<td><a href="${pageContext.request.contextPath}/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>											</td>
 												<td>${l.lectureStartDate}</td>
 												<td>${l.lectureEndDate}</td>
-												<td>${l.lectureroomName}</td>
+												<td>${l.lectureRoomName}</td>
 												<td>${l.lectureCreateDate}</td>
 											</tr>
 										</c:forEach>
@@ -70,6 +69,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 	<script>
 		$("#navAsideManager").load('${pageContext.request.contextPath}/include/navAsideManager.jsp');
