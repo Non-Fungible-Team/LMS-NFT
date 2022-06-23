@@ -31,7 +31,7 @@
 	<!-- 1-1. 수강 중인 강의목록 보기(학생) -->
 	<select id="selectLectureByStudent"
 				resultType="kr.co.nft.lms.vo.Lecture"
-				parameterType="String">
+				parameterType="java.util.Map">
 	SELECT 
 		l.lecture_no lectureNo
 		,s.subject_name subjectName
@@ -49,12 +49,23 @@
 		ON l.lecture_no = sl.lecture_no
 	WHERE sl.member_id = #{memberId}
 	ORDER BY l.lecture_no
+	LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!--1-1. 수강 중인 강의목록 보기(학생) 의 전체 행의 수  -->
+	<select id="selectLectureTotalCountByStudent"
+				resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM lecture l
+	INNER JOIN student_lecture sl
+		ON l.lecture_no = sl.lecture_no
+	WHERE sl.member_id = #{memberId}
 	</select>
 
 	<!-- 1-2. 수강 중인 강의목록 보기(강사) -->
 	<select id="selectLectureByTeacher"
 				resultType="kr.co.nft.lms.vo.Lecture"
-				parameterType="String">
+				parameterType="java.util.Map">
 	SELECT 
 		l.lecture_no lectureNo
 		,s.subject_name subjectName
@@ -72,6 +83,17 @@
 		ON l.lecture_no = tl.lecture_no
 	WHERE tl.member_id = #{memberId}
 	ORDER BY lecture_no
+	LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<!-- 1-2. 수강 중인 강의목록 보기(강사)의 전체 행의 수 -->
+	<select id="selectLectureTotalCountByTeacher"
+				resultType="int">
+	SELECT 
+		COUNT(*)
+	FROM lecture l
+	INNER JOIN teacher_lecture
+		ON l.lecture_no = tl.lecture_no
+	WHERE sl.member_id = #{memberId}
 	</select>
 	
 	<!-- 2.강의 삽입 -->

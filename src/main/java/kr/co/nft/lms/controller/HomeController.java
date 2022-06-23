@@ -1,6 +1,7 @@
 package kr.co.nft.lms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,16 +25,27 @@ public class HomeController {
 	//홈화면을 보여주는 컨트롤러
 	
 	@GetMapping("/all/home")
-	public String home(Model model, HttpSession session){
+	public String home(Model model,
+			HttpSession session
+			,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage
+			,@RequestParam(name = "rowPerPage", defaultValue = "5") int rowPerPage){
+		
+		log.debug(A.E+"[HomeController.home.param] currentPage"+currentPage+A.R);
+		log.debug(A.E+"[HomeController.home.param] rowPerPage"+rowPerPage+A.R);
 		//세선에 정보 요청
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		int lectureNo = (int)session.getAttribute("sessionLectureNo");
+		
 		//수강 목록 출력 부분
-		List<Lecture> lectureList = homeService.getLectureByMemberId(loginMember);
+		Map<String,Object> returnMap = homeService.getLectureByMemberId(loginMember,currentPage,rowPerPage);
+		log.debug(A.E+"[HomeController.home.getLectureByMemberId] returnMap"+returnMap+A.R);
 		
 		//모델값 저장
-		model.addAttribute("lectureList", lectureList);
-		model.addAttribute("lectureNo", lectureNo);
+		model.addAttribute("lectureList", returnMap.get("lectureList"));
+		model.addAttribute("lectureListLastPage", returnMap.get("lectureListLastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", returnMap.get("lectureListLastPage"));
+		
 		return "home";
 	}
 	

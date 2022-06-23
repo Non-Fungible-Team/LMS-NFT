@@ -31,7 +31,12 @@
 					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="width: 15%" />
 					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="light-logo" style="width: 15%" />
 					</b> 
-					<span class="logo-text"> LMS </span>
+					<span class="logo-text">
+						<!-- dark Logo text -->
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS.png" alt="homepage" class="dark-logo" style="width: 88%"/>
+	                    <!-- Light Logo text -->
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS.png" class="light-logo" alt="homepage" />
+                    </span>
 					</a>
 				</div>
 				<!-- End Logo -->

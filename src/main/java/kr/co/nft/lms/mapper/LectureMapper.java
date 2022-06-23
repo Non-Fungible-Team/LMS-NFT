@@ -8,17 +8,22 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.ManagerLecture;
 import kr.co.nft.lms.vo.StudentLecture;
-import kr.co.nft.lms.vo.TeacherLecture;
 
 @Mapper
 public interface LectureMapper {
 	//1.강의 목록(상세보기)- 전체 강의에 대한
 	//강의데이터가 키값으로 전달받음, List로 반환
 	List<Lecture> selectLectureByPage(Map<String, Object> map);
+	//페이징을 위한 전체 행의 수
+	int selectLectureCount();
 	//1-1.수강 중인 강의 목록(학생)
-	List<Lecture> selectLectureByStudent(String memberId);
+	List<Lecture> selectLectureByStudent(Map<String, Object> map);
+	//페이징을 위한 전체 행의 수
+	int selectLectureTotalCountByStudent();
 	//1-2.수강 중인 강의 목록(강사)
-	List<Lecture> selectLectureByTeacher(String memberId);
+	List<Lecture> selectLectureByTeacher(Map<String, Object> map);
+	//페이징을 위한 전체 행의 수
+	int selectLectureTotalCountByTeacher();
 
 	//2.강의 삽입 - action
 	//int형으로 반환, notice 객체 값? 전달받음
@@ -58,8 +63,7 @@ public interface LectureMapper {
 	//6.운영자_강의 삽입
 	int insertManagerLecture(ManagerLecture managerLecture);
 
-	//7.전체 행수 -강의
-	int selectLectureCount();
+
 
 	//7-2. 강의-학생 전체 행
 	int selectStudentLectureCount();

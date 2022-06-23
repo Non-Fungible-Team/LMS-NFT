@@ -55,10 +55,40 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 				                   <td>${l.lectureEndDate}</td>
 				                   <td>${l.lectureRoomName}</td>
 				                </tr>
-                            
                             </c:forEach>
                             </tbody>
 		            	</table>
+				                   <!-- 페이지 목록 표시 부분 -->
+									<!-- 이전 목록 표시 -->
+										<form method="get" action = "${pageContext.request.contextPath}/all/home">
+												<c:if test="${currentPage>10}">
+												 	<button type = "submit" value ="${currentPage-10}" name = "currentPage" class="btn btn-secondary" >이전목록</button>
+												</c:if>
+												<!-- 이전 부분 -->
+												<c:if test="${currentPage>1}">
+												 	<button type = "submit" value ="${currentPage-1}" name = "currentPage" class="btn btn-secondary" >이전</button>
+												</c:if>
+												<!-- 목록 사이 번호 표시 -->
+												<c:forEach begin="1" end="10" step="1" var="i" varStatus="status">
+														<c:if test="${ i< 5 && currentPage-(5-i)> 0 }">
+															<button type = "submit" value ="${currentPage-(5-i)}" name = "currentPage" class="btn btn-light">${currentPage-(5-i)}</button>
+														</c:if>
+														<c:if test="${ i==5 }">
+															<button type = "submit" value ="${currentPage}" name = "currentPage" class="btn btn-danger">${currentPage}</button>
+														</c:if>
+														<c:if test="${ i > 5 && currentPage+(i-5) <= lastPage }">
+															<button type = "submit" value ="${currentPage+(i-5)}" name = "currentPage" class="btn btn-light">${currentPage+(i-5)}</button>
+														</c:if>
+												</c:forEach>
+												<!-- 다음 부분 -->
+												<c:if test="${currentPage< lastPage }">
+											 		<button type = "submit" value ="${currentPage+1}" name = "currentPage" class="btn btn-secondary" >다음</button>
+												</c:if>
+												<!-- 다음목록 표시 -->
+												<c:if test="${currentPage+10 <= lastPage }">
+											 		<button type = "submit" value ="${currentPage+10}" name = "currentPage" class="btn btn-secondary">다음목록</button>
+												</c:if>
+										</form>
 		             </div>   
 		        </div>
 		    </div>
