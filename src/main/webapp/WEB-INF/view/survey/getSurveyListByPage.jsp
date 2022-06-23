@@ -26,7 +26,7 @@
 			<c:forEach var="sv" items="${surveyList}">
 				<tr>
 					<td>${sv.surveyNo}</td>
-					<td><a href="${pageContext.request.contextPath}/getSurveyOne?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
+					<td><a href="${pageContext.request.contextPath}/survey/getSurveyOne?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
 					<td>${sv.surveyContent}</td>
 					<td>${sv.surveyCreateDate}</td>
 					<td>${sv.surveyStartlineDate}</td>
