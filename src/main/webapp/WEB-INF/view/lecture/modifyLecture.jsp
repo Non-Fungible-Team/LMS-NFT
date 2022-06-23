@@ -53,24 +53,24 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="l" items="${lectureList}">
-												<tr>
-													<td>${l.lectureNo}</td>
-													<td>${l.subjectName}</td>
-													<td><a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
-													<td>${l.lectureStartDate}</td>
-													<td>${l.lectureEndDate}</td>
-													<td>${l.lectureRoomName}</td>
-													<td>${l.teacherName}</td>
-													<td>${l.lectureCreateDate}</td>
-													<td>
-														<div class="btn-group" role="group" aria-label="Basic example">
-															<a href="${pageContext.request.contextPath}/manager/lecture/modifyLecture?lectureNo=${l.lectureNo}" class="btn btn-info">수정</a>
-															<a href="${pageContext.request.contextPath}/manager/lecture/removeLecture?lectureNo=${l.lectureNo}" class="btn btn-danger">삭제</a>
-														</div>
-													</td>
-												</tr>
-											</c:forEach>
+											<tr>
+												<td><input type="text" readonly="readonly">${l.lectureNo}</td>
+												<c:forEach var="l" items="${lectureList}">
+												<td>${l.subjectName}</td>
+												<td><a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
+												<td>${l.lectureStartDate}</td>
+												<td>${l.lectureEndDate}</td>
+												<td>${l.lectureRoomName}</td>
+												<td>${l.teacherName}</td>
+												<td>${l.lectureCreateDate}</td>
+												<td>
+													<div class="btn-group" role="group" aria-label="Basic example">
+														<a href="${pageContext.request.contextPath}/manager/lecture/modifyLecture?lectureNo=${l.lectureNo}" class="btn btn-info">수정</a>
+														<a href="${pageContext.request.contextPath}/manager/lecture/removeLecture?lectureNo=${l.lectureNo}" class="btn btn-danger">삭제</a>
+													</div>
+												</td>
+												</c:forEach>
+											</tr>
 										</tbody>
 									</table>
 								</div>
