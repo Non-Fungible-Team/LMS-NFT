@@ -173,7 +173,7 @@
 	<!-- 5/6.학생_강의 목록: 강의명 누르면 나오는 화면 -->
 	<select id="selectStudentLecture"
 				parameterType="java.util.Map"
-				resultType="java.util.List">
+				resultType="kr.co.nft.lms.vo.StudentLecture">
 		SELECT 
 			 s.member_id memberId
 			, s.student_name studentName
