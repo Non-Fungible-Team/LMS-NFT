@@ -17,6 +17,7 @@ public interface NoticeMapper {
 	
 	//select
 	List<Notice> selectNoticeListByPage(Map<String, Object> map);
+	
 	//전체row
 	int selectNoticeListTotalCount();
 	

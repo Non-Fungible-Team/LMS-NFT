@@ -98,8 +98,18 @@ public class NoticeController {
 		return "redirect:/all/notice/getNoticeOne?noticeNo=" + notice.getNoticeNo();
 	}		 
 	
-	//Notice 삭제 액션
+	//Notice 삭제폼
 	@GetMapping("/manager/notice/removeNotice")
+	public String removeNotice(Model model
+							,@RequestParam(name="noticeNo") int noticeNo) {
+		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
+		Notice notice = noticeService.getNoticeOne(noticeNo);
+		model.addAttribute("notice", notice);
+		return "/notice/removeNotice";
+	}
+	
+	//Notice 삭제 액션
+	@PostMapping("/manager/notice/removeNotice")
 	public String removeNotice(int noticeNo) {
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
 		int row = noticeService.removeNotice(noticeNo);
@@ -113,5 +123,5 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)성공"+ A.R);
 		return "redirect:/all/notice/getNoticeListByPage";
 	}
-	
+
 }
