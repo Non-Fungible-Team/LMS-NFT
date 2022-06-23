@@ -1,16 +1,20 @@
 package kr.co.nft.lms.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.mapper.NoticeMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Notice;
+import kr.co.nft.lms.vo.NoticeFile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -21,14 +25,62 @@ public class NoticeService {
 	NoticeMapper noticeMapper;
  
 	//Notice 입력 액션 
-	public int addNotice(Notice notice) { 
+	public int addNotice(Notice notice, NoticeFile noticeFile, String path) { 
 		log.debug(A.S + "[NoticeService.addNotice.param] notice : "+ notice + A.R); 
 		int row1 = noticeMapper.insertNoticeInBoard(notice);
 		log.debug(A.S + "[NoticeService.addNotice.boardNo] row1 : "+ row1 + A.R); 
 		int row = noticeMapper.insertNotice(notice);
 		log.debug(A.S + "[NoticeService.addNotice.param] row : "+ row + A.R); 
+		//파일저장 성공 횟수를 셀 디버깅
+		int noticeFileRow = 0;
+		//공지사항에 입력한 파일이 있고 위의 공지 추가 코드가 정상적으로 실행되었을경우(row=1) 아래의 코드 실행
+		if(noticeFile.getNoticeFileList() != null && noticeFile.getNoticeFileList().get(0).getSize() > 0 && row == 1) {
+			log.debug(A.S + "[NoticeService.addNotice] 첨부할 파일이 있습니다." + A.R); 
+			for(MultipartFile mf : noticeFile.getNoticeFileList()) {
+				// mf -> Noticefile
+				NoticeFile noticeFileOne = new NoticeFile();
+				//파일 원래의 이름 요청
+				String noticeFileOriginName = mf.getOriginalFilename();
+				// originName에서 마지막 .뒤에 글자들 .과 같이 저장(ex: .jpg)
+				String ext = noticeFileOriginName.substring(noticeFileOriginName.lastIndexOf("."));
+				// 파일을 저장할대 사용할 중복되지않는 새로운 이름 필요(UUID API사용)
+				String noticeFileName = UUID.randomUUID().toString();
+				noticeFileName = noticeFileName.replace("-","");
+				noticeFileName = noticeFileName + ext;
+				
+				noticeFileOne.setNoticeNo(notice.getNoticeNo());
+				noticeFileOne.setNoticeFileName(noticeFileName);
+				noticeFileOne.setNoticeFileOriginName(noticeFileOriginName);
+				noticeFileOne.setNoticeFileType(mf.getContentType());
+				noticeFileOne.setNoticeFileSize(mf.getSize());
+				log.debug(A.S + "[NoticeService.addNotice] 저장될 파일 noticeFileOne: "+noticeFileOne + A.R); 
+				//입력 및 성공 횟수 저장
+				noticeFileRow = noticeFileRow + noticeMapper.insertNoticeFile(noticeFileOne);
+				
+				try {
+					//경로+이름으로 파일 저장
+					mf.transferTo(new File(path+noticeFileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 새로운 예외 발생시켜야지만 @Transactional 작동을 위해
+					throw new RuntimeException(); // RuntimeException은 예외처리를 하지 않아도 컴파일된다
+				}
+			}
+		}
+		log.debug(A.S + "[NoticeService.addNotice.param] 파일 저장 해야되는 갯수 NoticeFileList().size() : "+ noticeFile.getNoticeFileList().size() + A.R); 
+		log.debug(A.S + "[NoticeService.addNotice.param] 파일 저장 성공 갯수 noticeFileRow : "+ noticeFileRow + A.R); 
 		return row;
 	}
+	
+	//Notice (+파일첨부) 입력 
+	public void addNotice(NoticeFile noticefile, String path) {
+		log.debug(A.S + "[NoticeService.addNotice.param] noticefile : "+ noticefile + A.R);
+		log.debug(A.S + "[NoticeService.addNotice.param] path : "+ path + A.R);
+		
+		//
+		
+	}
+	
 
 	//Notice 목록 보기 
 	public Map<String, Object> getNoticeListByPage(int currentPage, int rowPerPage){
@@ -58,12 +110,23 @@ public class NoticeService {
 		return noticeRowReturnMap;
 	}
   
-	//Notice 상세보기 + 수정폼 
-	public Notice getNoticeOne(int noticeNo){
+	//Notice 상세보기(File추가) + 수정폼 
+	public Map<String, Object> getNoticeOne(int noticeNo){
 		log.debug(A.S + "[NoticeService.getNoticeOne.param] noticeNo : "+ noticeNo + A.R); 
 		Notice notice = noticeMapper.selectNoticeOne(noticeNo);
 		log.debug(A.S + "[NoticeService.getNoticeOne] notice : "+ notice + A.R); 
-		return notice;
+		
+		//File PART
+		List<NoticeFile> noticeFileList = noticeMapper.selectNoticeFileOneList(noticeNo);
+		log.debug(A.S + "[NoticeService.getNoticeOne] noticeFileList : "+ noticeFileList + A.R); 
+		
+		//Map으로 묶어줌
+		Map<String, Object> noticeOneReturnMap = new HashMap<>();
+		noticeOneReturnMap.put("notice", notice);
+		noticeOneReturnMap.put("noticeFileList", noticeFileList);
+		log.debug(A.S + "[NoticeService.getNoticeOne] noticeOneReturnMap : "+ noticeOneReturnMap + A.R); 
+		
+		return noticeOneReturnMap;
 	}
 	  
 	//Notice 수정액션 
@@ -75,11 +138,44 @@ public class NoticeService {
 	}
 	  
 	//Notice 삭제(블라인드로 변경) 
-	public int removeNotice(int noticeNo) { 
+//	public int removeNotice(int noticeNo) { 
+//		log.debug(A.S + "[NoticeService.removeNotice.param] noticeNo : "+ noticeNo + A.R); 
+//		int row = noticeMapper.deleteNotice(noticeNo);
+//		log.debug(A.S + "[NoticeService.removeNotice.row] row : "+ row + A.R); 
+//		return row;
+//	}
+	
+	//Notice + File 삭제
+	public int removeNotice(int noticeNo, String path) {
 		log.debug(A.S + "[NoticeService.removeNotice.param] noticeNo : "+ noticeNo + A.R); 
-		int row = noticeMapper.deleteNotice(noticeNo);
-		log.debug(A.S + "[NoticeService.removeNotice.row] row : "+ row + A.R); 
+		log.debug(A.S + "[NoticeService.removeNotice.param] path : "+ path + A.R); 
+		
+		int row = -1;
+		//1)저장장치의 파일을 삭제 -> 파일이름
+		List<String> noticeFileList = noticeMapper.selectNoticeFileNameList(noticeNo);
+		log.debug(A.S + "[NoticeService.removeNotice] noticeFileList : "+ noticeFileList + A.R); 
+		
+		for(String fileName : noticeFileList) {
+			File f = new File(path + fileName);
+			// 만약 파일이 존재한다면
+			if(f.exists()) {
+				//삭제한다
+				f.delete();
+			}
+		}
+		//2)DB 삭제 (파일삭제 -> 공지삭제)
+		noticeMapper.deleteNoticeFileList(noticeNo);
+		row = noticeMapper.deleteNotice(noticeNo);
+		return row;
+	}
+
+	//File 만 삭제
+	public int removeNoticeFile(int noticeFileNo) {
+		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileNo : "+ noticeFileNo + A.R); 
+		int row = -1;
+		row = noticeMapper.deleteNoticeFileOne(noticeFileNo);		
 		return row;
 	}
 }
+
  

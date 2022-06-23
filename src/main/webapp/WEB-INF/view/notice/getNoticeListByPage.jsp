@@ -35,7 +35,7 @@
 			            		<h4 class="card-title">getNoticeListByPage</h4>
 			            		<div>
 							        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">
-							        	<input type="button" class="btn btn-info" style="float: right" value="게시판입력" id="addNotice">
+							        	<input type="button" class="btn btn-info" style="float: right" value="게시판입력">
 							        </a>
 						        </div>
 						    </div>

@@ -8,23 +8,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
 <title>addNotice</title>
 <!-- CSS 링크 -->
-<link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="dist/css/style.min.css" rel="stylesheet">
-<script src="assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <style type="text/css">textarea{width: 100%; height: 1000em; border: none; resize: none;}</style>
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
-</script>
 </head>
 	<script>
-		//유효성검사
-		$('document').ready(function(){
+		// html페이지를 다 로드시키고 매개변수함수를 실행
+		$('document').ready(function(){ 
+			//
+			let flag = true;
+			$('#addNoticeFileUpload').click(function(){
+				$('.noticeFileList').each(function(){
+					if($(this).val() == ''){
+						flag = false;	
+					}
+				});
+			
+				if(flag){
+					$('#fileSection').append("<div class='input-group'><label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded' id ='label'>Browse File<input type='file' id = 'fileBtn' class='noticeFileList' style='display: none;' name='noticeFileList'></span></label></div>");
+					/* 
+					$('#fileBtn').change(function(){
+						$('#label').text($('#fileBtn').val());
+					});
+					 */
+				} else {
+					alert('첨부되지 않은 List가 존재합니다.');
+				}
+			});
+			
+			//유효성검사
 			$('#uploadNotice').click(function(){
 					$('#noticeTitleHelper').text('');
 					$('#noticeContentHelper').text('');
@@ -39,8 +59,18 @@
 				} else if($('#noticePrivilege').val() == '-1'){
 					$('#noticePrivilegeHelper').text('읽기권한을 선택하세요');
 					$('#noticePrivilege').focus();
-				} else {
-					$('#addNoticeForm').submit();
+				} else {//첨부되지 않은 파일여부 체크 후 submit
+					$('.noticeFileList').each(function(){
+						if($(this).val == ''){
+							flag = false;
+						}
+					});
+					if(flag){
+						$('#addNoticeForm').submit();
+					} else {
+						$('#addNoticeFileUploadHelper').text('파일을 첨부해 주세요');	
+						$('#addNoticeFileUpload').focus();
+					}
 				}
 			});
 		});
@@ -58,7 +88,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		        <div class="card-body">
 		            <h4 class="card-title">addNotice</h4>
 		            <div class="mt-2" style="height:auto; width:100%;">
-		            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post">
+		            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post" enctype="multipart/form-data">
 			            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
 								<tr>
 					    			<th>제목</th>
@@ -95,6 +125,18 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 					    		</tr>
 			            	</table>
 			            	
+			            	
+			            	
+			            	<div>
+			            		<button type="button" id = "addNoticeFileUpload" class="btn btn-outline-info btn-rounded">파일 업로드 추가</button>
+			            		<div id = "fileSection">
+			            			<!-- 파일 업로드 input 태그가 추가될 영역 -->
+			            		</div>
+			            		<span id="addNoticeFileUploadHelper" class="helper"></span>
+			            	</div>
+
+
+
 			            	<div>
 			            		<button type="button" id="uploadNotice" class="btn btn-outline-success btn-rounded">등록</button>
 						        <a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
@@ -116,17 +158,17 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
     	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
   	</script>
 
-    <script src="dist/js/app-style-switcher.js"></script>
-    <script src="dist/js/feather.min.js"></script>
-    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="dist/js/sidebarmenu.js"></script>
-    <script src="dist/js/custom.min.js"></script>
-    <script src="assets/extra-libs/c3/d3.min.js"></script>
-    <script src="assets/extra-libs/c3/c3.min.js"></script>
-    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="dist/js/pages/dashboards/dashboard1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
     
 </html>
