@@ -15,6 +15,10 @@ public interface LectureMapper {
 	//1.강의 목록(상세보기)- 전체 강의에 대한
 	//강의데이터가 키값으로 전달받음, List로 반환
 	List<Lecture> selectLectureByPage(Map<String, Object> map);
+	//1-1.수강 중인 강의 목록(학생)
+	List<Lecture> selectLectureByStudent(String memberId);
+	//1-2.수강 중인 강의 목록(강사)
+	List<Lecture> selectLectureByTeacher(String memberId);
 
 	//2.강의 삽입 - action
 	//int형으로 반환, notice 객체 값? 전달받음
@@ -59,5 +63,8 @@ public interface LectureMapper {
 
 	//7-2. 강의-학생 전체 행
 	int selectStudentLectureCount();
+
+	//9. 강의 번호로 강의 하나의 정보를 select
+	Lecture selectLecturebyLectureNo(int lectureNo);
 
 }

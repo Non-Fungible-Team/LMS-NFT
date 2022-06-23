@@ -30,6 +30,7 @@ public class StudentLoginFilter implements Filter  {
 			if(session.getAttribute("sessionLoginMember") == null) {
 				log.debug(A.E+"[studentLoginFilter.doFilter] : 로그인 하지 않은 자의 요청 "+A.R);
 				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/login");
+				return;
 			}
 			//로그인 정보가 있을시 Member 변수에 저장
 			Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
@@ -37,6 +38,7 @@ public class StudentLoginFilter implements Filter  {
 			if(sessionLoginMember.getMemberLevel() != 4) {
 				log.debug(A.E+"[studentLoginFilter.doFilter] : 권한이 아닌 자의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
 				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/homeController?msg=notStudent");
+				return;
 			}
 			
 		} else {
