@@ -22,7 +22,7 @@ public class MemberController {
 	
 	@Autowired MemberService memberService;
 	
-	// 학생 정보 삭제
+	// 학생 휴면 처리 ( 삭제 대체 ) 
 	@PostMapping("/all/freezeStudent")
 	public String removeStudent(HttpSession session
 								, Member member) {
@@ -40,7 +40,7 @@ public class MemberController {
 		return "redirect:/login";
 	}
 	
-	// 학생 정보 삭제 
+	// 학생 휴면 처리 ( 삭제 대체 ) 
 	@GetMapping("/all/freezeStudent")
 	public String removeStudent(HttpSession session) {
 		
@@ -182,7 +182,7 @@ public class MemberController {
 	@GetMapping("/login")
 	public String login(HttpSession session) {
 		if(session.getAttribute("sessionLoginMember") != null) {
-			return "home";
+			return "redirect:/all/home";
 		}
 		return "/member/memberLogin";
 	}
