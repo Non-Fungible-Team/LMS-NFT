@@ -35,41 +35,23 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		<div class="col-lg-12 col-md-6">
 		    <div class="card">
 		        <div class="card-body">
-		            <h4 class="card-title">StudentLecture List</h4>
+		            <h4 class="card-title">StudentLecture add</h4>
 		            <br>
-		            <a href="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture" class="btn btn-primary btn-rounded">
-						<i class="fas fa-check"></i>입력
-					</a>
-		            <div class="mt-2" style="height:auto; width:auto;">
-		            <!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-		            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
-		            		<thead>
-					            <tr>
-					                <th>학생 ID</th>
-					                <th>학생 이름</th>
-					                <th>취업 여부</th>
-					                <th>등록일</th>
-					                <th>수료일</th>
-					                <th>전체 성적</th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					            <c:forEach var="sl" items="${studentLectureList}">
-					                <tr>
-					                   <td>${sl.memberId}</td>
-					                   <td>${sl.studentName}</td>
-					                   <td>${sl.studentLectureJob}</td>
-					                   <td>${sl.studentLectureLegistrationDate}</td>
-					                   <td>${sl.studentLectureEndDate}</td>
-					                   <td>${sl.studentLectureScore}</td>
-					                </tr>
-					            </c:forEach>
-					        </tbody>
-		            	</table>
-		             </div>   
+		            <div style="height:294px;">
+		            	<form method="post" id="addForm" action="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture###">
+		            	<!-- 
+                            <div class="form-group">
+                               lectureRoom name : <input type="text" name="lectureRoomName" class="form-control" id="lectureRoomName">
+                               lectureRoom location : <input type="text" name="lectureRoomLocation" class="form-control" id="lectureRoomLocation">
+                               lectureRoom people : <input type="number" name="lectureRoomPeople" class="form-control" id="lectureRoomPeople">
+                            </div>
+                             -->
+                            <button type="button" class="btn btn-outline-success btn-rounded" id="addLectureRoom"><i class="fas fa-check"></i>입력</button>
+                        </form>
+		            </div>     
 		        </div>
 		    </div>
-		</div>		
+		</div>
 	</div>
 </div>
 </div>

@@ -209,11 +209,17 @@ public class LectureController {
 		return "/lecture/getStudentLectureByPage";
 	}
 	
-	// 5-2.학생-강의 삽입
-	/*@PostMapping("a")
+	// 5-2.학생-강의 삽입 폼
+	@GetMapping("/teacher/lecture/addStudentLecture")
 	public String addStudentLecture() {
 		
-		return "";
+		return "/lecture/addStudentLecture";
+	}
+	
+	/*@PostMapping("/teacher/lecture/addStudentLecture")
+	public String addStudentLecture() {
+		
+		return "/lecture/addStudentLecture";
 	}
 	
 	// 5-3. 학생-강의 목록 수정 폼
