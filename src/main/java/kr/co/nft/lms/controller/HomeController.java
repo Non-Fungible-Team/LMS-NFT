@@ -64,6 +64,11 @@ public class HomeController {
 		//지금은 임시로 homecontroller로 리다이렉트
 			return "redirect:/all/home";
 	}
+	// index 대신 home을 연결해주는 컨트롤러
+	@GetMapping("/")
+	public String index(){
+		return "redirect:/all/home";
+	}
 	// emptyPage을 리턴하는 임시 컨트롤러
 	@GetMapping("/emptyPage")
 	public String emptyPage(){

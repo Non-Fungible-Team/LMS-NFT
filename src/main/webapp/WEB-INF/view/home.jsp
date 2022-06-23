@@ -53,7 +53,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 				                   <td><a href="${pageContext.request.contextPath}/all/lectureNoController?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
 				                   <td>${l.lectureStartDate}</td>
 				                   <td>${l.lectureEndDate}</td>
-				                   <td>${l.lectureroomName}</td>
+				                   <td>${l.lectureRoomName}</td>
 				                </tr>
                             
                             </c:forEach>

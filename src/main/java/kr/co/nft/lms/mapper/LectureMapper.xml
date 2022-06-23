@@ -11,7 +11,7 @@
 		,lecture_name lectureName
 		,lecture_start_date lectureStartDate
 		,lecture_end_date lectureEndDate
-		,lr.lecture_room_name lectureroomName
+		,lr.lecture_room_name lectureRoomName
 		,lecture_create_date lectureCreateDate  
 		,t.teacher_name teacherName
 		,lecture_writer lectureWriter
@@ -38,7 +38,7 @@
 		,lecture_name lectureName
 		,lecture_start_date lectureStartDate
 		,lecture_end_date lectureEndDate
-		,lr.lecture_room_name lectureroomName
+		,lr.lecture_room_name lectureRoomName
 		,lecture_create_date lectureCreateDate  
 	FROM lecture l
 	INNER JOIN subject s
@@ -61,7 +61,7 @@
 		,lecture_name lectureName
 		,lecture_start_date lectureStartDate
 		,lecture_end_date lectureEndDate
-		,lr.lecture_room_name lectureroomName
+		,lr.lecture_room_name lectureRoomName
 		,lecture_create_date lectureCreateDate  
 	FROM lecture l
 	INNER JOIN subject s
@@ -254,7 +254,7 @@
 		,lecture_name lectureName
 		,lecture_start_date lectureStartDate
 		,lecture_end_date lectureEndDate
-		,lr.lecture_room_name lectureroomName
+		,lr.lecture_room_name lectureRoomName
 		,lecture_create_date lectureCreateDate  
 	FROM lecture l
 	INNER JOIN subject s
