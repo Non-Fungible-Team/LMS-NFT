@@ -39,10 +39,10 @@ public interface SurveyMapper {
 	int countSurvey();
 	
 	// 설문조사 상세보기
-	Survey selectSurveyOne(Survey survey);
+	Survey getSurveyOne(int surveyNo);
 	
 	// 설문조사 상세보기(이너조인)
-	int selectSurveyOneQuestion(Survey survey);
+	List<Map<String,Object>> SurveyQuestionList(int survey);
 	
 	
 }

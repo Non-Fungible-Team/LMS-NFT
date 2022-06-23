@@ -148,6 +148,26 @@
 				WHERE survey_no = #{surveyNo}
 		</select>
 		
-		
+		<select id="selectSurveyOneQuestion"
+				resultType="map">
+			SELECT
+				s.survey_no
+				,s.survey_title
+				,s.survey_content
+				,s.survey_create_date
+				,s.survey_update_date
+				,s.survey_startline_date
+				,s.survey_deadline_date
+				,s.lecture_no
+				,s.member_id
+				,sq.survey_question_no
+				,sq.survey_question_list_no
+				,sq.survey_question_content
+				,sq.survey_question_type
+				FROM survey AS s
+				INNER JOIN survey_question AS sq
+				ON sq.survey_no = s.survey_no
+				ORDER BY survey_no
+		</select>
 		
 </mapper>
