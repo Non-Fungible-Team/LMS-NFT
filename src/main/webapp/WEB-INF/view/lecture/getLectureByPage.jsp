@@ -52,7 +52,16 @@
 											<tr>
 												<td>${l.lectureNo}</td>
 												<td>${l.subjectName}</td>
-												<td>${l.lectureName}</td>
+												<td>
+													<c:choose> 
+														<c:when test="${sessionLoginMember.memberLevel > 5}">
+															<a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a>
+														</c:when>
+														<c:otherwise>
+															<a href="${pageContext.request.contextPath}/student/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a>
+														</c:otherwise> 
+													</c:choose> 
+												</td>
 												<td>${l.lectureStartDate}</td>
 												<td>${l.lectureEndDate}</td>
 												<td>${l.lectureroomName}</td>
