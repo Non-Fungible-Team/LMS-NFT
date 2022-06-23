@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Member;
+import kr.co.nft.lms.vo.MemberPhoto;
 import kr.co.nft.lms.vo.Student;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +39,9 @@ public class MemberController {
 		// log.debug(A.Z+"[MemberController.removeStudent] rowOfStudentTbl : "+rowOfStudentTbl+A.R);
 		int rowOfMemberTbl = memberService.freezeStudentOfMemberTbl(member);
 		log.debug(A.Z+"[MemberController.removeStudent] rowOfMemberTbl : "+rowOfMemberTbl+A.R);
+		
+		int rowOfLevelHistoryTbl = memberService.addLevelHistoryOfStudentRecord(loginMember);
+		log.debug(A.Z+"[MemberController.removeStudent] rowOfLevelHistoryTbl : "+rowOfLevelHistoryTbl+A.R);
 		
 		return "redirect:/login";
 	}
@@ -63,15 +69,27 @@ public class MemberController {
 	// 학생 정보 수정 
 	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
+								, HttpServletRequest request
 								, Member member
-								, Student student) {
+								, Student student
+								, MemberPhoto memberPhoto) {
+		
+		String path = request.getServletContext().getRealPath("/memberPhoto/studentPhoto");
+		log.debug(A.Z+"[MemberController.modifyStudent.param] path : "+path+A.R);
+		
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		
 		log.debug(A.Z+"[MemberController.modifyStudent.param] member : "+member+A.R);
 		log.debug(A.Z+"[MemberController.modifyStudent.param] student : "+student+A.R);
+		log.debug(A.Z+"[MemberController.modifyStudent.param] memberPhoto : "+memberPhoto+A.R);
+		
+		// 어떻게 사용하면 좋을지 ? 
+		// MultipartFile studentPhoto 
 		
 	    int rowOfMember = memberService.modifyStudent(member);
 	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfMember : "+rowOfMember+A.R);
+	    
+	    
 	    int rowOfStudent = memberService.modifyStudent(student);
 	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfStudent : "+rowOfStudent+A.R);
 		

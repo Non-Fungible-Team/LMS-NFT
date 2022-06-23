@@ -16,6 +16,23 @@
 			, address_detail addressDetail
 		FROM teacher	
 	</select>
+	
+	<insert id="insertLevelHistoryOfStudentRecord"
+			parameterType="kr.co.nft.lms.vo.Member">
+		INSERT INTO level_history (
+			member_id
+			, level_history_new_level
+			, level_history_reason
+			, member_id2
+			, level_history_update_date
+		) VALUES (
+			#{memberId}
+			, -4
+			, NULL
+			, 'system'
+			, NOW() 
+		);
+	</insert>
 
 	<update id="updateStudentOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
@@ -72,6 +89,7 @@
 			, student_gender studentGender
 			, student_email studentEmail 
 			, student_education studentEducation 
+			, photo_no photoNo
 		FROM student 
 		WHERE member_id = #{memberId} 
 	</select>
