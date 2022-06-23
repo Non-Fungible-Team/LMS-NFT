@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>Lecture List</title>
+<title>Manager</title>
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
-		<div id="navAside"></div>
+		<div id="navAsideManager"></div>
 
 		<!-- main화면 body start -->
 		<!-- 첫번쨰 문단 -->
@@ -32,9 +32,10 @@
 				<div class="col-lg-12 col-md-6">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">수강목록</h4>
+							<h4 class="card-title">Lecture List</h4>
+							<br>
 							<div class="mt-2" style="height: auto; width: auto;">
-								<a href="${pageContext.request.contextPath}/manager/lecture/addLecture" class="btn btn-outline-dark">강의 입력</a>
+								
 								<table id="zero_config" class="table table-striped table-bordered no-wrap">
 									<thead>
 										<tr>
@@ -52,7 +53,7 @@
 											<tr>
 												<td>${l.lectureNo}</td>
 												<td>${l.subjectName}</td>
-												<td><a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>														
+												<td><a href="${pageContext.request.contextPath}/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>											</td>
 												<td>${l.lectureStartDate}</td>
 												<td>${l.lectureEndDate}</td>
 												<td>${l.lectureroomName}</td>
@@ -61,6 +62,7 @@
 										</c:forEach>
 									</tbody>
 								</table>
+								<a href="${pageContext.request.contextPath}/manager/lecture/addLecture" class="btn btn-rounded btn-outline-primary">강의 입력</a>
 							</div>
 						</div>
 					</div>
@@ -70,7 +72,7 @@
 	</div>
 </body>
 	<script>
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		$("#navAsideManager").load('${pageContext.request.contextPath}/include/navAsideManager.jsp');
   	</script>
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
