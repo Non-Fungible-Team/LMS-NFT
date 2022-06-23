@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.MemberMapper;
+import kr.co.nft.lms.vo.LevelHistory;
 import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Student;
@@ -17,6 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	
 	@Autowired MemberMapper memberMapper;
+	
+	// 학생의 레벨이 변경되면 `level_history` 테이블에 튜플을 남긴다 
+	public int addLevelHistoryOfStudentRecord(Member member) {
+		return memberMapper.insertLevelHistoryOfStudentRecord(member);
+	}
 	
 	// Member 테이블의 학생 튜플 삭제, 삭제시 순서가 밀린다 
 	public int freezeStudentOfMemberTbl(Member member) {

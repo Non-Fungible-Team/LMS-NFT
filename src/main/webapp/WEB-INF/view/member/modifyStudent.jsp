@@ -5,10 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>modifyStudent</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+</script>
 </head>
 <body>
 	<h1>modifyStudent</h1>
-	<form action="${pageContext.request.contextPath}/all/modifyStudent" method="post">
+	<form action="${pageContext.request.contextPath}/all/modifyStudent" method="post" enctype="multipart/form-data">
 		<table border="1">
 		
 			<tr>
@@ -52,6 +56,13 @@
 				<td>최종 학력</td>
 				<td>
 					<input type="text" name="studentEducation" id="studentEducation" value="${getStudentOneByStudentVo.studentEducation}">
+				</td>
+			</tr>
+			<tr>
+				<td>학생 사진</td>
+				<td>
+					<input type="file" id="photoOriginName" name="photoOriginName">
+					<span id="studentPhotoSection"></span>
 				</td>
 			</tr>
 			<tr>
