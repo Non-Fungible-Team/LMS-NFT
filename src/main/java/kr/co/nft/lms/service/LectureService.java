@@ -150,8 +150,9 @@ public class LectureService {
 	}
 	
 	//5&6.학생 강의 목록
-	public Map<String,Object> getStudentLectureByPage(int currentPage, int rowPerPage){
+	public Map<String,Object> getStudentLectureByPage(int lectureNo, int currentPage, int rowPerPage) {
 		//디버깅코드
+		log.debug(A.A + "[LectureService.getStudentLectureByPage.lectureNo] lectureNo  : " + lectureNo + A.R);
 		log.debug(A.W +"[LectureService.getStudentLectureByPage.currentPage] currentPage  : " + currentPage +A.R);
 		log.debug(A.W +"[LectureService.getStudentLectureByPage.rowPerPage ] rowPerPage : " + rowPerPage +A.R);
 		
@@ -162,12 +163,13 @@ public class LectureService {
 		
 		//페이지값 받아오기
 		Map<String, Object> map = new HashMap<>();
+		map.put("lectureNo", lectureNo);
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		log.debug(A.W +"[LectureService.getStudentLectureByPage.map] map : " +map +A.R);//디버깅코드
 
 		//강의목록 mapper메소드 호출
-		List<Lecture> studentLectureList = lectureMapper.selectStudentLecture(map);
+		List<StudentLecture> studentLectureList = lectureMapper.selectStudentLecture(map);
 		log.debug(A.W +"[LectureService.getStudentLectureByPage.studentLectureList] studentLectureList : " +studentLectureList +A.R);//디버깅코드
 		
 		//Mapper에서 반환된값 가공 -> controller로 전달

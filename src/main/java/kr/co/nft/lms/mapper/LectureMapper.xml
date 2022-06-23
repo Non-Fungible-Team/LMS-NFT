@@ -18,7 +18,7 @@
 	FROM lecture l
 	INNER JOIN subject s
 		ON l.subject_no = s.subject_no
-	INNER JOIN teacher_lecutre tl
+	INNER JOIN teacher_lecture tl
 		ON l.lecture_no = tl.lecture_no 
 	INNER JOIN teacher t
 		ON t.member_id = tl.member_id
@@ -102,7 +102,7 @@
 	</insert>
 	<!--2-2 강의-강사 삽입 -->
 	<insert id="insertTeacherLecture" parameterType="kr.co.nft.lms.vo.Lecture">
-		INSERT INTO teacher_lecutre(member_id, lecture_no) 
+		INSERT INTO teacher_lecture(member_id, lecture_no) 
 		VALUES(
 			#{memberId}
 			,#{lectureNo}
@@ -147,21 +147,25 @@
 		WHERE lecture_no =#{lectureNo} 
 		AND member_id = #{memberId}
 	</delete>
+	
 	<!-- 5/6.학생_강의 목록: 강의명 누르면 나오는 화면 -->
 	<select id="selectStudentLecture"
 				parameterType="java.util.Map"
 				resultType="java.util.List">
 		SELECT 
 			 s.member_id memberId
-			,s.student_name studentName, student_lecture_legistration_date studentLectureLegistrationDate
-			,student_lecture_end_date studentLectureEndDate, student_lecture_score studentLectureScore
-			,student_lecture_job  studentLectureJob 
+			, s.student_name studentName
+			, student_lecture_legistration_date studentLectureLegistrationDate
+			, student_lecture_end_date studentLectureEndDate
+			, student_lecture_score studentLectureScore
+			, student_lecture_job  studentLectureJob 
 		FROM student_lecture sl
 		INNER JOIN lecture l
 			ON l.lecture_no = sl.lecture_no
 		INNER JOIN student s
 			ON sl.member_id = s.member_id
-		ORDER BY lectureName ASC, studentLectureLegistrationDate DESC
+		WHERE sl.lecture_no = #{lectureNo}
+		ORDER BY sl.lecture_No ASC, studentLectureLegistrationDate DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	

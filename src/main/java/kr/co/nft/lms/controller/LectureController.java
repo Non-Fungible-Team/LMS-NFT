@@ -143,7 +143,7 @@ public class LectureController {
 	}
 	
 	//3. 강의 수정 폼
-	@GetMapping("/teacher/lecture/modifyLecture")
+	@GetMapping("/manager/lecture/modifyLecture")
 	public String modifyLecture(Model model
 								,@RequestParam(name="lectureNo") int lectureNo) {
 		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.param] lectureNo : " + lectureNo +A.R);
@@ -160,7 +160,7 @@ public class LectureController {
 		return "/lecture/modifyLecture";
 	}
 	//수정 액션
-	@PostMapping("/teacher/lecture/modifyLecture")
+	@PostMapping("/manager/lecture/modifyLecture")
 	public String modifyLecture(Lecture lecture) {
 		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.lecture] lecture : " + lecture +A.R);
 		
@@ -182,20 +182,33 @@ public class LectureController {
 		return "/lecture/getLectureByPage";
 	}
 	*/
-	/*
+	
 	// 5 & 6.학생 강의 목록
 	@GetMapping("/teacher/lecture/getStudentLectureByPage")
-	public String getStudentLectureByPage(@RequestParam(name = "currentPage",defaultValue = "1") int currentPage
+	public String getStudentLectureByPage(Model model
+										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+										, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 										, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		
+		lectureNo = 1;
+		
+		log.debug(A.A + "[LectureController.getStudentLectureByPage] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] currentPage : " + currentPage + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] rowPerPage : " + rowPerPage + A.R);
 		
-		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(currentPage, rowPerPage);
-		// model.addAttribute("lecture",returnMap.get("lecture")); 
-		return "";
+		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(lectureNo, currentPage, rowPerPage);
+		
+		log.debug(A.A + "[LectureController.getStudentLectureByPage] returnMap : " + returnMap + A.R);
+		
+		model.addAttribute("studentLectureList", returnMap.get("studentLectureList")); 
+		model.addAttribute("currentPage", returnMap.get("currentPage")); 
+		model.addAttribute("rowPerPage", returnMap.get("rowPerPage")); 
+		
+		log.debug(A.A + "[LectureController.getStudentLectureByPage] model : " + model + A.R);
+		
+		return "/lecture/getStudentLectureByPage";
 	}
-	*/
+	
 	// 5-2.학생-강의 삽입
 	/*@PostMapping("a")
 	public String addStudentLecture() {
