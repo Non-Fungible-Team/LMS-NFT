@@ -9,65 +9,70 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	var appendCountMultiple = 1;
-	var appendCountShort = 1;
+	var appendCount = 1;
+	var appendCountList = 0;
 	
 	
 	$('#multipleSurvey').click(function(){
-		if (appendCountMultiple >= 11) return; 
+		if (appendCount >= 11) return; 
 			//jquery api 사용
 			
-			
-			$('#multipleSurveyForm').append("<tr><td>객관식 질문 "+appendCountMultiple+"번</td></tr><tr><td>질문 항목"+appendCountMultiple+"</td><td><select id='surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' id='surveyQuestionType' value='객관식' readonly></td></tr>");
-			appendCountMultiple++;
+			appendCountList = appendCount-1;
+			$('#surveyQuestionForm').append("<tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr>");
+			appendCount++;
 	});
 	
 	$('#shortSurvey').click(function(){
-		if (appendCountShort >= 11) return;
+		if (appendCount >= 11) return;
 			//jquery api 사용
-			$('#shortSurveyForm').append("<tr><td>주관식 질문 "+appendCountShort+"번</td></tr><tr><td>질문 항목"+appendCountShort+"</td><td><select id='surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' id='surveyQuestionType' value='주관식' readonly></td></tr>");
-			appendCountShort++;
+			appendCountList = appendCount-1;
+			$('#surveyQuestionForm').append("<tr><td>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr>");
+			appendCount++;
 	});
-	
 	
 	
 	
 	$('#deleteTypeButton').click(function(){
-		$('#multipleSurveyForm').empty();
-		$('#shortSurveyForm').empty();
-		appendCountMultiple = 1;
-		appendCountShort = 1;
+		$('#surveyQuestionForm').empty();
+		appendCount = 1;
+		appendCountList = 0;
 	});
 	
 	$('#insertQuestionList').click(function(){
-		if($('#surveyName').val() == '') {
-			$('#surveyNameHelper').text('제목을 입력하세요');
+		if($('#surveyTitle').val() == '') {
+			$('#surveyTitleHelper').text('제목을 입력하세요');
 			$('#surveyContentHelper').text('')
 			$('#surveyNameHelper').text('')
 			$('#deadlineHelper').text('');
 			
-    		$('#surveyName').focus();
+    		$('#surveyTitle').focus();
 		}else if($('#surveyContent').val() == '') {
-			$('#surveyNameHelper').text('');
+			$('#surveyTitleHelper').text('');
 			$('#surveyContentHelper').text('내용을 입력하세요')
 			$('#startlineHelper').text('');
 			$('#deadlineHelper').text('');
 			
 			$('#surveyContent').focus();
-		}else if($('#startline').val() == '') {
-			$('#surveyNameHelper').text('');
+		}else if($('#surveyStartlineDate').val() == '') {
+			$('#surveyTitleHelper').text('');
 			$('#surveyContentHelper').text('')
 			$('#startlineHelper').text('설문 시작일을 입력하세요');
 			$('#deadlineHelper').text('');
 			
-			$('#startline').focus();
-		}else if($('#deadline').val() == '') {
-			$('#surveyNameHelper').text('');
+			$('#surveyDeadlineDate').focus();
+		}else if($('#surveyDeadlineDate').val() == '') {
+			$('#surveyTitleHelper').text('');
 			$('#surveyContentHelper').text('')
-			$('#startline').text('');
+			$('#startlineHelper').text('');
 			$('#deadlineHelper').text('설문 마감일을 입력하세요');
 			
-			$('#deadlineHelper').focus();
+			$('#surveyDeadlineDate').focus();
+		}else if(appendCount == 1){
+			$('#surveyTitleHelper').text('');
+			$('#surveyContentHelper').text('')
+			$('#startlineHelper').text('');
+			$('#deadlineHelper').text('');
+			$('#qestionFormHelper').text('질문을 선택해주세요')
 		}else {
 			$('#insertSurvey').submit();
 		}
@@ -91,12 +96,12 @@ $(document).ready(function(){
 		<table>
 			<tr>
 				<td>설문조사 제목</td>
-				<td><input type="text" name="surveyTitle">
-				<span id='surveyNameHelper' class='helper'></span></td>
+				<td><input type="text" name="surveyTitle" id="surveyTitle">
+				<span id='surveyTitleHelper' class='helper'></span></td>
 			</tr>
 			<tr>
 				<td>설문조사 내용</td>
-				<td><input type="text" name="surveyContent">
+				<td><input type="text" name="surveyContent" id="surveyContent">
 				<span id='surveyContentHelper' class='helper'></span></td>
 			</tr>
 			<tr><td>설문 시작일</td>
@@ -112,10 +117,11 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 			<td>
-			<td id="multipleSurveyForm"></td>
-			<td id="shortSurveyForm"></td>
-			<tr>
-				
+			<td id="surveyQuestionForm">
+			<span id='qestionFormHelper' class='helper'></span></td>
+			
+			
+			
 		</table>
 		<button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button>
 	</form>

@@ -40,14 +40,14 @@ public class SurveyService {
 		return select;
 	}
 	
-	public int insertSurbey(Survey survey,ArrayList<SurveyQuestion> surveyQuestion) {
+	public int insertSurbey(Survey survey, List<SurveyQuestion> surveyQuestionList) {
 		log.debug(A.D+"[SurveyService.insertSurbey] survey : " + survey + A.R);
 		int row = surveyMapper.insertSurvey(survey);
 		log.debug(A.D+"[SurveyService.insertSurbey] surveyNo : " + row+ A.R);
 		
 		
 		int row2 = 0;
-		for(SurveyQuestion s : surveyQuestion) {
+		for(SurveyQuestion s : surveyQuestionList) {
 			s.setSurveyNo(survey.getSurveyNo());
 			row2 = row2 + surveyMapper.insertSurveyQuestion(s);
 			

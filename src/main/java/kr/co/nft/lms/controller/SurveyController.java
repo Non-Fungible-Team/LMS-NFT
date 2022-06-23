@@ -1,6 +1,6 @@
 package kr.co.nft.lms.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +36,23 @@ public class SurveyController {
 	}
 	
 	@PostMapping("/survey/insertSurvey")
-	public String insertSurveyl(Survey survey,ArrayList<SurveyQuestion> surveyQuestion) {
+	public String insertSurveyl(Survey survey, SurveyQuestion surveyQuestion) {
 		log.debug(A.D+"[SurveyController.insertSurvey] survey : " + survey + A.R); // 디버깅
 		log.debug(A.D+"[SurveyController.insertSurvey] surveyQuestion : " + surveyQuestion + A.R); // 디버깅
-		int row = surveyService.insertSurbey(survey, surveyQuestion);
+		
+		
+		int row = surveyService.insertSurbey(survey, surveyQuestion.getSurveyQuestionList());
 		log.debug(A.D+"[SurveyController.insertSurvey] row : " + row + A.R); // 디버깅
+		
+		
+		
 		if(row == 0) {
 			log.debug(A.D+"[SurveyController.insertSurvey] 등록실패  " + A.R); // 디버깅
 			return "/survey/insertSurvey";
 		}
+		
 		log.debug(A.D+"[SurveyController.insertSurvey] 등록성공  " + A.R); // 디버깅
-		return "/redirect:/survey/getSurveyListByPage";
+		return "redirect:/survey/getSurveyListByPage";
 	}
 	
 	

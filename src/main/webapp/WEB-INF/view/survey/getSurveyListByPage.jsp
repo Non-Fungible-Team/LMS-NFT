@@ -18,6 +18,7 @@
 				<th>생성일</th>
 				<th>설문시작일</th>
 				<th>설문마감일</th>
+				<th>강의</th>
 				<th>작성자</th>
 			</tr>
 		</thead>
@@ -25,11 +26,12 @@
 			<c:forEach var="sv" items="${surveyList}">
 				<tr>
 					<td>${sv.surveyNo}</td>
-					<td>${sv.surveyTitle}</td>
+					<td><a href="${pageContext.request.contextPath}/getSurveyOne?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
 					<td>${sv.surveyContent}</td>
 					<td>${sv.surveyCreateDate}</td>
 					<td>${sv.surveyStartlineDate}</td>
 					<td>${sv.surveyDeadlineDate}</td>
+					<td>${sv.lectureNo}</td>
 					<td>${sv.memberId}</td>
 				</tr>
 			</c:forEach>

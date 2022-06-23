@@ -96,14 +96,18 @@
 		<insert id="insertSurveyQuestion"
 				parameterType="kr.co.nft.lms.vo.SurveyQuestion">
 			INSERT INTO survey_question(
-				survey_no
+				survey_question_no
+				,survey_no
 				,survey_question_list_no
+				,survey_question_content
 				,survey_question_type
 				,survey_question_create_date
 				,survey_question_update_date
 			) VALUES(
-				#{surveyNo}
+				#{surveyQuestionNo}
+				,#{surveyNo}
 				,#{surveyQuestionListNo}
+				,#{surveyQuestionContent}
 				,#{surveyQuestionType}
 				,NOW()
 				,NOW()
@@ -126,5 +130,24 @@
 				FROM survey
 				ORDER BY survey_no
 		</select>
+		
+		<select id="selectSurveyOne"
+				parameterType="int"
+				resultType="kr.co.nft.lms.vo.Survey">
+			SELECT
+				survey_no surveyNo
+				,survey_title surveyTitle
+				,survey_content surveyContent
+				,survey_create_date surveyCreateDate
+				,survey_update_date surveyUpdateDate
+				,survey_startline_date surveyStartlineDate
+				,survey_deadline_date surveyDeadlineDate
+				,lecture_no lectureNo
+				,member_id memberId
+				FROM survey
+				WHERE survey_no = #{surveyNo}
+		</select>
+		
+		
 		
 </mapper>
