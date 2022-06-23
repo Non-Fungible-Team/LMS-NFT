@@ -91,9 +91,8 @@ public class LectureService {
 		return returnMap;
 	}
 	
-	public int addLecture(Lecture lecture,TeacherLecture teacherLecture) { //controller 넘겨오는 값
+	public int addLecture(Lecture lecture) { //controller 넘겨오는 값
 		log.debug(A.W +"[LectureService.addLecture.lecture] lecture  : " + lecture +A.R);
-		log.debug(A.W +"[LectureService.addTeacherLecture.teacherLecture] teacherLecture  : " + teacherLecture +A.R);
 		//mapper 메소드 호출
 		int lectureRow = lectureMapper.insertLecture(lecture);
 		log.debug(A.W +"[LectureService.addLecture.lectureRow] lectureRow : " + lectureRow +A.R);

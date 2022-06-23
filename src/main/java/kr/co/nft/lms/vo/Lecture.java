@@ -14,4 +14,6 @@ public class Lecture {
 	private String lectureCreateDate;
 	private String lectureUpdateDate;
 	private String lectureRoomName;
+	private String lectureWriter;
+	private String teacherName;
 }

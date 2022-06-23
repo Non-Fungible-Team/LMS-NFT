@@ -13,12 +13,18 @@
 		,lecture_end_date lectureEndDate
 		,lr.lecture_room_name lectureroomName
 		,lecture_create_date lectureCreateDate  
+		,t.teacher_name teacherName
+		,lecture_writer lectureWriter
 	FROM lecture l
 	INNER JOIN subject s
 		ON l.subject_no = s.subject_no
+	INNER JOIN teacher_lecutre tl
+		ON l.lecture_no = tl.lecture_no 
+	INNER JOIN teacher t
+		ON t.member_id = tl.member_id
 	INNER JOIN lecture_room lr
 		ON l.lecture_room_name = lr.lecture_room_name
-	ORDER BY lecture_no
+	ORDER BY l.lecture_no
 	LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
@@ -35,6 +41,7 @@
 			,lecture_create_date
 			,lecture_update_date
 			,lecture_room_name
+			,lecture_writer
 		)
 		VALUES(
 			#{subjectNo}
@@ -44,6 +51,7 @@
 			,NOW()
 			,NOW()
 			,#{lectureRoomName}
+			,#{lectureWriter}
 		)
 	</insert>
 	<!--2-2 강의-강사 삽입 -->

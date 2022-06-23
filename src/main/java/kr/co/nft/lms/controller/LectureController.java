@@ -133,11 +133,10 @@ public class LectureController {
 	}
 	
 	@PostMapping("/manager/lecture/addLecture")
-	public String addLecture(Lecture lecture,TeacherLecture teacherLecture) {
+	public String addLecture(Lecture lecture) {
 		log.debug(A.W +"[LectureController.manager.lecture/addLecture.lecture] lecture : " + lecture +A.R);
-		log.debug(A.W +"[LectureController.manager.lecture/addLecture.teacherLecture] teacherLecture : " + teacherLecture +A.R);
 		
-		int row = lectureService.addLecture(lecture, teacherLecture);
+		int row = lectureService.addLecture(lecture);
 		log.debug(A.W +"[LectureController.manager.lecture/addLecture.row] row : " + row +A.R);
 		
 		return "redirect:/teacher/lecture/getLectureByPage"; //addLecture로 이동
