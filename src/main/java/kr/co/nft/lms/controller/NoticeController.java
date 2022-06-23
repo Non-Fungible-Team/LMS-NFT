@@ -67,6 +67,7 @@ public class NoticeController {
 		Notice notice = noticeService.getNoticeOne(noticeNo);
 		log.debug(A.S + "[NoticeController.getNoticeOne] notice : " + notice + A.R);
 		model.addAttribute("notice", notice);
+		log.debug(A.S + "[NoticeController.getNoticeOne] model : " + model + A.R);
 		return "/notice/getNoticeOne";
 	}
 	
@@ -89,11 +90,11 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.modifyNotice] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
-			log.debug(A.S + "[NoticeController.modifyNotice.param] 수정실패"+ A.R);
+			log.debug(A.S + "[NoticeController.modifyNotice.row] 수정실패"+ A.R);
 			return "redirect:/manager/notice/modifyNotice?msg=fail";
 		}
 		//입력성공 했을 경우
-		log.debug(A.S + "[NoticeController.modifyNotice.param] 수정성공"+ A.R);
+		log.debug(A.S + "[NoticeController.modifyNotice.row] 수정성공"+ A.R);
 		return "redirect:/all/notice/getNoticeOne?noticeNo=" + notice.getNoticeNo();
 	}		 
 	
