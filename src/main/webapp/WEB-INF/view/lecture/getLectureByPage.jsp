@@ -43,6 +43,7 @@
 												<th>개강일</th>
 												<th>수료일</th>
 												<th>강의실</th>
+												<th>강사</th>
 												<th>생성날짜</th>
 											</tr>
 										</thead>
@@ -55,6 +56,7 @@
 													<td>${l.lectureStartDate}</td>
 													<td>${l.lectureEndDate}</td>
 													<td>${l.lectureRoomName}</td>
+													<td>${l.teacherName}</td>
 													<td>${l.lectureCreateDate}</td>
 												</tr>
 											</c:forEach>
