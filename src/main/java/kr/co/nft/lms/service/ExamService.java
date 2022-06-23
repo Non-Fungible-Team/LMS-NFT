@@ -53,12 +53,11 @@ public class ExamService {
 	// 시험 상세보기
 	public Map<String, Object> getExamOne(int examNo) {
 			log.debug(A.C + "[ExamService.getExamOne.param] examNo: " + examNo + A.R);
-			
-			List<Exam> examOneList = examMapper.selectExamOne(examNo);
+			Exam examOne = examMapper.selectExamOne(examNo);
 			
 			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("examOne",examOne);
 			log.debug(A.C + "[ExamService.getExamOne.Mapper] paramMap : " + paramMap + A.R);
-			paramMap.put("examOneList",examOneList);
 			return paramMap;
 			}
 	

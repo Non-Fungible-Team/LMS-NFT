@@ -45,9 +45,11 @@ public class ExamController {
 	public String getExamOne(Model model ,@RequestParam(name="examNo") int examNo, Map<String, Object> examQuestionOneList) {
 		log.debug(A.C + "[ExamController.getExamOne.param] examNo: " + examNo + A.R);
 		Map<String, Object> map1 = examService.getExamOne(examNo); // 시험 정보 호출
+		map1 = examService.getExamOne(examNo);
+		log.debug(A.C + "[ExamController.getExamOne.map1] examNo: " + examNo + A.R);
 		Map<String, Object> map2 = examService.getExamQuestionOne(examNo); // 시험 문제 정보 호출
 		
-		model.addAttribute("examOneList", map1.get("examOneList"));	// 시험정보
+		model.addAttribute("examOne", map1.get("examOne"));	// 시험정보
 		model.addAttribute("examQuestionOneList", map2.get("examQuestionOneList")); // 문제정보
 		model.addAttribute("examExampleOneList", map2.get("examExampleOneList")); // 보기정보
 		log.debug(A.C + "[ExamController.getExamOne.param] examExampleOneList: " + map2.get("examExampleOneList") + A.R);

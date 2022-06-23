@@ -59,16 +59,14 @@ $('#').trigger('click');
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="e" items="${examOneList}">
 					<tr>
-						<td class="text-center">${e.examNo}</td>
-						<td class="text-center">${e.examTitle}</td>
-						<td class="text-center">${e.examCount}</td>
-						<td class="text-center">${e.examMaxScore}</td>
-						<td class="text-center">${e.examStartDate}</td>
-						<td class="text-center">${e.examEndDate}</td>
+						<td class="text-center">${examOne.examNo}</td>
+						<td class="text-center">${examOne.examTitle}</td>
+						<td class="text-center">${examOne.examNo}</td>
+						<td class="text-center">${examOne.examMaxScore}</td>
+						<td class="text-center">${examOne.examStartDate}</td>
+						<td class="text-center">${examOne.examEndDate}</td>
 					</tr>
-				</c:forEach>
 			</tbody>
 		</table>
 		<c:forEach var="q" items="${examQuestionOneList}" varStatus="status">
@@ -115,11 +113,13 @@ $('#').trigger('click');
 			</table>
 		</c:forEach>
 		<div style="float: right">
+		<form action="removeExam" method="post">
+			<input type="hidden" name="examNo" value="${param.examNo}">
 			<a class="btn btn-info"
-				href="${pageContext.request.contextPath}/exam/updateExam?examNo=${examNo}">수정</a>
-<!-- 			<a class="btn btn-danger" -->
-<%-- 				href="${pageContext.request.contextPath}/exam/removeExam?examNo=${examNo}">삭제</a> --%>
-			<button class="btn btn-danger" type="button" id="btnRemove">삭제</button>
+				href="${pageContext.request.contextPath}/exam/modifyExam?examNo=${param.examNo}">수정</a>
+				<button class="btn btn-danger" type="submit">삭제</button>
+			</form>
 		</div>
+	</div>		
 </body>
 </html>

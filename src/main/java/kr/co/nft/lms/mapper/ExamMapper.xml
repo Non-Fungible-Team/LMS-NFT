@@ -82,8 +82,8 @@
 							,exam_create_date
 							,exam_Update_date
 			) VALUES (		
-							'wldnd'
-							,1
+							#{memberId}
+							,#{lectureNo}
 							,#{examTitle}
 							,#{examCount}
 							,#{examMaxScore}
@@ -174,23 +174,34 @@
 	</update>
 	
 	
+<!-- 		시험 삭제 -->
 	<delete id="deleteExam"
 			parameterType="int">
-			SET AUTOCOMMIT = FALSE; 	<!-- 오토커밋 해제 -->
-<!-- 		시험 삭제 -->
 			DELETE FROM exam
 			WHERE exam_no = #{examNo}
-<!--		시험문제 삭제 -->
-			DELETE FROM exam_question
-			WHERE exam_no = #{examNo}
-<!--		보기 삭제		 -->
-			DELETE FROM exam_example
-			WHERE exam_no = #{examNo}
-			SET AUTOCOMMIT = TRUE; 		<!--오토커밋 설정  -->
 	</delete>
 	
 
-			
+<!-- 시험 답안 입력 (학생) -->
+	<insert id="insertExamAnswer"
+			parameterType="kr.co.nft.lms.vo.ExamAnswer">
+			INSERT INTO exam_answer(
+							 exam_question_No		
+							,member_id 
+							,exam_answer
+							,exam_score
+							,exam_answer_start_date
+							,exam_answer_end_date
+			) VALUES (		#{examQuestionNo}
+							,#{memberId}
+							,#{examAnswer}
+<!-- 							,#{examScore} -->
+							,#{examAnswerStartDate}
+							,#{examAnswerEndDate}
+							,NOW()
+							,NOW()		
+			);
+	</insert>
 			
 		
 	

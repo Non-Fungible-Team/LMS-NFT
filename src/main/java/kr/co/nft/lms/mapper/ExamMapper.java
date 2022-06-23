@@ -17,7 +17,7 @@ public interface ExamMapper {
 	int countExam();
 	
 	// 시험 상세보기
-	List<Exam> selectExamOne(int examNo);
+	Exam selectExamOne(int examNo);
 	
 	// 시험문제 상세보기
 	List<Exam> selectExamQuestionOne(int examNo);

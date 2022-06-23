@@ -8,7 +8,7 @@ public class ExamAnswer {
 	private String memberId;
 	private String examAnswer;
 	private int examScore;
-	private String examStartDate;
-	private String examEndDate;
+	private String examAnswerStartDate;
+	private String examAnswerEndDate;
 
 }
