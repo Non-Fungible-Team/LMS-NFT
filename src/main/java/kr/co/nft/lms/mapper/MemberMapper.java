@@ -1,5 +1,7 @@
 package kr.co.nft.lms.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Manager;
@@ -9,6 +11,9 @@ import kr.co.nft.lms.vo.Teacher;
 
 @Mapper
 public interface MemberMapper {
+	
+	// 강사 전체 리스트
+	List<Teacher> selectTeacherList();
 	
 	// Member 테이블의 학생 레코드 삭제 
 	int updateStudentOfMemberTbl(Member member);

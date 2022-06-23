@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<select id="selectTeacherList"
+			resultType="kr.co.nft.lms.vo.Teacher">
+		SELECT 	
+			member_id memberId
+			, teacher_entry_date teacherEntryDate
+			, teacher_subject teacherSubject
+			, teacher_name teacherName
+			, teacher_birth teacherBirth
+			, teacher_gender teacherGender
+			, teacher_email teacherEmail
+			, photo_no photoNo
+			, address_detail addressDetail
+		FROM teacher	
+	</select>
+
 	<update id="updateStudentOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
