@@ -83,7 +83,7 @@
 		ON n.board_no = b.board_no
 		WHERE b.board_privilege= '4'
 		AND b.board_blind = 'N'
-		AND n.board_no = #{boardNo}
+		AND n.board_no = #{noticeNo}
 	</select>
 	<!-- 수정 -->
 	<update id="updateNoticeInBoard"
@@ -102,4 +102,60 @@
 		SET board_blind = 'Y'
 		WHERE board_no = #{noticeNo}
 	</update>
+	
+	
+	<!-- ■■■■■■■■■■■■■■■■NoticeFile■■■■■■■■■■■■■■■■ -->
+	
+	
+	<select id="selectNoticeFileNameList"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			board_file_name noticeFileName
+		FROM board_file
+		WHERE board_no = #{noticeNo}
+	</select>
+	
+	<select id="selectNoticeFileOneList"
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.NoticeFile">
+		SELECT
+			board_file_no noticeFileNo
+			,board_file_name noticeFileName
+			,board_file_origin_name noticeFileOriginName
+			,board_file_type noticeFileType
+			,board_file_size noticeFileSize
+		FROM board_file
+		WHERE board_no = #{noticeNo}
+	</select>
+
+	<insert id="insertNoticeFile"
+			parameterType="kr.co.nft.lms.vo.NoticeFile">
+		INSERT INTO board_file(
+			board_no
+			,board_file_name
+			,board_file_origin_name
+			,board_file_type
+			,board_file_size
+		) VALUES (
+			#{noticeNo}
+			,#{noticeFileName}
+			,#{noticeFileOriginName}
+			,#{noticeFileType}
+			,#{noticeFileSize}
+		)
+	</insert>
+	
+	<delete id="deleteNoticeFileList"
+			parameterType="int">
+		DELETE FROM board_file
+		WHERE board_no = #{noticeNo}
+	</delete>
+	
+	<delete id="deleteNoticeFileOne"
+			parameterType="int">
+		DELETE FROM board_file
+		WHERE board_file_no = #{noticeFileNo}
+	</delete>
+	
 </mapper>
