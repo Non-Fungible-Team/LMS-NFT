@@ -25,42 +25,42 @@
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
 
-		<!-- main화면 body start -->
-		<!-- 첫번쨰 문단 -->
-		<div class="container p-5 my-5 border">
-			<div class="row">
-				<div class="col-lg-12 col-md-6">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">수강목록</h4>
-							<div class="mt-2" style="height: auto; width: auto;">
-								<a href="${pageContext.request.contextPath}/manager/lecture/addLecture" class="btn btn-outline-dark">강의 입력</a>
-								<table id="zero_config" class="table table-striped table-bordered no-wrap">
-									<thead>
-										<tr>
-											<th>강의번호</th>
-											<th>과목</th>
-											<th>강의명</th>
-											<th>개강일</th>
-											<th>수료일</th>
-											<th>강의실</th>
-											<th>생성날짜</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="l" items="${lectureList}">
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-6">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">수강목록</h4>
+								<div class="mt-2" style="height: auto; width: auto;">
+									<a href="${pageContext.request.contextPath}/manager/lecture/addLecture" class="btn btn-outline-dark">강의 입력</a>
+									<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<thead>
 											<tr>
-												<td>${l.lectureNo}</td>
-												<td>${l.subjectName}</td>
-												<td><a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>														
-												<td>${l.lectureStartDate}</td>
-												<td>${l.lectureEndDate}</td>
-												<td>${l.lectureroomName}</td>
-												<td>${l.lectureCreateDate}</td>
+												<th>강의번호</th>
+												<th>과목</th>
+												<th>강의명</th>
+												<th>개강일</th>
+												<th>수료일</th>
+												<th>강의실</th>
+												<th>생성날짜</th>
 											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											<c:forEach var="l" items="${lectureList}">
+												<tr>
+													<td>${l.lectureNo}</td>
+													<td>${l.subjectName}</td>
+													<td><a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
+													<td>${l.lectureStartDate}</td>
+													<td>${l.lectureEndDate}</td>
+													<td>${l.lectureRoomName}</td>
+													<td>${l.lectureCreateDate}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -69,21 +69,21 @@
 		</div>
 	</div>
 </body>
-	<script>
+<script>
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
   	</script>
 
-    <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
+<script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
+<script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+<script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
 
 </html>
