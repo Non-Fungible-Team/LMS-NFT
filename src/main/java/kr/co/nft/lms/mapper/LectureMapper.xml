@@ -24,7 +24,7 @@
 	
 	<!-- 2.강의 삽입 -->
 	<insert id="insertLecture" parameterType="kr.co.nft.lms.vo.Lecture">
-		<selectKey resultType="int" keyProperty="lecture_no" order="AFTER">
+		<selectKey resultType="int" keyProperty="lectureNo" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey> 
 		INSERT INTO lecture(
@@ -43,11 +43,11 @@
 			,#{lectureEndDate}
 			,NOW()
 			,NOW()
-			,#{lectureroomName}
+			,#{lectureRoomName}
 		)
 	</insert>
 	<!--2-2 강의-강사 삽입 -->
-	<insert id="insertTeacherLecture" parameterType="kr.co.nft.lms.vo.TeacherLecture">
+	<insert id="insertTeacherLecture" parameterType="kr.co.nft.lms.vo.Lecture">
 		INSERT INTO teacher_lecutre(member_id, lecture_no) 
 		VALUES(
 			#{memberId}

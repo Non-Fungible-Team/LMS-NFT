@@ -120,8 +120,14 @@ public class LectureController {
 	//2.강의 / 강의-강사 삽입
 	@GetMapping("/manager/lecture/addLecture")
 	public String addLecture(Model model) {
-		Map<String,Object> returnMap = lectureService.addLectureForm(); 
-		model.addAttribute("returnMap",returnMap);
+		log.debug(A.W +"[LectureController.manager.lecture/addLecture.param] model : " + model +A.R);
+		Map<String,Object> map = lectureService.addLectureForm(); 
+		model.addAttribute("returnMap",map.get("returnMap"));
+		model.addAttribute("subjectList", map.get("subjectList"));
+		model.addAttribute("lectureRoomList", map.get("lectureRoomList"));
+		model.addAttribute("teacherList", map.get("teacherList"));
+		
+		log.debug(A.W +"[LectureController.manager.lecture/addLecture.map] map : " + map +A.R);
 		
 		return "lecture/addLecture"; //jsp로 이동
 	}

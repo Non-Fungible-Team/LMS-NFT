@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.LectureMapper;
 import kr.co.nft.lms.mapper.LectureRoomMapper;
+import kr.co.nft.lms.mapper.MemberMapper;
 import kr.co.nft.lms.mapper.SubjectMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
@@ -17,6 +19,7 @@ import kr.co.nft.lms.vo.LectureRoom;
 import kr.co.nft.lms.vo.ManagerLecture;
 import kr.co.nft.lms.vo.StudentLecture;
 import kr.co.nft.lms.vo.Subject;
+import kr.co.nft.lms.vo.Teacher;
 import kr.co.nft.lms.vo.TeacherLecture;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +31,7 @@ public class LectureService {
 	@Autowired private LectureMapper lectureMapper;
 	@Autowired private SubjectMapper subjectMapper;
 	@Autowired private LectureRoomMapper lectureRoomMapper;
+	@Autowired private MemberMapper memberMapper;
 	
 	//1.강의목록(상세보기) + 전체 행 수
 	public Map<String,Object> getLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
@@ -72,13 +76,16 @@ public class LectureService {
 		
 		List<Subject> subjectList = subjectMapper.selectSubjectList();
 		List<LectureRoom> lectureRoomList = lectureRoomMapper.selectLectureRoomList();
+		List<Teacher> teacherList = memberMapper.selectTeacherList();
 		log.debug(A.W +"[LectureService.addLectureForm.subjectList] subjectList : " +subjectList +A.R);//디버깅코드
 		log.debug(A.W +"[LectureService.addLectureForm.lectureRoomList] lectureRoomList : " +lectureRoomList +A.R);//디버깅코드
+		log.debug(A.W +"[LectureService.addLectureForm.teacherList] teacherList : " +teacherList +A.R);//디버깅코드
 		
 		//결과값 반환 객체생성
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("subjectList", subjectList); //과목목록 값
 		returnMap.put("lectureRoomList", lectureRoomList); //강의실목록 값
+		returnMap.put("teacherList", teacherList); //강의실목록 값
 		log.debug(A.W +"[LectureService.addLectureForm.returnMap] returnMap : " +returnMap +A.R);//디버깅코드
 		
 		return returnMap;
@@ -88,14 +95,12 @@ public class LectureService {
 		log.debug(A.W +"[LectureService.addLecture.lecture] lecture  : " + lecture +A.R);
 		log.debug(A.W +"[LectureService.addTeacherLecture.teacherLecture] teacherLecture  : " + teacherLecture +A.R);
 		//mapper 메소드 호출
-		int lectureNo = lectureMapper.insertLecture(lecture);
-		log.debug(A.W +"[LectureService.addLecture.row] row : " + lectureNo +A.R);
-		teacherLecture.setLectureNo(lectureNo);
-		
-		int row = lectureMapper.insertTeacherLecture(teacherLecture);
-		//insert시 입력된 autoincrement값이 출력됨
+		int lectureRow = lectureMapper.insertLecture(lecture);
+		log.debug(A.W +"[LectureService.addLecture.lectureRow] lectureRow : " + lectureRow +A.R);
+		int TeacherLectureRow = lectureMapper.insertTeacherLecture(lecture);
+		log.debug(A.W +"[LectureService.addLecture.TeacherLectureRow] TeacherLectureRow : " + TeacherLectureRow +A.R);
 
-		return row; //입력된 행 반환 = 1
+		return TeacherLectureRow; //입력된 행 반환 = 1
 	}
 	
 	//3. 강의수정 폼
