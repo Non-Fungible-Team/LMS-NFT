@@ -77,7 +77,12 @@ public interface LectureMapper {
 	//8. 강의-강사 목록
 	List<TeacherLecture> selectTeacherLectureByPage(Map<String,Object> map);
 	
+	//8-2. 강의_강사 목록 전체행
+	int selectTeacherLectureCount();
+	
 	//9. 강의 번호로 강의 하나의 정보를 select
 	Lecture selectLecturebyLectureNo(int lectureNo);
+	
+	
 
 }

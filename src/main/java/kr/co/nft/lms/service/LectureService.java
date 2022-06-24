@@ -351,10 +351,13 @@ public class LectureService {
 
 		//강사_강의목록 mapper메소드 호출
 		List<TeacherLecture> teacherLectureList = lectureMapper.selectTeacherLectureByPage(map);
-		log.debug(A.W +"[LectureService.getLectureByPage.teacherLectureList] teacherLectureList : " +teacherLectureList  +A.R);//디버깅코드
+		
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.teacherLectureList] teacherLectureList : " +teacherLectureList  +A.R);//디버깅코드
+		
+		
 		
 		//Mapper에서 반환된값 가공 -> controller로 전달
-		int totalCount = lectureMapper.selectLectureCount();//전체행 수
+		int totalCount = lectureMapper.selectTeacherLectureCount();//전체행 수
 		int lastPage = (int)(Math.ceil((double)totalCount/(double)rowPerPage)); //마지막페이지-> 소수점 올림 해서 int형변환
 		//디버깅코드
 		log.debug(A.W +"[LectureService.getManagerLectureByPage.totalCount] totalCount: " +totalCount +A.R);

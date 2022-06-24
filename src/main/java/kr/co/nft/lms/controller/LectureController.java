@@ -297,12 +297,32 @@ public class LectureController {
 		return "";
 	}
 	
-	// 6. 운영자- 강의 삽입
-	@GetMapping("d")
-	public String addManagerLecture() {
-		
-		return "";
-	}*/
+	 */
+	
+	//6.강사_강의 목록
+	@GetMapping("/manager/lecture/getManagerLectureByPage")
+	public String getManagerLectureByPage(Model model
+					,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
+					,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+		//디버깅코드
+		log.debug(A.W +"[LectureController.teacher.lecture.getLectureByPage.model] model : " + model +A.R);
+		log.debug(A.W +"[LectureController.teacher.lecture.getLectureByPage.currentPage] currentPage : " +currentPage +A.R);
+		log.debug(A.W +"[LectureController.teacher.lecture.getLectureByPage.rowPerPage] rowPerPage : " +rowPerPage +A.R);
+			
+		Map<String,Object> map = lectureService.getManagerLectureByPage(currentPage, rowPerPage); //강사_강의목록 서비스 호출해서 map객체에 저장
+		 //서비스에 저장된 값 가져와서 모델객체에 저장 
+		model.addAttribute("teacherLectureList", map.get("teacherLectureList")); //강사_강의목록
+		model.addAttribute("currentPage", map.get("currentPage")); //현재페이지
+		model.addAttribute("lastPage",map.get("lastPage") ); //마지막페이지
+		//디버깅코드
+		log.debug(A.W +"[LectureController.getLectureByPage.map] map(Service 호출) : " +map +A.R);
+		log.debug(A.W +"[LectureController.getLectureByPage.model] model.teacherLectureList : " +map.get("teacherLectureList") +A.R);
+		log.debug(A.W +"[LectureController.getLectureByPage.model] model.currentPage : " +map.get("currentPage") +A.R);
+		log.debug(A.W +"[LectureController.getLectureByPage.model] model.lastPage : " +map.get("lastPage") +A.R);
+			
+		return "/lecture/getManagerLectureByPage"; //jsp로 이동
+
+		}
 	
 	// ------------------------------------------------ lecture_room
 	// form - lecture_room 테이블 전체 리스트, lecture_room 테이블 데이터 입력

@@ -6,4 +6,6 @@ import lombok.Data;
 public class TeacherLecture {
 	private String memberId;
 	private int lectureNo;
+	private String teacherName;
+	private String lectureName;
 }
