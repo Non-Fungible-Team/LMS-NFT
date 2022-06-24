@@ -34,56 +34,54 @@
 				<h1>템플릿 구조 예시</h1>
 				<!-- main화면 body start -->
 				<!-- 첫번쨰 문단 -->
-				<div class="container p-5 my-5 border">
-					<div class="row">
-						<div class="col-lg-12 col-md-12">
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">수강목록</h4>
-									<div class="mt-2" style="height: auto; width: auto;">
-										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-										<table id="zero_config" class="table table-striped table-bordered">
-											<thead>
-												<tr>
-													<th>강의번호</th>
-													<th>과목</th>
-													<th>강의명</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>내용</td>
-													<td>내용2</td>
-													<td>내용</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">수강목록</h4>
+								<div class="mt-2" style="height: auto; width: auto;">
+									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
+									<table id="zero_config" class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>강의번호</th>
+												<th>과목</th>
+												<th>강의명</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>내용</td>
+												<td>내용2</td>
+												<td>내용</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-						<!-- 첫번쨰 끝 -->
-						<!-- 2번째 문단 -->
-						<div class="col-lg-12 col-md-6">
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">타이틀</h4>
-									<div style="height: 294px;">
-										<!-- 내용입력 칸 ex) 테이블 및 폼 -->
-										<form class="mt-4" method="post" action="#">
-											<div class="form-group">
-												입력 : <input type="text" class="form-control"> 비번 : <input type="password" class="form-control" id="passtext" placeholder="Password">
-											</div>
-											<button type="button" class="btn btn-outline-success btn-rounded">
-												<i class="fas fa-check"></i> 입력
-											</button>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 2번째 문단 끝 -->
 					</div>
+					<!-- 첫번쨰 끝 -->
+					<!-- 2번째 문단 -->
+					<div class="col-lg-12 col-md-6">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">타이틀</h4>
+								<div style="height: 294px;">
+									<!-- 내용입력 칸 ex) 테이블 및 폼 -->
+									<form class="mt-4" method="post" action="#">
+										<div class="form-group">
+											입력 : <input type="text" class="form-control"> 비번 : <input type="password" class="form-control" id="passtext" placeholder="Password">
+										</div>
+										<button type="button" class="btn btn-outline-success btn-rounded">
+											<i class="fas fa-check"></i> 입력
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 2번째 문단 끝 -->
 				</div>
 			</div>
 		</div>
