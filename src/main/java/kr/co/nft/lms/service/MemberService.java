@@ -134,6 +134,7 @@ public class MemberService {
 		return memberMapper.insertStudentByMemberVo(member);
 	}
 	
+	// 학생 상세 정보 확인 
 	public Member getMemberOne(Member member) {
 		return memberMapper.selectMemberOne(member);
 	}

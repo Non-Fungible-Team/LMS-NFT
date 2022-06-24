@@ -26,7 +26,7 @@ public interface MemberMapper {
 	// Member 테이블의 학생 레코드 삭제 
 	int updateStudentOfMemberTbl(Member member);
 	
-	// `level_history` 테이블에 이력 남기기 
+	// LEVEL_HISTORY 테이블에 이력 남기기 
 	int insertLevelHistoryOfStudentRecord(Member member);
 	
 	// Student 테이블의 학생 튜플 삭제 
@@ -59,7 +59,7 @@ public interface MemberMapper {
 	// 로그인
 	Member selectMemberOne(Member member);
 	
-	//id체크
+	//id 체크
 	int selectIdCheck(Member member);
 
 	

@@ -31,6 +31,7 @@ public class MemberController {
 	public String removeStudent(HttpSession session
 								, Member member) {
 		
+		// 매개 변수 내용 확인 
 		log.debug(A.Z+"[MemberController.removeStudent.param] member : "+member+A.R);
 		
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
@@ -38,12 +39,16 @@ public class MemberController {
 		
 		// int rowOfStudentTbl = memberService.freezeStudentOfStudentTbl(member);
 		// log.debug(A.Z+"[MemberController.removeStudent] rowOfStudentTbl : "+rowOfStudentTbl+A.R);
+		
+		// Member 테이블에 변경된 내용 확인 
 		int rowOfMemberTbl = memberService.freezeStudentOfMemberTbl(member);
 		log.debug(A.Z+"[MemberController.removeStudent] rowOfMemberTbl : "+rowOfMemberTbl+A.R);
 		
+		// 액터별 레벨 이력 테이블 변경 여부 확인 
 		int rowOfLevelHistoryTbl = memberService.addLevelHistoryOfStudentRecord(loginMember);
 		log.debug(A.Z+"[MemberController.removeStudent] rowOfLevelHistoryTbl : "+rowOfLevelHistoryTbl+A.R);
 		
+		// GetMapping(/login) 
 		return "redirect:/login";
 	}
 	
@@ -51,6 +56,7 @@ public class MemberController {
 	@GetMapping("/all/freezeStudent")
 	public String removeStudent(HttpSession session) {
 		
+		// 매개 변수 내용 확인 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		log.debug(A.Z+"[MemberController.removeStudent.param] loginMember : "+loginMember+A.R);
 		
@@ -61,9 +67,11 @@ public class MemberController {
 			return "/member/memberLogin";
 		}
 		
+		// 세션에 로그인 사용자 정보와 과목 번호 저장 
 		session.setAttribute("loginMember", loginMember);
 		session.setAttribute("sessionLectureNo", "");
 		
+		// 해당하는 경로의 뷰 페이지로 이동 
 		return "/member/freezeStudent";
 	}
 	
@@ -122,8 +130,11 @@ public class MemberController {
 	public String modifyStudent(HttpSession session
 								, @RequestParam(value="memberId") String memberId
 								, Model model) {
-		
+		// 매개 변수 확인 
 		log.debug(A.Z+"[MemberController.modifyStudent.param] memberId : "+memberId+A.R);
+		// 세션 매개 변수 확인 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.modifyStudent] loginMember : "+loginMember+A.R);
 		
 		// 계정 정보 없으면 로그인 실패 
 		if(memberId == null) {
@@ -131,19 +142,23 @@ public class MemberController {
 			// member/memberLogin.jsp 
 			return "/member/memberLogin";
 		}
-		
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		log.debug(A.Z+"[MemberController.modifyStudent] loginMember : "+loginMember+A.R);
-		
+
+		// 학생의 상세 정보를 가져온다 
+		// VO 두개를 합쳐야 한 학생의 정보가 나온다 
 		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
+		log.debug(A.Z+"[MemberController.modifyStudent] getStudentOneByStudentVo : "+getStudentOneByStudentVo+A.R);
 		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
+		log.debug(A.Z+"[MemberController.modifyStudent] getStudentOneByMemberVo : "+getStudentOneByMemberVo+A.R);
 		
+		// 이동하려는 뷰 페이지에 해당하는 데이터들을 보낸다 
 		model.addAttribute("getStudentOneByStudentVo", getStudentOneByStudentVo);
 		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
 		
+		// 세션에 로그인 사용자 정보와 과목 번호를 보낸다 
 		session.setAttribute("loginMember", loginMember);
 		session.setAttribute("sessionLectureNo", 0);
 		
+		// 해당하는 뷰 페이지로 이동 
 		return "/member/modifyStudent";
 	}
 	
@@ -189,14 +204,17 @@ public class MemberController {
 	@PostMapping("/all/addStudent")
 	public String addStudent(Member member
 							,Student student) {
+		// 매개 변수 내용 확인 
 		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
 		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
 		
+		// 한 학생 정보를 저장하기 위해서 두개의 테이블 Member, Student가 필요 
 		int rowOfMember = memberService.addStudent(member);
 		log.debug(A.Z+"[MemberController.addStudent] rowOfMember : "+rowOfMember+A.R);
 		int rowOfStudent = memberService.addStudent(student);
 		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
 		
+		// 해당하는 뷰 페이지로 이동 
 		return "/member/memberLogin";
 	}
 	
@@ -208,11 +226,15 @@ public class MemberController {
 							, Member member
 							, @RequestParam(value="memberLevel") int memberLevel) {
 		
+		// 매개 변수에 담긴 내용 확인 
 		log.debug(A.Z+"[MemberController.addStudent.param] model : "+model+A.R);
 		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
 		log.debug(A.Z+"[MemberController.addStudent.param] memberLevel : "+memberLevel+A.R);
 		
+		// 뷰 페이지에 사용자 레벨 넘긴다 
 		model.addAttribute("memberLevel", memberLevel);
+		
+		// 학생 회원 가입 페이지 양식으로 이동 
 		return "/member/addStudent";
 	}
 	
@@ -220,16 +242,22 @@ public class MemberController {
 	// 로그아웃 
 	@GetMapping("/all/logout")
 	public String logout(HttpSession session) {
+		// 세션 갱신 
 		session.invalidate();
+		
+		// GetMapping 사용 
 		return "redirect:/login";
 	}
 	
 	// 로그인 폼 
 	@GetMapping("/login")
 	public String login(HttpSession session) {
+		// 세션에 저장된 로그인 사용자 정보가 있다면 홈 화면으로 이동 
 		if(session.getAttribute("sessionLoginMember") != null) {
 			return "redirect:/all/home";
 		}
+		
+		// 그렇지 않다면 다시 로그인 페이지로 이동 
 		return "/member/memberLogin";
 	}
 	
@@ -237,7 +265,7 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(HttpSession session
 						, Member member) {
-		
+		// 매개 변수 확인 
 		log.debug(A.Z+"MemberController.login.param : member : "+member+A.R);
 		
 		Member sessionLoginMember = memberService.getMemberOne(member);
@@ -249,11 +277,12 @@ public class MemberController {
 			// member/memberLogin.jsp 
 			return "/member/memberLogin";
 		}
-		
-		
+
 		// 로그인 성공 
 		session.setAttribute("sessionLoginMember", sessionLoginMember);
 		session.setAttribute("sessionLectureNo", 0);
+		
+		// 로그인 성공하면 홈 화면으로 이동 
 		return "redirect:/all/home";
 	}
 	
