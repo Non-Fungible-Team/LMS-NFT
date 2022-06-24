@@ -183,7 +183,7 @@ public class LectureController {
 		int row = lectureService.removeLecture(lectureNo);
 		log.debug(A.A + "[LectureController.teacher.lecture/removeLecture.row] row : " + row + A.R);
 		
-		return "/lecture/getLectureByPage";
+		return "redirect:/teacher/lecture/getLectureByPage";
 	}
 	
 	// 5 & 6.학생 강의 목록

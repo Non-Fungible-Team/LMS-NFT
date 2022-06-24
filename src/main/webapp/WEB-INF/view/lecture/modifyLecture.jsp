@@ -38,8 +38,12 @@ $(document).ready(function(){
 							<div class="card-body">
 								<h4 class="card-title">강의 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-									<form class="mt-4" method="post" id="addLectureForm" action="${pageContext.request.contextPath}/manager/lecture/modifyLecture">
+									<form class="mt-4" method="post" action="${pageContext.request.contextPath}/manager/lecture/modifyLecture">
 										<div class="form-group">
+											<div>
+												강의 번호
+												<input type="text" value="${lecture.lectureNo}" name="lectureNo" readonly="readonly">${lectureNo}
+											</div>
 											<div>
 												과목명 <select name="subjectNo">
 													<option value=" ">과목 선택</option>
@@ -68,7 +72,7 @@ $(document).ready(function(){
 										</div>
 										<!-- 작성자 -->
 										<input type="hidden"  name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
-										<button type="button" class="btn btn-outline-success btn-rounded">
+										<button type="submit" class="btn btn-outline-success btn-rounded">
 											<i class="fas fa-check"></i>강의 수정
 										</button>
 									</form>

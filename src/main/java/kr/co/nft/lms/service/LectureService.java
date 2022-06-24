@@ -178,15 +178,23 @@ public class LectureService {
 		log.debug(A.W +"[LectureService.removeLecture.lectureNo] lectureNo  : " + lectureNo +A.R);
 	
 		//mapper 메소드 호출
-		int row = lectureMapper.deleteLecture(lectureNo);
-		if(row ==1) {
-			log.debug(A.W +"[LectureService.removeLecture.row] row  : " + row +A.R);
-			log.debug(A.W +"[LectureService.removeLecture.row] 삭제 성공 " +A.R);
+		int TeacherLectureRow = lectureMapper.deleteTeacherLecture(lectureNo);
+		if(TeacherLectureRow == 1) {
+			log.debug(A.W +"[LectureService.removeLecture.TeacherLectureRow] TeacherLectureRow  : " + TeacherLectureRow +A.R);
+			log.debug(A.W +"[LectureService.removeLecture.TeacherLectureRow] 삭제 성공 " +A.R);
 		}else {
-			log.debug(A.W +"[LectureService.removeLecture.row] 삭제 실패 " +A.R);
+			log.debug(A.W +"[LectureService.removeLecture.TeacherLectureRow] 삭제 실패 " +A.R);
+		}
+		
+		int lectureRow = lectureMapper.deleteLecture(lectureNo);
+		if(lectureRow ==1) {
+			log.debug(A.W +"[LectureService.removeLecture.lectureRow] lectureRow  : " + lectureRow +A.R);
+			log.debug(A.W +"[LectureService.removeLecture.lectureRow] 삭제 성공 " +A.R);
+		}else {
+			log.debug(A.W +"[LectureService.removeLecture.lectureRow] 삭제 실패 " +A.R);
 		}
 
-		return row;
+		return lectureRow;
 	}
 	
 	//5&6.학생 강의 목록
