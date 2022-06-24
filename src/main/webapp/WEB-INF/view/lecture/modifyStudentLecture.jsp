@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>StudentLecture List</title>
+<title>StudentLecture</title>
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -20,13 +20,29 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		$('#modifyStudentLecture').click(function(){
+			if($('#memberId').val() == '-1') {
+				alert('학생을 선택하세요');
+			} else if($('#studentLectureJob').val() == '-1') {
+				alert('취업 여부를 선택하세요');
+			} else if($('#studentLectureLegistrationDate').val() == '') {
+				alert('등록일을 입력하세요');
+			} else {
+				$('#modifyForm').submit();
+			}
+		});
+		
+	});	
+</script>
 </head>
 	<script>
 		$('document').ready(function(){
 	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		});
   	</script>
-
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -40,45 +56,36 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		<div class="col-lg-12 col-md-6">
 		    <div class="card">
 		        <div class="card-body">
-		            <h4 class="card-title">StudentLecture List</h4>
+		            <h4 class="card-title">StudentLecture modify</h4>
 		            <br>
-		            <a href="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture" class="btn btn-primary btn-rounded">
-						<i class="fas fa-check"></i>입력
-					</a>
-		            <div class="mt-2" style="height:auto; width:auto;">
-		            <!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-		            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
-		            		<thead>
-					            <tr>
-					            	<th>강의</th>
-					                <th>학생 ID</th>
-					                <th>학생 이름</th>
-					                <th>취업 여부</th>
-					                <th>등록일</th>
-					                <th>수료일</th>
-					                <th>전체 성적</th>
-					                <th></th>
-					            </tr>
-					        </thead>
-					        <tbody>
-					            <c:forEach var="sl" items="${studentLectureAllList}">
-					                <tr>
-					                   <td>${sl.lectureNo}</td>
-					                   <td>${sl.memberId}</td>
-					                   <td>${sl.studentName}</td>
-					                   <td>${sl.studentLectureJob}</td>
-					                   <td>${sl.studentLectureLegistrationDate}</td>
-					                   <td>${sl.studentLectureEndDate}</td>
-					                   <td>${sl.studentLectureScore}</td>
-					                   <td><a href="${pageContext.request.contextPath}/teacher/lecture/modifyStudentLecture?lectureNo=${sl.lectureNo}&memberId=${sl.memberId}" class="btn btn-info">수정</a></td>
-					                </tr>
-					            </c:forEach>
-					        </tbody>
-		            	</table>
-		             </div>   
+		            <div style="height:294px;">
+		            	<form method="post" id="modifyForm" action="${pageContext.request.contextPath}/teacher/lecture/modifyStudentLectureAction">
+                            <div class="form-group">
+                               강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo">
+                               학생 : <select name="memberId" id="memberId" class="form-control">
+                               			<option value="-1">학생 선택</option>
+                               			<c:forEach var ="s" items="${ studentList }">
+                               				<c:if test="${ s.memberId == ## }">
+					                        	<option value="${ s.memberId }" seleted>${ s.memberId } (${ s.studentName })</option>
+					                      	</c:if>
+                               				<option value="${ s.memberId }">${ s.memberId } (${ s.studentName })</option>
+                               			</c:forEach>
+                              		 </select>
+                               취업 여부 : <select name="studentLectureJob" id="studentLectureJob" class="form-control">
+		                               		<option value="-1">취업 여부 선택</option>
+		                               		<option value="Y">Y</option>
+		                               		<option value="N">N</option>
+	                              	    </select>
+                               등록일 : <input type="date" name="studentLectureLegistrationDate" class="form-control" id="studentLectureLegistrationDate">
+                               수료일 : <input type="date" name="studentLectureEndDate" class="form-control" id="studentLectureEndDate">
+                               전체 성적 : <input type="int" name="studentLectureScore" class="form-control" id="studentLectureScore">
+                            </div>
+                            <button type="button" class="btn btn-outline-success btn-rounded" id="modifyStudentLecture"><i class="fas fa-check"></i>수정</button>
+                        </form>
+		            </div>
 		        </div>
 		    </div>
-		</div>		
+		</div>
 	</div>
 </div>
 </div>

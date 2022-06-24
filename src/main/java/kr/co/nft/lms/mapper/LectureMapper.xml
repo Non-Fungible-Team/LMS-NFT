@@ -297,22 +297,14 @@
 		INNER JOIN lecture l
 		ON tl.lecture_no =
 		l.lecture_no
-		LIMIT
-		#{beginRow}, #{rowPerPage}
-		ORDER BY l.lecture_name
+		ORDER BY lecture_name
+		LIMIT #{beginRow}, #{rowPerPage}	
+	</select>
+	<select id="selectTeacherLectureCount" resultType="int">
+		SELECT COUNT(*) FROM teacher_lecture
 	</select>
 	<!-- 9. 강의번호로 강의정보 가져오기 -->
 	<select id="selectLecturebyLectureNo"
-
-    
-          
-            
-    
-
-          
-    
-    
-  
 		resultType="kr.co.nft.lms.vo.Lecture" parameterType="int">
 		SELECT
 		l.lecture_no lectureNo
