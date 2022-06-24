@@ -20,18 +20,25 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
-
+<script>
+	$('document').ready(function(){
+	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+	});
+</script>
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
-	<div id="test"></div>
+	<div id="navAside"></div>
     <div class="container p-5 my-5 border">
 		<div class="row">
-			<div class="col-lg-12 col-md-6">
+			<div class="col-lg-12 col-md-12">
 			    <div class="card">
 			        <div class="card-body">
-			            <h4 class="card-title">getNoticeOne</h4>
+			            <h4 class="card-title">공지사항 상세보기</h4>
+			            <a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
+							<input type="button" class="btn btn-info" style="float: right" value="목록으로">
+						</a>
 			            <div class="mt-2" style="height:auto; width:auto;">
 			            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
 			            		<tr>
@@ -67,54 +74,47 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 									<td>${notice.noticeUpdateDate}</td>
 								</tr>
 			            	</table>
-			            	<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
-			            		<input type="button" class="btn btn-outline-success" value="수정">
-			            	</a>
-						    <a href="${pageContext.request.contextPath}/manager/notice/removeNotice?noticeNo=${notice.noticeNo}">
-						    	<input type="button" class="btn btn-outline-danger" value="삭제">
-						    </a>
+			            	<div>
+			            		<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
+			            			<input type="button" class="btn btn-outline-success" value="공지사항 내용 수정">
+			            		</a>
+						    	
+						    	<a href="${pageContext.request.contextPath}/manager/notice/removeNotice?noticeNo=${notice.noticeNo}">
+						    		<input type="button" class="btn btn-outline-danger" value="삭제">
+						    	</a>
+						    </div>
 						    
-						      
 			    			<div>
+			    			<br>
 							    <h4>첨부된 파일 정보</h4>
-							    <table id="zero_config" class="table table-striped table-bordered no-wrap">
-							    	<tr>
-								    	<th>파일미리보기</th>
-										<th>파일번호</th>
-										<th>파일이름</th>
-										<th>파일원본이름</th>
-										<th>파일타입</th>
-										<th>파일사이즈</th>
-										<th>삭제</th>
-							    	</tr>
-							    	<c:forEach var ="f" items="${noticeFileList}">
-										<tr>
-											<td>
-												<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
-													<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
-												</c:if>
-												<a href="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}" download>▶${f.noticeFileOriginName}◀ 사진 다운로드</a>
-											</td>
-											<td>${f.noticeFileNo}</td>
-											<td>${f.noticeFileName}</td>
-											<td>${f.noticeFileOriginName}</td>
-											<td>${f.noticefileType}</td>
-											<td>${f.noticefileSize}</td>
-											<td>
-							   					<a href="${pageContext.request.contextPath}/removeNoticeFile?noticeFileNo=${f.noticeFileNo}&noticeNo=${notice.noticeNo}">file 삭제</a>
-											</td>
-										</tr>	
-							    	</c:forEach>
-							    
-							    </table>
+							    <div>
+								    <table id="zero_config" class="table table-striped table-bordered">
+								    	<tr>
+									    	<th>파일미리보기</th>
+											<th>파일타입</th>
+											<th>파일사이즈</th>
+											<th>삭제</th>
+								    	</tr>
+								    	<c:forEach var ="f" items="${noticeFileList}">
+											<tr>
+												<td>
+													<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
+														<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
+													</c:if>
+													<a href="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}" download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
+												</td>
+												<td>${f.noticeFileType}</td>
+												<td>${f.noticeFileSize}</td>
+												<td>
+													<a href="${pageContext.request.contextPath}/manager/notice/removeNoticeFile?noticeFileNo=${f.noticeFileNo}&noticeNo=${notice.noticeNo}">
+											    		<input type="button" class="btn btn-outline-danger" value="file삭제">
+											    	</a>
+												</td>
+											</tr>	
+								    	</c:forEach>
+								    </table>
+								 </div>
 							 </div>
-
-						    
-						    
-						    
-							<a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
-								<input type="button" class="btn btn-info" style="float: right" value="목록으로">
-							</a>
 			             </div>   
 				      </div>
 				   </div>
@@ -123,9 +123,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		</div>
 	</div>
 </body>
-	<script>
-    	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
-  	</script>
+
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

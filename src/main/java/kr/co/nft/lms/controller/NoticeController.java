@@ -125,7 +125,7 @@ public class NoticeController {
 		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
 		int row = noticeService.removeNotice(noticeNo,path);
-		log.debug(A.S + "[NoticeController.removeNoticex] row : " + row + A.R);
+		log.debug(A.S + "[NoticeController.removeNotice] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)실패"+ A.R);
@@ -136,4 +136,23 @@ public class NoticeController {
 		return "redirect:/all/notice/getNoticeListByPage";
 	}
 
+	//NoticeFile 삭제 액션
+	@PostMapping("/manager/notice/removeNoticeFile")
+	public String removeNoticeFile(HttpServletRequest request, int noticeFileNo, int noticeNo) {
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
+		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileNo : " + noticeFileNo + A.R);
+		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeNo : " + noticeNo + A.R);
+		int row = noticeService.removeNoticeFile(noticeFileNo,path);
+		log.debug(A.S + "[NoticeController.removeNoticeFile] row : " + row + A.R);
+		//row가 0 이면 입력 실패
+		if(row==0) {
+			log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 실패"+ A.R);
+			return "redirect:/manager/notice/removeNoticeFile?msg=fail";
+		}
+		//입력성공 했을 경우
+		log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 성공"+ A.R);
+		return "redirect:/all/notice/getNoticeOne?noticeNo=" + noticeNo;
+		
+		
+	}
 }

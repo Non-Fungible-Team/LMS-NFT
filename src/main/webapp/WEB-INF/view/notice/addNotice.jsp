@@ -23,6 +23,8 @@
 	<script>
 		// html페이지를 다 로드시키고 매개변수함수를 실행
 		$('document').ready(function(){ 
+			$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+			
 			//
 			let flag = true;
 			var fileUploadCount = 0;
@@ -36,7 +38,7 @@
 				if(flag){
 					var label = 'label' + fileUploadCount;
 					var fileBtn = 'fileBtun' + fileUploadCount;
-					$('#fileSection').append("<div class='input-group'><label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded' id ="+label+">파일 입력<input type='file' id = "+fileBtn+" class='noticeFileList' style='display: none;' name='noticeFileList["+fileUploadCount+"]' ></span></label></div>");
+					$('#fileSection').append("<label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded'><span  id ="+label+">파일 입력</span><input type='file' id = "+fileBtn+" class='noticeFileList' style='display: none;' name='noticeFileList' ></span></label>");
 					
 					$('#'+fileBtn+'').change(function(){
 						$('#'+label+'').text($('#'+fileBtn+'').val());
@@ -83,13 +85,13 @@
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
-	<div id="test"></div>
+	<div id="navAside"></div>
     <div class="container p-5 my-5 border">
 	<div class="row">
 		<div class="col-lg-12 col-md-6">
 		    <div class="card">
 		        <div class="card-body">
-		            <h4 class="card-title">addNotice</h4>
+		            <h4 class="card-title">공지사항 입력</h4>
 		            <div class="mt-2" style="height:auto; width:100%;">
 		            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post" enctype="multipart/form-data">
 			            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
@@ -157,9 +159,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </body>
 
 
-	<script>
-    	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
-  	</script>
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
