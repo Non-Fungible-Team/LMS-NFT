@@ -90,7 +90,7 @@ public class LectureService {
 		
 		return returnMap;
 	}
-	
+	//액션
 	public int addLecture(Lecture lecture) { //controller 넘겨오는 값
 		log.debug(A.W +"[LectureService.addLecture.lecture] lecture  : " + lecture +A.R);
 		//mapper 메소드 호출
@@ -197,7 +197,7 @@ public class LectureService {
 		return lectureRow;
 	}
 	
-	//5&6.학생 강의 목록
+	//5.학생 강의 목록
 	public Map<String,Object> getStudentLectureByPage(int lectureNo, int currentPage, int rowPerPage) {
 		//디버깅코드
 		log.debug(A.A + "[LectureService.getStudentLectureByPage.lectureNo] lectureNo  : " + lectureNo + A.R);
@@ -284,14 +284,41 @@ public class LectureService {
 		return row;
 	}
 	
-	//6. 운영자- 강의 삽입
-	public int addManagerLecture(ManagerLecture managerLecture) {
-		log.debug(A.W +"[LectureService.addManagerLecture.lecture] managerLecture  : " + managerLecture +A.R);
+	//6. 운영자- 강의 목록
+	public Map<String,Object> getManagerLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
+		//디버깅코드
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.currentPage] currentPage  : " + currentPage +A.R);
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.rowPerPage ] rowPerPage : " + rowPerPage +A.R);
 		
-		//mapper 메소드 호출
-		int row = lectureMapper.insertManagerLecture(managerLecture);
-		log.debug(A.W +"[LectureService.addManagerLecture.row] row : " + row +A.R);
+		//컨트롤러가 넘겨준 값 가공하기
+		//페이지 시작 행 번호
+		int beginRow = (currentPage -1)*rowPerPage;
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.beginRow ]  beginRow : " + beginRow +A.R);//디버깅코드
 		
-		return row; //입력된 행 반환 = 1
+		//페이지값 받아오기
+		Map<String, Object> map = new HashMap<>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.map] map : " +map +A.R);//디버깅코드 
+
+		//강사_강의목록 mapper메소드 호출
+		List<TeacherLecture> teacherLectureList = lectureMapper.selectTeacherLectureByPage(map);
+		log.debug(A.W +"[LectureService.getLectureByPage.teacherLectureList] teacherLectureList : " +teacherLectureList  +A.R);//디버깅코드
+		
+		//Mapper에서 반환된값 가공 -> controller로 전달
+		int totalCount = lectureMapper.selectLectureCount();//전체행 수
+		int lastPage = (int)(Math.ceil((double)totalCount/(double)rowPerPage)); //마지막페이지-> 소수점 올림 해서 int형변환
+		//디버깅코드
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.totalCount] totalCount: " +totalCount +A.R);
+		log.debug(A.W +"[LectureService.getManagerLectureByPage.lastPage] lastPage : "  + lastPage +A.R);
+		
+		//결과값 반환 객체생성
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("teacherLectureList", teacherLectureList); //강가_강의목록 값
+		returnMap.put("currentPage", currentPage); //현재페이지
+		returnMap.put("lastPage", lastPage); //마지막 페이지
+		log.debug(A.W +"[LectureService.getLectureByPage.returnMap] returnMap : " + returnMap +A.R);//디버깅코드
+		
+		return returnMap;
 	}
 }
