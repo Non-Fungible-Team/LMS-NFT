@@ -21,6 +21,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+	<script>
+		$('document').ready(function(){
+	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		});
+  	</script>
 
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
@@ -75,9 +80,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </div>
 </body>
-	<script>
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAsideManager.jsp');
-  	</script>
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

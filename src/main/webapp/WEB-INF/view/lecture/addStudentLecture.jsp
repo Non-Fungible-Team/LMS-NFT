@@ -20,8 +20,29 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		$('#addStudentLecture').click(function(){
+			if($('#memberId').val() == '-1') {
+				alert('학생을 선택하세요');
+			} else if($('#studentLectureJob').val() == '-1') {
+				alert('취업 여부를 선택하세요');
+			} else if($('#studentLectureLegistrationDate').val() == '') {
+				alert('등록일을 입력하세요');
+			} else {
+				$('#addForm').submit();
+			}
+		});
+		
+	});	
+</script>
 </head>
-
+	<script>
+		$('document').ready(function(){
+	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		});
+  	</script>
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -38,17 +59,24 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            <h4 class="card-title">StudentLecture add</h4>
 		            <br>
 		            <div style="height:294px;">
-		            	<form method="post" id="addForm" action="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture###">
-		            	<!-- 
+		            	<form method="post" id="addForm" action="${pageContext.request.contextPath}/teacher/lecture/addStudentLectureAction">
                             <div class="form-group">
-                               lectureRoom name : <input type="text" name="lectureRoomName" class="form-control" id="lectureRoomName">
-                               lectureRoom location : <input type="text" name="lectureRoomLocation" class="form-control" id="lectureRoomLocation">
-                               lectureRoom people : <input type="number" name="lectureRoomPeople" class="form-control" id="lectureRoomPeople">
+                               <!-- 강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo">  -->
+                               학생 : <select name="memberId" id="memberId" class="form-control">
+	                               		<option value="-1">학생 선택</option>
+	                               		<option value="a">학생 아이디(학생 이름) 순으로 보여주기</option>
+	                               		<option value="a">if문 돌려서 student memberId 가져오기</option>
+                              		 </select>
+                               취업 여부 : <select name="studentLectureJob" id="studentLectureJob" class="form-control">
+		                               		<option value="-1">취업 여부 선택</option>
+		                               		<option value="Y">Y</option>
+		                               		<option value="N">N</option>
+	                              	    </select>
+                               등록일 : <input type="date" name="studentLectureLegistrationDate" class="form-control" id="studentLectureLegistrationDate">
                             </div>
-                             -->
-                            <button type="button" class="btn btn-outline-success btn-rounded" id="addLectureRoom"><i class="fas fa-check"></i>입력</button>
+                            <button type="button" class="btn btn-outline-success btn-rounded" id="addStudentLecture"><i class="fas fa-check"></i>입력</button>
                         </form>
-		            </div>     
+		            </div>
 		        </div>
 		    </div>
 		</div>
@@ -57,9 +85,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </div>
 </body>
-	<script>
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAsideManager.jsp');
-  	</script>
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
