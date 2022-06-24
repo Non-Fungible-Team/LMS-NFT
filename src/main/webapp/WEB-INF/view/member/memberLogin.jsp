@@ -63,7 +63,7 @@
 								<button type="submit" class="btn btn-block btn-dark">로그인</button>
 							</div>
 							<div class="col-lg-12 text-center mt-5">
-								Don't have an account? <a href="${pageContext.request.contextPath}/member/addStudent?memberLevel=4">회원가입</a>
+								Don't have an account? <a href="${pageContext.request.contextPath}/addStudent?memberLevel=4">회원가입</a>
 							</div>
 						</div>
 					</form>
@@ -89,7 +89,7 @@
 								<button type="submit" class="btn btn-block btn-dark">로그인</button>
 							</div>
 							<div class="col-lg-12 text-center mt-5">
-								Don't have an account? <a href="${pageContext.request.contextPath}/member/addTeacher?memberLevel=5">회원가입</a>
+								Don't have an account? <a href="${pageContext.request.contextPath}/addTeacher?memberLevel=5">회원가입</a>
 							</div>
 						</div>
 					</form>
@@ -115,7 +115,7 @@
 								<button type="submit" class="btn btn-block btn-dark">로그인</button>
 							</div>
 							<div class="col-lg-12 text-center mt-5">
-								Don't have an account? <a href="${pageContext.request.contextPath}/member/addManager?memberLevel=6">회원가입</a>
+								Don't have an account? <a href="${pageContext.request.contextPath}/addManager?memberLevel=6">회원가입</a>
 							</div>
 						</div>
 					</form>
