@@ -28,14 +28,14 @@
 					<!-- 로고 아이콘 -->
 					<a href=" "> <!-- 건들면 안됨.  -> http://lms-->
 					<b class="logo-icon"> 
-					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="width: 15%" />
-					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/logo-icon.png" alt="homepage" class="light-logo" style="width: 15%" />
+					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.png" alt="homepage" class="dark-logo" style="width: 15%" />
+					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.png" alt="homepage" class="light-logo" style="width: 15%" />
 					</b> 
 					<span class="logo-text">
 						<!-- dark Logo text -->
-	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS.png" alt="homepage" class="dark-logo" style="width: 88%"/>
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.png" alt="homepage" class="dark-logo" style="width: 88%"/>
 	                    <!-- Light Logo text -->
-	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS.png" class="light-logo" alt="homepage" />
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.png" class="light-logo" alt="homepage" />
                     </span>
 					</a>
 				</div>
