@@ -108,16 +108,16 @@ public class SurveyService {
 		return returnMap;
 	}
 	
-	 public Map<String, Object> getSurveyOneAndQuestion(Map<String, Object> map) {
-	      // 1) 컨트롤러의 입력값 가공
-	      int SurveyNo = (int)map.get("Surveyno");
-	      
-	      // 2) 메퍼 반환값 가공
-	      Survey survey = surveyMapper.getSurveyOne(SurveyNo);
-	      List<Map<String, Object>> SurveyQuestionList = surveyMapper.SurveyQuestionList(SurveyNo);
+	 public Map<String, Object> getSurveyOneAndQuestion(int surveyNo) {
+		 log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion]" + A.R);
+		 
+	      Survey surveyOne = surveyMapper.getSurveyOne(surveyNo);
+	      List<Map<String, Object>> SurveyQuestionList = surveyMapper.getSurveyQuestionList(surveyNo);
+	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] surveyOne :" + surveyOne +A.R);
+	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] SurveyQuestionList : " + SurveyQuestionList +A.R);
 	     
 	      Map<String, Object> returnMap = new HashMap<>();
-	      returnMap.put("survey", survey);
+	      returnMap.put("surveyOne", surveyOne);
 	      returnMap.put("SurveyQuestionList", SurveyQuestionList);
 	      return returnMap;
 	   }

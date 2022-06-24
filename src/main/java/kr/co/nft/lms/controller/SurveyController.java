@@ -57,14 +57,16 @@ public class SurveyController {
 	
 	@GetMapping("/survey/getSurveyOne")
 	public String getSurveyOne(Model model
-			,@RequestParam(name="surveyNo") Map<String, Object> surveyNo) {
-		log.debug(A.D+"[SurveyController.insertSurvey] surveyNo : " + surveyNo + A.R); // 디버깅
+			,@RequestParam(name="surveyNo") int surveyNo) {
+		log.debug(A.D+"[SurveyController.getSurveyOne] " + A.R); // 디버깅
+		log.debug(A.D+"[SurveyController.getSurveyOne] surveyNo : " + surveyNo + A.R); // 디버깅
 		
 		Map<String, Object> returnMap = surveyService.getSurveyOneAndQuestion(surveyNo);
+		log.debug(A.D+"[SurveyController.getSurveyOne] returnMap : " + returnMap + A.R); // 디버깅
 		
-		model.addAttribute("getSurveyOne",returnMap.get("getSurveyOne"));
-		model.addAttribute("SurveyQuestionList", returnMap.get("SurveyQuestionList"));
-		
+		model.addAttribute("surveyOne",returnMap.get("surveyOne"));
+		model.addAttribute("surveyQuestionList", returnMap.get("SurveyQuestionList"));
+		log.debug(A.D+"[SurveyController.getSurveyOne] model : " + model + A.R); // 디버깅
 		
 		return"/survey/getSurveyOne";
 	}

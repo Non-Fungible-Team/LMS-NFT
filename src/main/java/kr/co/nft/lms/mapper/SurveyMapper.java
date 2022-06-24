@@ -42,7 +42,7 @@ public interface SurveyMapper {
 	Survey getSurveyOne(int surveyNo);
 	
 	// 설문조사 상세보기(이너조인)
-	List<Map<String,Object>> SurveyQuestionList(int survey);
+	List<Map<String,Object>> getSurveyQuestionList(int surveyNo);
 	
 	
 }

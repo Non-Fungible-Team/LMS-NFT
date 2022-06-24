@@ -131,7 +131,7 @@
 				ORDER BY survey_no
 		</select>
 		
-		<select id="selectSurveyOne"
+		<select id="getSurveyOne"
 				parameterType="int"
 				resultType="kr.co.nft.lms.vo.Survey">
 			SELECT
@@ -148,26 +148,24 @@
 				WHERE survey_no = #{surveyNo}
 		</select>
 		
-		<select id="selectSurveyOneQuestion"
+		<select id="getSurveyQuestionList"
 				resultType="map">
-			SELECT
-				s.survey_no
-				,s.survey_title
-				,s.survey_content
-				,s.survey_create_date
-				,s.survey_update_date
-				,s.survey_startline_date
-				,s.survey_deadline_date
-				,s.lecture_no
-				,s.member_id
-				,sq.survey_question_no
-				,sq.survey_question_list_no
-				,sq.survey_question_content
-				,sq.survey_question_type
-				FROM survey AS s
-				INNER JOIN survey_question AS sq
-				ON sq.survey_no = s.survey_no
-				ORDER BY survey_no
+				SELECT
+					a.survey_question_no surveyQuestionNo
+					,a.survey_no surveyNo
+					,a.survey_question_list_no surveyQuestionListNo
+					,a.survey_question_content surveyQuestionContent
+					,a.survey_question_type surveyQuestionType
+					,a.survey_question_create_date surveyQuestionCreateDate
+					,a.survey_question_update_date surveyQuestionUpdateDate
+					,b.survey_question_list_name surveyQuestionListName
+					,b.survey_question_list_content surveyQuestionListContent
+					,b.survey_question_list_create_date surveyQuestionListCreateDate
+					,b.survey_question_list_update_date surveyQuestionListUpdateDate
+				FROM survey_question AS a
+				INNER JOIN survey_question_list AS b
+				ON a.survey_question_list_no = b.survey_question_list_no
+				ORDER BY survey_question_no
 		</select>
 		
 </mapper>
