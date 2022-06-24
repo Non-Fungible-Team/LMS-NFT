@@ -70,11 +70,12 @@ public interface LectureMapper {
 	//6.운영자_강의 삽입
 	int insertManagerLecture(ManagerLecture managerLecture);
 
-
-
 	//7-2. 강의-학생 전체 행
 	int selectStudentLectureCount();
 
+	//8. 강의-강사 목록
+	List<TeacherLecture> selectTeacherLectureByPage(Map<String,Object> map);
+	
 	//9. 강의 번호로 강의 하나의 정보를 select
 	Lecture selectLecturebyLectureNo(int lectureNo);
 
