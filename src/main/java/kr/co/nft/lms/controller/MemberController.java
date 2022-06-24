@@ -201,7 +201,7 @@ public class MemberController {
 	}
 	
 	// 학생 회원가입 
-	@PostMapping("/all/addStudent")
+	@PostMapping("/addStudent")
 	public String addStudent(Member member
 							,Student student) {
 		// 매개 변수 내용 확인 
@@ -219,7 +219,7 @@ public class MemberController {
 	}
 	
 	// 학생 회원가입 
-	@GetMapping("/all/addStudent") 
+	@GetMapping("/addStudent") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
 	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
 	public String addStudent(Model model
