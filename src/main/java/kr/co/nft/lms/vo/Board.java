@@ -9,7 +9,7 @@ public class Board {
 	private String boardContent;
 	private String boardCategory;
 	private String memberId;
-	private String boardPrivilege;
+	private int boardPrivilege;
 	private String boardBlind;
 	private String boardCreateDate;
 	private String boardUpdateDate;

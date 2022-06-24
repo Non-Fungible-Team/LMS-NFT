@@ -20,7 +20,7 @@ public interface NoticeMapper {
 	List<Notice> selectNoticeListByPage(Map<String, Object> map);
 	
 	//Notice 전체row
-	int selectNoticeListTotalCount();
+	int selectNoticeListTotalCount(int memberLevel);
 	
 	//Notice 상세보기
 	Notice selectNoticeOne(int noticeNo);

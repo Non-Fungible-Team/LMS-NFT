@@ -71,21 +71,13 @@ public class NoticeService {
 		log.debug(A.S + "[NoticeService.addNotice.param] 파일 저장 성공 갯수 noticeFileRow : "+ noticeFileRow + A.R); 
 		return row;
 	}
-	
-	//Notice (+파일첨부) 입력 
-	public void addNotice(NoticeFile noticefile, String path) {
-		log.debug(A.S + "[NoticeService.addNotice.param] noticefile : "+ noticefile + A.R);
-		log.debug(A.S + "[NoticeService.addNotice.param] path : "+ path + A.R);
 		
-		//
-		
-	}
-	
 
 	//Notice 목록 보기 
-	public Map<String, Object> getNoticeListByPage(int currentPage, int rowPerPage){
+	public Map<String, Object> getNoticeListByPage(int currentPage, int rowPerPage, int memberLevel){
 		log.debug(A.S + "[NoticeService.getNoticeListByPage.param] currentPage : "+ currentPage + A.R);
 		log.debug(A.S + "[NoticeService.getNoticeListByPage.param] rowPerPage : "+ rowPerPage + A.R);
+		log.debug(A.S + "[NoticeService.getNoticeListByPage.param] memberLevel : "+ memberLevel + A.R);
 		
 		//1) controller 에서 넘어온 매개변수값을 가공 후 매퍼 호출
 		int beginRow = (currentPage -1) * rowPerPage;
@@ -93,12 +85,13 @@ public class NoticeService {
 		Map<String, Object> noticeRowMap = new HashMap<>();
 		noticeRowMap.put("rowPerPage", rowPerPage); 
 		noticeRowMap.put("beginRow", beginRow);
+		noticeRowMap.put("memberLevel", memberLevel);
 		log.debug(A.S + "[NoticeService.getNoticeListByPage] noticeRowMap : "+ noticeRowMap + A.R);
 		List<Notice> noticeList = noticeMapper.selectNoticeListByPage(noticeRowMap);
 		log.debug(A.S + "[NoticeService.getNoticeListByPage] noticeList : "+ noticeList + A.R);
   
 		//2) 매퍼에서 반환된 값을 가공, controller에 반환 
-		int totalCount = noticeMapper.selectNoticeListTotalCount(); 
+		int totalCount = noticeMapper.selectNoticeListTotalCount(memberLevel); 
 		log.debug(A.S + "[NoticeService.getNoticeListByPage.totalCount] totalCount : "+ totalCount + A.R);
 		int lastPage = (int)Math.ceil((double)totalCount/(double)rowPerPage);
 		log.debug(A.S + "[NoticeService.getNoticeListByPage.lastPage] lastPage : "+ lastPage + A.R);
@@ -170,22 +163,26 @@ public class NoticeService {
 	}
 
 	//File 만 삭제
-	public int removeNoticeFile(int noticeFileNo, String path) {
-		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileNo : "+ noticeFileNo + A.R); 
+	public int removeNoticeFile(int noticeNo, String noticeFileName,int noticeFileNo, String path) {
+		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeNo : "+ noticeNo + A.R); 
+		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileNo : "+ noticeFileName + A.R); 
 		log.debug(A.S + "[NoticeService.removeNoticeFile.param] path : "+ path + A.R); 
 		int row = -1;
 		
-		//1) 저장장치의 파일을 삭제 -> 파일이름
-		List<String> noticeFileOnlyList = noticeMapper.selectNoticeFileNameList(noticeFileNo);
-		log.debug(A.S + "[NoticeService.removeNoticeFile] noticeFileOnlyList : "+ noticeFileOnlyList + A.R); 
-		
-		for(String fileOnlyName : noticeFileOnlyList) {
-			File fo = new File(path + fileOnlyName);
+		//1) 저장장치의 파일을 삭제 -> 파일이름,경로 필요함
+		//파일 삭제 실패시 @Transactional 작동안함 -> try,catch로 파일삭제 실패시 runtimeException 발생 시킴
+		try {
+			File fo = new File(path + noticeFileName);
 			// 만약 파일이 존재한다면
 			if(fo.exists()) {
 				//삭제한다
 				fo.delete();
 			}
+			//경로+이름으로 파일 저장
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 새로운 예외 발생시켜야지만 @Transactional 작동을 위해
+			throw new RuntimeException(); // RuntimeException은 예외처리를 하지 않아도 컴파일된다
 		}
 		//2) DB 삭제 (파일삭제)
 		row = noticeMapper.deleteNoticeFileOne(noticeFileNo);		

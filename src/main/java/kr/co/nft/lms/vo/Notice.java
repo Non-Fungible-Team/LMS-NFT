@@ -9,7 +9,7 @@ public class Notice {
 	private String noticeContent;
 	private String noticeCategory;
 	private String memberId;
-	private String noticePrivilege;
+	private int noticePrivilege;
 	private String noticeBlind;
 	private String noticeCreateDate;
 	private String noticeUpdateDate;

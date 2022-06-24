@@ -49,19 +49,21 @@
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_privilege= '4'
+		WHERE <![CDATA[b.board_privilege <= #{memberLevel}]]>
 		AND b.board_blind = 'N'
 		ORDER BY n.board_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}	
 	</select>
 	
 	<select id="selectNoticeListTotalCount"
+			parameterType="int"
 			resultType="int">
 		SELECT COUNT(*)
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_blind = 'N'
+		WHERE <![CDATA[b.board_privilege <= #{memberLevel}]]>
+		AND b.board_blind = 'N'
 	</select>
 	
 	<!-- 상세보기 -->
@@ -81,8 +83,7 @@
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
-		WHERE b.board_privilege= '4'
-		AND b.board_blind = 'N'
+		WHERE b.board_blind = 'N'
 		AND n.board_no = #{noticeNo}
 	</select>
 	<!-- 수정 -->

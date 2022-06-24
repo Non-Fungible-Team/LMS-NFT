@@ -3,6 +3,7 @@ package kr.co.nft.lms.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.NoticeService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Notice;
 import kr.co.nft.lms.vo.NoticeFile;
 import lombok.extern.slf4j.Slf4j;
@@ -49,12 +51,17 @@ public class NoticeController {
 	//Notice 목록보기
 	@GetMapping("/all/notice/getNoticeListByPage")
 	public String getNoticeListByPage(Model model
+									,HttpSession session
 									,@RequestParam(name= "currentPage", defaultValue = "1") int currentPage
 									,@RequestParam(name= "rowPerPage", defaultValue = "10") int rowPerPage) {
+		//요청값 디버깅
 		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] currentPage : " + currentPage + A.R);
 		log.debug(A.S + "[NoticeController.getNoticeListByPage.param] rowPerPage : " + rowPerPage + A.R);
+		//세션에 로그인 정보 요청
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		
-		Map<String, Object> noticeRowReturnMap = noticeService.getNoticeListByPage(currentPage, rowPerPage);
+		
+		Map<String, Object> noticeRowReturnMap = noticeService.getNoticeListByPage(currentPage, rowPerPage,loginMember.getMemberLevel());
 		log.debug(A.S + "[NoticeController.getNoticeListByPage] noticeRowReturnMap : " + noticeRowReturnMap + A.R);
 		
 		model.addAttribute("noticeList", noticeRowReturnMap.get("noticeList"));
@@ -68,14 +75,27 @@ public class NoticeController {
 	//Notice 상세보기
 	@GetMapping("/all/notice/getNoticeOne")
 	public String getNoticeOne(Model model
+							,HttpSession session
 							,@RequestParam(name="noticeNo") int noticeNo) {
+		//요청값 디버깅
 		log.debug(A.S + "[NoticeController.getNoticeOne.param] noticeNo : " + noticeNo + A.R);
+		//세션에 로그인 정보 요청
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		
 		Map<String, Object> noticeOneReturnMap = noticeService.getNoticeOne(noticeNo);
 		log.debug(A.S + "[NoticeController.getNoticeOne] notice : " + noticeOneReturnMap.get("notice") + A.R);
 		log.debug(A.S + "[NoticeController.getNoticeOne] noticeFileList : " + noticeOneReturnMap.get("noticeFileList") + A.R);
-		model.addAttribute("notice", noticeOneReturnMap.get("notice"));
+		//returnMap 안에 notice는 권한 비교를 위해 notice변수에 저장
+		Notice notice = (Notice)noticeOneReturnMap.get("notice");
+		
+		model.addAttribute("notice", notice);
 		model.addAttribute("noticeFileList", noticeOneReturnMap.get("noticeFileList"));
 		log.debug(A.S + "[NoticeController.getNoticeOne] model : " + model + A.R);
+		//가져온 상세보기가 로그인한 회원의 권한 밖의 게시물이면 list로 redirect
+		if(notice.getNoticePrivilege() > loginMember.getMemberLevel()){
+			log.debug(A.S + "[NoticeController.getNoticeOne] 권한밖의 notice게시물 상세보기 요청" + A.R);
+			return "redirect:/all/notice/getNoticeListByPage";
+		}
 		return "/notice/getNoticeOne";
 	}
 	
@@ -137,12 +157,13 @@ public class NoticeController {
 	}
 
 	//NoticeFile 삭제 액션
-	@PostMapping("/manager/notice/removeNoticeFile")
-	public String removeNoticeFile(HttpServletRequest request, int noticeFileNo, int noticeNo) {
+	@GetMapping("/manager/notice/removeNoticeFile")
+	public String removeNoticeFile(HttpServletRequest request, String noticeFileName,int noticeFileNo, int noticeNo) {
 		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
-		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileNo : " + noticeFileNo + A.R);
+		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileName : " + noticeFileName + A.R);
 		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeNo : " + noticeNo + A.R);
-		int row = noticeService.removeNoticeFile(noticeFileNo,path);
+		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileNo : " + noticeFileNo + A.R);
+		int row = noticeService.removeNoticeFile(noticeNo,noticeFileName,noticeFileNo,path);
 		log.debug(A.S + "[NoticeController.removeNoticeFile] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
