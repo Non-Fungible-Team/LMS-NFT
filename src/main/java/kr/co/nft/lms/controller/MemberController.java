@@ -86,7 +86,7 @@ public class MemberController {
 		log.debug(A.Z+"[MemberController.modifyStudent.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
 		
 		// 사진을 업로드하면 저장되는 경로 설정 
-		String path = request.getServletContext().getRealPath("/memberPhoto/studentPhoto/");
+		String path = request.getServletContext().getRealPath("/memberPhoto/");
 		log.debug(A.Z+"[MemberController.modifyStudent.param] path : "+path+A.R);
 		
 		// 세션에서 아이디와 레벨은 계속 가져온다 
@@ -148,12 +148,13 @@ public class MemberController {
 	}
 	
 	// 학생 상세보기
+	// 세션 받는다 
 	@GetMapping("/all/getStudentOne")
 	public String getStudentOne(HttpSession session
-			
 								, Model model) {
+		// 세션에서 받아온 참조 변수 Member의 ID, LEVEL 필드를 받는다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		log.debug(A.Z+"[MemberController.getStudentOne.param] memberId : "+loginMember+A.R);
+		log.debug(A.Z+"[MemberController.getStudentOne.param] loginMember : "+loginMember+A.R);
 
 		// 계정 정보 없으면 로그인 실패 
 		if(loginMember == null) {
@@ -161,16 +162,23 @@ public class MemberController {
 			// member/memberLogin.jsp 
 			return "/member/memberLogin";
 		}
-			
 		
-		log.debug(A.Z+"[MemberController.getStudentOne] loginMember : "+loginMember+A.R);
-		
+		// 학생 개인의 정보를 띄우기 위해 Member, Student, MemberPhoto 테이블에서 거의 모든 필드들을 가져온다 
 		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
-		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
+		log.debug(A.Z+"[MemberController.getStudentOne] getStudentOneByStudentVo : "+getStudentOneByStudentVo+A.R);
 		
+		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
+		log.debug(A.Z+"[MemberController.getStudentOne] getStudentOneByMemberVo : "+getStudentOneByMemberVo+A.R);
+		
+		MemberPhoto getMemberPhoto = memberService.getMemberPhoto(loginMember);
+		log.debug(A.Z+"[MemberController.getStudentOne] getMemberPhoto : "+getMemberPhoto+A.R);
+		
+		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
 		model.addAttribute("getStudentOneByStudentVo", getStudentOneByStudentVo);
 		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
+		model.addAttribute("getMemberPhoto", getMemberPhoto);
 		
+		// 세션으로 로그인한 유저의 정보와 과목 번호를 넘긴다 
 		session.setAttribute("loginMember", loginMember);
 		session.setAttribute("sessionLectureNo", 0);
 		

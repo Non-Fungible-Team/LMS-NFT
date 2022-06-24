@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<select id="selectManagerList"
+			resultType="kr.co.nft.lms.vo.Manager">
+		SELECT 	
+			member_id memberId
+			, manager_entry_date managerEntryDate 
+			, manager_name managerName
+			, manager_birth managerBirth
+			, manage_gender managerGender
+			, manager_email managerEmail
+			, address_detail addressDetail
+		FROM manager	
+	</select>
+
+	<select id="selectStudentList"
+			resultType="kr.co.nft.lms.vo.Student">
+		SELECT 	
+			member_id memberId
+			, student_education studentEducation
+			, student_name studentName 
+			, student_birth studentBirth
+			, student_gender studentGender
+			, student_email studentEmail
+			, address_detail addressDetail
+		FROM student	
+	</select>
+
 	<select id="selectTeacherList"
 			resultType="kr.co.nft.lms.vo.Teacher">
 		SELECT 	
@@ -47,6 +73,19 @@
 		WHERE member_id = #{memberId}
 	</update>
 
+	<select id="selectMemberPhoto"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.MemberPhoto">
+		SELECT 
+			photo_name photoName
+			, photo_origin_name photoOriginName
+			, photo_type photoType
+			, photo_size photoSize 
+			, photo_create_date photoCreateDate
+			, photo_update_date photoUpdateDate
+		FROM member_photo
+		WHERE member_id = #{memberId} 
+	</select>
 	
 	<insert id="insertMemberPhoto"
 			parameterType="kr.co.nft.lms.vo.MemberPhoto">

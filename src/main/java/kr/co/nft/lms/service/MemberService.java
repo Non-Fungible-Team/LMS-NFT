@@ -42,6 +42,11 @@ public class MemberService {
 		return memberMapper.updateStudentOfStudentTbl(member);
 	}
 	
+	// MemberPhoto 레코드 정보를 가져오기 위해 사용 
+	public MemberPhoto getMemberPhoto(Member member) {
+		return memberMapper.selectMemberPhoto(member);
+	}
+	
 	// MemberPhoto 테이블 활용하여 학생 사진 업로드 - 학생 정보 수정과 같이 이루어진다 
 	public void addMemberPhoto(Member member, MemberPhoto memberPhoto, MemberUploadPhoto memberUploadPhoto, String path) {
 		

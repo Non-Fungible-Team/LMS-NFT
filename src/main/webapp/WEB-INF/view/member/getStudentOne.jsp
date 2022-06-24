@@ -11,7 +11,14 @@
 	<table border="1">
 		<tr>
 			<td>학생 사진</td>
-			<td></td>
+			<td colspan="2">
+				<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
+					<img src="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}">
+				</c:if>
+				<a href="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
+					${getMemberPhoto.photoOriginName}
+				</a>
+			</td>
 		</tr>
 		<tr>
 			<td>아이디</td>

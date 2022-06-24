@@ -14,6 +14,12 @@ import kr.co.nft.lms.vo.Teacher;
 @Mapper
 public interface MemberMapper {
 	
+	// 관리자 전체 리스트
+	List<Manager> selectManagerList();
+	
+	// 학생 전체 리스트
+	List<Student> selectStudentList();
+	
 	// 강사 전체 리스트
 	List<Teacher> selectTeacherList();
 	
@@ -25,6 +31,9 @@ public interface MemberMapper {
 	
 	// Student 테이블의 학생 튜플 삭제 
 	int updateStudentOfStudentTbl(Member member);
+	
+	// MemberPhoto 튜플 정보 가져오기 
+	MemberPhoto selectMemberPhoto(Member member);
 	
 	// MemberPhoto 테이블에 회원 사진 등록
 	int insertMemberPhoto(MemberPhoto memberPhoto);
