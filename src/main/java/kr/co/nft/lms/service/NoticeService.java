@@ -170,9 +170,24 @@ public class NoticeService {
 	}
 
 	//File 만 삭제
-	public int removeNoticeFile(int noticeFileNo) {
+	public int removeNoticeFile(int noticeFileNo, String path) {
 		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileNo : "+ noticeFileNo + A.R); 
+		log.debug(A.S + "[NoticeService.removeNoticeFile.param] path : "+ path + A.R); 
 		int row = -1;
+		
+		//1) 저장장치의 파일을 삭제 -> 파일이름
+		List<String> noticeFileOnlyList = noticeMapper.selectNoticeFileNameList(noticeFileNo);
+		log.debug(A.S + "[NoticeService.removeNoticeFile] noticeFileOnlyList : "+ noticeFileOnlyList + A.R); 
+		
+		for(String fileOnlyName : noticeFileOnlyList) {
+			File fo = new File(path + fileOnlyName);
+			// 만약 파일이 존재한다면
+			if(fo.exists()) {
+				//삭제한다
+				fo.delete();
+			}
+		}
+		//2) DB 삭제 (파일삭제)
 		row = noticeMapper.deleteNoticeFileOne(noticeFileNo);		
 		return row;
 	}
