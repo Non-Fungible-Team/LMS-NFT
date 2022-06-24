@@ -16,6 +16,7 @@ import kr.co.nft.lms.service.SubjectService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureRoom;
+import kr.co.nft.lms.vo.StudentLecture;
 import kr.co.nft.lms.vo.Subject;
 import kr.co.nft.lms.vo.TeacherLecture;
 import lombok.extern.slf4j.Slf4j;
@@ -212,19 +213,48 @@ public class LectureController {
 		return "/lecture/getStudentLectureByPage";
 	}
 	
-	// 5-2.학생-강의 삽입 폼
+	// 5-2. 학생-강의 삽입 폼
 	@GetMapping("/teacher/lecture/addStudentLecture")
 	public String addStudentLecture() {
 		
-		return "/lecture/addStudentLecture";
-	}
-	
-	/*@PostMapping("/teacher/lecture/addStudentLecture")
-	public String addStudentLecture() {
+		log.debug(A.A + "[LectureController.addStudentLecture] 실행" + A.R);		
 		
 		return "/lecture/addStudentLecture";
 	}
 	
+	@PostMapping("/teacher/lecture/addStudentLectureAction")
+		public String addStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+									  , @RequestParam(name = "memberId") String memberId
+									  , @RequestParam(name = "studentLectureJob") String studentLectureJob
+									  , @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate) {
+		
+		lectureNo = 1;
+		memberId = "student2";
+				
+		log.debug(A.A + "[LectureController.addStudentLectureAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureController.addStudentLectureAction] memberId : " + memberId + A.R);
+		log.debug(A.A + "[LectureController.addStudentLectureAction] studentLectureJob : " + studentLectureJob + A.R);
+		log.debug(A.A + "[LectureController.addStudentLectureAction] studentLectureLegistrationDate : " + studentLectureLegistrationDate + A.R);
+		
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setLectureNo(lectureNo);
+		studentLecture.setMemberId(memberId);
+		studentLecture.setStudentLectureJob(studentLectureJob);
+		studentLecture.setStudentLectureLegistrationDate(studentLectureLegistrationDate);
+		
+		log.debug(A.A + "[LectureController.studentLecture] studentLecture : " + studentLecture + A.R);
+		
+		int row = lectureService.addStudentLecture(studentLecture);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 실패" + A.R);
+		}
+
+		return "redirect:/teacher/lecture/getStudentLectureByPage";
+	}
+	/*
 	// 5-3. 학생-강의 목록 수정 폼
 	@GetMapping("b")
 	public String modifyStudentLectureForm() {
