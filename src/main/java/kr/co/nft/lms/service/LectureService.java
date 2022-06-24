@@ -95,10 +95,20 @@ public class LectureService {
 		log.debug(A.W +"[LectureService.addLecture.lecture] lecture  : " + lecture +A.R);
 		//mapper 메소드 호출
 		int lectureRow = lectureMapper.insertLecture(lecture);
+		if(lectureRow == 1) {
 		log.debug(A.W +"[LectureService.addLecture.lectureRow] lectureRow : " + lectureRow +A.R);
+		log.debug(A.W +"[LectureService.addLecture.lectureRow] 입력 성공" +A.R);
+		}else {
+			log.debug(A.W +"[LectureService.addLecture.lectureRow] 입력 실패"+A.R);
+		}
 		int TeacherLectureRow = lectureMapper.insertTeacherLecture(lecture);
-		log.debug(A.W +"[LectureService.addLecture.TeacherLectureRow] TeacherLectureRow : " + TeacherLectureRow +A.R);
-
+		if(TeacherLectureRow == 1) {
+			log.debug(A.W +"[LectureService.addLecture.TeacherLectureRow] TeacherLectureRow : " + TeacherLectureRow +A.R);
+			log.debug(A.W +"[LectureService.addLecture.TeacherLectureRow] 입력 성공 " +A.R);
+		}else {
+			log.debug(A.W +"[LectureService.addLecture.TeacherLectureRow] 입력 실패 "+A.R);
+		}
+		
 		return TeacherLectureRow; //입력된 행 반환 = 1
 	}
 	
@@ -120,32 +130,62 @@ public class LectureService {
 		Lecture lecture = lectureMapper.updateLectureForm(lectureNo);
 		log.debug(A.W +"[LectureService.modifyLectureForm.lecture] lecture  : " + lecture +A.R);
 		
+		//mapper 값 가져오기
+		List<Subject> subjectList = subjectMapper.selectSubjectList();
+		List<LectureRoom> lectureRoomList = lectureRoomMapper.selectLectureRoomList();
+		List<Teacher> teacherList = memberMapper.selectTeacherList();
+		log.debug(A.W +"[LectureService.modifyLectureForm.subjectList] subjectList : " +subjectList +A.R);//디버깅코드
+		log.debug(A.W +"[LectureService.modifyLectureForm.lectureRoomList] lectureRoomList : " +lectureRoomList +A.R);//디버깅코드
+		log.debug(A.W +"[LectureService.modifyLectureForm.teacherList] teacherList : " +teacherList +A.R);//디버깅코드
+				
 		//결과 값 저장
 		Map<String,Object> returnMap = new HashMap<>();
 		returnMap.put("lecture", lecture);
+		returnMap.put("subjectList", subjectList); //과목목록 값
+		returnMap.put("lectureRoomList", lectureRoomList); //강의실목록 값
+		returnMap.put("teacherList", teacherList); //강의실목록 값
+		log.debug(A.W +"[LectureService.addLectureForm.returnMap] returnMap : " +returnMap +A.R);//디버깅코드
 		log.debug(A.W +"[LectureService.modifyLectureForm.returnMap] returnMap  : " + returnMap +A.R);
 		
 		return returnMap;	
 	}
 	//강의수정 액션
-	public int modifyLecture(Lecture lecture) {
+	public int modifyLecture(Lecture lecture, TeacherLecture teacherLecture) {
 		log.debug(A.W +"[LectureService.modifyLecture.lecture] lecture  : " + lecture +A.R);
 		
 		//mapper 메소드호출
 		int row = lectureMapper.updateLecture(lecture);
-		log.debug(A.W +"[LectureService.modifyLecture.row] row  : " + row +A.R);
+		if(row == 1) {
+			log.debug(A.W +"[LectureService.modifyLecture.row] row  : " + row +A.R);
+			log.debug(A.W +"[LectureService.modifyLecture.row] 수정성공" +A.R);
+		}else {
+			log.debug(A.W +"[LectureService.modifyLecture.row] 수정실패" +A.R);
+		}
 		
-		return row;
+		int TeacherLectureRow = lectureMapper.updateTeacherLecture(teacherLecture);
+		if(TeacherLectureRow == 1) {
+			log.debug(A.W +"[LectureService.modifyLecture.TeacherLectureRow] TeacherLectureRow  : " + TeacherLectureRow +A.R);
+			log.debug(A.W +"[LectureService.modifyLecture.TeacherLectureRow] 수정성공" +A.R);
+		}else {
+			log.debug(A.W +"[LectureService.modifyLecture.TeacherLectureRow] 수정실패" +A.R);
+		}
+		
+		return TeacherLectureRow;
 	}
 	
 	//4. 강의 삭제
-	public int removeLecture(Lecture lecture) {
-		log.debug(A.W +"[LectureService.removeLecture.lecture] lecture  : " + lecture +A.R);
+	public int removeLecture(int lectureNo) {
+		log.debug(A.W +"[LectureService.removeLecture.lectureNo] lectureNo  : " + lectureNo +A.R);
 	
 		//mapper 메소드 호출
-		int row = lectureMapper.deleteLecture(lecture);
-		log.debug(A.W +"[LectureService.removeLecture.row] row  : " + row +A.R);
-		
+		int row = lectureMapper.deleteLecture(lectureNo);
+		if(row ==1) {
+			log.debug(A.W +"[LectureService.removeLecture.row] row  : " + row +A.R);
+			log.debug(A.W +"[LectureService.removeLecture.row] 삭제 성공 " +A.R);
+		}else {
+			log.debug(A.W +"[LectureService.removeLecture.row] 삭제 실패 " +A.R);
+		}
+
 		return row;
 	}
 	
