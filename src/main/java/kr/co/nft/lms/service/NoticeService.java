@@ -36,6 +36,7 @@ public class NoticeService {
 		//공지사항에 입력한 파일이 있고 위의 공지 추가 코드가 정상적으로 실행되었을경우(row=1) 아래의 코드 실행
 		if(noticeFile.getNoticeFileList() != null && noticeFile.getNoticeFileList().get(0).getSize() > 0 && row == 1) {
 			log.debug(A.S + "[NoticeService.addNotice] 첨부할 파일이 있습니다." + A.R); 
+			log.debug(A.S + "[NoticeService.addNotice.param] 파일 저장 해야되는 갯수 NoticeFileList().size() : "+ noticeFile.getNoticeFileList().size() + A.R); 
 			for(MultipartFile mf : noticeFile.getNoticeFileList()) {
 				// mf -> Noticefile
 				NoticeFile noticeFileOne = new NoticeFile();
@@ -67,7 +68,6 @@ public class NoticeService {
 				}
 			}
 		}
-		log.debug(A.S + "[NoticeService.addNotice.param] 파일 저장 해야되는 갯수 NoticeFileList().size() : "+ noticeFile.getNoticeFileList().size() + A.R); 
 		log.debug(A.S + "[NoticeService.addNotice.param] 파일 저장 성공 갯수 noticeFileRow : "+ noticeFileRow + A.R); 
 		return row;
 	}

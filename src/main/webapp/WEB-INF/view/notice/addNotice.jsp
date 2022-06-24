@@ -25,6 +25,7 @@
 		$('document').ready(function(){ 
 			//
 			let flag = true;
+			var fileUploadCount = 0;
 			$('#addNoticeFileUpload').click(function(){
 				$('.noticeFileList').each(function(){
 					if($(this).val() == ''){
@@ -33,12 +34,14 @@
 				});
 			
 				if(flag){
-					$('#fileSection').append("<div class='input-group'><label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded' id ='label'>Browse File<input type='file' id = 'fileBtn' class='noticeFileList' style='display: none;' name='noticeFileList'></span></label></div>");
-					/* 
-					$('#fileBtn').change(function(){
-						$('#label').text($('#fileBtn').val());
+					var label = 'label' + fileUploadCount;
+					var fileBtn = 'fileBtun' + fileUploadCount;
+					$('#fileSection').append("<div class='input-group'><label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded' id ="+label+">파일 입력<input type='file' id = "+fileBtn+" class='noticeFileList' style='display: none;' name='noticeFileList["+fileUploadCount+"]' ></span></label></div>");
+					
+					$('#'+fileBtn+'').change(function(){
+						$('#'+label+'').text($('#'+fileBtn+'').val());
 					});
-					 */
+					fileUploadCount = fileUploadCount+1;
 				} else {
 					alert('첨부되지 않은 List가 존재합니다.');
 				}

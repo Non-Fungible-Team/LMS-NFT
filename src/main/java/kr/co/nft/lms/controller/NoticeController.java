@@ -33,6 +33,7 @@ public class NoticeController {
 		//파일 저장 경로 설정
 		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[NoticeController.addNotice.param] notice : "+ notice + A.R);
+		log.debug(A.S + "[NoticeController.addNotice.param] noticeFile : "+ noticeFile + A.R);
 		int row = noticeService.addNotice(notice,noticeFile,path);
 		log.debug(A.S + "[NoticeController.addNotice] row : "+ row + A.R);
 		//row가 0 이면 입력 실패
