@@ -10,6 +10,10 @@
 	<h1>학생 상세보기</h1>
 	<table border="1">
 		<tr>
+			<td>학생 사진</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>아이디</td>
 			<td>${loginMember.memberId}</td>
 		</tr>

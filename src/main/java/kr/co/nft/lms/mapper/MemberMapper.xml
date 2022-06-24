@@ -12,7 +12,6 @@
 			, teacher_birth teacherBirth
 			, teacher_gender teacherGender
 			, teacher_email teacherEmail
-			, photo_no photoNo
 			, address_detail addressDetail
 		FROM teacher	
 	</select>
