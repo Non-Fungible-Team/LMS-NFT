@@ -19,7 +19,12 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
-
+<script>
+$(document).ready(function(){
+	$("#navAside").load(
+			'${pageContext.request.contextPath}/include/navAside.jsp');
+	}
+</script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
@@ -31,48 +36,42 @@
 					<div class="col-lg-12 col-md-6">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">수강목록</h4>
+								<h4 class="card-title">강의 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-
-									<table id="zero_config" class="table table-striped table-bordered no-wrap">
-										<thead>
-											<tr>
-												<th>강의번호</th>
-												<th>과목</th>
-												<th>강의명</th>
-												<th>개강일</th>
-												<th>수료일</th>
-												<th>강의실</th>
-												<th>강사</th>
-												<th>생성날짜</th>
-												<th>
-													<a href="${pageContext.request.contextPath}/manager/lecture/addLecture" class="btn btn-primary btn-rounded">
-													 <i class="fas fa-check"></i> 강의 입력
-													</a>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><input type="text" readonly="readonly">${l.lectureNo}</td>
-												<c:forEach var="l" items="${lectureList}">
-												<td>${l.subjectName}</td>
-												<td><a href="${pageContext.request.contextPath}/teacher/lecture/#####?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
-												<td>${l.lectureStartDate}</td>
-												<td>${l.lectureEndDate}</td>
-												<td>${l.lectureRoomName}</td>
-												<td>${l.teacherName}</td>
-												<td>${l.lectureCreateDate}</td>
-												<td>
-													<div class="btn-group" role="group" aria-label="Basic example">
-														<a href="${pageContext.request.contextPath}/manager/lecture/modifyLecture?lectureNo=${l.lectureNo}" class="btn btn-info">수정</a>
-														<a href="${pageContext.request.contextPath}/manager/lecture/removeLecture?lectureNo=${l.lectureNo}" class="btn btn-danger">삭제</a>
-													</div>
-												</td>
+									<form class="mt-4" method="post" id="addLectureForm" action="${pageContext.request.contextPath}/manager/lecture/modifyLecture">
+										<div class="form-group">
+											<div>
+												과목명 <select name="subjectNo">
+													<option value=" ">과목 선택</option>
+													<c:forEach var="s" items="${subjectList}">
+														<option value="${s.subjectNo}">${s.subjectName}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<br> 강의명 <input type="text" name="lectureName" class="form-control" placeholder="강의명 입력해주세요" value="${lectureName}"> 
+											<br> 개강일 <input type="date"  class="form-control" name="lectureStartDate" value="${lectureStartDate }"> 
+											<br> 수료일 <input type="date"  class="form-control" name="lectureEndDate" value="${lectureEndDate}"><br>
+											<div>
+												강의실 <select name=lectureRoomName>
+													<option value=" ">강의실 선택</option>
+													<c:forEach var="l" items="${lectureRoomList}">
+														<option value="${l.lectureRoomName}">${l.lectureRoomName}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<br> 강사 <select name="memberId">
+												<option value=" ">강사 선택</option>
+												<c:forEach var="t" items="${teacherList}">
+													<option value="${t.memberId}">${t.teacherName}</option>
 												</c:forEach>
-											</tr>
-										</tbody>
-									</table>
+											</select>
+										</div>
+										<!-- 작성자 -->
+										<input type="hidden"  name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
+										<button type="button" class="btn btn-outline-success btn-rounded">
+											<i class="fas fa-check"></i>강의 수정
+										</button>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -82,9 +81,7 @@
 		</div>
 	</div>
 </body>
-<script>
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
-  	</script>
+
 
 <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
