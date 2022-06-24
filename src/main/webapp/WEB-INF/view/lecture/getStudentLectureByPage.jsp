@@ -21,6 +21,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+	<script>
+		$('document').ready(function(){
+	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		});
+  	</script>
 
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
@@ -35,7 +40,11 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		<div class="col-lg-12 col-md-6">
 		    <div class="card">
 		        <div class="card-body">
-		            <h4 class="card-title">lectureRoomList</h4>
+		            <h4 class="card-title">StudentLecture List</h4>
+		            <br>
+		            <a href="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture" class="btn btn-primary btn-rounded">
+						<i class="fas fa-check"></i>입력
+					</a>
 		            <div class="mt-2" style="height:auto; width:auto;">
 		            <!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 		            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
@@ -71,9 +80,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </div>
 </body>
-	<script>
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAsideManager.jsp');
-  	</script>
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

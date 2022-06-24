@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.nft.lms.vo.LevelHistory;
 import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
+import kr.co.nft.lms.vo.MemberPhoto;
 import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.Teacher;
 
@@ -24,6 +25,9 @@ public interface MemberMapper {
 	
 	// Student 테이블의 학생 튜플 삭제 
 	int updateStudentOfStudentTbl(Member member);
+	
+	// MemberPhoto 테이블에 회원 사진 등록
+	int insertMemberPhoto(MemberPhoto memberPhoto);
 	
 	// Member 테이블 활용하여 학생 정보 수정 
 	int updateStudentByMemberVo(Member member);

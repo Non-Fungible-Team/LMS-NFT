@@ -61,7 +61,7 @@
 			<tr>
 				<td>학생 사진</td>
 				<td>
-					<input type="file" id="photoOriginName" name="photoOriginName">
+					<input type="file" id="memberPhotoOne" name="memberPhotoOne">
 					<span id="studentPhotoSection"></span>
 				</td>
 			</tr>

@@ -12,7 +12,6 @@
 			, teacher_birth teacherBirth
 			, teacher_gender teacherGender
 			, teacher_email teacherEmail
-			, photo_no photoNo
 			, address_detail addressDetail
 		FROM teacher	
 	</select>
@@ -47,6 +46,29 @@
 			member_level = -4
 		WHERE member_id = #{memberId}
 	</update>
+
+	
+	<insert id="insertMemberPhoto"
+			parameterType="kr.co.nft.lms.vo.MemberPhoto">
+		
+		INSERT INTO member_photo (
+			member_id
+			, photo_name
+			, photo_origin_name
+			, photo_type
+			, photo_size
+			, photo_create_date
+			, photo_update_date
+		) VALUES (
+			#{memberId}
+			, #{photoName}
+			, #{photoOriginName}
+			, #{photoType}
+			, #{photoSize}
+			, NOW()
+			, NOW()
+		);
+	</insert>
 
 	<update id="updateStudentByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
@@ -89,7 +111,7 @@
 			, student_gender studentGender
 			, student_email studentEmail 
 			, student_education studentEducation 
-			, photo_no photoNo
+			
 		FROM student 
 		WHERE member_id = #{memberId} 
 	</select>

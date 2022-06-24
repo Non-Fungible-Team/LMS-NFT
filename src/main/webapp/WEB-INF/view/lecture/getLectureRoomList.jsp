@@ -22,7 +22,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		$('#addLectureRoom').click(function() {
 			if($('#lectureRoomName').val() == '') {
 				alert('강의실 이름을 입력하세요');
@@ -105,9 +105,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 </div>
 </div>
 </body>
-	<script>
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAsideManager.jsp');
-  	</script>
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class MemberPhoto {
-	private int photoNo;
+	private String memberId;
 	private String photoName;
 	private String photoOriginName;
 	private String photoType;
-	private int photoSize;
+	private long photoSize;
 	private String photoCreateDate;
 	private String photoUpdateDate;
 }

@@ -16,6 +16,7 @@ import kr.co.nft.lms.service.SubjectService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureRoom;
+import kr.co.nft.lms.vo.StudentLecture;
 import kr.co.nft.lms.vo.Subject;
 import kr.co.nft.lms.vo.TeacherLecture;
 import lombok.extern.slf4j.Slf4j;
@@ -146,42 +147,45 @@ public class LectureController {
 	@GetMapping("/manager/lecture/modifyLecture")
 	public String modifyLecture(Model model
 								,@RequestParam(name="lectureNo") int lectureNo) {
-		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.param] lectureNo : " + lectureNo +A.R);
+		log.debug(A.W +"[LectureController.manager.lecture/modifyLecture.param] lectureNo : " + lectureNo +A.R);
 		//받아온 값 저장 객체 생성
-		Map<String,Object> map = new HashMap<>();
-		map.put("lectureNo", lectureNo); //번호 값 저장
-		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.map] map : " + map +A.R);
+		Map<String,Object> Parammap = new HashMap<>();
+		Parammap.put("lectureNo", lectureNo); //번호 값 저장
+		log.debug(A.W +"[LectureController.manager.lecture/modifyLecture.Parammap] Parammap : " + Parammap +A.R);
 		
 		//결과값 저장 객체 생성 -> 서비스에 저장된 값 가져와서 모델객체에 저장
-		Map<String,Object> returnMap =lectureService.modifyLectureForm(map);
-		model.addAttribute("lecture",returnMap.get("lecture")); 
-		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.returnMap] returnMap : " + returnMap +A.R);
+		Map<String,Object> map =lectureService.modifyLectureForm(Parammap);
+		model.addAttribute("lecture",map.get("lecture")); 
+		model.addAttribute("subjectList", map.get("subjectList"));
+		model.addAttribute("lectureRoomList", map.get("lectureRoomList"));
+		model.addAttribute("teacherList", map.get("teacherList"));
+		log.debug(A.W +"[LectureController.manager.lecture/modifyLecture.map] map : " + map +A.R);
 		
 		return "/lecture/modifyLecture";
 	}
 	//수정 액션
 	@PostMapping("/manager/lecture/modifyLecture")
-	public String modifyLecture(Lecture lecture) {
-		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.lecture] lecture : " + lecture +A.R);
+	public String modifyLecture(Lecture lecture, TeacherLecture teacherLecture) {
+		log.debug(A.W +"[LectureController.manager.lecture/modifyLecture.lecture] lecture : " + lecture +A.R);
+		log.debug(A.W +"[LectureController.manager.lecture/modifyLecture.teacherLecture] teacherLecture : " + teacherLecture +A.R);
 		
-		int row = lectureService.modifyLecture(lecture);
-		log.debug(A.W +"[LectureController.teacher.lecture/modifyLecture.row] row : " + row +A.R);
+		int row = lectureService.modifyLecture(lecture, teacherLecture);
+		log.debug(A.W +"[LectureController.manager.lecture/modifyLecture.row] row : " + row +A.R);
 		
 		return "redirect:/teacher/lecture/getLectureByPage";
 
 	}
-	/*
+	
 	//4.강의 삭제
-	@GetMapping("/teacher/lecture/removeLecture")
+	@GetMapping("/manager/lecture/removeLecture")
 	public String removeLecture(@RequestParam(name = "lectureNo") int lectureNo) {
-		log.debug(A.A + "[LectureController.teacher.lecture/removeLecture.lecture] lecture : " + lecture + A.R);
+		log.debug(A.A + "[LectureController.teacher.lecture/removeLecture.lectureNo] lectureNo : " + lectureNo + A.R);
 		
-		int row = lectureService.removeLecture(lecture);
+		int row = lectureService.removeLecture(lectureNo);
 		log.debug(A.A + "[LectureController.teacher.lecture/removeLecture.row] row : " + row + A.R);
 		
-		return "/lecture/getLectureByPage";
+		return "redirect:/teacher/lecture/getLectureByPage";
 	}
-	*/
 	
 	// 5 & 6.학생 강의 목록
 	@GetMapping("/teacher/lecture/getStudentLectureByPage")
@@ -209,13 +213,48 @@ public class LectureController {
 		return "/lecture/getStudentLectureByPage";
 	}
 	
-	// 5-2.학생-강의 삽입
-	/*@PostMapping("a")
+	// 5-2. 학생-강의 삽입 폼
+	@GetMapping("/teacher/lecture/addStudentLecture")
 	public String addStudentLecture() {
 		
-		return "";
+		log.debug(A.A + "[LectureController.addStudentLecture] 실행" + A.R);		
+		
+		return "/lecture/addStudentLecture";
 	}
 	
+	@PostMapping("/teacher/lecture/addStudentLectureAction")
+		public String addStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+									  , @RequestParam(name = "memberId") String memberId
+									  , @RequestParam(name = "studentLectureJob") String studentLectureJob
+									  , @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate) {
+		
+		lectureNo = 1;
+		memberId = "student2";
+				
+		log.debug(A.A + "[LectureController.addStudentLectureAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureController.addStudentLectureAction] memberId : " + memberId + A.R);
+		log.debug(A.A + "[LectureController.addStudentLectureAction] studentLectureJob : " + studentLectureJob + A.R);
+		log.debug(A.A + "[LectureController.addStudentLectureAction] studentLectureLegistrationDate : " + studentLectureLegistrationDate + A.R);
+		
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setLectureNo(lectureNo);
+		studentLecture.setMemberId(memberId);
+		studentLecture.setStudentLectureJob(studentLectureJob);
+		studentLecture.setStudentLectureLegistrationDate(studentLectureLegistrationDate);
+		
+		log.debug(A.A + "[LectureController.studentLecture] studentLecture : " + studentLecture + A.R);
+		
+		int row = lectureService.addStudentLecture(studentLecture);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 실패" + A.R);
+		}
+
+		return "redirect:/teacher/lecture/getStudentLectureByPage";
+	}
+	/*
 	// 5-3. 학생-강의 목록 수정 폼
 	@GetMapping("b")
 	public String modifyStudentLectureForm() {

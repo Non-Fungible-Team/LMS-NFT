@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,5 +113,16 @@ public class TemplateController {
 		
 		log.debug(A.A + "[TemplateController.managerPage] 실행" + A.R);
 		return "/managerPage";
+	}
+	
+	@GetMapping("/teacher/lecture/lectureNameOne")
+	public String lectureNameOne(@RequestParam(name = "lectureNo") int lectureNo) {
+		log.debug(A.W +"[TemplateController.teacher.lecture/lectureNameOne.param] lectureNo : " + lectureNo +A.R);
+		Map<String,Object> ParamMap = new HashMap<>();
+		
+		ParamMap.put("lectureNo", lectureNo); //번호 값 저장
+		log.debug(A.W +"[TemplateController.teacher.lecture/lectureNameOne.ParamMap] ParamMap : " + ParamMap +A.R);
+		
+		return "lecture/lectureNameOne";
 	}
 }

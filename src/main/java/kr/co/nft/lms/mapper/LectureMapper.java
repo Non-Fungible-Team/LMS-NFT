@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.ManagerLecture;
 import kr.co.nft.lms.vo.StudentLecture;
+import kr.co.nft.lms.vo.TeacherLecture;
 
 @Mapper
 public interface LectureMapper {
@@ -38,10 +39,16 @@ public interface LectureMapper {
 
 	//action : int형으로 반환, notice객체값 전달됨(여러 값 수정)
 	int updateLecture(Lecture lecture);
+	
+	//3-2 강의-강사 수정
+	int updateTeacherLecture(TeacherLecture teacherLecture);
 
 	//4.강의 삭제 - action
 	//int형으로 반환, 번호값 전달받음
-	int deleteLecture(Lecture lecture);
+	int deleteLecture(int lectureNo);
+	
+	//4-2.강의-강사 삭제
+	int deleteTeacherLecture(int lectureNo);
 
 	//5.학생-강의 목록 - 강의별 학생의 목록(운영자,강사)
 	//List로 반환, 키값으로 데이터 전달받음.
@@ -63,11 +70,12 @@ public interface LectureMapper {
 	//6.운영자_강의 삽입
 	int insertManagerLecture(ManagerLecture managerLecture);
 
-
-
 	//7-2. 강의-학생 전체 행
 	int selectStudentLectureCount();
 
+	//8. 강의-강사 목록
+	List<TeacherLecture> selectTeacherLectureByPage(Map<String,Object> map);
+	
 	//9. 강의 번호로 강의 하나의 정보를 select
 	Lecture selectLecturebyLectureNo(int lectureNo);
 

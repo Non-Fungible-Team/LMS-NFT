@@ -2,6 +2,8 @@ package kr.co.nft.lms.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.NoticeService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Notice;
+import kr.co.nft.lms.vo.NoticeFile;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,9 +29,12 @@ public class NoticeController {
 	}
 	//Notice 입력 액션
 	@PostMapping("/manager/notice/addNotice")
-	public String addNotice(Notice notice) {
+	public String addNotice(HttpServletRequest request,Notice notice,NoticeFile noticeFile) {
+		//파일 저장 경로 설정
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[NoticeController.addNotice.param] notice : "+ notice + A.R);
-		int row = noticeService.addNotice(notice);
+		log.debug(A.S + "[NoticeController.addNotice.param] noticeFile : "+ noticeFile + A.R);
+		int row = noticeService.addNotice(notice,noticeFile,path);
 		log.debug(A.S + "[NoticeController.addNotice] row : "+ row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
@@ -64,9 +70,11 @@ public class NoticeController {
 	public String getNoticeOne(Model model
 							,@RequestParam(name="noticeNo") int noticeNo) {
 		log.debug(A.S + "[NoticeController.getNoticeOne.param] noticeNo : " + noticeNo + A.R);
-		Notice notice = noticeService.getNoticeOne(noticeNo);
-		log.debug(A.S + "[NoticeController.getNoticeOne] notice : " + notice + A.R);
-		model.addAttribute("notice", notice);
+		Map<String, Object> noticeOneReturnMap = noticeService.getNoticeOne(noticeNo);
+		log.debug(A.S + "[NoticeController.getNoticeOne] notice : " + noticeOneReturnMap.get("notice") + A.R);
+		log.debug(A.S + "[NoticeController.getNoticeOne] noticeFileList : " + noticeOneReturnMap.get("noticeFileList") + A.R);
+		model.addAttribute("notice", noticeOneReturnMap.get("notice"));
+		model.addAttribute("noticeFileList", noticeOneReturnMap.get("noticeFileList"));
 		log.debug(A.S + "[NoticeController.getNoticeOne] model : " + model + A.R);
 		return "/notice/getNoticeOne";
 	}
@@ -76,9 +84,11 @@ public class NoticeController {
 	public String modifyNotice(Model model
 							,@RequestParam(name="noticeNo") int noticeNo) {
 		log.debug(A.S + "[NoticeController.modifyNotice.param] noticeNo : " + noticeNo + A.R);
-		Notice notice = noticeService.getNoticeOne(noticeNo);
-		log.debug(A.S + "[NoticeController.modifyNotice] notice : " + notice + A.R);
-		model.addAttribute("notice", notice);
+		Map<String, Object> noticeOneReturnMap = noticeService.getNoticeOne(noticeNo);
+		log.debug(A.S + "[NoticeController.modifyNotice] notice : " + noticeOneReturnMap.get("notice") + A.R);
+		log.debug(A.S + "[NoticeController.modifyNotice] noticeFileList : " + noticeOneReturnMap.get("noticeFileList") + A.R);
+		model.addAttribute("notice", noticeOneReturnMap.get("notice"));
+		model.addAttribute("noticeFileList", noticeOneReturnMap.get("noticeFileList"));
 		return "/notice/modifyNotice";
 	}
 	
@@ -103,17 +113,19 @@ public class NoticeController {
 	public String removeNotice(Model model
 							,@RequestParam(name="noticeNo") int noticeNo) {
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
-		Notice notice = noticeService.getNoticeOne(noticeNo);
-		model.addAttribute("notice", notice);
+		Map<String, Object> noticeOneReturnMap = noticeService.getNoticeOne(noticeNo);
+		log.debug(A.S + "[NoticeController.removeNotice] notice : " + noticeOneReturnMap.get("notice") + A.R);
+		model.addAttribute("notice", noticeOneReturnMap.get("notice"));
 		return "/notice/removeNotice";
 	}
 	
 	//Notice 삭제 액션
 	@PostMapping("/manager/notice/removeNotice")
-	public String removeNotice(int noticeNo) {
+	public String removeNotice(HttpServletRequest request,int noticeNo) {
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
-		int row = noticeService.removeNotice(noticeNo);
-		log.debug(A.S + "[NoticeController.removeNoticex] row : " + row + A.R);
+		int row = noticeService.removeNotice(noticeNo,path);
+		log.debug(A.S + "[NoticeController.removeNotice] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)실패"+ A.R);
@@ -124,4 +136,23 @@ public class NoticeController {
 		return "redirect:/all/notice/getNoticeListByPage";
 	}
 
+	//NoticeFile 삭제 액션
+	@PostMapping("/manager/notice/removeNoticeFile")
+	public String removeNoticeFile(HttpServletRequest request, int noticeFileNo, int noticeNo) {
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
+		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileNo : " + noticeFileNo + A.R);
+		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeNo : " + noticeNo + A.R);
+		int row = noticeService.removeNoticeFile(noticeFileNo,path);
+		log.debug(A.S + "[NoticeController.removeNoticeFile] row : " + row + A.R);
+		//row가 0 이면 입력 실패
+		if(row==0) {
+			log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 실패"+ A.R);
+			return "redirect:/manager/notice/removeNoticeFile?msg=fail";
+		}
+		//입력성공 했을 경우
+		log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 성공"+ A.R);
+		return "redirect:/all/notice/getNoticeOne?noticeNo=" + noticeNo;
+		
+		
+	}
 }

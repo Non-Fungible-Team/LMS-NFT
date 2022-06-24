@@ -94,71 +94,7 @@
 			<nav class="sidebar-nav">
 				<ul id="sidebarnav">
 					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/managerPage" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Home</span></a></li>
-					<li class="list-divider"></li>
-					<li class="nav-small-cap"><span class="hide-menu">Lecture</span></li>
 
-					<li class="sidebar-item"><a class="sidebar-link" href="##########.jsp" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Lecture List </span></a></li>
-					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/subjectList" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Subject List </span></a></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Member Lecture </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Student Lecture </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher Lecture </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager Lecture </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="##########.jsp" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Etc </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><span class="hide-menu"> LectureRoom List </span></a></li>
-						</ul></li>
-
-					<li class="list-divider"></li>
-					<li class="nav-small-cap"><span class="hide-menu">Member</span></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Manager </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Teacher </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Student </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="f##########.jsp" class="sidebar-link"><span class="hide-menu"> Student List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-						
-					<li class="list-divider"></li>
-					<li class="nav-small-cap"><span class="hide-menu">Board</span></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Board </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Board List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Report Board </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Report List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Comment </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Comment List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="list-divider"></li>
-					<li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Survey </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Survey List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Exam </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Exam List </span></a></li>
-							<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-						</ul></li>
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="##########.jsp" aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span class="hide-menu">Logout</span></a></li>
 				</ul>
 			</nav>
 			<!-- End Sidebar navigation -->
