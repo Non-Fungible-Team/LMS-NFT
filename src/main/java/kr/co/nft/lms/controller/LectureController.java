@@ -16,6 +16,7 @@ import kr.co.nft.lms.service.SubjectService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureRoom;
+import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.StudentLecture;
 import kr.co.nft.lms.vo.Subject;
 import kr.co.nft.lms.vo.TeacherLecture;
@@ -194,8 +195,6 @@ public class LectureController {
 										, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 										, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		
-		lectureNo = 1;
-		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] currentPage : " + currentPage + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] rowPerPage : " + rowPerPage + A.R);
@@ -215,18 +214,25 @@ public class LectureController {
 	
 	// 5-2. 학생-강의 삽입 폼
 	@GetMapping("/teacher/lecture/addStudentLecture")
-	public String addStudentLecture() {
+	public String addStudentLecture(Model model) {
 		
 		log.debug(A.A + "[LectureController.addStudentLecture] 실행" + A.R);		
+		
+		List<Student> studentList = lectureService.addStudentLecture();
+		
+		log.debug(A.A + "[LectureController.addStudentLecture] studentList : " + studentList + A.R);
+		
+		model.addAttribute("studentList", studentList);
 		
 		return "/lecture/addStudentLecture";
 	}
 	
+	// 5-2. 학생-강의 삽입 액션
 	@PostMapping("/teacher/lecture/addStudentLectureAction")
 		public String addStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
-									  , @RequestParam(name = "memberId") String memberId
-									  , @RequestParam(name = "studentLectureJob") String studentLectureJob
-									  , @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate) {
+									  		, @RequestParam(name = "memberId") String memberId
+								  			, @RequestParam(name = "studentLectureJob") String studentLectureJob
+								  			, @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate) {
 		
 		lectureNo = 1;
 		memberId = "student2";
@@ -244,7 +250,7 @@ public class LectureController {
 		
 		log.debug(A.A + "[LectureController.studentLecture] studentLecture : " + studentLecture + A.R);
 		
-		int row = lectureService.addStudentLecture(studentLecture);
+		int row = lectureService.addStudentLectureAction(studentLecture);
 		
 		if(row == 1) {
 			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 성공" + A.R);

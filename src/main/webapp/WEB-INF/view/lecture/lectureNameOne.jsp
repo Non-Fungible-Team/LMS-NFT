@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>임시 페이지</h1>
-	<a href="${pageContext.request.contextPath}/teacher/lecture/getStudentLectureByPage">수강목록</a>
+	<h1>임시 페이지 - ${ lectureNo }</h1>
+	<a href="${pageContext.request.contextPath}/teacher/lecture/getStudentLectureByPage?lectureNo=${ lectureNo }">학생 목록</a>	
 </body>
 </html>

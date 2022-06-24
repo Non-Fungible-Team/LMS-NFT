@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,7 @@ import kr.co.nft.lms.mapper.SubjectMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureRoom;
-import kr.co.nft.lms.vo.ManagerLecture;
+import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.StudentLecture;
 import kr.co.nft.lms.vo.Subject;
 import kr.co.nft.lms.vo.Teacher;
@@ -236,16 +235,27 @@ public class LectureService {
 		
 		return returnMap;
 	}
+		
+	//5-2.학생-강의 삽입 폼
+	public List<Student> addStudentLecture() { //controller 넘겨오는 값
+		
+		//mapper 메소드 호출
+		List<Student> studentList = memberMapper.selectStudentList();
+		log.debug(A.A +"[LectureService.addStudentLecture.studentList] studentList : " + studentList + A.R);
+		
+		return studentList;
+	}
 	
-	//5-2.학생-강의 삽입
-	public int addStudentLecture(StudentLecture studentLecture) { //controller 넘겨오는 값
-	log.debug(A.W +"[LectureService.addStudentLecture.lecture] lecture  : " + studentLecture +A.R);
-	
-	//mapper 메소드 호출
-	int row = lectureMapper.insertStudentLecture(studentLecture);
-	log.debug(A.W +"[LectureService.addStudentLecture.row] row : " + row +A.R);
-	
-	return row; //입력된 행 반환 = 1
+	//5-2.학생-강의 삽입 액션
+	public int addStudentLectureAction(StudentLecture studentLecture) { //controller 넘겨오는 값
+		
+		log.debug(A.A +"[LectureService.addStudentLectureAction.studentLecture] studentLecture  : " + studentLecture + A.R);
+		
+		//mapper 메소드 호출
+		int row = lectureMapper.insertStudentLecture(studentLecture);
+		log.debug(A.W +"[LectureService.addStudentLecture.row] row : " + row +A.R);
+						
+		return row;
 	}
 	
 	//5-3. 학생-강의 목록 수정폼

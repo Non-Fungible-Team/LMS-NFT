@@ -63,9 +63,10 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
                             <div class="form-group">
                                <!-- 강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo">  -->
                                학생 : <select name="memberId" id="memberId" class="form-control">
-	                               		<option value="-1">학생 선택</option>
-	                               		<option value="a">학생 아이디(학생 이름) 순으로 보여주기</option>
-	                               		<option value="a">if문 돌려서 student memberId 가져오기</option>
+                               			<option value="-1">학생 선택</option>
+                               			<c:forEach var ="s" items="${ studentList }">
+                               				<option value="${ s.memberId }">${ s.memberId } (${ s.studentName })</option>
+                               			</c:forEach>
                               		 </select>
                                취업 여부 : <select name="studentLectureJob" id="studentLectureJob" class="form-control">
 		                               		<option value="-1">취업 여부 선택</option>
