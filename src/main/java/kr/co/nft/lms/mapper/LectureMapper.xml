@@ -200,20 +200,21 @@
 	<insert id="insertStudentLecture" parameterType="kr.co.nft.lms.vo.StudentLecture">
 		INSERT INTO student_lecture(
 			lecture_no
-			,member_id
-			,student_lecture_job
-			,student_lecture_legistration_date
-			,student_lecture_end_date
-			,student_lecture_score
+			, member_id
+			, student_lecture_job
+			, student_lecture_legistration_date
+			, student_lecture_end_date
+			, student_lecture_score
 		)VALUES(
 			#{lectureNo}
-			,#{memberId}
-			,#{studentLectureJob}
-			,#{studentLectureLegistrationDate}
-			,#{studentLectureEndDate}
-			,#{studentLectureScore}
+			, #{memberId}
+			, #{studentLectureJob}
+			, #{studentLectureLegistrationDate}
+			, null
+			, null
 		)
 	</insert>
+	
 	<!-- 5-3.학생-강의 목록 수정폼 -->
 	<select id="updateStudentLectureForm" 
 				parameterType="int"
