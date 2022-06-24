@@ -212,6 +212,28 @@ public class LectureController {
 		return "/lecture/getStudentLectureByPage";
 	}
 	
+	// 5 & 6.학생 강의 전체 목록
+	@GetMapping("/manager/lecture/getStudentLectureAllByPage")
+	public String getStudentLectureAllByPage(Model model
+											, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
+											, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+		
+		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] currentPage : " + currentPage + A.R);
+		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] rowPerPage : " + rowPerPage + A.R);
+		
+		Map<String,Object> returnMap = lectureService.getStudentLectureAllByPage(currentPage, rowPerPage);
+		
+		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] returnMap : " + returnMap + A.R);
+		
+		model.addAttribute("studentLectureAllList", returnMap.get("studentLectureAllList")); 
+		model.addAttribute("currentPage", returnMap.get("currentPage")); 
+		model.addAttribute("rowPerPage", returnMap.get("rowPerPage")); 
+		
+		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] model : " + model + A.R);
+		
+		return "/lecture/getStudentLectureAllByPage";
+	}
+	
 	// 5-2. 학생-강의 삽입 폼
 	@GetMapping("/teacher/lecture/addStudentLecture")
 	public String addStudentLecture(Model model) {

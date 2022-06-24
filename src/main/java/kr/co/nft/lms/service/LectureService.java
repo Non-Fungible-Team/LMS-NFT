@@ -235,6 +235,44 @@ public class LectureService {
 		
 		return returnMap;
 	}
+	
+	//5.학생 강의 전체 목록
+	public Map<String,Object> getStudentLectureAllByPage(int currentPage, int rowPerPage) {
+		//디버깅코드
+		log.debug(A.A + "[LectureService.getStudentLectureAllByPage.currentPage] currentPage  : " + currentPage + A.R);
+		log.debug(A.A + "[LectureService.getStudentLectureAllByPage.rowPerPage ] rowPerPage : " + rowPerPage + A.R);
+		
+		//컨트롤러가 넘겨준 값 가공하기
+		//페이지 시작 행 번호
+		int beginRow = (currentPage - 1) * rowPerPage;
+		log.debug(A.A + "[LectureService.getStudentLectureAllByPage.beginRow ] beginRow : " + beginRow + A.R);
+		
+		//페이지값 받아오기
+		Map<String, Object> map = new HashMap<>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		log.debug(A.A +"[LectureService.getStudentLectureAllByPage.map] map : " + map + A.R);
+
+		//강의목록 mapper메소드 호출
+		List<StudentLecture> studentLectureAllList = lectureMapper.selectStudentLectureAll(map);
+		log.debug(A.A + "[LectureService.getStudentLectureAllByPage.studentLectureAllList] studentLectureAllList : " + studentLectureAllList + A.R);//디버깅코드
+		
+		//Mapper에서 반환된값 가공 -> controller로 전달
+		int totalCount = lectureMapper.selectStudentLectureCount();
+		int lastPage = (int)(Math.ceil((double)totalCount/(double)rowPerPage)); //마지막페이지-> 소수점 올림 해서 int형변환
+		//디버깅코드
+		log.debug(A.A + "[LectureService.getStudentLectureAllByPage.totalCount] totalCount : " + totalCount + A.R);
+		log.debug(A.A + "[LectureService.getStudentLectureAllByPage.lastPage] lastPage : "  + lastPage + A.R);
+		
+		//결과값 반환 객체생성
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("studentLectureAllList", studentLectureAllList); //강의목록 값
+		returnMap.put("currentPage", currentPage); //현재페이지
+		returnMap.put("lastPage", lastPage); //마지막 페이지
+		log.debug(A.A +"[LectureService.getStudentLectureByPage.returnMap] returnMap : " + returnMap + A.R);//디버깅코드
+		
+		return returnMap;
+	}
 		
 	//5-2.학생-강의 삽입 폼
 	public List<Student> addStudentLecture() { //controller 넘겨오는 값

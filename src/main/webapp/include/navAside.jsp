@@ -133,7 +133,7 @@
 						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/subjectList" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Subject List </span></a></li>
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Member Lecture </span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Student Lecture </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getStudentLectureAllByPage" class="sidebar-link"><span class="hide-menu"> Student Lecture </span></a></li>
 								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher Lecture </span></a></li>
 								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager Lecture </span></a></li>
 							</ul></li>

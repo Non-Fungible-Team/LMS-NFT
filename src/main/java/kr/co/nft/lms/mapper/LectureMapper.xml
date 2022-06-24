@@ -187,6 +187,7 @@
 		resultType="kr.co.nft.lms.vo.StudentLecture">
 		SELECT
 		s.member_id memberId
+		, sl.lecture_no lectureNo
 		, s.student_name studentName
 		, student_lecture_legistration_date studentLectureLegistrationDate
 		, student_lecture_end_date studentLectureEndDate
@@ -200,8 +201,27 @@
 		WHERE sl.lecture_no = #{lectureNo}
 		ORDER BY
 		sl.lecture_No ASC, studentLectureLegistrationDate DESC
-		LIMIT
-		#{beginRow}, #{rowPerPage}
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<select id="selectStudentLectureAll" parameterType="java.util.Map"
+		resultType="kr.co.nft.lms.vo.StudentLecture">
+		SELECT
+		s.member_id memberId
+		, sl.lecture_no lectureNo
+		, s.student_name studentName
+		, student_lecture_legistration_date studentLectureLegistrationDate
+		, student_lecture_end_date studentLectureEndDate
+		, student_lecture_score studentLectureScore
+		, student_lecture_job studentLectureJob
+		FROM student_lecture sl
+		INNER JOIN lecture l
+		ON l.lecture_no = sl.lecture_no
+		INNER JOIN student s
+		ON sl.member_id = s.member_id
+		ORDER BY
+		sl.lecture_No ASC, studentLectureLegistrationDate DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 
 	<!-- 5-2. 학생-강의 삽입 -->
