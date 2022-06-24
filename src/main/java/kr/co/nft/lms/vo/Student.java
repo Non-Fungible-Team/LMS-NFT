@@ -10,6 +10,5 @@ public class Student {
 	private String studentBirth;
 	private String studentGender;
 	private String studentEmail;
-	private int photoNo;
 	private String addressDetail;
 }

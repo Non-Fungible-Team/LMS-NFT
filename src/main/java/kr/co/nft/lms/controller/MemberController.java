@@ -16,6 +16,7 @@ import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
+import kr.co.nft.lms.vo.MemberUploadPhoto;
 import kr.co.nft.lms.vo.Student;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,28 +73,47 @@ public class MemberController {
 								, HttpServletRequest request
 								, Member member
 								, Student student
-								, MemberPhoto memberPhoto) {
+								, MemberPhoto memberPhoto
+								, MemberUploadPhoto memberUploadPhoto) {
 		
-		String path = request.getServletContext().getRealPath("/memberPhoto/studentPhoto");
-		log.debug(A.Z+"[MemberController.modifyStudent.param] path : "+path+A.R);
-		
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		
+		// 매개변수가 잘 들어왔는지 확인 
+		// 학생 정보 수정시 MEMBER 테이블에 수정해야 할 내용 받기 
 		log.debug(A.Z+"[MemberController.modifyStudent.param] member : "+member+A.R);
+		// 학생 정보 수정시 STUDENT 테이블에 수정해야 할 내용 받기 
 		log.debug(A.Z+"[MemberController.modifyStudent.param] student : "+student+A.R);
 		log.debug(A.Z+"[MemberController.modifyStudent.param] memberPhoto : "+memberPhoto+A.R);
+		// // 학생 정보 수정시 MEMBERPHOTO 테이블에 수정해야 할 내용 받기
+		log.debug(A.Z+"[MemberController.modifyStudent.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
 		
-		// 어떻게 사용하면 좋을지 ? 
-		// MultipartFile studentPhoto 
+		// 사진을 업로드하면 저장되는 경로 설정 
+		String path = request.getServletContext().getRealPath("/memberPhoto/studentPhoto/");
+		log.debug(A.Z+"[MemberController.modifyStudent.param] path : "+path+A.R);
 		
+		// 세션에서 아이디와 레벨은 계속 가져온다 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		
+		// modifyStudent.jsp 페이지에서 파일 받은 내용 확인 
+		MultipartFile studentPhoto = memberUploadPhoto.getMemberPhotoOne();
+		log.debug(A.Z+"[MemberController.modifyStudent.param] studentPhoto : "+studentPhoto+A.R);
+		
+		// 파일이 들어왔고 파일 사이즈가 0보다 크면 
+		if(studentPhoto != null && studentPhoto.getSize() > 0) {
+			// 파일이 들어온 내용을 확인 
+			log.debug(A.Z+"[MemberController.modifyStudent] studentPhoto : "+studentPhoto+A.R);
+		}
+		
+		// 사용자 사진 업로드 
+		memberService.addMemberPhoto(member, memberPhoto, memberUploadPhoto, path);
+		
+		// 학생 정보가 바뀌었는지 확인 
+		// 멤버 테이블에 변경 내용이 반영되었는지 확인 
 	    int rowOfMember = memberService.modifyStudent(member);
 	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfMember : "+rowOfMember+A.R);
-	    
-	    
+	    // 학생 테이블에 변경 내용이 반영되었는지 확인 
 	    int rowOfStudent = memberService.modifyStudent(student);
 	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfStudent : "+rowOfStudent+A.R);
 		
-	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아가야 한다. 
+	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아간다  
 	    return "redirect:/all/getStudentOne";
 	}
 	

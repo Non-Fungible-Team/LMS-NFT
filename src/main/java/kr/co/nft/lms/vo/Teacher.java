@@ -11,6 +11,5 @@ public class Teacher {
 	private String teacherBirth;
 	private String teacherGender;
 	private String teacherEmail;
-	private int photoNo;
 	private String addressDetail;
 }

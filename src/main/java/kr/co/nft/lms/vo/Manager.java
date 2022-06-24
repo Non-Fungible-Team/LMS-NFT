@@ -10,6 +10,5 @@ public class Manager {
 	private String managerBirth;
 	private String managerGender;
 	private String managerEmail;
-	private int photoNo;
 	private String addressDetail;
 }
