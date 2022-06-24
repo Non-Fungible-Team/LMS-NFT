@@ -7,6 +7,7 @@ public class SurveyMultipleAnswer {
 	private int surveyQuestionNo;
 	private int surveyNo;
 	private String MemberId;
+	private String SurveyMultipleAnswerType;
 	private int surveyMultipleAnswerContent;
 	private String surveyMultipleAnswerCreateDate;
 	private String surveyMultipleAnswerUpdateDate;

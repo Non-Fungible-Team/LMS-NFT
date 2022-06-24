@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyController {
 	@Autowired private SurveyService surveyService;
 	
-	@GetMapping("/survey/insertSurvey")
+	@GetMapping("/manager/survey/insertSurvey")
 	public String insertSurvey(Survey survey, Model model,
 			@RequestParam(name = "currentPage",defaultValue = "1") int currentPage,
 			@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {	
@@ -32,10 +32,10 @@ public class SurveyController {
 		
 		model.addAttribute("QuestionList",map.get("QuestionList"));
 		
-		return "/survey/insertSurvey";
+		return "survey/insertSurvey";
 	}
 	
-	@PostMapping("/survey/insertSurvey")
+	@PostMapping("/manager/survey/insertSurvey")
 	public String insertSurveyl(Survey survey, SurveyQuestion surveyQuestion) {
 		log.debug(A.D+"[SurveyController.insertSurvey] survey : " + survey + A.R); // 디버깅
 		log.debug(A.D+"[SurveyController.insertSurvey] surveyQuestion : " + surveyQuestion + A.R); // 디버깅
@@ -48,7 +48,7 @@ public class SurveyController {
 		
 		if(row == 0) {
 			log.debug(A.D+"[SurveyController.insertSurvey] 등록실패  " + A.R); // 디버깅
-			return "/survey/insertSurvey";
+			return "survey/insertSurvey";
 		}
 		
 		log.debug(A.D+"[SurveyController.insertSurvey] 등록성공  " + A.R); // 디버깅
@@ -68,21 +68,21 @@ public class SurveyController {
 		model.addAttribute("surveyQuestionList", returnMap.get("SurveyQuestionList"));
 		log.debug(A.D+"[SurveyController.getSurveyOne] model : " + model + A.R); // 디버깅
 		
-		return"/survey/getSurveyOne";
+		return"survey/getSurveyOne";
 	}
 	
-	@GetMapping("/survey/insertSurveyQuestionList")
+	@GetMapping("/manager/survey/insertSurveyQuestionList")
 	public String insertSurveyQuestionList() {
-		return "/survey/insertSurveyQuestionList";
+		return "survey/insertSurveyQuestionList";
 	}
 	
-	@PostMapping("/survey/insertSurveyList")
+	@PostMapping("/manager/survey/insertSurveyQuestionList")
 	public String insertSurveyList(SurveyQuestionList surveyQuestionList) {
 		log.debug(A.D+"[SurveyController.insertSurveyList] surveyQuestionList : " + surveyQuestionList.toString() + A.R); // 디버깅
 
 		
 		surveyService.insertSurveyList(surveyQuestionList);
-		return "redirect:/survey/getSurveyQuestionListByPage";
+		return "redirect:/manager/survey/getSurveyQuestionListByPage";
 	}
 	
 	
@@ -99,10 +99,10 @@ public class SurveyController {
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		
-		return "/survey/getSurveyListByPage";
+		return "survey/getSurveyListByPage";
 	}
 	
-	@GetMapping("/survey/getSurveyQuestionListByPage") // 설문조사 항목 리스트 페이지
+	@GetMapping("/manager/survey/getSurveyQuestionListByPage") // 설문조사 항목 리스트 페이지
 	public String getSurveyQuestionListByPage(Model model,
 			@RequestParam(name = "currentPage",defaultValue="1")int currentPage,
 			@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {// 디폴트 값 설정
@@ -114,7 +114,7 @@ public class SurveyController {
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		
-		return "/survey/getSurveyQuestionListByPage";
+		return "survey/getSurveyQuestionListByPage";
 	}
 	
 }

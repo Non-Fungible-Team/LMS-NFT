@@ -5,10 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 반응형 웹 -->
+<!-- 반응형 웹 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<!-- title icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
+<title>Lecture List</title>
+<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+	
 	var appendCount = 1;
 	var appendCountList = 0;
 	
@@ -81,52 +98,80 @@ $(document).ready(function(){
 		
 });
 </script>
+<style>
+	    .helper {
+	    	color : #FF0000;
+	    }
+	</style>
 </head>
 <body>
-	<h1>설문조사</h1>
-	
-	<div>설문조사 항목 타입 선택</div>
-		<button type="button" id="multipleSurvey" name="multipleSurvey">객관식 문제 추가</button>
-		<button type="button" id="shortSurvey" name="shortSurvey">주관식 문제 추가</button>
-		<button type="button" id="deleteTypeButton" name="deleteTypeButton">삭제</button>
-	<div>&nbsp;</div>
-	
-	
-	<form method="post" action='${pageContext.request.contextPath}/survey/insertSurvey' id="insertSurvey">
-		<table>
-			<tr>
-				<td>설문조사 제목</td>
-				<td><input type="text" name="surveyTitle" id="surveyTitle">
-				<span id='surveyTitleHelper' class='helper'></span></td>
-			</tr>
-			<tr>
-				<td>설문조사 내용</td>
-				<td><input type="text" name="surveyContent" id="surveyContent">
-				<span id='surveyContentHelper' class='helper'></span></td>
-			</tr>
-			<tr><td>설문 시작일</td>
-				<td>
-				<input type="date" name="surveyStartlineDate" id="surveyStartlineDate"> 
-				<span id='startlineHelper' class='helper'></span></td>
-			</tr>
-			<tr>
-				<td>설문 마감일</td>
-				<td>
-				<input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate">
-				<span id='deadlineHelper' class='helper'></span></td>
-			</tr>
-			<tr>
-			<td>
-			<td id="surveyQuestionForm">
-			<span id='qestionFormHelper' class='helper'></span></td>
-			
-			
-			
-		</table>
-		<button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button>
-	</form>
-		
-		
-		
+	<div id="main-wrapper" data-theme="light" data-layout="vertical"
+		data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed"
+		data-boxed-layout="full">
+		<!-- header include(네비게이션바) -->
+		<div id="navAside"></div>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="container p-5 my-5 border">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="card">
+								<div class="card-body">
+
+									<h1 class="card-title">설문조사 생성</h1>
+
+									<div>설문조사 항목 타입 선택</div>
+									<button type="button" id="multipleSurvey" name="multipleSurvey">객관식
+										문제 추가</button>
+									<button type="button" id="shortSurvey" name="shortSurvey">주관식
+										문제 추가</button>
+									<button type="button" id="deleteTypeButton"
+										name="deleteTypeButton">삭제</button>
+									<div>&nbsp;</div>
+
+
+									<form method="post"
+										action='${pageContext.request.contextPath}manager/survey/insertSurvey'
+										id="insertSurvey">
+										<table>
+											<tr>
+												<td>설문조사 제목</td>
+												<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
+													<span id='surveyTitleHelper' class='helper'></span></td>
+											</tr>
+											<tr>
+												<td>설문조사 내용</td>
+												<td><input type="text" name="surveyContent" id="surveyContent" class="form-control"> 
+												<span id='surveyContentHelper' class='helper'></span></td>
+											</tr>
+											<tr>
+												<td>설문 시작일</td>
+												<td><input type="date" name="surveyStartlineDate" id="surveyStartlineDate" class="form-control"> 
+												<span id='startlineHelper' class='helper'></span></td>
+											</tr>
+											<tr>
+												<td>설문 마감일</td>
+												<td><input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate" class="form-control">
+												<span id='deadlineHelper' class='helper'></span></td>
+											</tr>
+										</table>
+										<table>
+											<tr>
+												<td id="surveyQuestionForm">
+												<span id='qestionFormHelper' class='helper'></span></td>
+											</tr>
+										</table>
+										<button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
