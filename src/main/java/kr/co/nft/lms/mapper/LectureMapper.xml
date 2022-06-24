@@ -3,151 +3,147 @@
 <mapper namespace="kr.co.nft.lms.mapper.LectureMapper">
 	<!-- 1.강의목록(상세보기) -->
 	<select id="selectLectureByPage"
-		resultType="kr.co.nft.lms.vo.Lecture" 
-		parameterType="java.util.Map">
+		resultType="kr.co.nft.lms.vo.Lecture" parameterType="java.util.Map">
 		SELECT
-			l.lecture_no lectureNo
-			,s.subject_name subjectName
-			,lecture_name lectureName
-			,lecture_start_date lectureStartDate
-			,lecture_end_date lectureEndDate
-			,lr.lecture_room_name lectureRoomName
-			,lecture_create_date
-			,lectureCreateDate
-			,t.teacher_name teacherName
-			,lecture_writer lectureWriter
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureRoomName
+		,lecture_create_date
+		lectureCreateDate
+		,t.teacher_name teacherName
+		,lecture_writer lectureWriter
 		FROM lecture l
 		INNER JOIN subject s
-			ON l.subject_no = s.subject_no
+		ON l.subject_no = s.subject_no
 		INNER JOIN teacher_lecture tl
-			ON l.lecture_no = tl.lecture_no
+		ON l.lecture_no = tl.lecture_no
 		INNER JOIN teacher t
-			ON t.member_id = tl.member_id
+		ON t.member_id = tl.member_id
 		INNER JOIN lecture_room lr
-			ON l.lecture_room_name = lr.lecture_room_name
+		ON l.lecture_room_name = lr.lecture_room_name
 		ORDER BY l.lecture_no
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-
 	<!-- 1-1. 수강 중인 강의목록 보기(학생) -->
 	<select id="selectLectureByStudent"
-		resultType="kr.co.nft.lms.vo.Lecture" 
-		parameterType="java.util.Map">
+		resultType="kr.co.nft.lms.vo.Lecture" parameterType="java.util.Map">
 		SELECT
-			l.lecture_no lectureNo
-			,s.subject_name subjectName
-			,lecture_name lectureName
-			,lecture_start_date lectureStartDate
-			,lecture_end_date lectureEndDate
-			,lr.lecture_room_name lectureRoomName
-			,lecture_create_date
-			,lectureCreateDate
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureRoomName
+		,lecture_create_date
+		lectureCreateDate
 		FROM lecture l
 		INNER JOIN subject s
-			ON l.subject_no = s.subject_no
+		ON l.subject_no = s.subject_no
 		INNER JOIN lecture_room lr
-			ON l.lecture_room_name = lr.lecture_room_name
+		ON l.lecture_room_name = lr.lecture_room_name
 		INNER JOIN student_lecture sl
-			ON l.lecture_no = sl.lecture_no
+		ON l.lecture_no = sl.lecture_no
 		WHERE sl.member_id = #{memberId}
 		ORDER BY l.lecture_no
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!--1-1. 수강 중인 강의목록 보기(학생) 의 전체 행의 수 -->
 	<select id="selectLectureTotalCountByStudent" resultType="int">
-		SELECT COUNT(*) FROM lecture l
+		SELECT
+		COUNT(*)
+		FROM lecture l
 		INNER JOIN student_lecture sl
-			ON l.lecture_no = sl.lecture_no
+		ON l.lecture_no = sl.lecture_no
 		WHERE sl.member_id = #{memberId}
 	</select>
-
 	<!-- 1-2. 수강 중인 강의목록 보기(강사) -->
 	<select id="selectLectureByTeacher"
-		resultType="kr.co.nft.lms.vo.Lecture" 
-		parameterType="java.util.Map">
+		resultType="kr.co.nft.lms.vo.Lecture" parameterType="java.util.Map">
 		SELECT
-			l.lecture_no lectureNo
-			,s.subject_name subjectName
-			,lecture_name lectureName
-			,lecture_start_date lectureStartDate
-			,lecture_end_date lectureEndDate
-			,lr.lecture_room_name lectureRoomName
-			,lecture_create_date
-			,lectureCreateDate
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureRoomName
+		,lecture_create_date
+		lectureCreateDate
 		FROM lecture l
 		INNER JOIN subject s
-			ON l.subject_no = s.subject_no
+		ON l.subject_no = s.subject_no
 		INNER JOIN lecture_room lr
-			ON l.lecture_room_name = lr.lecture_room_name
+		ON l.lecture_room_name = lr.lecture_room_name
 		INNER JOIN teacher_lecture tl
-			ON l.lecture_no = tl.lecture_no
+		ON l.lecture_no = tl.lecture_no
 		WHERE tl.member_id = #{memberId}
 		ORDER BY lecture_no
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 1-2. 수강 중인 강의목록 보기(강사)의 전체 행의 수 -->
 	<select id="selectLectureTotalCountByTeacher" resultType="int">
-		SELECT COUNT(*) FROM lecture l
+		SELECT
+		COUNT(*)
+		FROM lecture l
 		INNER JOIN teacher_lecture
-			ON l.lecture_no = tl.lecture_no
+		ON l.lecture_no = tl.lecture_no
 		WHERE sl.member_id = #{memberId}
 	</select>
-
 	<!-- 2.강의 삽입 -->
 	<insert id="insertLecture"
 		parameterType="kr.co.nft.lms.vo.Lecture">
-		<selectKey resultType="int" keyProperty="lectureNo" order="AFTER">
+		<selectKey resultType="int" keyProperty="lectureNo"
+			order="AFTER">
 			SELECT last_insert_id()
 		</selectKey>
 		INSERT INTO lecture(
-			subject_no
-			,lecture_name
-			,lecture_start_date
-			,lecture_end_date
-			,lecture_create_date
-			,lecture_update_date
-			,lecture_room_name
-			,lecture_writer
+		subject_no
+		,lecture_name
+		,lecture_start_date
+		,lecture_end_date
+		,lecture_create_date
+		,lecture_update_date
+		,lecture_room_name
+		,lecture_writer
 		)
 		VALUES(
-			#{subjectNo}
-			,#{lectureName}
-			,#{lectureStartDate}
-			,#{lectureEndDate}
-			,NOW()
-			,NOW()
-			,#{lectureRoomName}
-			,#{lectureWriter}
+		#{subjectNo}
+		,#{lectureName}
+		,#{lectureStartDate}
+		,#{lectureEndDate}
+		,NOW()
+		,NOW()
+		,#{lectureRoomName}
+		,#{lectureWriter}
 		)
 	</insert>
 	<!--2-2 강의-강사 삽입 -->
 	<insert id="insertTeacherLecture"
 		parameterType="kr.co.nft.lms.vo.Lecture">
-		INSERT INTO 
-			teacher_lecture(member_id, lecture_no)
+		INSERT INTO teacher_lecture(member_id, lecture_no)
 		VALUES(
-			#{memberId}
-			,#{lectureNo}
+		#{memberId}
+		,#{lectureNo}
 		)
 	</insert>
-
 	<!-- 3.강의수정 -->
 	<!-- updateForm -->
-	<select id="updateLectureForm" 
-		parameterType="int"
+	<select id="updateLectureForm" parameterType="int"
 		resultType="kr.co.nft.lms.vo.Lecture">
 		SELECT
-			l.lecture_no lectureNo
-			,s.subject_name subjectName
-			,lecture_name lectureName
-			,lecture_start_date lectureStartDate
-			,lecture_end_date lectureEndDate
-			,lr.lecture_room_name lectureRoomName
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureRoomName
 		FROM lecture l
 		INNER JOIN subject s
-			ON l.subject_no = s.subject_no
+		ON l.subject_no = s.subject_no
 		INNER JOIN lecture_room lr
-			ON l.lecture_room_name = lr.lecture_room_name
+		ON l.lecture_room_name = lr.lecture_room_name
 		WHERE lecture_no =#{lectureNo}
 	</select>
 	<!-- updateAction -->
@@ -155,12 +151,12 @@
 		parameterType="kr.co.nft.lms.vo.Lecture">
 		UPDATE lecture
 		SET
-			subject_no =#{subjectNo}
-			,lecture_name = #{lectureName}
-			,lecture_start_date=#{lectureStartDate}
-			,lecture_end_date=#{lectureEndDate}
-			,lecture_room_name =#{lectureRoomName}
-			,lecture_writer =#{lectureWriter}
+		subject_no =#{subjectNo}
+		,lecture_name = #{lectureName}
+		,lecture_start_date=#{lectureStartDate}
+		,lecture_end_date=#{lectureEndDate}
+		,lecture_room_name =#{lectureRoomName}
+		,lecture_writer =#{lectureWriter}
 		WHERE lecture_no =#{lectureNo}
 	</update>
 	<!-- 강의_강사 수정 -->
@@ -168,7 +164,7 @@
 		parameterType="kr.co.nft.lms.vo.TeacherLecture">
 		UPDATE teacher_lecture
 		SET
-			member_id = #{memberId}
+		member_id = #{memberId}
 		WHERE lecture_no =#{lectureNo}
 	</update>
 	<!--4. 강의 삭제 -->
@@ -178,157 +174,160 @@
 	</delete>
 	<!-- 4-2. 강의-강사 삭제 -->
 	<delete id="deleteTeacherLecture" parameterType="int">
-		DELETE FROM teacher_lecture
+		DELETE FROM
+		teacher_lecture
 		WHERE lecture_no = #{lectureNo}
 	</delete>
 	<!-- 5/6.학생_강의 목록: 강의명 누르면 나오는 화면 -->
-	<select id="selectStudentLecture" 
-			parameterType="java.util.Map"
-			resultType="kr.co.nft.lms.vo.StudentLecture">
+	<select id="selectStudentLecture" parameterType="java.util.Map"
+		resultType="kr.co.nft.lms.vo.StudentLecture">
 		SELECT
-			s.member_id memberId
-			, sl.lecture_no lectureNo
-			, s.student_name studentName
-			, student_lecture_legistration_date studentLectureLegistrationDate
-			, student_lecture_end_date studentLectureEndDate
-			, student_lecture_score studentLectureScore
-			, student_lecture_job studentLectureJob
+		s.member_id memberId
+		, sl.lecture_no lectureNo
+		, s.student_name studentName
+		, student_lecture_legistration_date studentLectureLegistrationDate
+		, student_lecture_end_date studentLectureEndDate
+		, student_lecture_score studentLectureScore
+		, student_lecture_job studentLectureJob
 		FROM student_lecture sl
 		INNER JOIN lecture l
-			ON l.lecture_no = sl.lecture_no
+		ON l.lecture_no = sl.lecture_no
 		INNER JOIN student s
-			ON sl.member_id = s.member_id
+		ON sl.member_id = s.member_id
 		WHERE sl.lecture_no = #{lectureNo}
-		ORDER BY sl.lecture_No ASC, studentLectureLegistrationDate DESC
+		ORDER BY
+		sl.lecture_No ASC, studentLectureLegistrationDate DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<select id="selectStudentLectureAll" 
-				parameterType="java.util.Map"
-				resultType="kr.co.nft.lms.vo.StudentLecture">
+	<select id="selectStudentLectureAll" parameterType="java.util.Map"
+		resultType="kr.co.nft.lms.vo.StudentLecture">
 		SELECT
-			s.member_id memberId
-			, sl.lecture_no lectureNo
-			, s.student_name studentName
-			, student_lecture_legistration_date studentLectureLegistrationDate
-			, student_lecture_end_date studentLectureEndDate
-			, student_lecture_score studentLectureScore
-			, student_lecture_job studentLectureJob
+		s.member_id memberId
+		, sl.lecture_no lectureNo
+		, s.student_name studentName
+		, student_lecture_legistration_date studentLectureLegistrationDate
+		, student_lecture_end_date studentLectureEndDate
+		, student_lecture_score studentLectureScore
+		, student_lecture_job studentLectureJob
 		FROM student_lecture sl
 		INNER JOIN lecture l
-			ON l.lecture_no = sl.lecture_no
+		ON l.lecture_no = sl.lecture_no
 		INNER JOIN student s
-			ON sl.member_id = s.member_id
-		ORDER BY sl.lecture_No ASC, studentLectureLegistrationDate DESC
+		ON sl.member_id = s.member_id
+		ORDER BY
+		sl.lecture_No ASC, studentLectureLegistrationDate DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-
 	<!-- 5-2. 학생-강의 삽입 -->
 	<insert id="insertStudentLecture"
 		parameterType="kr.co.nft.lms.vo.StudentLecture">
 		INSERT INTO student_lecture(
-			lecture_no
-			, member_id
-			, student_lecture_job
-			, student_lecture_legistration_date
-			, student_lecture_end_date
-			, student_lecture_score
+		lecture_no
+		, member_id
+		, student_lecture_job
+		, student_lecture_legistration_date
+		, student_lecture_end_date
+		, student_lecture_score
 		)VALUES(
-			#{lectureNo}
-			, #{memberId}
-			, #{studentLectureJob}
-			, #{studentLectureLegistrationDate}
-			, null
-			, null
+		#{lectureNo}
+		, #{memberId}
+		, #{studentLectureJob}
+		, #{studentLectureLegistrationDate}
+		, null
+		, null
 		)
 	</insert>
-
 	<!-- 5-3.학생-강의 목록 수정폼 -->
-	<select id="updateStudentLectureForm" 
-				parameterType="int"
-				resultType="kr.co.nft.lms.vo.StudentLecture">
+	<select id="updateStudentLectureForm" parameterType="int"
+		resultType="kr.co.nft.lms.vo.StudentLecture">
 		SELECT
-			s.student_name studentName
-			,student_lecture_legistration_date studentLectureLegistrationDate
-			,student_lecture_end_date studentLectureEndDate
-			,student_lecture_score studentLectureScore
-			,student_lecture_job studentLectureJob
+		s.student_name studentName
+		,student_lecture_legistration_date studentLectureLegistrationDate
+		,student_lecture_end_date studentLectureEndDate
+		,student_lecture_score studentLectureScore
+		,student_lecture_job studentLectureJob
 		FROM student_lecture sl
 		INNER JOIN lecture l
-			ON l.lecture_no = sl.lecture_no
+		ON l.lecture_no = sl.lecture_no
 		INNER JOIN student s
-			ON sl.member_id = s.member_id
+		ON sl.member_id = s.member_id
 		WHERE member_id = #{memberId}
 	</select>
-
 	<!--5-3.학생-강의 목록 수정액션 -->
 	<update id="updateStudentLecture">
 		UPDATE student_lecture
-		SET 
-			lecture_no =#{lectureNo}
-			,member_id = #{memberId}
-			,student_lecture_job =#{studentLectureJob}
-			,student_lecture_legistration_date =#{studentLectureLegistrationDate}
-			,student_lecture_end_date = #{studentLectureEndDate}
-			,#{student_lecture_score} =#{studentLectureScore}
+		SET lecture_no =#{lectureNo}
+		,member_id = #{memberId}
+		,student_lecture_job =#{studentLectureJob}
+		,student_lecture_legistration_date =#{studentLectureLegistrationDate}
+		,student_lecture_end_date = #{studentLectureEndDate}
+		,#{student_lecture_score} =#{studentLectureScore}
 		WHERE member_id = #{memberId}
 	</update>
-
 	<!-- 5-4.학생-강의 목록 삭제 -->
 	<delete id="deleteStudentLecture" parameterType="int">
-		DELETE FROM student_lecture
+		DELETE FROM
+		student_lecture
 		WHERE lecture_no = #{lectureNo}
 		AND member_id = #{memberId}
 	</delete>
-
 	<!-- 7.강의 전체 행수 -->
 	<select id="selectLectureCount" resultType="int">
-		SELECT COUNT(*) FROM lecture
+		SELECT COUNT(*) FROM
+		lecture
 	</select>
-
 	<!-- 7-2.학생목록 전체 행 -->
 	<select id="selectStudentLectureCount" resultType="int">
-		SELECT COUNT(*) FROM student_lecture
+		SELECT
+		COUNT(*) FROM student_lecture
 	</select>
-
 	<!-- 8.강사-강의 목록 -->
 	<select id="selectTeacherLectureByPage"
 		resultType="kr.co.nft.lms.vo.TeacherLecture"
 		parameterType="java.util.Map">
 		SELECT
-			t.member_id memberId
-			, t.teacher_name teacherName
-			, l.lecture_no lectureNo
-			, l.lecture_name lectureName
+		t.member_id memberId
+		, t.teacher_name teacherName
+		, l.lecture_no lectureNo
+		, l.lecture_name lectureName
 		FROM teacher_lecture tl
 		INNER JOIN teacher t
-			ON tl.member_id = t.member_id
+		ON tl.member_id = t.member_id
 		INNER JOIN lecture l
-			ON tl.lecture_no = l.lecture_no
-		ORDER BY lecture_name
-		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
-	<select id="selectTeacherLectureCount" resultType="int">
-		SELECT COUNT(*) FROM teacher_lecture
+		ON tl.lecture_no =
+		l.lecture_no
+		LIMIT
+		#{beginRow}, #{rowPerPage}
+		ORDER BY l.lecture_name
 	</select>
 	<!-- 9. 강의번호로 강의정보 가져오기 -->
 	<select id="selectLecturebyLectureNo"
-		resultType="kr.co.nft.lms.vo.Lecture" 
-		parameterType="int">
+
+    
+          
+            
+    
+
+          
+    
+    
+  
+		resultType="kr.co.nft.lms.vo.Lecture" parameterType="int">
 		SELECT
-			l.lecture_no lectureNo
-			,s.subject_name subjectName
-			,lecture_name lectureName
-			,lecture_start_date lectureStartDate
-			,lecture_end_date lectureEndDate
-			,lr.lecture_room_name lectureRoomName
-			,lecture_create_date
-			,lectureCreateDate
+		l.lecture_no lectureNo
+		,s.subject_name subjectName
+		,lecture_name lectureName
+		,lecture_start_date lectureStartDate
+		,lecture_end_date lectureEndDate
+		,lr.lecture_room_name lectureRoomName
+		,lecture_create_date
+		lectureCreateDate
 		FROM lecture l
 		INNER JOIN subject s
-			ON l.subject_no = s.subject_no
+		ON l.subject_no = s.subject_no
 		INNER JOIN lecture_room lr
-			ON l.lecture_room_name = lr.lecture_room_name
+		ON l.lecture_room_name = lr.lecture_room_name
 		WHERE l.lecture_no = #{lectureNo}
 	</select>
 </mapper>
