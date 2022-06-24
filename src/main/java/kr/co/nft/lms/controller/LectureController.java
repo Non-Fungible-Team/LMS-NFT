@@ -282,14 +282,26 @@ public class LectureController {
 
 		return "redirect:/teacher/lecture/getStudentLectureByPage";
 	}
-	/*
+	
 	// 5-3. 학생-강의 목록 수정 폼
-	@GetMapping("b")
-	public String modifyStudentLectureForm() {
+	@GetMapping("/teacher/lecture/modifyStudentLecture")
+	public String modifyStudentLectureForm(Model model
+										 , @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+	  									 , @RequestParam(name = "memberId") String memberId) {
 		
-		return "";
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] memberId : " + memberId + A.R);
+		
+		// List<Student> student = lectureService.();
+		
+		// log.debug(A.A + "[LectureController.addStudentLecture] studentList : " + studentList + A.R);
+		
+		// model.addAttribute("studentList", studentList);
+		
+		return "/lecture/modifyStudentLecture";
 	}
 	
+	/*
 	// 학생-강의 목록 수정 액션
 	@PostMapping("c")
 	public String modifyStudentLecture() {
