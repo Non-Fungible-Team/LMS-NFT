@@ -24,6 +24,8 @@
 	<script>
 		//유효성검사
 		$('document').ready(function(){
+			$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+			
 			$('#uploadModifyNotice').click(function(){
 					$('#modifyNoticeTitleHelper').text('');
 					$('#modifyNoticeContentHelper').text('');
@@ -55,7 +57,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 				<div class="col-lg-12 col-md-6">
 				    <div class="card">
 				        <div class="card-body">
-				            <h4 class="card-title">modifyNotice</h4>
+				            <h4 class="card-title">공지사항 수정</h4>
 				            <div class="mt-2" style="height:auto; width:auto;">
 								<form id="modifyNoticeForm" action="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}" method="post">
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
@@ -105,9 +107,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		</div>
 	</div>
 </body>
-	<script>
-    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
-  	</script>
+		     
 
     <script src="static/dist/js/app-style-switcher.js"></script>
     <script src="static/dist/js/feather.min.js"></script>

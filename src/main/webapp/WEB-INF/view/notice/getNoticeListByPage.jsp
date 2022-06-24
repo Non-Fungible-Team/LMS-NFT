@@ -20,19 +20,23 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
-
+<script>
+	$('document').ready(function(){
+	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+	});
+</script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
 	data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
-		<div id="test"></div>
+		<div id="navAside"></div>
 	    <div class="container p-5 my-5 border">
 			<div class="row">
 				<div class="col-lg-12 col-md-6">
 				    <div class="card">
 				        <div class="card-body">
 			            	<div>
-			            		<h4 class="card-title">getNoticeListByPage</h4>
+			            		<h4 class="card-title">공지사항</h4>
 			            		<div>
 							        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">
 							        	<input type="button" class="btn btn-info" style="float: right" value="게시판입력">
@@ -78,10 +82,6 @@
 		</div>
 	</div>
 </body>
-	<script>
-    	$("#test").load('${pageContext.request.contextPath}/include/test.jsp');
-  	</script>
-
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
