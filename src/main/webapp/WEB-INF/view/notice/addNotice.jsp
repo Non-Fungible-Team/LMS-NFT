@@ -82,84 +82,81 @@
 		
 	</script>
 <body>
-<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" 
-data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
 	<div id="navAside"></div>
-    <div class="container p-5 my-5 border">
-	<div class="row">
-		<div class="col-lg-12 col-md-6">
-		    <div class="card">
-		        <div class="card-body">
-		            <h4 class="card-title">공지사항 입력</h4>
-		            <div class="mt-2" style="height:auto; width:100%;">
-		            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post" enctype="multipart/form-data">
-			            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
-								<tr>
-					    			<th>제목</th>
-					    			<td>
-					    				<input type="text" name="noticeTitle" id="noticeTitle" class="form-control">
-					    				<span id="noticeTitleHelper" class="helper"></span>
-					    			</td>
-					    		</tr>
-					    		<tr>
-					    			<th>작성자</th>
-					    			<td>
-					    				<input type="text" name="memberId" id="memberId" class="form-control" value="${sessionLoginMember.memberId}" readonly="readonly">
-					    				<span id="memberIdHelper" class="helper"></span>
-					    			</td>
-					    		</tr>
-					    		<tr>
-					    			<th>내용</th>
-					    			<td height= 500px>
-					    				<textarea rows="20" Cols="10" name="noticeContent" id="noticeContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
-					    				<span id="noticeContentHelper" class="helper"></span>
-					    			</td>
-					    		</tr>
-					    		<tr>
-					    			<th>읽기권한</th>
-					    			<td>
-					    				<select name = "noticePrivilege" id="noticePrivilege">
-					    					<option value="-1">::읽기권한::</option>
-					    					<option value="4">학생이상</option>
-					    					<option value="5">강사이상</option>
-					    					<option value="6">운영자만</option>
-					    				</select>
-					    				<span id="noticePrivilegeHelper" class="helper"></span>
-					    			</td>
-					    		</tr>
-			            	</table>
-			            	
-			            	
-			            	
-			            	<div>
-			            		<button type="button" id = "addNoticeFileUpload" class="btn btn-outline-info btn-rounded">파일 업로드 추가</button>
-			            		<div id = "fileSection">
-			            			<!-- 파일 업로드 input 태그가 추가될 영역 -->
-			            		</div>
-			            		<span id="addNoticeFileUploadHelper" class="helper"></span>
-			            	</div>
-
-
-
-			            	<div>
-			            		<button type="button" id="uploadNotice" class="btn btn-outline-success btn-rounded">등록</button>
-						        <a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
-						        	<input type="button" class="btn btn-info" style="float: right" value="목록으로">
-						        </a>
-				        	</div>
-			            </form>
-		             </div>   
-		        </div>
-		    </div>
+	<div class="page-wrapper">
+		<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 col-md-12">
+			    <div class="card">
+			        <div class="card-body">
+			            <h4 class="card-title">공지사항 입력</h4>
+				            <div>
+				            	<a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
+								  	<input type="button" class="btn btn-info" style="float: right" value="목록으로">
+								</a>
+							</div>
+			            <div class="mt-2" style="height:auto; width:100%;">
+			            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post" enctype="multipart/form-data">
+				            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
+									<tr>
+						    			<th>제목</th>
+						    			<td>
+						    				<input type="text" name="noticeTitle" id="noticeTitle" class="form-control">
+						    				<span id="noticeTitleHelper" class="helper"></span>
+						    			</td>
+						    		</tr>
+						    		<tr>
+						    			<th>작성자</th>
+						    			<td>
+						    				<input type="text" name="memberId" id="memberId" class="form-control" value="${sessionLoginMember.memberId}" readonly="readonly">
+						    				<span id="memberIdHelper" class="helper"></span>
+						    			</td>
+						    		</tr>
+						    		<tr>
+						    			<th>내용</th>
+						    			<td height= 500px>
+						    				<textarea rows="20" Cols="10" name="noticeContent" id="noticeContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+						    				<span id="noticeContentHelper" class="helper"></span>
+						    			</td>
+						    		</tr>
+						    		<tr>
+						    			<th>읽기권한</th>
+						    			<td>
+						    				<select name = "noticePrivilege" id="noticePrivilege">
+						    					<option value="-1">::읽기권한::</option>
+						    					<option value="4">학생이상</option>
+						    					<option value="5">강사이상</option>
+						    					<option value="6">운영자만</option>
+						    				</select>
+						    				<span id="noticePrivilegeHelper" class="helper"></span>
+						    			</td>
+						    		</tr>
+				            	</table>
+				            	
+				            	
+				            	
+				            	<div>
+				            		<button type="button" id = "addNoticeFileUpload" class="btn btn-outline-info btn-rounded">파일 업로드 추가</button>
+				            		<div id = "fileSection">
+				            			<!-- 파일 업로드 input 태그가 추가될 영역 -->
+				            		</div>
+				            		<span id="addNoticeFileUploadHelper" class="helper"></span>
+				            	</div>
+				            	<div>
+				            		<button type="button" id="uploadNotice" class="btn btn-outline-success btn-rounded">등록</button>
+					        	</div>
+				            </form>
+			             </div>   
+			        </div>
+			    </div>
+			  </div>
 		</div>
 	</div>
 </div>
 </div>
 </body>
-
-
-
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
