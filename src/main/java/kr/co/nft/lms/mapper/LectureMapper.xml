@@ -159,15 +159,20 @@
 			,lecture_start_date=#{lectureStartDate}
 			,lecture_end_date=#{lectureEndDate}
 			,lecture_room_name =#{lectureroomName}
-		WHERE lecture_no_no =#{lectureNo}
-		AND member_id = #{memberId}
+			,lecture_writer =#{lectureWriter}
+		WHERE lecture_no =#{lectureNo}
 	</update>
-	
+	<!--  강의_강사 수정 -->
+	<update id="updateTeacherLecture" parameterType="kr.co.nft.lms.vo.TeacherLecture">
+		UPDATE teacher_lecture 
+		SET 
+			member_id = #{memberId}
+		WHERE lecture_no =#{lectureNo}
+	</update>
 	<!--4. 강의 삭제 -->
 	<delete id="deleteLecture" parameterType="int">
 		DELETE FROM lecture 
 		WHERE lecture_no =#{lectureNo} 
-		AND member_id = #{memberId}
 	</delete>
 	
 	<!-- 5/6.학생_강의 목록: 강의명 누르면 나오는 화면 -->
