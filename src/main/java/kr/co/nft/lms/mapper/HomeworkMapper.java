@@ -35,4 +35,21 @@ public interface HomeworkMapper {
 	// 학생 과제 입력
 	int insertHomeworkSubmitFile(HomeworkSubmitFile homeworkSubmitFile);
 	int insertHomeworkSubmit(HomeworkSubmit homeworkSubmit);
+	
+	// 학생 과제 목록 
+	List<HomeworkSubmit> selectHomeworkSubmitListByPage(Map<String, Object> map);
+	
+	// 학생 제출과제 상세보기
+	HomeworkSubmit selectHomeworkSubmitOne(int homeworkSubmitNo);
+	
+	// 학생 제출과제 수정
+	int updateHomeworkSubmit(HomeworkSubmit homeworkSubmit);
+	
+	// 학생 제출과제 삭제
+	int deleteHomeworkSubmit(HomeworkSubmit homeworkSubmit);
+	
+	// 학생 과제 피드백 점수 입력
+	int updateHomeworkSubmitScore(HomeworkSubmit homeworkSubmit);
+	
+	
 }

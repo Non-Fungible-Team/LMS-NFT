@@ -149,7 +149,7 @@ public class HomeworkController {
 	public String addHomeworkSubmit(HttpServletRequest request
 									,HomeworkSubmit homeworkSubmit
 									,@RequestParam(name="homeworkNo") int homeworkNo) {
-		String path = request.getServletContext().getRealPath("/homeworkFile/");
+		String path = request.getServletContext().getRealPath("/uploadFile/homeworkFile/");
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path"+ path +A.R);
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit"+ homeworkSubmit +A.R);
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkNo :"+homeworkNo +A.R);
