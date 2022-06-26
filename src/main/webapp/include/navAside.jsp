@@ -28,14 +28,14 @@
 					<!-- 로고 아이콘 -->
 					<a href=" "> <!-- 건들면 안됨.  -> http://lms-->
 					<b class="logo-icon"> 
-					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.png" alt="homepage" class="dark-logo" style="width: 15%" />
-					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.png" alt="homepage" class="light-logo" style="width: 15%" />
+					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.PNG" alt="homepage" class="dark-logo" style="width: 15%" />
+					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.PNG" alt="homepage" class="light-logo" style="width: 15%" />
 					</b> 
 					<span class="logo-text">
 						<!-- dark Logo text -->
-	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.png" alt="homepage" class="dark-logo" style="width: 88%"/>
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.PNG" alt="homepage" class="dark-logo" style="width: 88%"/>
 	                    <!-- Light Logo text -->
-	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.png" class="light-logo" alt="homepage" />
+	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.PNG" class="light-logo" alt="homepage" />
                     </span>
 					</a>
 				</div>
@@ -48,7 +48,24 @@
 			</div>
 			<!-- nav -->
 			<div class="navbar-collapse collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav float-left mr-auto ml-3 pl-1"><!-- nav 왼쪽 여백용 --></ul>
+				<ul class="navbar-nav float-left mr-auto ml-3 pl-1"><!-- nav 왼쪽 여백용 -->
+	            <!-- 강의를 선택 안했을 시 표시 -->
+		            <c:if test="${empty sessionLecture}">
+		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">수강목록에서 강의를 선택하세요!</h3>
+		            </c:if>
+		            <c:if test="${not empty sessionLecture }">
+		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">${sessionLecture.lectureName}</h3>
+		                <div class="d-flex align-items-center">
+		                    <nav aria-label="breadcrumb">
+		                        <ol class="breadcrumb m-0 p-0">
+		                            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/all/lectureNoController">클릭시 강의 선택이 초기화 됩니다.</a>
+		                            </li>
+		                        </ol>
+		                    </nav>
+		                </div>
+		            </c:if>
+				</ul>
+				
 				<ul class="navbar-nav float-right">
 					<!-- 프로필 -->
 					<li class="nav-item dropdown">
@@ -95,18 +112,18 @@
 				<ul id="sidebarnav">
 					<!--  공통으로 보여지는 부분 -->
 					<!-- 홈버튼 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/all/lectureNoController" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Home</span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/home" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">Home</span></a></li>
 					<!-- 공지사항 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage" aria-expanded="false"><i data-feather="feather" class="feather-icon"></i><span class="hide-menu">공지사항 </span></a>
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage" aria-expanded="false"><i data-feather="feather" class="feather-icon"></i><span class="hide-menu">공지사항 </span></a>
 					<!-- 학원일정 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">학원 일정</span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">학원 일정</span></a></li>
 					<!-- 강의 선택시에 강의에 대한 세부 메뉴 시작 -->
 					<c:if test="${not empty sessionLecture }">
 					<li class="list-divider"></li>
 					<!-- 선택한 강의 이름 -->
 					<li class="nav-small-cap"><span class="hide-menu">${sessionLecture.lectureName}</span></li>
 					<!-- 강의 게시판 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
 					<!-- 출석 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
 					<!-- 과제 -->
@@ -118,7 +135,7 @@
 							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/exam/" class="sidebar-link"><span class="hide-menu"> 점수확인 </span></a></li>
 						</ul></li>
 					<!-- 강의 설문조사 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/survey/insertSurvey" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">강의 설문조사</span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/survey/getSurveyListByPage" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">강의 설문조사</span></a></li>
 					</c:if>
 					<!-- 강의에 대한 세부 메뉴 끝 -->
 					
@@ -153,7 +170,7 @@
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Teacher </span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getManagerLectureByPage" class="sidebar-link"><span class="hide-menu"> 강의 강사 리스트</span></a></li>
 							</ul></li>
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Student </span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
@@ -183,7 +200,7 @@
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Survey </span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Survey List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class="sidebar-link"><span class="hide-menu"> 질문 관리 리스트 </span></a></li>
 							</ul></li>
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Exam </span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">

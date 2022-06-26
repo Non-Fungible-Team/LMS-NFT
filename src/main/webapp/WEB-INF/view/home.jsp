@@ -34,21 +34,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
        	<div class="page-breadcrumb">
 	        <div class="row">
 	            <div class="col-7 align-self-center">
-	            <!-- 강의를 선택 안했을 시 표시 -->
-	            <c:if test="${empty sessionLecture }">
-	                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">수강목록에서 강의를 선택하세요!</h3>
-	            </c:if>
-	            <c:if test="${not empty sessionLecture }">
-	                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">${sessionLecture.lectureName}</h3>
-	                <div class="d-flex align-items-center">
-	                    <nav aria-label="breadcrumb">
-	                        <ol class="breadcrumb m-0 p-0">
-	                            <li class="breadcrumb-item"><a href="index.html">홈버튼 클릭시 강의 선택이 초기화 됩니다.</a>
-	                            </li>
-	                        </ol>
-	                    </nav>
-	                </div>
-	            </c:if>
+
 	            </div>
 	        </div>
 	    </div>

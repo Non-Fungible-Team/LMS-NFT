@@ -44,8 +44,14 @@
 		SELECT 
 			n.board_no noticeNo
 			, b.board_title noticeTitle
+			, b.board_content noticeContent
+			, b.board_category noticeCategory
 			, b.member_id memberId
+			, b.board_privilege noticePrivilege
+			, b.board_blind boardBlind
 			, b.board_create_date noticeCreateDate
+			, b.board_update_date noticeUpdateDate
+			
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no

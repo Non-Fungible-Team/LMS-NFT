@@ -34,8 +34,8 @@ public class ManagerLoginFilter implements Filter {
 			}
 			//로그인 정보가 있을시 Member 변수에 저장
 			Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
-			//level이 4가 아닌 경우 메세지와 함께 homeController로 redirect
-			if(sessionLoginMember.getMemberLevel() != 4) {
+			//level이 6이상이 아닐경우 메세지와 함께 homeController로 redirect
+			if(sessionLoginMember.getMemberLevel() < 4) {
 				log.debug(A.E+"[ManagerLoginFilter.doFilter] : 권한이 아닌 자의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
 				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/homeController?msg=underManager");
 				return;

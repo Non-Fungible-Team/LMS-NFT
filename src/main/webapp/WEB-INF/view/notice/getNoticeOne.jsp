@@ -63,7 +63,7 @@
 									</tr>
 									<tr>
 										<th>읽기권한</th>
-										<td>${notice.noticePrivilege}</td>
+										<td>${notice.privilegeName}</td>
 									</tr>
 									<tr>
 										<th>생성날짜</th>
