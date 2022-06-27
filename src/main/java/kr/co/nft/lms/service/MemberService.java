@@ -124,6 +124,11 @@ public class MemberService {
 		return memberMapper.selectStudentOneByStudentVo(member);
 	}
 	
+	// Manager 테이블에 들어가는 운영자 회원 가입 
+	public int addManager(Manager manager) {
+		return memberMapper.insertManagerByManagerVo(manager);
+	}
+	
 	// Teacher 테이블에 들어가는 강사 회원 가입 
 	public int addTeacher(Teacher teacher) {
 		return memberMapper.insertTeacherByTeacherVo(teacher);
@@ -132,6 +137,11 @@ public class MemberService {
 	// Student 테이블에 들어가는 학생 회원 가입 
 	public int addStudent(Student student) {
 		return memberMapper.insertStudentByStudentVo(student);
+	}
+	
+	// Member 테이블에 들어가는 운영자 회원 가입 
+	public int addManager(Member member) {
+		return memberMapper.insertManagerByMemberVo(member);
 	}
 	
 	// Member 테이블에 들어가는 강사 회원 가입 

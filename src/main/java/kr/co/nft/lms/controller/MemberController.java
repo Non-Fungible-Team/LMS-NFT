@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
 import kr.co.nft.lms.vo.MemberUploadPhoto;
@@ -201,6 +202,24 @@ public class MemberController {
 		return "/member/getStudentOne";
 	}
 	
+	// 운영자 회원가입 
+	@PostMapping("/addManager")
+	public String addManager(Member member
+							,Manager manager) {
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.addManager.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addManager.param] teacher : "+manager+A.R);
+		
+		// 운영자 한명의 정보를 저장하기 위해서 두개의 테이블 Member, Manager가 필요 
+		int rowOfMember = memberService.addManager(member);
+		log.debug(A.Z+"[MemberController.addManager] rowOfMember : "+rowOfMember+A.R);
+		int rowOfManager = memberService.addManager(manager);
+		log.debug(A.Z+"[MemberController.addManager] rowOfManager : "+rowOfManager+A.R);
+		
+		// 해당하는 뷰 페이지로 이동 
+		return "/member/memberLogin";
+	}
+	
 	// 강사 회원가입
 	@PostMapping("/addTeacher")
 	public String addTeacher(Member member
@@ -235,6 +254,26 @@ public class MemberController {
 		
 		// 해당하는 뷰 페이지로 이동 
 		return "/member/memberLogin";
+	}
+	
+	// 운영자 회원가입
+	@GetMapping("/addManager") 
+	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
+	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
+	public String addManager(Model model
+							, Member member
+							, @RequestParam(value="memberLevel") int memberLevel) {
+		
+		// 매개 변수에 담긴 내용 확인 
+		log.debug(A.Z+"[MemberController.addManager.param] model : "+model+A.R);
+		log.debug(A.Z+"[MemberController.addManager.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addManager.param] memberLevel : "+memberLevel+A.R);
+		
+		// 뷰 페이지에 사용자 레벨 넘긴다 
+		model.addAttribute("memberLevel", memberLevel);
+		
+		// 운영자 회원 가입 페이지 양식으로 이동 
+		return "/member/addManager";
 	}
 	
 	// 강사 회원가입 
@@ -288,6 +327,31 @@ public class MemberController {
 		return "redirect:/login";
 	}
 	
+	// 로그인 액션 
+		@PostMapping("/login")
+		public String login(HttpSession session
+							, Member member) {
+			// 매개 변수 확인 
+			log.debug(A.Z+"MemberController.login.param : member : "+member+A.R);
+			
+			Member sessionLoginMember = memberService.getMemberOne(member);
+			log.debug(A.Z+"MemberController.login.sessionLoginMember : "+sessionLoginMember+A.R);
+				
+			// 계정 정보 없으면 로그인 실패 
+			if(sessionLoginMember == null) {
+				log.debug(A.Z+"MemberController.login : "+"로그인 실패"+A.R);
+				// member/memberLogin.jsp 
+				return "/member/memberLogin";
+			}
+
+			// 로그인 성공 
+			session.setAttribute("sessionLoginMember", sessionLoginMember);
+			session.setAttribute("sessionLectureNo", 0);
+			
+			// 로그인 성공하면 홈 화면으로 이동 
+			return "redirect:/all/home";
+		}
+	
 	// 로그인 폼 
 	@GetMapping("/login")
 	public String login(HttpSession session) {
@@ -299,31 +363,5 @@ public class MemberController {
 		// 그렇지 않다면 다시 로그인 페이지로 이동 
 		return "/member/memberLogin";
 	}
-	
-	// 로그인 액션 
-	@PostMapping("/login")
-	public String login(HttpSession session
-						, Member member) {
-		// 매개 변수 확인 
-		log.debug(A.Z+"MemberController.login.param : member : "+member+A.R);
-		
-		Member sessionLoginMember = memberService.getMemberOne(member);
-		log.debug(A.Z+"MemberController.login.sessionLoginMember : "+sessionLoginMember+A.R);
-			
-		// 계정 정보 없으면 로그인 실패 
-		if(sessionLoginMember == null) {
-			log.debug(A.Z+"MemberController.login : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
-		}
 
-		// 로그인 성공 
-		session.setAttribute("sessionLoginMember", sessionLoginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
-		// 로그인 성공하면 홈 화면으로 이동 
-		return "redirect:/all/home";
-	}
-	
-	
 }
