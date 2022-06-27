@@ -165,11 +165,12 @@
 				FROM survey_question AS a
 				INNER JOIN survey_question_list AS b
 				ON a.survey_question_list_no = b.survey_question_list_no
+				WHERE a.survey_no = #{surveyNo}
 				ORDER BY survey_question_no
 		</select>
 		
 		<insert id="insertSurveyMultipleAnswer"
-				parameterType="kr.co.nft.lms.vo.SurveyMultipleAnswer">
+				parameterType="kr.co.nft.lms.vo.SurveyAnswer">
 			INSERT INTO survey_multiple_answer(
 				survey_question_no
 				,survey_no
@@ -189,7 +190,7 @@
 		
 		
 		<insert id="insertSurveyShortAnswer"
-				parameterType="kr.co.nft.lms.vo.SurveyShortAnswer">
+				parameterType="kr.co.nft.lms.vo.SurveyAnswer">
 			INSERT INTO survey_short_answer(
 				survey_question_no
 				,survey_no

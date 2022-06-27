@@ -69,7 +69,7 @@
 					</div>
 				<h2>답변등록</h2>
 				<div class="mt-2" style="height:auto; width:auto;">
-					<form method="post" action="${pageContext.request.contextPath}/student/survey/insertSurveyAnswer" id="surveyAnswerForm">
+					<form method="post" action="${pageContext.request.contextPath}/student/survey/addSurveyAnswer" id="surveyAnswerForm">
 						<table id="zero_config" class="table table-striped table-bordered no-wrap">
 						
 							<c:forEach var="sqa" items="${surveyQuestionList}" varStatus="status">
@@ -88,7 +88,7 @@
 									<td>답변</td>
 									<td>
 										<c:if test="${sqa.surveyQuestionType=='객관식'}">
-											<input type='hidden' name='surveyAnswer[${status.index}].SurveyShortAnswerType' value="객관식" readonly>
+											<input type='hidden' name='surveyAnswer[${status.index}].surveyAnswerType' value="객관식" readonly>
 											<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
 											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=1> 1  &nbsp;&nbsp;
 											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=2> 2  &nbsp;&nbsp;
@@ -97,7 +97,7 @@
 											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=5> 5  &nbsp;&nbsp;
 										</c:if>
 										<c:if test="${sqa.surveyQuestionType=='주관식'}">
-											<input type='hidden' name='surveyAnswer[${status.index}].SurveyShortAnswerType' value="주관식" readonly>
+											<input type='hidden' name='surveyAnswer[${status.index}].SurveyAnswerType' value="주관식" readonly>
 											<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
 											<input type='text' name='surveyAnswer[${status.index}].surveyShortAnswerContent'>
 										</c:if>

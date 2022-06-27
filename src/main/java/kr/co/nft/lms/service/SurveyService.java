@@ -11,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.nft.lms.mapper.SurveyMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Survey;
-import kr.co.nft.lms.vo.SurveyMultipleAnswer;
+import kr.co.nft.lms.vo.SurveyAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
-import kr.co.nft.lms.vo.SurveyShortAnswer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -122,16 +121,15 @@ public class SurveyService {
 	      returnMap.put("SurveyQuestionList", SurveyQuestionList);
 	      return returnMap;
 	   }
-	public int insertSurveyQuestionAnswer(List<SurveyQuestion> surveyQuestionList, SurveyMultipleAnswer surveyMultipleAnswer
-										,SurveyShortAnswer surveyShortAnswer) {
+	public int addSurveyQuestionAnswer(List<SurveyAnswer> surveyAnswer) {
 		
 		int row = 0;
 		
-		for(SurveyQuestion s : surveyQuestionList) {
-			if(row==0) {
-				row = row + surveyMapper.insertSurveyMultipleAnswer(surveyMultipleAnswer);
-			} else if(row==2) {
-				row = row + surveyMapper.insertSurveyShortAnswer(surveyShortAnswer);
+		for(SurveyAnswer s : surveyAnswer) {
+			if(s.getSurveyAnswerType().equals("객관식")) {
+				row = row + surveyMapper.insertSurveyMultipleAnswer(s);
+			} else if(s.getSurveyAnswerType().equals("주관식")) {
+				row = row + surveyMapper.insertSurveyShortAnswer(s);
 			}
 		}
 		return row;

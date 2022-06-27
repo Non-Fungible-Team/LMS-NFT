@@ -1,6 +1,5 @@
 package kr.co.nft.lms.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,7 @@ import kr.co.nft.lms.service.SurveyService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Survey;
+import kr.co.nft.lms.vo.SurveyAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
 import lombok.extern.slf4j.Slf4j;
@@ -114,6 +114,13 @@ public class SurveyController {
 		
 		surveyService.insertSurveyList(surveyQuestionList);
 		return "redirect:/manager/survey/getSurveyQuestionListByPage";
+	}
+	@PostMapping("/student/survey/addSurveyAnswer")
+	public String addSurveyAnswer(SurveyAnswer surveyAnswer) {
+		log.debug(A.E+"[123451534535132]"+surveyAnswer+A.R);
+		int row = surveyService.addSurveyQuestionAnswer(surveyAnswer.getSurveyAnswer());
+		return "redirect:/all/survey/getSurveyListByPages";
+		
 	}
 	
 	
