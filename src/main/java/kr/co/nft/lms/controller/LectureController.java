@@ -292,11 +292,25 @@ public class LectureController {
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] memberId : " + memberId + A.R);
 		
-		// List<Student> student = lectureService.();
+		// 학생 이름 리스트
+		List<Student> studentTotalList = lectureService.addStudentLecture();
 		
-		// log.debug(A.A + "[LectureController.addStudentLecture] studentList : " + studentList + A.R);
+		int currentPage = 1;
+		int rowPerPage = 1000;
 		
-		// model.addAttribute("studentList", studentList);
+		// 강의 이름 리스트
+		Map<String,Object> map = lectureService.getLectureByPage(currentPage, rowPerPage); //강의목록 서비스 호출해서 map객체에 저장
+		 //서비스에 저장된 값 가져와서 모델객체에 저장
+		model.addAttribute("lectureList", map.get("lectureList")); //강의목록
+		
+		// 학생 강의 One 리스트
+		StudentLecture studentLectureOne  = lectureService.modifyStudentLectureForm(lectureNo, memberId);
+		
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentTotalList : " + studentTotalList + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentLectureOne : " + studentLectureOne + A.R);
+		
+		model.addAttribute("studentTotalList", studentTotalList);
+		model.addAttribute("studentLectureOne", studentLectureOne);
 		
 		return "/lecture/modifyStudentLecture";
 	}

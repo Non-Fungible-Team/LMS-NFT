@@ -239,21 +239,27 @@
 		)
 	</insert>
 	<!-- 5-3.학생-강의 목록 수정폼 -->
-	<select id="updateStudentLectureForm" parameterType="int"
-		resultType="kr.co.nft.lms.vo.StudentLecture">
+	<select id="updateStudentLectureForm" 
+			parameterType="kr.co.nft.lms.vo.StudentLecture"
+			resultType="kr.co.nft.lms.vo.StudentLecture">
 		SELECT
-		s.student_name studentName
-		,student_lecture_legistration_date studentLectureLegistrationDate
-		,student_lecture_end_date studentLectureEndDate
-		,student_lecture_score studentLectureScore
-		,student_lecture_job studentLectureJob
+			s.member_id memberId
+			, sl.lecture_no lectureNo
+			, l.lecture_name lectureName
+			, s.student_name studentName
+			, student_lecture_legistration_date studentLectureLegistrationDate
+			, student_lecture_end_date studentLectureEndDate
+			, student_lecture_score studentLectureScore
+			, student_lecture_job studentLectureJob
 		FROM student_lecture sl
-		INNER JOIN lecture l
-		ON l.lecture_no = sl.lecture_no
-		INNER JOIN student s
-		ON sl.member_id = s.member_id
-		WHERE member_id = #{memberId}
+			INNER JOIN lecture l
+			ON l.lecture_no = sl.lecture_no
+			INNER JOIN student s
+			ON sl.member_id = s.member_id
+		WHERE sl.lecture_no = #{lectureNo}
+			  AND s.member_id = #{memberId}
 	</select>
+	
 	<!--5-3.학생-강의 목록 수정액션 -->
 	<update id="updateStudentLecture">
 		UPDATE student_lecture

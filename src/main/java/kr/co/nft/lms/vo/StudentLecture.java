@@ -12,4 +12,5 @@ public class StudentLecture {
 	private int studentLectureScore;
 	
 	private String studentName;
+	private String lectureName;
 }

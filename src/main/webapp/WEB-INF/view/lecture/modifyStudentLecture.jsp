@@ -61,12 +61,12 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            <div style="height:294px;">
 		            	<form method="post" id="modifyForm" action="${pageContext.request.contextPath}/teacher/lecture/modifyStudentLectureAction">
                             <div class="form-group">
-                               강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo">
+                               강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo" value="${ studentLectureOne.lectureNo } (${ studentLectureOne.lectureName })">
                                학생 : <select name="memberId" id="memberId" class="form-control">
                                			<option value="-1">학생 선택</option>
-                               			<c:forEach var ="s" items="${ studentList }">
-                               				<c:if test="${ s.memberId == ## }">
-					                        	<option value="${ s.memberId }" seleted>${ s.memberId } (${ s.studentName })</option>
+                               			<c:forEach var ="s" items="${ studentTotalList }">
+                               				<c:if test="${ s.memberId == studentLectureOne.memberId }">
+					                        	<option value="${ s.memberId }" selected>${ studentLectureOne.memberId } (${ studentLectureOne.studentName })</option>
 					                      	</c:if>
                                				<option value="${ s.memberId }">${ s.memberId } (${ s.studentName })</option>
                                			</c:forEach>
@@ -76,9 +76,9 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		                               		<option value="Y">Y</option>
 		                               		<option value="N">N</option>
 	                              	    </select>
-                               등록일 : <input type="date" name="studentLectureLegistrationDate" class="form-control" id="studentLectureLegistrationDate">
+                               등록일 : <input type="date" name="studentLectureLegistrationDate" class="form-control" id="studentLectureLegistrationDate" value="${ studentLectureOne.studentLectureLegistrationDate }">
                                수료일 : <input type="date" name="studentLectureEndDate" class="form-control" id="studentLectureEndDate">
-                               전체 성적 : <input type="int" name="studentLectureScore" class="form-control" id="studentLectureScore">
+                               전체 성적 : <input type="number" name="studentLectureScore" class="form-control" id="studentLectureScore" value="${ studentLectureOne.studentLectureScore }">
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="modifyStudentLecture"><i class="fas fa-check"></i>수정</button>
                         </form>
@@ -87,7 +87,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		    </div>
 		</div>
 	</div>
-</div>
 </div>
 </div>
 </body>
