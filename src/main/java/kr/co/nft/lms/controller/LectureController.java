@@ -307,6 +307,7 @@ public class LectureController {
 		StudentLecture studentLectureOne  = lectureService.modifyStudentLectureForm(lectureNo, memberId);
 		
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentTotalList : " + studentTotalList + A.R);
+		// log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureList : " + lectureList + A.R);
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentLectureOne : " + studentLectureOne + A.R);
 		
 		model.addAttribute("studentTotalList", studentTotalList);
