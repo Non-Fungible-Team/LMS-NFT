@@ -29,7 +29,7 @@
 			var modifyFileUploadCount = 0;
 			$('#addModifyNoticeFileUpload').click(function(){
 				$('.modifyNoticeFileList').each(function(){
-					if($(this).val == ''){
+					if($(this).val() == ''){
 						flag = false;
 					}
 				});
@@ -37,7 +37,7 @@
 				if(flag){
 					var label = 'label' + modifyFileUploadCount;
 					var fileBtn = 'fileBtn' + modifyFileUploadCount;
-					$('#fileSection').append("<label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded'><span  id ="+label+">파일 입력</span><input type='file' id = "+fileBtn+" class='modifyNoticeFileList' style='display: none;' name='modifyNoticeFileList' ></span></label>");
+					$('#fileSection').append("<label class='input-group-btn' ><span class='btn btn-outline-info btn-rounded'><span  id ="+label+">파일 입력</span><input type='file' id = "+fileBtn+" class='modifyNoticeFileList' style='display: none;' name='noticeFileList' ></span></label>");
 					
 					$('#'+fileBtn+'').change(function(){
 						$('#'+label+'').text($('#'+fileBtn+'').val());
@@ -66,7 +66,7 @@
 					$('#modifyNoticePrivilege').focus();
 				} else { //첨부되지 않은 파일여부 체크 후 submit
 					$('.modifyNoticeFileList').each(function(){
-						if($(this).val == ''){
+						if($(this).val() == ''){
 							flag = false;	
 						}
 					});
@@ -98,7 +98,7 @@
 									</a>
 					            </div>
 					            <div class="mt-2" style="height:auto; width:auto;">
-									<form id="modifyNoticeForm" action="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}" method="post">
+									<form id="modifyNoticeForm" action="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}" method="post" enctype="multipart/form-data" >
 										<table id="zero_config" class="table table-striped table-bordered no-wrap">
 											<tr>
 												<th>번호</th>

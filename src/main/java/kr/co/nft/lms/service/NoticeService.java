@@ -123,11 +123,51 @@ public class NoticeService {
 	}
 	  
 	//Notice 수정액션 
-	public int modifyNotice(Notice notice) {
+	public int modifyNotice(Notice notice, NoticeFile noticeFile, String path) {
 		log.debug(A.S + "[NoticeService.modifyNotice.param] notice : "+ notice + A.R); 
 		int row = noticeMapper.updateNoticeInBoard(notice); 
 		log.debug(A.S + "[NoticeService.modifyNotice.row] row : "+ row + A.R); 
-		return row; 
+		
+		
+		//파일저장 성공 횟수를 셀 디버깅
+		int noticeFileModifyRow = 0;
+		//공지사항에 입력한 파일이 있고 위의 공지 추가 코드가 정상적으로 실행되었을경우(row=1) 아래의 코드 실행
+		if(noticeFile.getNoticeFileList() != null && noticeFile.getNoticeFileList().get(0).getSize() > 0 && row == 1) {
+			log.debug(A.S + "[NoticeService.modifyNotice] 첨부할 파일이 있습니다." + A.R); 
+			log.debug(A.S + "[NoticeService.modifyNotice.param] 파일 저장 해야되는 갯수 NoticeFileList().size() : "+ noticeFile.getNoticeFileList().size() + A.R); 
+			for(MultipartFile mf : noticeFile.getNoticeFileList()) {
+				// mf -> NoticeFile
+				NoticeFile noticeFileModify = new NoticeFile();
+				//파일 원래의 이름 요청
+				String noticeFileOriginName = mf.getOriginalFilename();
+				// originName에서 마지막 .뒤에 글자들 .과 같이 저장(ex: .jpg)
+				String ext = noticeFileOriginName.substring(noticeFileOriginName.lastIndexOf("."));
+				// 파일을 저장할대 사용할 중복되지않는 새로운 이름 필요(UUID API사용)
+				String noticeFileName = UUID.randomUUID().toString();
+				noticeFileName = noticeFileName.replace("-","");
+				noticeFileName = noticeFileName + ext;
+				
+				noticeFileModify.setNoticeNo(notice.getNoticeNo());
+				noticeFileModify.setNoticeFileName(noticeFileName);
+				noticeFileModify.setNoticeFileOriginName(noticeFileOriginName);
+				noticeFileModify.setNoticeFileType(mf.getContentType());
+				noticeFileModify.setNoticeFileSize(mf.getSize());
+				log.debug(A.S + "[NoticeService.modifyNotice] 저장될 파일 noticeFileModify: "+noticeFileModify + A.R); 
+				//입력 및 성공 횟수 저장
+				noticeFileModifyRow = noticeFileModifyRow + noticeMapper.insertNoticeFile(noticeFileModify);
+				
+				try {
+					//경로+이름으로 파일 저장
+					mf.transferTo(new File(path+noticeFileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 새로운 예외 발생시켜야지만 @Transactional 작동을 위해
+					throw new RuntimeException(); // RuntimeException은 예외처리를 하지 않아도 컴파일된다
+				}
+			}
+		}
+		log.debug(A.S + "[NoticeService.modifyNotice.param] 파일 저장 성공 갯수 noticeFileModifyRow : "+ noticeFileModifyRow + A.R); 
+		return row;
 	}
 	
 	//Notice + File 삭제

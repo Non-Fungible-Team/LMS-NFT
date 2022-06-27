@@ -128,9 +128,12 @@ public class NoticeController {
 	
 	//Notice 수정 액션
 	@PostMapping("/manager/notice/modifyNotice")
-	public String modifyNotice(Notice notice) {
+	public String modifyNotice(HttpServletRequest request, Notice notice, NoticeFile noticeFile) {
+		//파일 저장 경로 설정
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[NoticeController.modifyNotice.param] notice : " + notice + A.R);
-		int row = noticeService.modifyNotice(notice);
+		log.debug(A.S + "[NoticeController.modifyNotice.param] noticeFile : " + noticeFile + A.R);
+		int row = noticeService.modifyNotice(notice,noticeFile,path);
 		log.debug(A.S + "[NoticeController.modifyNotice] row : " + row + A.R);
 		//row가 0 이면 입력 실패
 		if(row==0) {
