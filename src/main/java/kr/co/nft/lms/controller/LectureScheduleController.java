@@ -14,22 +14,56 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.LectureScheduleService;
 import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.LectureSchedule;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class LectureScheduleController {
+	
 	@Autowired private LectureScheduleService lectureScheduleService;
+	
 	@Autowired private LectureService lectureService;
 	
-	//1.강의시간표 입력
-	@GetMapping("/manager/lecture/addLectureSchedule")
-	public String addLectureSchedule() {
-		log.debug(A.A + "[ScheduleController.addLectureSchedule] 실행" + A.R);
-		lectureScheduleService.addLectureSchedule(); 
-		log.debug(A.A + "[LectureScheduleController.addLectureSchedule] 실행 완료" + A.R);
+	//1.강의시간표 입력 Form
+	@GetMapping("/manager/lecture/addLectureScheduleForm")
+	public String addLectureScheduleForm(Model model
+										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
+		
+		log.debug(A.A + "[LectureScheduleController.addLectureSchedule] lectureNo : " + lectureNo + A.R);
+		
+		model.addAttribute("lectureNo", lectureNo);
+						
 		return "/lecture/addLectureSchedule";
 	}
 	
+	// 1-1. 강의시간표 입력 Action
+	@PostMapping("/manager/lecture/addLectureScheduleAction")
+	public String addLectureScheduleAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+										 , @RequestParam(name = "lectureScheduleDate", defaultValue = "0") String lectureScheduleDate
+										 , @RequestParam(name = "lectureScheduleStartDate", defaultValue = "0") String lectureScheduleStartDate
+										 , @RequestParam(name = "lectureScheduleEndDate", defaultValue = "0") String lectureScheduleEndDate
+										 , @RequestParam(name = "lectureScheduleStartDay", defaultValue = "0") String lectureScheduleStartDay
+										 , @RequestParam(name = "lectureScheduleEndDay", defaultValue = "0") String lectureScheduleEndDay) {
+		
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureScheduleDate : " + lectureScheduleDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureScheduleStartDate : " + lectureScheduleStartDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureScheduleEndDate : " + lectureScheduleEndDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureScheduleStartDay : " + lectureScheduleStartDay + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureScheduleEndDay : " + lectureScheduleEndDay + A.R);
+		
+		LectureSchedule lectureSchedule = new LectureSchedule();
+		lectureSchedule.setLectureNo(lectureNo);
+		lectureSchedule.setLectureScheduleDate(lectureScheduleDate);
+		lectureSchedule.setLectureScheduleStartDate(lectureScheduleStartDate);
+		lectureSchedule.setLectureScheduleEndDate(lectureScheduleEndDate);
+
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleAction] lectureSchedule : " + lectureSchedule + A.R);
+		
+		lectureScheduleService.addLectureSchedule(lectureSchedule, lectureScheduleStartDay, lectureScheduleEndDay);
+		
+		return "redirect:/all/lecture/getLectureScheduleListByLectureNo";
+	}
 	
 	//2.강의시간표 목록
 	@GetMapping("/all/lecture/getLectureScheduleListByLectureNo")
@@ -64,7 +98,7 @@ public class LectureScheduleController {
 	//3.강의 시간표 삭제 -> 강의번호 받아오기 수정
 	@GetMapping("manager/lecture/removeLectureSchedule")
 	public String removeLectureSchedule(@RequestParam(name = "lectureScheduleDate") String lectureScheduleDate
-										, @RequestParam(name = "lectureNo") int lectureNo) {
+									  , @RequestParam(name = "lectureNo") int lectureNo) {
 		
 		log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lectureScheduleDate : " + lectureScheduleDate + A.R);
 		log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lectureNo : " + lectureNo + A.R);

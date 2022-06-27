@@ -66,23 +66,14 @@ public class LectureScheduleService {
 	}
 	
 	//2.lecture_schedule 테이블 데이터 입력 - 운영자, 강사
-	public void addLectureSchedule() {
-		// addLectureSchedule(LectureSchedule lectureSchedule)로 수정 필요
-		LectureSchedule lectureSchedule = new LectureSchedule();
+	public void addLectureSchedule(LectureSchedule lectureSchedule, String lectureScheduleStartDay, String lectureScheduleEndDay) {
 		
-		// String scheduleDate = ""; // 학원 오는 날짜
+		// 시간표 넣을 때 반복할 날짜
+		lectureScheduleStartDay = lectureScheduleStartDay.replace("-",""); // -를 ""으로 바꿔서 String에 저장
+		lectureScheduleEndDay = lectureScheduleEndDay.replace("-",""); // -를 ""으로 바꿔서 String에 저장
 		
-		// String lectureScheduleStartDate = lectureSchedule.getLectureScheduleStartDate();
-		// String lectureScheduleEndDate = lectureSchedule.getLectureScheduleEndDate();
-		
-		String lectureScheduleStartDate = "20220501";
-		String lectureScheduleEndDate = "20220510";
-		
-		// startDate = lectureScheduleStartDate.replace("-",""); // -를 ""으로 바꿔서 int에 저장
-		// int endDate1 = Integer.parseInt(lectureScheduleEndDate.replace("-","")); // -를 ""으로 바꿔서 int에 저장
-		
-		log.debug(A.A + "[LectureScheduleService.addLectureSchedule] lectureScheduleStartDate : " + lectureScheduleStartDate + A.R);
-		log.debug(A.A + "[LectureScheduleService.addLectureSchedule] lectureScheduleEndDate : " + lectureScheduleEndDate + A.R);
+		log.debug(A.A + "[LectureScheduleService.addLectureSchedule] lectureScheduleStartDay : " + lectureScheduleStartDay + A.R);
+		log.debug(A.A + "[LectureScheduleService.addLectureSchedule] lectureScheduleEndDay : " + lectureScheduleEndDay + A.R);
 				
 		Date startDate;
 		Date endDate;
@@ -92,8 +83,8 @@ public class LectureScheduleService {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 			
-			startDate = dateFormat.parse(lectureScheduleStartDate);
-			endDate = dateFormat.parse(lectureScheduleEndDate);
+			startDate = dateFormat.parse(lectureScheduleStartDay);
+			endDate = dateFormat.parse(lectureScheduleEndDay);
 			
 			log.debug(A.A + "[LectureScheduleService.addLectureSchedule] startDate : " + startDate + A.R);
 			log.debug(A.A + "[LectureScheduleService.addLectureSchedule] endDate : " + endDate + A.R);
@@ -127,9 +118,9 @@ public class LectureScheduleService {
 				
 				// mapper에 보내기 위해 lectureSchedule vo로 변경
 				lectureSchedule.setLectureScheduleDate(formatDate);
-				// log.debug(A.A + "[LectureScheduleService.addLectureSchedule] lectureSchedule : " + lectureSchedule + A.R);
+				log.debug(A.A + "[LectureScheduleService.addLectureSchedule] lectureSchedule : " + lectureSchedule + A.R);
 				
-				// lectureScheduleMapper.insertLectureSchedule(lectureSchedule);
+				lectureScheduleMapper.insertLectureSchedule(lectureSchedule);
 			}
 			
 			cStartDate.add(Calendar.DATE, 1); // 1일 더해줌

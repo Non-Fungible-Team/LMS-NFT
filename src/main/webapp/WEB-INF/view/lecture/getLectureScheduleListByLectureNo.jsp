@@ -48,7 +48,7 @@
 												<th>수업 종료 시간</th>
 												<th>시간표 작성 날짜</th>
 												<th>
-													<a href="${pageContext.request.contextPath}/manager/lecture/addLectureSchedule" class="btn btn-primary btn-rounded">시간표 추가</a>
+													<a href="${pageContext.request.contextPath}/manager/lecture/addLectureScheduleForm?lectureNo=${lectureNo}" class="btn btn-primary btn-rounded">시간표 추가</a>
 												</th>
 											</tr>
 										</thead>
