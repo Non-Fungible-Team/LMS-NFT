@@ -90,6 +90,6 @@ public interface LectureMapper {
 	//10-2. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 사용가능한 강의실 목록
 	List<LectureRoom> selectLectureRoomListByDates(String lectureStartDate,String lectureEndDate);
 	
-	
-
+	// 강의 이름과 강의 번호만 select
+	List<Lecture> selectLectureNoNameList();
 }
