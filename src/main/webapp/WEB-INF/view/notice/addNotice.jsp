@@ -67,7 +67,7 @@
 					$('#noticePrivilege').focus();
 				} else {//첨부되지 않은 파일여부 체크 후 submit
 					$('.noticeFileList').each(function(){
-						if($(this).val == ''){
+						if($(this).val() == ''){
 							flag = false;
 						}
 					});
