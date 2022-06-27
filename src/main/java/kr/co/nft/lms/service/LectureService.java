@@ -297,29 +297,23 @@ public class LectureService {
 	}
 	
 	//5-3. 학생-강의 목록 수정폼
-	public Map<String,Object> modifyStudentLectureForm(Map<String,Object> map) {
-		log.debug(A.W +"[LectureService.modifyStudentLectureForm.map] map  : " + map +A.R);
+	public StudentLecture modifyStudentLectureForm(int lectureNo, String memberId) {
 		
-		//컨트롤러 입력된 값 가공
-		int lectureNo = (int)map.get("lectureNo"); //int형으로 번호 값 가져오기
-		log.debug(A.W +"[LectureService.modifyStudentLectureForm.lectureNo] lectureNo  : " + lectureNo +A.R);
+		// 파라미터 값 디버깅
+		log.debug(A.A +"[LectureService.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A +"[LectureService.modifyStudentLectureForm] memberId : " + memberId + A.R);
 		
-		//가져온 번호 값 저장할 객체 생성
-		Map<String,Object> paramMap = new HashMap<>();
-		paramMap.put("lectureNo", lectureNo); //가져온 번호 값 저장
-		log.debug(A.W +"[LectureService.modifyStudentLectureForm.paramMap] paramMap  : " + paramMap +A.R);
+		// 컨트롤러 입력된 값 가공 + 디버깅
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setLectureNo(lectureNo);
+		studentLecture.setMemberId(memberId);
 		
-		//매퍼 반환 값 가공해서 controller 넘겨줌
-		//수정폼 mapper 메소드 호출 및 저장객체 생성
-		StudentLecture studentLecture = lectureMapper.updateStudentLectureForm(lectureNo);
-		log.debug(A.W +"[LectureService.modifyStudentLectureForm.studentLecture] studentLecture  : " + studentLecture +A.R);
+		log.debug(A.A +"[LectureService.modifyStudentLectureForm] studentLecture : " + studentLecture + A.R);
 		
-		//결과 값 저장
-		Map<String,Object> returnMap = new HashMap<>();
-		returnMap.put("studentLecture", studentLecture);
-		log.debug(A.W +"[LectureService.modifyStudentLectureForm.returnMap] returnMap  : " + returnMap +A.R);
+		// 매퍼 반환 값 가공해서 controller에 넘겨줌 (수정폼 mapper 메소드 호출 및 저장객체 생성)
+		StudentLecture studentLectureOne = lectureMapper.updateStudentLectureForm(studentLecture);
 		
-		return returnMap;
+		return studentLectureOne;
 	}
 	
 	//학생-강의 목록 수정액션

@@ -60,7 +60,7 @@ public interface LectureMapper {
 
 	//5-3. 학생-강의 목록 수정(학생아이디 누르면 상세정보)
 	//수정폼(학생개인 수강정보)
-	StudentLecture updateStudentLectureForm(int lectureNo);
+	StudentLecture updateStudentLectureForm(StudentLecture studentLecture);
 
 	//수정액션
 	int updateStudentLecture(StudentLecture studentLecture);
