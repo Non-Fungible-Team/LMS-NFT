@@ -332,6 +332,23 @@ public class LectureService {
 		return row;
 	}
 	
+	// 5-4. 학생 강의 삭제
+	public int removeStudentLectureAction(int lectureNo, String memberId) {
+		
+		log.debug(A.A +"[LectureService.removeStudentLectureAction] lectureNo  : " + lectureNo + A.R);
+		log.debug(A.A +"[LectureService.removeStudentLectureAction] memberId  : " + memberId + A.R);
+		
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setLectureNo(lectureNo);
+		studentLecture.setMemberId(memberId);
+		
+		int row = lectureMapper.deleteStudentLecture(studentLecture);
+		
+		log.debug(A.A +"[LectureService.removeStudentLectureAction] row  : " + row + A.R);
+		
+		return row;
+	}
+	
 	//6. 운영자- 강의 목록
 	public Map<String,Object> getManagerLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
 		//디버깅코드

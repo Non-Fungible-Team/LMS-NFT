@@ -275,9 +275,10 @@
 		WHERE member_id = #{memberId}
 	</update>
 	<!-- 5-4.학생-강의 목록 삭제 -->
-	<delete id="deleteStudentLecture" parameterType="int">
+	<delete id="deleteStudentLecture" 
+			parameterType="kr.co.nft.lms.vo.StudentLecture">
 		DELETE FROM
-		student_lecture
+			student_lecture
 		WHERE lecture_no = #{lectureNo}
 		AND member_id = #{memberId}
 	</delete>

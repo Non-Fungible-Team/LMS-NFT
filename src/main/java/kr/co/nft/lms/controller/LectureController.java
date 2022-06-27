@@ -348,6 +348,25 @@ public class LectureController {
 		
 		return "redirect:/manager/lecture/getStudentLectureAllByPage";
 	}
+	
+	// 5-4. 학생 강의 삭제
+	@GetMapping("/teacher/lecture/removeStudentLectureAction")
+	public String removeStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+											, @RequestParam(name = "memberId") String memberId) {
+		
+		log.debug(A.A + "[LectureController.removeStudentLectureAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureController.removeStudentLectureAction] memberId : " + memberId + A.R);
+		
+		int row = lectureService.removeStudentLectureAction(lectureNo, memberId);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.removeStudentLectureAction] student_lecture 삭제 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.removeStudentLectureAction] student_lecture 삭제 실패" + A.R);
+		}
+		
+		return "redirect:/manager/lecture/getStudentLectureAllByPage";
+	}
 		
 	//6.강사_강의 목록
 	@GetMapping("/manager/lecture/getManagerLectureByPage")
