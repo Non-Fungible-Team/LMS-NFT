@@ -57,11 +57,11 @@ public class TemplateController {
 		lectureNo = 1;
 		log.debug(A.A + "[TemplateController.getLectureScheduleListByLectureNo] lectureNo : " + lectureNo + A.R);
 		
-		List<LectureSchedule> lectureScheduleList = lectureScheduleService.getLectureScheduleListByLectureNo(lectureNo);
+		//List<LectureSchedule> lectureScheduleList = lectureScheduleService.getLectureScheduleListByLectureNo(lectureNo, lectureNo, lectureNo);
 		
-		log.debug(A.A + "[TemplateController.getLectureScheduleListByLectureNo] lectureScheduleList : " + lectureScheduleList + A.R);
+		//log.debug(A.A + "[TemplateController.getLectureScheduleListByLectureNo] lectureScheduleList : " + lectureScheduleList + A.R);
 		
-		model.addAttribute("lectureScheduleList", lectureScheduleList);
+		//model.addAttribute("lectureScheduleList", lectureScheduleList);
 		
 		log.debug(A.A + "[TemplateController.getLectureScheduleListByLectureNo] 실행 완료" + A.R);
 		

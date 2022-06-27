@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,14 +27,41 @@ public class LectureScheduleService {
 	private LectureScheduleMapper lectureScheduleMapper;
 	
 	// lecture_schedule 테이블 lecture_no에 따른 전체 리스트
-	public List<LectureSchedule> getLectureScheduleListByLectureNo(int lectureNo) {
-		
+	public Map<String,Object> getLectureScheduleListByLectureNo(int lectureNo, int currentPage, int rowPerPage ) {
 		log.debug(A.A + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureNo : " + lectureNo + A.R);
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.currentPage] currentPage  : " + currentPage +A.R);
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.currentPage] rowPerPage  : " + rowPerPage +A.R);
 		
-		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleListByLectureNo(lectureNo);
+		//컨트롤러가 넘겨준 값 가공하기
+		//페이지 시작 행
+		int beginRow = (currentPage -1)*rowPerPage; 
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.beginRow ] beginRow : " + beginRow +A.R);//디버깅코드
+		
+		//페이지값 받기
+		Map<String, Object> map = new HashMap<>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.map] map(페이지값) : " +map +A.R);//디버깅코드
+		
+		//mapper메소드 호출
+		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleListByLectureNo(map);
 		log.debug(A.A + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureScheduleList : " + lectureScheduleList + A.R);
 		
-		return lectureScheduleList;
+		//mapper에서 반환된 값 가공 -> controller로 전달
+		int totalCount = lectureScheduleMapper.selectLectureSchedulCount(); //전체행 수
+		int lastPage = (int)(Math.ceil((double)totalCount/(double)rowPerPage)); //마지막페이지-> 소수점 올림 해서 int형변환
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.totalCount] totalCount(전체행) : " +totalCount +A.R);//디버깅코드
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.lastPage] lastPage(마지막페이지) : " +lastPage +A.R);//디버깅코드
+		
+		//결과값 반환 객체 생성
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("lectureNo", lectureNo); //강의 번호
+		returnMap.put("lectureScheduleList", lectureScheduleList); //강의시간표 목록
+		returnMap.put("currentPage", currentPage); //현재페이지
+		returnMap.put("lastPage", lastPage); //마지막 페이지
+		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.returnMap] returnMap : " + returnMap +A.R);//디버깅코드
+		
+		return returnMap;
 	}
 	
 	// lecture_schedule 테이블 데이터 입력 - 운영자, 강사

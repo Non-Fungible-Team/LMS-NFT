@@ -3,29 +3,30 @@
 <mapper namespace="kr.co.nft.lms.mapper.LectureScheduleMapper">
 
 	<select id="selectLectureScheduleListByLectureNo"
-			parameterType="int"
+			parameterType="java.util.Map"
 			resultType="kr.co.nft.lms.vo.LectureSchedule">
 		SELECT 
-			lecture_schedule_date lectureScheduleDate
-			, lecture_no lectureNo
+			lecture_no lectureNo
+			,lecture_schedule_date lectureScheduleDate
 			, lecture_schedule_start_date lectureScheduleStartDate
 			, lecture_schedule_end_date lectureScheduleEndDate
 			, lecture_schedule_create_date lectureScheduleCreateDate
 		FROM lecture_schedule
 		WHERE lecture_no = #{ lectureNo };
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<insert id="insertLectureSchedule"
 			parameterType="kr.co.nft.lms.vo.LectureSchedule">
 		INSERT INTO lecture_schedule (
-			lecture_schedule_date
-			, lecture_no
+			lecture_no
+			,lecture_schedule_date
 			, lecture_schedule_start_date
 			, lecture_schedule_end_date
 			, lecture_schedule_create_date
 		) VALUES (
-			#{ lectureScheduleDate }
-			, #{ lectureNo }
+			  #{ lectureNo }
+			, #{ lectureScheduleDate }
 			, #{ lectureScheduleStartDate }
 			, #{ lectureScheduleEndDate }
 			, NOW()
@@ -38,4 +39,8 @@
 		WHERE lecture_schedule_date = #{ lectureScheduleDate }
 		AND lecture_no = #{ lectureNo }
 	</delete>
+	
+	<select id="selectLectureSchedulCount" resultType="int">
+		SELECT COUNT(*) FROM lecture_schedule
+	</select>
 </mapper>
