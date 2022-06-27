@@ -129,17 +129,17 @@ public class HomeworkController {
 	// 학생 과제 제출 입력 폼
 	@GetMapping("/homework/addHomeworkSubmit")
 	public String addHomeworkSubmit(Model model
-									,@RequestParam(name="homeworkNo") int homeworkNo) {
+									,@RequestParam(name="homeworkNo", defaultValue="0") int homeworkNo) {
 		log.debug(A.Q+" HomeworkController.addHomeworkSubmit.param homeworkNo " + homeworkNo+A.R);
 		
-		Homework homework = new Homework();
-		homework.setHomeworkNo(homeworkNo);
-		
+//		Homework homework = new Homework();
+//		homework.setHomeworkNo(homeworkNo);
 		
 		HomeworkSubmit homeworkSubmit = new HomeworkSubmit();
 		homeworkSubmit.setHomeworkNo(homeworkNo);
 		
-		model.addAttribute("homeworkNo", homework.getHomeworkNo());
+		model.addAttribute("homeworkNo", homeworkSubmit.getHomeworkNo());
+		
 		
 		return "/homework/addHomeworkSubmit";
 	}
@@ -148,12 +148,13 @@ public class HomeworkController {
 	@PostMapping("/homework/addHomeworkSubmit")
 	public String addHomeworkSubmit(HttpServletRequest request
 									,HomeworkSubmit homeworkSubmit
-									,@RequestParam(name="homeworkNo") int homeworkNo) {
+									,Homework homework
+									,@RequestParam(name="homeworkNo", defaultValue="0") int homeworkNo) {
 		String path = request.getServletContext().getRealPath("/uploadFile/homeworkFile/");
-		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path"+ path +A.R);
-		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit"+ homeworkSubmit +A.R);
-		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkNo :"+homeworkNo +A.R);
-		
+		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path :" + path +A.R);
+		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit" + homeworkSubmit +A.R);
+		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkNo :" + homeworkNo +A.R);
+//		log.debug(A.Q+"HomeworkController.addHomeworkSubmit lectureNo :" + lectureNo + A.R);
 
 		List<MultipartFile> homeworkSubmitFileList = homeworkSubmit.getHomeworkSubmitFileList();
 		if(homeworkSubmitFileList != null && homeworkSubmitFileList.get(0).getSize() > 0) {
@@ -161,11 +162,51 @@ public class HomeworkController {
 				log.debug(A.Q+"HomeworkController.addHomeworkSubmit filename :" + mf.getOriginalFilename() + A.R);
 			}
 		}
+//		homework.setLectureNo(lectureNo);
+		homeworkSubmit.setHomeworkNo(homeworkNo);
 		homeworkService.addHomeworkSubmit(homeworkSubmit, path);
+		
 		
 		
 		return"redirect:/homework/getHomeworkListByPage";
 	}
+	
+	@GetMapping("/homework/getHomeworkSubmitListByPage")
+	public String getHomeworkSubmitListByPage(Model model,
+			@RequestParam(name="currentPage", defaultValue = "1") int currentPage
+			,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
+		
+		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.currentPage :  " + currentPage + A.R);
+		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.rowPerPage :  " + rowPerPage + A.R);
+		
+		Map<String, Object> map = homeworkService.getHomeworkSubmitListByPage(currentPage, rowPerPage);
+		log.debug(A.Q + "HomeworkController.getHomeworkListByPage map:  "+ map + A.R);
+		
+		model.addAttribute("homeworkSubmitList", map.get("homeworkSubmitList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		log.debug(A.Q + "HomeworkController.getHomeworkListByPage model :" + model + A.R);
+		
+		return "/homework/getHomeworkSubmitListByPage";
+	}
+	
+	// 학생 과제 상세보기 
+	@GetMapping("/homework/getHomeworkSubmitOne")
+	public String getHomeworkSubmitOne(Model model
+									,@RequestParam(name="homeworkSubmitNo") int homeworkSubmitNo) {
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.param.homeworkSubmitNo : "+ homeworkSubmitNo +A.R);
+		
+		Map<String, Object> returnMap = homeworkService.getHomeworkSubmitOne(homeworkSubmitNo);
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.homeworkSubmitOne"+ returnMap.get("homeworkSubmitOne") + A.R);
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.homeworkSubmitOne"+ returnMap.get("homeworkSubmitFileList") + A.R);
+		
+		model.addAttribute("homeworkSubmitOne", returnMap.get("homeworkSubmitOne"));
+		model.addAttribute("homeworkSubmitFileList", returnMap.get("homeworkSubmitFileList"));
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.model :"+model+A.R);
+		
+		return "/homework/getHomeworkSubmitOne";
+	}
+	
 	
 	
 	

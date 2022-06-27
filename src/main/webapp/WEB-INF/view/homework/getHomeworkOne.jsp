@@ -64,10 +64,12 @@
 									</table>
 										<form action="${pageContext.request.contextPath}/homework/removeHomework" method="post">
 											<input type="hidden" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly">
+											<input type="hidden" name ="lectureNo" value ="${homeworkOne.lectureNo}" readonly="readonly">
 											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
 											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/modifyHomework?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check"></i>과제 수정</button>
 											<button type="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check"></i>과제 삭제</button>
 											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/addHomeworkSubmit?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check"></i>과제 제출</button>
+<%-- 											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check"></i>과제 제출 상세보기</button> --%>
 										</form>
 									</div>
 								</div>

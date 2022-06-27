@@ -81,13 +81,13 @@
 									<form action="${pageContext.request.contextPath}/homework/addHomeworkSubmit"method="post" id="addHomeworkSubmitFileForm" enctype="multipart/form-data">
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
-												<td>작성자</td><td><input type="text" name="memberId"></td>
+												<td>작성자</td><td><input type="text" name="memberId" value="${sessionLoginMember.memberId}" readonly="readonly"></td>
 											</tr>										
 											<tr>
-												<td>과제번호</td><td><input type="text" name="homeworkNo" value="${param.homeworkNo}" readonly="readonly"></td>
+												<td>과제번호</td><td><input type="text" name="homeworkNo" value="${homeworkNo}" readonly="readonly"></td>
 											</tr>										
 											<tr>
-												<td>강의번호</td><td><input type="text" name="lectureNo" value="${param.lectureNo}" readonly="readonly"></td>
+												<td>강의번호</td><td><input type="text" name="lectureNo" value="${sessionLectureNo}" readonly="readonly"></td>
 											</tr>										
 											<tr>
 												<td>과제제목</td><td><input type="text" name="homeworkSubmitTitle" id="homeworkSubmitTitle"></td>

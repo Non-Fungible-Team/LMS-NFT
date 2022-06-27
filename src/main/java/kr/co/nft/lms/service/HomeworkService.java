@@ -81,9 +81,17 @@ public class HomeworkService {
 	}
 	
 	// 학생 과제 제출
-	public void addHomeworkSubmit(HomeworkSubmit homeworkSubmit, String path) {
+	public Map<String, Object> addHomeworkSubmit(HomeworkSubmit homeworkSubmit, String path) {
 		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param homeworkSubmit : " + homeworkSubmit+ A.R);
 		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param path : " + path + A.R);
+		
+		int lectureNo = 0;
+		
+		Homework homework = new Homework();
+		homework.setLectureNo(lectureNo);
+		Map<String,Object> map = new HashMap<>();
+		map.put("lectureNo", homework.getLectureNo());
+		
 		
 		int row = homeworkMapper.insertHomeworkSubmit(homeworkSubmit);
 		if(homeworkSubmit.getHomeworkSubmitFileList() != null && homeworkSubmit.getHomeworkSubmitFileList().get(0).getSize() > 0 && row ==1) {
@@ -102,10 +110,9 @@ public class HomeworkService {
 				
 				fileName = fileName + ext;
 				
-				
 				homeworkSubmitFile.setHomeworkSubmitNo(homeworkSubmit.getHomeworkSubmitNo());
-				homeworkSubmitFile.setHomeworkSubmitFileOriginal(fileName);
-				homeworkSubmitFile.setHomeworkSubmitFileName(mf.getOriginalFilename());
+				homeworkSubmitFile.setHomeworkSubmitFileName(fileName);
+				homeworkSubmitFile.setHomeworkSubmitFileOriginal(mf.getOriginalFilename());
 				homeworkSubmitFile.setHomeworkSubmitFileType(mf.getContentType());
 				homeworkSubmitFile.setHomeworkSubmitFileSize(mf.getSize());
 				
@@ -119,6 +126,50 @@ public class HomeworkService {
 				}
 			}
 		}
+		return map;
+	}
+	// 학생 과제 목록
+	public Map<String, Object> getHomeworkSubmitListByPage(int currentPage, int rowPerPage){
+		log.debug(A.Q +"HomeworkService.getHomeworkSubmitListByPage.param.currentPage" + currentPage +A.R);
+		log.debug(A.Q +"HomeworkService.getHomeworkSubmitListByPage.param.rowPerPage" + rowPerPage +A.R);
+		
+		int beginRow = (currentPage-1)*rowPerPage;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		log.debug(A.Q + "HomeworkService.getHomeworkSubmitListByPage.map :" + map + A.R);
+		
+		List<HomeworkSubmit> homeworkSubmitList = homeworkMapper.selectHomeworkSubmitListByPage(map);
+		log.debug(A.Q + "HomeworkService.getHomeworkSubmitListByPage.homeworkSubmitList :" + homeworkSubmitList + A.R);
+		
+		int totalCount = homeworkMapper.selectSubmitTotalCount();
+		int lastPage = (int)Math.ceil((double)totalCount / (double)rowPerPage);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("homeworkSubmitList", homeworkSubmitList);
+		returnMap.put("lastPage", lastPage);
+		log.debug(A.Q + "HomeworkService.getHomeworkSubmitListByPage.returnMap :" + returnMap + A.R);
+		
+		return returnMap;
+	}
+	
+	// 학생 과제 상세보기
+	public Map<String, Object> getHomeworkSubmitOne(int homeworkSubmitNo) {
+		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.param.homeworkSubmitNo : "+ homeworkSubmitNo +A.R);
+		
+		HomeworkSubmit homeworkSubmitOne = homeworkMapper.selectHomeworkSubmitOne(homeworkSubmitNo);
+		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.homeworkSubmitOne :"+ homeworkSubmitOne +A.R);
+		
+		List<HomeworkSubmitFile> homeworkSubmitFileList = (List<HomeworkSubmitFile>) homeworkMapper.selectHomeworkSubmitOne(homeworkSubmitNo);
+		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.homeworkSubmitFileList"+ homeworkSubmitFileList+A.R);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("homeworkSubmitOne", homeworkSubmitOne);
+		map.put("homeworkSubmitFileList", homeworkSubmitFileList);
+		
+		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.map :" + map +A.R);
+		
+		return map;
 	}
 	
 	

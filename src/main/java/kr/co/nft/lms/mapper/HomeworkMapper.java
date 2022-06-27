@@ -51,5 +51,8 @@ public interface HomeworkMapper {
 	// 학생 과제 피드백 점수 입력
 	int updateHomeworkSubmitScore(HomeworkSubmit homeworkSubmit);
 	
+	// 학생 과제 총 갯수
+	int selectSubmitTotalCount();
+	
 	
 }
