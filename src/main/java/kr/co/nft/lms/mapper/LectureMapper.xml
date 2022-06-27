@@ -173,7 +173,8 @@
 		WHERE lecture_no =#{lectureNo}
 	</delete>
 	<!-- 4-2. 강의-강사 삭제 -->
-	<delete id="deleteTeacherLecture" parameterType="int">
+	<delete id="deleteTeacherLectur
+	e" parameterType="int">
 		DELETE FROM
 		teacher_lecture
 		WHERE lecture_no = #{lectureNo}

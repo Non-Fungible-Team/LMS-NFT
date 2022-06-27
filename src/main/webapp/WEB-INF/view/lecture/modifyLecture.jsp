@@ -24,6 +24,43 @@ $(document).ready(function(){
 	$("#navAside").load(
 			'${pageContext.request.contextPath}/include/navAside.jsp');
 	}
+	
+//개강일, 수료일로 강사, 강의실 검색
+$('#checkLecture').click(function() {
+	$('#lectureRoom').text("");
+	$('#teacherList').text("");
+	if($('#lectureStartDate').val()== ''){
+		alert('개강일을 선택해주세요'); 
+	}else if($('#lectureEndDate').val()== ''){
+		alert('수료일을 선택해주세요'); 
+	}else{
+		var lectureStartDate = $('#lectureStartDate').val();
+		var lectureEndDate = $('#lectureEndDate').val();
+		var checkLecture = "abc";
+		var url = '${pageContext.request.contextPath}/manager/getTeacherListAndLectureRoomList?lectureEndDate='+lectureEndDate+'&lectureStartDate='+lectureStartDate; 
+		$.ajax({
+			type:'get'
+			,url: url
+			,success: function(a){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
+			//ajax값 가공
+			console.log(a);
+            
+            let arr1 = a.lectureRoomList; // 강의실 배열
+            let arr2 = a.teacherList; // 강사목록 배열
+			console.log(arr1);
+			console.log(arr2);
+            
+				
+				for(var i=0; i<arr1.length; i++){
+				$('#lectureRoom').append("<option name='lectureRoomName' value='"+arr1[i].lectureRoomName+"'>"+arr1[i].lectureRoomName+"</option>");
+				}
+				for(var i=0; i<arr2.length; i++){
+				$('#teacherList').append("<option name='memberId' value="+arr2[i].memberId+">"+arr2[i].teacherName+"</option>");
+				}
+			}
+		});
+	}
+});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -41,8 +78,7 @@ $(document).ready(function(){
 									<form class="mt-4" method="post" action="${pageContext.request.contextPath}/manager/lecture/modifyLecture">
 										<div class="form-group">
 											<div>
-												강의 번호
-												<input type="text" value="${lecture.lectureNo}" name="lectureNo" readonly="readonly">${lectureNo}
+												강의 번호 <input type="text" value="${lecture.lectureNo}" name="lectureNo" readonly="readonly">${lectureNo}
 											</div>
 											<div>
 												과목명 <select name="subjectNo">
@@ -53,25 +89,24 @@ $(document).ready(function(){
 												</select>
 											</div>
 											<br> 강의명 <input type="text" name="lectureName" class="form-control" placeholder="강의명 입력해주세요" value="${lectureName}"> 
-											<br> 개강일 <input type="date"  class="form-control" name="lectureStartDate" value="${lectureStartDate }"> 
-											<br> 수료일 <input type="date"  class="form-control" name="lectureEndDate" value="${lectureEndDate}"><br>
+											<br> 개강일 <input type="date" class="form-control" name="lectureStartDate" value="${lectureStartDate }"> 
+											<br> 수료일 <input type="date" class="form-control" name="lectureEndDate" value="${lectureEndDate}"><br>
 											<div>
-												강의실 <select name=lectureRoomName>
+												<!-- 검색시, 강사, 강의실 리스트가 들어갈 자리 -->
+												강의실 
+												<select id="lectureRoom" name="lectureRoomName">
 													<option value=" ">강의실 선택</option>
-													<c:forEach var="l" items="${lectureRoomList}">
-														<option value="${l.lectureRoomName}">${l.lectureRoomName}</option>
-													</c:forEach>
+													<div id="lectureRoomList"></div>
 												</select>
 											</div>
-											<br> 강사 <select name="memberId">
+											<br> 강사 
+											<select id="teacherList" name="memberId">
 												<option value=" ">강사 선택</option>
-												<c:forEach var="t" items="${teacherList}">
-													<option value="${t.memberId}">${t.teacherName}</option>
-												</c:forEach>
+												<div id="teacherList"></div>
 											</select>
 										</div>
 										<!-- 작성자 -->
-										<input type="hidden"  name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
+										<input type="hidden" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
 										<button type="submit" class="btn btn-outline-success btn-rounded">
 											<i class="fas fa-check"></i>강의 수정
 										</button>
