@@ -155,6 +155,30 @@
 		WHERE member_id = #{memberId} 
 	</select>
 		
+	<insert id="insertTeacherByTeacherVo"
+			parameterType="kr.co.nft.lms.vo.Teacher">
+		INSERT INTO teacher (
+			member_id
+			, teacher_entry_date
+			, teacher_subject
+			, teacher_name
+			, teacher_birth
+			, teacher_gender
+			, teacher_email 
+			, address_detail 
+		) VALUES (
+			#{memberId}
+			, #{teacherEntryDate}
+			, #{teacherSubject}
+			, #{teacherName}
+			, #{teacherBirth}
+			, #{teacherGender}
+			, #{teacherEmail}
+			, #{addressDetail}
+		)
+				
+	</insert>
+		
 	<insert id="insertStudentByStudentVo"
 			parameterType="kr.co.nft.lms.vo.Student">
 		INSERT INTO student (
@@ -175,6 +199,31 @@
 			, #{addressDetail}
 		)
 				
+	</insert>
+
+	<insert id="insertTeacherByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member">
+			
+		INSERT INTO member(
+			member_id
+			, member_pw
+			, member_pw_update_date 
+			, member_phone_no
+			, member_level
+			, member_last_login_date
+			, member_create_date
+			, member_update_date 
+		) VALUES (
+			#{memberId}
+			, password(#{memberPw})
+			,NOW()
+			,#{memberPhoneNo}
+			,#{memberLevel}
+			,NOW()
+			,NOW()
+			,NOW()
+		)
+		
 	</insert>
 
 	<insert id="insertStudentByMemberVo"

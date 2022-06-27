@@ -124,9 +124,19 @@ public class MemberService {
 		return memberMapper.selectStudentOneByStudentVo(member);
 	}
 	
+	// Teacher 테이블에 들어가는 강사 회원 가입 
+	public int addTeacher(Teacher teacher) {
+		return memberMapper.insertTeacherByTeacherVo(teacher);
+	}
+	
 	// Student 테이블에 들어가는 학생 회원 가입 
 	public int addStudent(Student student) {
 		return memberMapper.insertStudentByStudentVo(student);
+	}
+	
+	// Member 테이블에 들어가는 강사 회원 가입 
+	public int addTeacher(Member member) {
+		return memberMapper.insertTeacherByMemberVo(member);
 	}
 	
 	// Member 테이블에 들어가는 학생 회원 가입 

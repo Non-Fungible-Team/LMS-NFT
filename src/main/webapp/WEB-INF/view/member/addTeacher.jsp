@@ -82,7 +82,7 @@ table {
 <body>
 	<h1>강사 회원가입</h1>
 	<form id="signUpteacher" method="post"
-		action="${pageContext.request.contextPath}/member/addteacher">
+		action="${pageContext.request.contextPath}/addTeacher">
 		<table>
 			<!--  
 				<tr>
@@ -94,79 +94,96 @@ table {
 			
 			<tr>
 				<td>강사 아이디</td>
-				<td><input type="text" id="memberId" name="memberId" value="stud2"> <span
-					id="memberIdHelper" class="helper"></span></td>
+				<td>
+					<input type="text" id="memberId" name="memberId" value="teacher1"> 
+					<span id="memberIdHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>강사 비밀번호</td>
-				<td><input type="password" id="memberPw" name="memberPw" value="1234">
-					<span id="memberPwHelper" class="helper"></span></td>
+				<td>
+					<input type="password" id="memberPw" name="memberPw" value="1234">
+					<span id="memberPwHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input type="text" id="teacherName" name="teacherName" value="강사2">
-					<span id="teacherNameHelper" class="helper"></span></td>
+				<td>
+					<input type="text" id="teacherName" name="teacherName" value="강사1">
+					<span id="teacherNameHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>생년월일</td>
-				<td><input type="date" id="teacherBirth" name="teacherBirth">
-					<span id="teacherBirthHelper" class="helper"></span></td>
+				<td>
+					<input type="date" id="teacherBirth" name="teacherBirth">
+					<span id="teacherBirthHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>성별</td>
-				<td><input type="radio" value="male" name="teacherGender"
-					class="gender">남 <input type="radio" value="female"
-					name="teacherGender" class="gender">여 <span
-					id="teacherGenderHelper" class="helper"></span></td>
+				<td>
+					<input type="radio" value="M" name="teacherGender" class="gender">남 
+					<input type="radio" value="F" name="teacherGender" class="gender">여 
+					<span id="teacherGenderHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>이메일</td>
-				<td><input type="text" id="teacherEmailId"
-					name="teacherEmailId" value="stud2"> @ <select id="emailUrl"
-					name="emailUrl">
+				<td>
+					<input type="text" id="teacherEmailId" name="teacherEmailId" value="teacher2"> @ <select id="emailUrl" name="emailUrl">
 						<option value="">::선택::</option>
 						<option value="naver.com">네이버</option>
 						<option value="daum.net">다음</option>
 						<option value="gmail.com">지메일</option>
-				</select> <span id="teacherEmailIdHelper" class="helper"></span></td>
+					</select> <span id="teacherEmailIdHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>주소</td>
-				<td><input type="text" id="keyword" name="keyword"
-					value="가산디지털2로">
-				<button type="button" id="addrBtn">주소검색</button></td>
+				<td>
+					<input type="text" id="keyword" name="keyword" value="가산디지털2로">
+					<button type="button" id="addrBtn">주소검색</button>
+				</td>
 			</tr>
 			<tr>
 				<td>주소리스트</td>
-				<td><select id="addrList" name="roadAddr">
-				</select></td>
+				<td>
+					<select id="addrList" name="roadAddr"></select>
+				</td>
 			</tr>
 			<tr>
-				<td>최종 학력</td>
-				<td><input type="text" id="teacherEducation"
-					name="teacherEducation" value="대졸"> <span id="teacherEducationHelper"
-					class="helper"></span></td>
+				<td>입사일</td>
+				<td>
+					<input type="date" id="teacherEntryDate" name="teacherEntryDate" value="2022-06-27"> 
+					<span id="teacherEntryDateHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
-				<td>최종 학력</td>
-				<td><input type="text" id="teacherEducation"
-					name="teacherEducation" value="대졸"> <span id="teacherEducationHelper"
-					class="helper"></span></td>
+				<td>담당 과목</td>
+				<td>
+					<input type="text" id="teacherSubject" name="teacherSubject" value="자바"> 
+					<span id="teacherSubjectHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
 				<td>전화번호</td>
-				<td><input type="text" id="memberPhoneNo" name="memberPhoneNo" value="010-1234-1234">
-					<span id="memberPhoneNoHelper" class="helper"></span></td>
+				<td>
+					<input type="text" id="memberPhoneNo" name="memberPhoneNo" value="010-1234-1234">
+					<span id="memberPhoneNoHelper" class="helper"></span>
+				</td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
+				<td>레벨</td>
+				<td>
+					<input type="number" id="memberLevel" name="memberLevel" value="5" readonly="readonly">
+				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="2">
 					<!-- 폼 text, radio, checkbox 공백이 있는지 체크 -->
-					<button type="submit" id="signup">학생 회원가입</button>
+					<button type="submit" id="signup">강사 회원가입</button>
 					<button type="reset">입력 내용 초기화</button>
 				</td>
             </tr>
@@ -175,6 +192,24 @@ table {
 </body>
 
 <script>
+
+	//이메일주소 가져오기
+	$("#teacherEmailId").blur(function(){
+		email();	
+	});
+	
+	$("#emailUrl").change(function(){
+		email();	
+	});
+	
+	function email() {
+		const email = $("#teacherEmailId").val();
+		const middle = $("#middle").text();
+		const address = $("#emailUrl").val();
+		if(email != "" && address != "") {
+			$("#teacherEmailId").val(email+middle+address);
+		}
+	};
 	
 	// 유효성 검사 
 	$('#signUp').click(function(){
@@ -199,14 +234,18 @@ table {
 			$('.teacherGender').focus();
 		} else if($('#teacherEmailId').val()=='' || $('#emailUrl').val()=='') {
 			$('#teacherGenderHelper').text('');
-			$('#emailHelper').text('이메일을 입력하세요');
-			$('#emailId').focus();
-		} else if($('#teacherEducation'.val()=='')) {
-			$('#teacherBirthHelper').text('');
-			$('#teacherEducationHelper').text('최종 학력을 입력하세요');
-			$('#teacherEducation').focus();	
+			$('#teacherEmailHelper').text('이메일을 입력하세요');
+			$('#teacherEmailId').focus();
+		} else if($('#teacherEntryDate'.val()=='')) {
+			$('#teacherEmailHelper').text('');
+			$('#teacherEntryDateHelper').text('입사일을 선택하세요');
+			$('#teacherEntryDate').focus();	
+		} else if($('#teacherSubject'.val()=='')) {
+			$('#teacherEntryDateHelper').text('');
+			$('#teacherSubjectHelper').text('담당 과목을 입력하세요');
+			$('#teacherSubject').focus();	
 		} else if($('#memberPhoneNo').val()=='') {
-			$('#teacherEducationHelper').text('');
+			$('#teacherSubjectHelper').text('');
 			$('#memberPhoneNoHelper').text('전화번호를 입력하세요');
 			$('#memberPhoneNo').focus();
 		} else {

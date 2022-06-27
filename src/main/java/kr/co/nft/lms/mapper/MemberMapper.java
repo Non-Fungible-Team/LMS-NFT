@@ -50,10 +50,16 @@ public interface MemberMapper {
 	// Student 테이블 활용하여 학생 상세보기 
 	Student selectStudentOneByStudentVo(Member member);
 	
-	// 학생 회원가입 
+	// Teacher VO 필드 활용하여 강사 회원가입 
+	int insertTeacherByTeacherVo(Teacher teacher);
+	
+	// Student VO 필드 활용하여 학생 회원가입 
 	int insertStudentByStudentVo(Student student);
 	
-	// 학생 회원가입 
+	// Member VO 필드 활용하여 강사 회원가입
+	int insertTeacherByMemberVo(Member member);
+	
+	// Member VO 필드 활용하여 학생 회원가입 
 	int insertStudentByMemberVo(Member member);
 	
 	// 로그인

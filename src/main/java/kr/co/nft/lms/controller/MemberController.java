@@ -18,6 +18,7 @@ import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
 import kr.co.nft.lms.vo.MemberUploadPhoto;
 import kr.co.nft.lms.vo.Student;
+import kr.co.nft.lms.vo.Teacher;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -200,6 +201,24 @@ public class MemberController {
 		return "/member/getStudentOne";
 	}
 	
+	// 강사 회원가입
+	@PostMapping("/addTeacher")
+	public String addTeacher(Member member
+							,Teacher teacher) {
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.addTeacher.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addTeacher.param] teacher : "+teacher+A.R);
+		
+		// 한 강사의 정보를 저장하기 위해서 두개의 테이블 Member, Teacher가 필요 
+		int rowOfMember = memberService.addTeacher(member);
+		log.debug(A.Z+"[MemberController.addTeacher] rowOfMember : "+rowOfMember+A.R);
+		int rowOfTeacher = memberService.addTeacher(teacher);
+		log.debug(A.Z+"[MemberController.addTeacher] rowOfTeacher : "+rowOfTeacher+A.R);
+		
+		// 해당하는 뷰 페이지로 이동 
+		return "/member/memberLogin";
+	}
+	
 	// 학생 회원가입 
 	@PostMapping("/addStudent")
 	public String addStudent(Member member
@@ -216,6 +235,26 @@ public class MemberController {
 		
 		// 해당하는 뷰 페이지로 이동 
 		return "/member/memberLogin";
+	}
+	
+	// 강사 회원가입 
+	@GetMapping("/addTeacher") 
+	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
+	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
+	public String addTeacher(Model model
+							, Member member
+							, @RequestParam(value="memberLevel") int memberLevel) {
+		
+		// 매개 변수에 담긴 내용 확인 
+		log.debug(A.Z+"[MemberController.addTeacher.param] model : "+model+A.R);
+		log.debug(A.Z+"[MemberController.addTeacher.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addTeacher.param] memberLevel : "+memberLevel+A.R);
+		
+		// 뷰 페이지에 사용자 레벨 넘긴다 
+		model.addAttribute("memberLevel", memberLevel);
+		
+		// 강사 회원 가입 페이지 양식으로 이동 
+		return "/member/addTeacher";
 	}
 	
 	// 학생 회원가입 
