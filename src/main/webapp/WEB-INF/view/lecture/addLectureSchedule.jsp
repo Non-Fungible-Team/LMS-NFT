@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h3>시간표 추가</h3>
 </body>
 </html>

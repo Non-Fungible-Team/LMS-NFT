@@ -26,7 +26,7 @@ public class LectureScheduleService {
 	@Autowired
 	private LectureScheduleMapper lectureScheduleMapper;
 	
-	// lecture_schedule 테이블 lecture_no에 따른 전체 리스트
+	//1.lecture_schedule 테이블 lecture_no에 따른 전체 리스트
 	public Map<String,Object> getLectureScheduleListByLectureNo(int lectureNo, int currentPage, int rowPerPage ) {
 		log.debug(A.W + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureNo : " + lectureNo + A.R);
 		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.currentPage] currentPage  : " + currentPage +A.R);
@@ -65,7 +65,7 @@ public class LectureScheduleService {
 		return returnMap;
 	}
 	
-	// lecture_schedule 테이블 데이터 입력 - 운영자, 강사
+	//2.lecture_schedule 테이블 데이터 입력 - 운영자, 강사
 	public void addLectureSchedule() {
 		// addLectureSchedule(LectureSchedule lectureSchedule)로 수정 필요
 		LectureSchedule lectureSchedule = new LectureSchedule();
@@ -138,7 +138,7 @@ public class LectureScheduleService {
 		
 	}
 	
-	// lecture_schedule 테이블 데이터 삭제
+	//3.lecture_schedule 테이블 데이터 삭제
 	public int removeLectureSchedule(String lectureScheduleDate, int lectureNo) {
 		
 		log.debug(A.A + "[LectureScheduleService.removeLectureSchedule] lectureScheduleDate : " + lectureScheduleDate + A.R);
