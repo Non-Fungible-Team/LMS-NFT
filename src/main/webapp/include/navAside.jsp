@@ -125,7 +125,7 @@
 					<!-- 강의 게시판 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
 					<!-- 강의 시간표 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/lecture/getLectureScheduleListByLectureNo" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/lecture/getLectureScheduleListByLectureNo" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
 					<!-- 출석 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
 					<!-- 과제 -->
