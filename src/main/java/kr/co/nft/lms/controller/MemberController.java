@@ -77,6 +77,95 @@ public class MemberController {
 		return "/member/freezeStudent";
 	}
 	
+	// ------------------ 정보 수정 ------------------ //
+	
+	// 강사 정보 수정 
+		@PostMapping("/teacher/modifyTeacher")
+		public String modifyTeacher(HttpSession session
+									, HttpServletRequest request
+									, Member member
+									, Teacher teacher
+									, MemberPhoto memberPhoto
+									, MemberUploadPhoto memberUploadPhoto) {
+			
+			// 매개변수가 잘 들어왔는지 확인 
+			// 강사 정보 수정시 MEMBER 테이블에 수정해야 할 내용 받기 
+			log.debug(A.Z+"[MemberController.modifyTeacher.param] member : "+member+A.R);
+			// 강사 정보 수정시  TEACHER 테이블에 수정해야 할 내용 받기 
+			log.debug(A.Z+"[MemberController.modifyTeacher.param]  teacher : "+teacher+A.R);
+			log.debug(A.Z+"[MemberController.modifyTeacher.param] memberPhoto : "+memberPhoto+A.R);
+			// 강사 정보 수정시 MEMBERPHOTO 테이블에 수정해야 할 내용 받기
+			log.debug(A.Z+"[MemberController.modifyTeacher.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
+			
+			// 사진을 업로드하면 저장되는 경로 설정 
+			String path = request.getServletContext().getRealPath("/memberPhoto/teacherPhoto/");
+			log.debug(A.Z+"[MemberController.modifyTeacher.param] path : "+path+A.R);
+			
+			// 세션에서 아이디와 레벨은 계속 가져온다 
+			Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+			
+			// modifyTeacher.jsp 페이지에서 파일 받은 내용 확인 
+			MultipartFile teacherPhoto = memberUploadPhoto.getMemberPhotoOne();
+			log.debug(A.Z+"[MemberController.modifyTeacher.param] teacherPhoto : "+teacherPhoto+A.R);
+			
+			// 파일이 들어왔고 파일 사이즈가 0보다 크면 
+			if(teacherPhoto != null && teacherPhoto.getSize() > 0) {
+				// 파일이 들어온 내용을 확인 
+				log.debug(A.Z+"[MemberController.modifyTeacher] teacherPhoto : "+teacherPhoto+A.R);
+			}
+			
+			// 사용자 사진 업로드 
+			memberService.addMemberPhoto(member, memberPhoto, memberUploadPhoto, path);
+			
+			// 강사 정보가 바뀌었는지 확인 
+			// 멤버 테이블에 변경 내용이 반영되었는지 확인 
+		    int rowOfMember = memberService.modifyTeacher(member);
+		    log.debug(A.Z+"[MemberController.modifyTeacher] rowOfMember : "+rowOfMember+A.R);
+		    // 학생 테이블에 변경 내용이 반영되었는지 확인 
+		    int rowOfTeacher = memberService.modifyTeacher(teacher);
+		    log.debug(A.Z+"[MemberController.modifyTeacher] rowOfTeacher : "+rowOfTeacher+A.R);
+			
+		    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아간다  
+		    return "redirect:/teacher/getTeacherOne";
+		}
+	
+	// 강사 정보 수정 
+		@GetMapping("/teacher/modifyTeacher")
+		public String modifyTeacher(HttpSession session
+									, @RequestParam(value="memberId") String memberId
+									, Model model) {
+			// 매개 변수 확인 
+			log.debug(A.Z+"[MemberController.modifyTeacher.param] memberId : "+memberId+A.R);
+			// 세션 매개 변수 확인 
+			Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+			log.debug(A.Z+"[MemberController.modifyTeacher] loginMember : "+loginMember+A.R);
+			
+			// 계정 정보 없으면 로그인 실패 
+			if(memberId == null) {
+				log.debug(A.Z+"MemberController.modifyTeacher : "+"로그인 실패"+A.R);
+				// member/memberLogin.jsp 
+				return "/member/memberLogin";
+			}
+
+			// 강사의 상세 정보를 가져온다 
+			// VO 두개를 합쳐야 한 학생의 정보가 나온다 
+			Teacher getTeacherOneByTeacherVo = memberService.getTeacherOneReturnTeacherVo(loginMember);
+			log.debug(A.Z+"[MemberController.modifyTeacher] getTeacherOneByTeacherVo : "+getTeacherOneByTeacherVo+A.R);
+			Member getTeacherOneByMemberVo = memberService.getTeacherOneReturnMemberVo(loginMember);
+			log.debug(A.Z+"[MemberController.modifyTeacher] getTeacherOneByMemberVo : "+getTeacherOneByMemberVo+A.R);
+			
+			// 이동하려는 뷰 페이지에 해당하는 데이터들을 보낸다 
+			model.addAttribute("getTeacherOneByTeacherVo", getTeacherOneByTeacherVo);
+			model.addAttribute("getTeacherOneByMemberVo", getTeacherOneByMemberVo);
+			
+			// 세션에 로그인 사용자 정보와 과목 번호를 보낸다 
+			session.setAttribute("loginMember", loginMember);
+			session.setAttribute("sessionLectureNo", 0);
+			
+			// 해당하는 뷰 페이지로 이동 
+			return "/member/modifyTeacher";
+		}
+	
 	// 학생 정보 수정 
 	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session

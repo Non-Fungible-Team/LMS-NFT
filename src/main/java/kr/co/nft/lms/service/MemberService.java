@@ -42,12 +42,15 @@ public class MemberService {
 		return memberMapper.updateStudentOfStudentTbl(member);
 	}
 	
+	// --------------------------------------- //
+	// 회원 정보 수정 
+	
 	// MemberPhoto 레코드 정보를 가져오기 위해 사용 
 	public MemberPhoto getMemberPhoto(Member member) {
 		return memberMapper.selectMemberPhoto(member);
 	}
 	
-	// MemberPhoto 테이블 활용하여 학생 사진 업로드 - 학생 정보 수정과 같이 이루어진다 
+	// MemberPhoto 테이블 활용하여 학생, 강사, 운영자 사진 업로드 - 학생, 강사, 운영자 정보 수정과 같이 이루어진다 
 	public void addMemberPhoto(Member member, MemberPhoto memberPhoto, MemberUploadPhoto memberUploadPhoto, String path) {
 		
 		// 매개변수를 잘 받아왔는지 확인 
@@ -82,11 +85,11 @@ public class MemberService {
 			memberPhoto.setPhotoType(memberUploadPhoto.getMemberPhotoOne().getContentType());
 			memberPhoto.setPhotoSize(memberUploadPhoto.getMemberPhotoOne().getSize());
 			// 값이 제대로 들어갔는지 확인 
-			log.debug(A.Z+"[MemberService.addStudentPhoto]  memberPhoto : "+memberPhoto+A.R);
+			log.debug(A.Z+"[MemberService.addMemberPhoto]  memberPhoto : "+memberPhoto+A.R);
 			
 			// 사진이 잘 등록되었는지 확인 
 			int row = memberMapper.insertMemberPhoto(memberPhoto);
-			log.debug(A.Z+"[MemberService.addStudentPhoto]  row : "+row+A.R);
+			log.debug(A.Z+"[MemberService.addMemberPhoto]  row : "+row+A.R);
 						
 			try {
 				// multipart 안의 파일을 저장 장치로 저장 
@@ -102,6 +105,16 @@ public class MemberService {
 			
 		}
 		
+	}
+	
+	// Member 테이블 활용하여 강사 수정 액션 
+	public int modifyTeacher(Member member) {
+		return memberMapper.updateTeacherByMemberVo(member);
+	}
+	
+	// Teacher 테이블 활용하여 강사 수정 액션 
+	public int modifyTeacher(Teacher teacher) {
+		return memberMapper.updateTeacherByTeacherVo(teacher);
 	}
 	
 	// Member 테이블 활용하여 학생 수정 액션

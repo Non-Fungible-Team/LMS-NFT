@@ -33,7 +33,6 @@
 		SELECT 	
 			member_id memberId
 			, teacher_entry_date teacherEntryDate
-			, teacher_subject teacherSubject
 			, teacher_name teacherName
 			, teacher_birth teacherBirth
 			, teacher_gender teacherGender
@@ -73,6 +72,8 @@
 		WHERE member_id = #{memberId}
 	</update>
 
+	<!-- 개인 정보 수정 -->
+
 	<select id="selectMemberPhoto"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="kr.co.nft.lms.vo.MemberPhoto">
@@ -108,6 +109,25 @@
 			, NOW()
 		);
 	</insert>
+	
+	<update id="updateTeacherByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member">
+		UPDATE member SET 
+			member_pw = #{memberPw}
+			, member_phone_no = #{memberPhoneNo} 
+		WHERE member_id = #{memberId} 		
+	</update>
+	
+	<update id="updateTeacherByTeacherVo"
+			parameterType="kr.co.nft.lms.vo.Teacher">
+		UPDATE teacher SET
+			teacher_name = #{teacherName}
+			, teacher_birth = #{teacherBirth}
+			, teacher_gender = #{teacherGender}
+			, teacher_email = #{teacherEmail}
+			, teacher_entry_date = #{teacherEntryDate}
+		WHERE member_id = #{memberId} 		
+	</update>
 
 	<update id="updateStudentByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
@@ -128,6 +148,8 @@
 		WHERE member_id = #{memberId} 
 				
 	</update>
+	
+	<!-- 개인 정보 수정 -->
 
 	<!-- 상세보기 -->
 	
@@ -177,7 +199,6 @@
 			, teacher_gender teacherGender
 			, teacher_email teacherEmail 
 			, teacher_entry_date teacherEntryDate
-			, teacher_subject teacherSubject
 		FROM teacher 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -202,8 +223,7 @@
 			, student_birth studentBirth
 			, student_gender studentGender
 			, student_email studentEmail 
-			, student_education studentEducation 
-			
+			, student_education studentEducation 	
 		FROM student 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -240,7 +260,6 @@
 		INSERT INTO teacher (
 			member_id
 			, teacher_entry_date
-			, teacher_subject
 			, teacher_name
 			, teacher_birth
 			, teacher_gender
@@ -249,7 +268,6 @@
 		) VALUES (
 			#{memberId}
 			, #{teacherEntryDate}
-			, #{teacherSubject}
 			, #{teacherName}
 			, #{teacherBirth}
 			, #{teacherGender}
