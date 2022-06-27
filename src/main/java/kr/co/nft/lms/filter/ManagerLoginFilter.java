@@ -17,7 +17,7 @@ import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@WebFilter("/Manager/*")
+@WebFilter("/manager/*")
 // 회원 level 6이상만 이용 가능한 filter, 운영자 모두 학생, 강사 불가
 public class ManagerLoginFilter implements Filter {
 	@Override
@@ -35,9 +35,9 @@ public class ManagerLoginFilter implements Filter {
 			//로그인 정보가 있을시 Member 변수에 저장
 			Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
 			//level이 6이상이 아닐경우 메세지와 함께 homeController로 redirect
-			if(sessionLoginMember.getMemberLevel() < 4) {
+			if(sessionLoginMember.getMemberLevel() <  6) {
 				log.debug(A.E+"[ManagerLoginFilter.doFilter] : 권한이 아닌 자의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
-				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/homeController?msg=underManager");
+				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/all/home?msg=underManager");
 				return;
 			}
 			

@@ -46,6 +46,9 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		<div class="col-lg-12 col-md-12">
 		    <div class="card">
 		        <div class="card-body">
+		        <c:if test="${not empty param.msg }">
+		            <h1>임시 오류 메세지 : ${param.msg}</h1>
+		        </c:if>
 		            <h4 class="card-title">수강목록</h4>
 		            <h6>강의명을 클릭하시면 강의 페이지로 이동합니다</h6>
 		            <div class="mt-2" style="height:auto; width:auto;">

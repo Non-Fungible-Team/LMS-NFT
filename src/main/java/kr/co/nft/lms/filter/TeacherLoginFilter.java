@@ -37,7 +37,7 @@ public class TeacherLoginFilter implements Filter {
 			//level이 4 이하 메세지와 함께 homeController로 redirect
 			if(sessionLoginMember.getMemberLevel() < 5) {
 				log.debug(A.E+"[TeacherLoginFilter.doFilter] : 권한이 아닌 자의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
-				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/homeController?msg=underTeacher");
+				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/all/home?msg=underTeacher");
 				return;
 			}
 			

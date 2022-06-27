@@ -37,7 +37,7 @@ public class StudentLoginFilter implements Filter  {
 			//level이 4가 아닌 경우 메세지와 함께 homeController로 redirect
 			if(sessionLoginMember.getMemberLevel() != 4) {
 				log.debug(A.E+"[studentLoginFilter.doFilter] : 권한이 아닌 자의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
-				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/homeController?msg=notStudent");
+				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/all/home?msg=notStudent");
 				return;
 			}
 			
