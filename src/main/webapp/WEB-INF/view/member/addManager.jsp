@@ -80,9 +80,9 @@ table {
 </script>
 </head>
 <body>
-	<h1>강사 회원가입</h1>
-	<form id="signUpteacher" method="post"
-		action="${pageContext.request.contextPath}/addTeacher">
+	<h1>운영자 회원가입</h1>
+	<form id="signUpManager" method="post"
+		action="${pageContext.request.contextPath}/addManager">
 		<table>
 			<!--  
 				<tr>
@@ -93,7 +93,7 @@ table {
 			-->
 			
 			<tr>
-				<td>강사 아이디</td>
+				<td>운영자 아이디</td>
 				<td>
 					<input type="text" id="memberId" name="memberId" value="manager1"> 
 					<span id="memberIdHelper" class="helper"></span>

@@ -261,20 +261,24 @@
 	</select>
 	
 	<!--5-3.학생-강의 목록 수정액션 -->
-	<update id="updateStudentLecture">
+	<update id="updateStudentLecture"
+			parameterType="kr.co.nft.lms.vo.StudentLecture">
 		UPDATE student_lecture
-		SET lecture_no =#{lectureNo}
-		,member_id = #{memberId}
-		,student_lecture_job =#{studentLectureJob}
-		,student_lecture_legistration_date =#{studentLectureLegistrationDate}
-		,student_lecture_end_date = #{studentLectureEndDate}
-		,#{student_lecture_score} =#{studentLectureScore}
+		SET lecture_no = #{lectureNo}
+			, member_id = #{memberId}
+			, student_lecture_job =#{studentLectureJob}
+			, student_lecture_legistration_date =#{studentLectureLegistrationDate}
+			<if test="studentLectureEndDate != 'null'">
+				, student_lecture_end_date = #{studentLectureEndDate}
+			</if>
+			, student_lecture_score = #{studentLectureScore}
 		WHERE member_id = #{memberId}
 	</update>
 	<!-- 5-4.학생-강의 목록 삭제 -->
-	<delete id="deleteStudentLecture" parameterType="int">
+	<delete id="deleteStudentLecture" 
+			parameterType="kr.co.nft.lms.vo.StudentLecture">
 		DELETE FROM
-		student_lecture
+			student_lecture
 		WHERE lecture_no = #{lectureNo}
 		AND member_id = #{memberId}
 	</delete>
@@ -330,4 +334,44 @@
 		ON l.lecture_room_name = lr.lecture_room_name
 		WHERE l.lecture_no = #{lectureNo}
 	</select>
+	<!-- 10-1. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 수업 가능한 강사 목록 -->
+	<select id ="selectTeacherListByDates"
+				resultType="kr.co.nft.lms.vo.Teacher"
+				parameterType = "String">
+				SELECT
+					t.member_id memberId
+					,t.teacher_name teacherName
+				FROM teacher t
+				WHERE t.member_id NOT IN (SELECT tl.member_id
+														FROM lecture l 
+														INNER JOIN teacher_lecture tl
+														ON tl.lecture_no = l.lecture_no
+														WHERE (
+															(<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d')]]>)
+															OR (<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d') ]]> AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)))
+				GROUP BY t.member_Id
+	</select>
+	<!-- 10-2. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 사용가능한 강의실 목록 -->
+	<select id ="selectLectureRoomListByDates"
+				resultType="kr.co.nft.lms.vo.LectureRoom"
+				parameterType = "String">
+				SELECT
+					lr.lecture_room_name lectureRoomName
+				FROM lecture_room lr
+				WHERE lr.lecture_room_name NOT IN (SELECT l.lecture_room_name 
+														FROM lecture l
+														WHERE (
+															(<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d')]]>)
+															OR (<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d') ]]> AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)))
+				GROUP BY lr.lecture_room_name
+	</select>
+	
+	<select id="selectLectureNoNameList"
+			resultType="kr.co.nft.lms.vo.Lecture">
+		SELECT 
+			lecture_no lectureNo
+			, lecture_name lectureName
+		FROM lecture;
+	</select>
+	
 </mapper>

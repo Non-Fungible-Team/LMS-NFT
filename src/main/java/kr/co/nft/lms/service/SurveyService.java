@@ -1,6 +1,5 @@
 package kr.co.nft.lms.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.nft.lms.mapper.SurveyMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Survey;
+import kr.co.nft.lms.vo.SurveyAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
 import lombok.extern.slf4j.Slf4j;
@@ -121,5 +121,18 @@ public class SurveyService {
 	      returnMap.put("SurveyQuestionList", SurveyQuestionList);
 	      return returnMap;
 	   }
-	
+	public int addSurveyQuestionAnswer(List<SurveyAnswer> surveyAnswer) {
+		
+		int row = 0;
+		
+		for(SurveyAnswer s : surveyAnswer) {
+			if(s.getSurveyAnswerType().equals("객관식")) {
+				row = row + surveyMapper.insertSurveyMultipleAnswer(s);
+			} else if(s.getSurveyAnswerType().equals("주관식")) {
+				row = row + surveyMapper.insertSurveyShortAnswer(s);
+			}
+		}
+		return row;
+		
+	}
 }

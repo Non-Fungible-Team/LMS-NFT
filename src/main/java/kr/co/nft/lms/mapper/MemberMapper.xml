@@ -129,6 +129,59 @@
 				
 	</update>
 
+	<!-- 상세보기 -->
+	
+	<select id="selectManagerOneByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT 
+			member_id memberId
+			, member_phone_no memberPhoneNo
+			, member_last_login_date memberLastLoginDate
+			, member_pw memberPw 
+		FROM member 
+		WHERE member_id = #{memberId} 
+	</select>
+	
+	<select id="selectManagerOneByManagerVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Manager">
+		SELECT 
+			manager_name managerName
+			, manager_birth managerBirth
+			, manager_gender managerGender
+			, manager_email managerEmail 
+			, manager_entry_date managerEntryDate 
+		FROM manager 
+		WHERE member_id = #{memberId} 
+	</select>
+	
+	<select id="selectTeacherOneByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT 
+			member_id memberId
+			, member_phone_no memberPhoneNo
+			, member_last_login_date memberLastLoginDate
+			, member_pw memberPw 
+		FROM member 
+		WHERE member_id = #{memberId} 
+	</select>
+	
+	<select id="selectTeacherOneByTeacherVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Teacher">
+		SELECT 
+			teacher_name teacherName
+			, teacher_birth teacherBirth
+			, teacher_gender teacherGender
+			, teacher_email teacherEmail 
+			, teacher_entry_date teacherEntryDate
+			, teacher_subject teacherSubject
+		FROM teacher 
+		WHERE member_id = #{memberId} 
+	</select>
+
 	<select id="selectStudentOneByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="kr.co.nft.lms.vo.Member">
@@ -154,7 +207,11 @@
 		FROM student 
 		WHERE member_id = #{memberId} 
 	</select>
-		
+	
+	<!-- 상세보기 -->
+	
+	<!-- 회원 가입 -->	
+	
 	<insert id="insertManagerByManagerVo"
 			parameterType="kr.co.nft.lms.vo.Manager">
 			
@@ -298,6 +355,8 @@
 		)
 		
 	</insert>
+
+	<!-- 회원 가입  -->	
 
 	<select id="selectMemberOne"
 			parameterType="kr.co.nft.lms.vo.Member"

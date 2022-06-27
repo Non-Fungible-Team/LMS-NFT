@@ -44,11 +44,27 @@ public interface MemberMapper {
 	// Student 테이블 활용하여 학생 정보 수정 
 	int updateStudentByStudentVo(Student student);
 	
+	// -------------- 상세 보기 ------------------ //  
+	
+	// Member 테이블 활용하여 운영자 상세보기 
+	Member selectManagerOneByMemberVo(Member member);
+	
+	// Manager 테이블 활용하여 운영자 상세보기 
+	Manager selectManagerOneByManagerVo(Member member);
+	
+	// Member 테이블 활용하여 강사 상세보기 
+	Member selectTeacherOneByMemberVo(Member member);
+	
+	// Teacher 테이블 활용하여 강사 상세보기 
+	Teacher selectTeacherOneByTeacherVo(Member member);
+	
 	// Member 테이블 활용하여 학생 상세보기 
 	Member selectStudentOneByMemberVo(Member member);
 	
 	// Student 테이블 활용하여 학생 상세보기 
 	Student selectStudentOneByStudentVo(Member member);
+	
+	// -------------- 회원 가입 ------------------ //  
 	
 	// Manager VO 필드 활용하여 운영자 회원가입
 	int insertManagerByManagerVo(Manager manager);
@@ -67,6 +83,8 @@ public interface MemberMapper {
 	
 	// Member VO 필드 활용하여 학생 회원가입 
 	int insertStudentByMemberVo(Member member);
+	
+	// --------------------------------------------- //  
 	
 	// 로그인
 	Member selectMemberOne(Member member);

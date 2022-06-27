@@ -42,11 +42,14 @@
 									<table id="zero_config" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>번호</th>
-												<th>날짜</th>
+												<th>강의 번호</th>
+												<th>수업 날짜</th>
 												<th>수업 시작 시간</th>
 												<th>수업 종료 시간</th>
 												<th>시간표 작성 날짜</th>
+												<th>
+													<a href="${pageContext.request.contextPath}/manager/lecture/addLectureSchedule" class="btn btn-primary btn-rounded">시간표 추가</a>
+												</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -57,12 +60,47 @@
 													<td>${l.lectureScheduleStartDate}</td>
 													<td>${l.lectureScheduleEndDate}</td>
 													<td>${l.lectureScheduleCreateDate}</td>
-													<td><a href="${pageContext.request.contextPath}/modifyLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}">수정</a></td>
-													<td><a href="${pageContext.request.contextPath}/removeLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}">삭제</a></td>
+													<div class="btn-group" role="group" aria-label="Basic example">
+													<c:if test="${sessionLoginMember.memberLevel > 5 }">
+														<td>
+															<a href="${pageContext.request.contextPath}/modifyLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-info btn-sm ">수정</a>
+															<a href="${pageContext.request.contextPath}/removeLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-danger btn-sm">삭제</a>
+														</td>
+													</c:if>
+													</div>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
+									<form method="get" action="${pageContext.request.contextPath}/all/lecture/getLectureScheduleListByLectureNo">
+											<c:if test="${currentPage>10}">
+												<button type="submit" value="${currentPage-10}" name="currentPage" class="btn btn-secondary">이전목록</button>
+											</c:if>
+											<!-- 이전 부분 -->
+											<c:if test="${currentPage>1}">
+												<button type="submit" value="${currentPage-1}" name="currentPage" class="btn btn-secondary">이전</button>
+											</c:if>
+											<!-- 목록 사이 번호 표시 -->
+											<c:forEach begin="1" end="10" step="1" var="i" varStatus="status">
+												<c:if test="${ i< 5 && currentPage-(5-i)> 0 }">
+													<button type="submit" value="${currentPage-(5-i)}" name="currentPage" class="btn btn-light">${currentPage-(5-i)}</button>
+												</c:if>
+												<c:if test="${ i==5 }">
+													<button type="submit" value="${currentPage}" name="currentPage" class="btn btn-danger">${currentPage}</button>
+												</c:if>
+												<c:if test="${ i > 5 && currentPage+(i-5) <= lastPage }">
+													<button type="submit" value="${currentPage+(i-5)}" name="currentPage" class="btn btn-light">${currentPage+(i-5)}</button>
+												</c:if>
+											</c:forEach>
+											<!-- 다음 부분 -->
+											<c:if test="${currentPage< lastPage }">
+												<button type="submit" value="${currentPage+1}" name="currentPage" class="btn btn-secondary">다음</button>
+											</c:if>
+											<!-- 다음목록 표시 -->
+											<c:if test="${currentPage+10 <= lastPage }">
+												<button type="submit" value="${currentPage+10}" name="currentPage" class="btn btn-secondary">다음목록</button>
+											</c:if>
+										</form>
 								</div>
 							</div>
 						</div>

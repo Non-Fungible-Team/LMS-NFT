@@ -297,7 +297,7 @@ public class LectureService {
 	}
 	
 	//5-3. 학생-강의 목록 수정폼
-	public StudentLecture modifyStudentLectureForm(int lectureNo, String memberId) {
+	public Map<String , Object> modifyStudentLectureForm(int lectureNo, String memberId) {
 		
 		// 파라미터 값 디버깅
 		log.debug(A.A +"[LectureService.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
@@ -310,18 +310,41 @@ public class LectureService {
 		
 		log.debug(A.A +"[LectureService.modifyStudentLectureForm] studentLecture : " + studentLecture + A.R);
 		
+		List<Lecture> lectureNoNameList = lectureMapper.selectLectureNoNameList();
+		
 		// 매퍼 반환 값 가공해서 controller에 넘겨줌 (수정폼 mapper 메소드 호출 및 저장객체 생성)
 		StudentLecture studentLectureOne = lectureMapper.updateStudentLectureForm(studentLecture);
 		
-		return studentLectureOne;
+		Map<String , Object> returnMap = new HashMap<>();
+		returnMap.put("lectureNoNameList", lectureNoNameList);
+		returnMap.put("studentLectureOne", studentLectureOne);
+		
+		return returnMap;
 	}
 	
 	//학생-강의 목록 수정액션
-	public int modifyStudentLecture(StudentLecture studentLecture) {
-		log.debug(A.W +"[LectureService.modifyStudentLecture.studentLecture] studentLecture  : " + studentLecture +A.R);
+	public int modifyStudentLectureAction(StudentLecture studentLecture) {
+		log.debug(A.A +"[LectureService.modifyStudentLecture.studentLecture] studentLecture  : " + studentLecture +A.R);
 		
 		int row = lectureMapper.updateStudentLecture(studentLecture);
-		log.debug(A.W +"[LectureService.modifyStudentLecture.row] row  : " + row +A.R);
+		log.debug(A.A +"[LectureService.modifyStudentLectureAction.row] row  : " + row + A.R);
+		
+		return row;
+	}
+	
+	// 5-4. 학생 강의 삭제
+	public int removeStudentLectureAction(int lectureNo, String memberId) {
+		
+		log.debug(A.A +"[LectureService.removeStudentLectureAction] lectureNo  : " + lectureNo + A.R);
+		log.debug(A.A +"[LectureService.removeStudentLectureAction] memberId  : " + memberId + A.R);
+		
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setLectureNo(lectureNo);
+		studentLecture.setMemberId(memberId);
+		
+		int row = lectureMapper.deleteStudentLecture(studentLecture);
+		
+		log.debug(A.A +"[LectureService.removeStudentLectureAction] row  : " + row + A.R);
 		
 		return row;
 	}
@@ -364,6 +387,23 @@ public class LectureService {
 		returnMap.put("lastPage", lastPage); //마지막 페이지
 		log.debug(A.W +"[LectureService.getLectureByPage.returnMap] returnMap : " + returnMap +A.R);//디버깅코드
 		
+		return returnMap;
+	}
+	//강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 수업 가능한 강사 목록, 사용가능한 강의실을 DB에 요청하는 서비스
+	//[LectureRestController.getTeacherListByDates]에서 호출
+	public Map<String,Object> getTeacherListAndLectureRoomList(String lectureStartDate,String lectureEndDate){
+		log.debug(A.E+"[LectureService.getTeacherListByDates] lectureStartDate:"+lectureStartDate+A.R);
+		log.debug(A.E+"[LectureService.getTeacherListByDates] lectureEndDate:"+lectureEndDate+A.R);
+		//강의 시간이 겹치지않은 강사 리스트 요청
+		List<Teacher> teacherList = lectureMapper.selectTeacherListByDates(lectureStartDate, lectureEndDate);
+		//강의 시간이 겹치지않은 강의실 리스트 요청
+		log.debug(A.E+"[LectureService.getTeacherListByDates] teacherList:"+teacherList+A.R);
+		List<LectureRoom> lectureRoomList = lectureMapper.selectLectureRoomListByDates(lectureStartDate, lectureEndDate);
+		log.debug(A.E+"[LectureService.getTeacherListByDates] lectureRoomList:"+lectureRoomList+A.R);
+		//모델값 반환
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("teacherList", teacherList);
+		returnMap.put("lectureRoomList", lectureRoomList);
 		return returnMap;
 	}
 }
