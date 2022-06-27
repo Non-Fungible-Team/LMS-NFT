@@ -33,7 +33,7 @@
 		<div id="navAside"></div>
 			<div class="page-wrapper">
 				<div class="container-fluid">
-					<h1>설문조사 항목</h1>
+					<h1>설문조사 질문 항목</h1>
 					<div class="mt-2" style="height:auto; width:auto;">
 				            <table id="zero_config" class="table table-striped table-bordered no-wrap">
 					<thead>
@@ -43,6 +43,7 @@
 							<th>내용</th>
 							<th>생성일</th>
 							<th>업데이트날짜</th>
+							<th>수정</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,6 +54,7 @@
 								<td>${svql.surveyQuestionListContent}</td>
 								<td>${svql.surveyQuestionListCreateDate}</td>
 								<td>${svql.surveyQuestionListUpdateDate}</td>
+								<td><a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestionList?surveyQuestionListNo=${svql.surveyQuestionListNo}">수정</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -60,11 +62,11 @@
 					<ul>
 					<c:if test="${currentPage>1}">
 						<li><a
-							href="${pageContext.request.contextPath}/survey/getSurveyQuestionListByPage?currentPage=${currentPage-1}">이전</a></li>
+							href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage?currentPage=${currentPage-1}">이전</a></li>
 					</c:if>
 					<c:if test="${currentPage<lastPage}">
 						<li><a
-							href="${pageContext.request.contextPath}/survey/getSurveyQuestionListByPage?currentPage=${currentPage+1}">다음</a></li>
+							href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage?currentPage=${currentPage+1}">다음</a></li>
 					</c:if>
 					</ul>
 			

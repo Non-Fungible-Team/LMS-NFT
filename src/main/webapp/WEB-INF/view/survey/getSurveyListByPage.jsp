@@ -51,7 +51,13 @@
 							<c:forEach var="sv" items="${surveyList}">
 								<tr>
 									<td>${sv.surveyNo}</td>
-									<td><a href="${pageContext.request.contextPath}/survey/getSurveyOne?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
+									<c:if test="${loginMember.memberLevel==4}">
+										<td><a href="${pageContext.request.contextPath}/student/survey/getSurveyOneS?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
+									</c:if>
+									<c:if test="${loginMember.memberLevel>5}">
+										<td><a href="${pageContext.request.contextPath}/manager/survey/getSurveyOneM?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
+									</c:if>
+									
 									<td>${sv.surveyContent}</td>
 									<td>${sv.surveyCreateDate}</td>
 									<td>${sv.surveyStartlineDate}</td>
@@ -65,11 +71,11 @@
 						<ul>
 						<c:if test="${currentPage>1}">
 							<li><a
-								href="${pageContext.request.contextPath}/getSurveyListByPage?currentPage=${currentPage-1}">이전</a></li>
+								href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage?currentPage=${currentPage-1}">이전</a></li>
 						</c:if>
 						<c:if test="${currentPage<lastPage}">
 							<li><a
-								href="${pageContext.request.contextPath}/getSurveyListByPage?currentPage=${currentPage+1}">다음</a></li>
+								href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage?currentPage=${currentPage+1}">다음</a></li>
 						</c:if>
 					</ul>
 	
