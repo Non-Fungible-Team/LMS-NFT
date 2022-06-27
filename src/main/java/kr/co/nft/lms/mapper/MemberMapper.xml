@@ -131,6 +131,31 @@
 
 	<!-- 상세보기 -->
 	
+	<select id="selectManagerOneByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT 
+			member_id memberId
+			, member_phone_no memberPhoneNo
+			, member_last_login_date memberLastLoginDate
+			, member_pw memberPw 
+		FROM member 
+		WHERE member_id = #{memberId} 
+	</select>
+	
+	<select id="selectManagerOneByManagerVo"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="kr.co.nft.lms.vo.Manager">
+		SELECT 
+			manager_name managerName
+			, manager_birth managerBirth
+			, manager_gender managerGender
+			, manager_email managerEmail 
+			, manager_entry_date managerEntryDate 
+		FROM manager 
+		WHERE member_id = #{memberId} 
+	</select>
+	
 	<select id="selectTeacherOneByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="kr.co.nft.lms.vo.Member">

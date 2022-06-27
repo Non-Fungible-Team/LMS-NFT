@@ -46,6 +46,12 @@ public interface MemberMapper {
 	
 	// -------------- 상세 보기 ------------------ //  
 	
+	// Member 테이블 활용하여 운영자 상세보기 
+	Member selectManagerOneByMemberVo(Member member);
+	
+	// Manager 테이블 활용하여 운영자 상세보기 
+	Manager selectManagerOneByManagerVo(Member member);
+	
 	// Member 테이블 활용하여 강사 상세보기 
 	Member selectTeacherOneByMemberVo(Member member);
 	

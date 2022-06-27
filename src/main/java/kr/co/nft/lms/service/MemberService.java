@@ -115,6 +115,17 @@ public class MemberService {
 	}
 	
 	// --------------------------------------- // 
+	// 상세보기 
+	
+	// Member 테이블 활용하여 운영자 상세 조회 
+	public Member getManagerOneReturnMemberVo(Member member) {
+		return memberMapper.selectManagerOneByMemberVo(member);
+	}
+	
+	// Manager 테이블 활용하여 운영자 상세 조회 
+	public Manager getManagerOneReturnManagerVo(Member member) {
+		return memberMapper.selectManagerOneByManagerVo(member);
+	}
 	
 	// Member 테이블 활용하여 강사 상세 조회 
 	public Member getTeacherOneReturnMemberVo(Member member) {
@@ -137,6 +148,7 @@ public class MemberService {
 	}
 	
 	// --------------------------------------- // 
+	// 회원가입 
 	
 	// Manager 테이블에 들어가는 운영자 회원 가입 
 	public int addManager(Manager manager) {
