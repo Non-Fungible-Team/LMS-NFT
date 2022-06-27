@@ -124,6 +124,8 @@
 					<li class="nav-small-cap"><span class="hide-menu">${sessionLecture.lectureName}</span></li>
 					<!-- 강의 게시판 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
+					<!-- 강의 시간표 -->
+					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/lecture/getLectureScheduleListByLectureNo" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
 					<!-- 출석 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
 					<!-- 과제 -->
@@ -154,7 +156,6 @@
 								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher Lecture </span></a></li>
 								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager Lecture </span></a></li>
 							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="##########.jsp" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Etc </span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><span class="hide-menu"> LectureRoom List </span></a></li>

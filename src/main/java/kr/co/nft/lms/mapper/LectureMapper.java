@@ -6,8 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Lecture;
+import kr.co.nft.lms.vo.LectureRoom;
 import kr.co.nft.lms.vo.ManagerLecture;
 import kr.co.nft.lms.vo.StudentLecture;
+import kr.co.nft.lms.vo.Teacher;
 import kr.co.nft.lms.vo.TeacherLecture;
 
 @Mapper
@@ -82,6 +84,11 @@ public interface LectureMapper {
 	
 	//9. 강의 번호로 강의 하나의 정보를 select
 	Lecture selectLecturebyLectureNo(int lectureNo);
+	
+	//10-1. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 수업 가능한 강사 목록
+	List<Teacher> selectTeacherListByDates(String lectureStartDate,String lectureEndDate);
+	//10-2. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 사용가능한 강의실 목록
+	List<LectureRoom> selectLectureRoomListByDates(String lectureStartDate,String lectureEndDate);
 	
 	
 

@@ -20,6 +20,43 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
+		//개강일, 수료일로 강사, 강의실 검색
+		$('#checkLecture').click(function() {
+			if($('#lectureStartDate').val()== ' '){
+				alert('개강일을 선택해주세요'); 
+			}else if($('#lectureEndDate').val()== ' '){
+				alert('수료일을 선택해주세요'); 
+			}else{
+				var lectureStartDate = $('#lectureStartDate').val();
+				var lectureEndDate = $('#lectureEndDate').val();
+				var url = '${pageContext.request.contextPath}/manager/getTeacherListAndLectureRoomList?lectureEndDate='+lectureEndDate+'&lectureStartDate='+lectureStartDate; 
+				$.ajax({
+					type:'get'
+					,url: url
+					,success: function(a){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
+					//ajax값 가공
+					console.log(a)
+					var a2 = JSON.stringify(a);
+					var a3 = JSON.parse(a2);
+	            	console.log("▶▶▶a2 : "+a);
+	                console.log("▶▶▶typeof(a3) : "+typeof(a3));
+	               
+	                // let 변수 선언 자리에 var 사용해도 상관 없다 
+	                let arr = a3.results.juso; // 주소 배열
+	                console.log("▶▶▶arr : "+arr);
+						
+						for(var i=0; i<arr.length; i++){
+						$('#roomList').append(`<option name="lectureRoomName" value="a.lecutureRoomList[i]">`+a.lecutureRoomList[i]+`</option>`);
+						}
+						for(var i=0; i<arr.length; i++){
+						$('#roomList').append(`<option name="memberId" value="a.teacherList[i]">`+a.teacherList[i]+`</option>`);
+						}
+					}
+				});
+			}
+		});
+		
+		//form submit 유효성 검사
 		$('#addLectureBtn').click(function() {
 			if($('#subjectName').val() == ' '){
 				alert('과목을 선택해주세요'); 
@@ -66,20 +103,17 @@
 										<br> 강의명 <input type="text" id="lectureName" name="lectureName" class="form-control" placeholder="강의명 입력해주세요">
 										<br> 개강일 <input type="date" id="lectureStartDate" class="form-control" name="lectureStartDate">
 										<br> 수료일 <input type="date" id="lectureEndDate" class="form-control" name="lectureEndDate"><br>
-										<div>
-											강의실 <select id="lectureRoom" name=lectureRoomName>
-												<option value=" ">강의실 선택</option>
-												<c:forEach var="l" items="${lectureRoomList}">
-													<option value="${l.lectureRoomName}">${l.lectureRoomName}</option>
-												</c:forEach>
-											</select>
-										</div>
-										<br> 강사 <select id="teacher" name="memberId">
-											<option value=" ">강사 선택</option>
-											<c:forEach var="t" items="${teacherList}">
-												<option value="${t.memberId}">${t.teacherName}</option>
-											</c:forEach>
+										<button type = "button" id="checkLecture">강사,강의실 검색</button>
+										<!-- 검색시, 강사, 강의실 리스트가 들어갈 자리 -->
+										강의실 <select id="lectureRoom" name="lectureRoomName">
+										<option value=" ">강의실 선택</option>
+										<div id = "lectureRoomList"></div>
 										</select>
+										강사 <select id="teacherList" name="memberId">
+										<option value=" ">강사 선택</option>
+										<div id = "teacherList"></div>
+										</select>
+										</div>
 									</div>
 										<!-- 작성자 -->
 										<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">

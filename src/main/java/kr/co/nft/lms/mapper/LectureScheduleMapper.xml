@@ -12,7 +12,7 @@
 			, lecture_schedule_end_date lectureScheduleEndDate
 			, lecture_schedule_create_date lectureScheduleCreateDate
 		FROM lecture_schedule
-		WHERE lecture_no = #{ lectureNo };
+		WHERE lecture_no = #{ lectureNo }
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	

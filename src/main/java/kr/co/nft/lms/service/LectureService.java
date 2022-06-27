@@ -366,4 +366,21 @@ public class LectureService {
 		
 		return returnMap;
 	}
+	//강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 수업 가능한 강사 목록, 사용가능한 강의실을 DB에 요청하는 서비스
+	//[LectureRestController.getTeacherListByDates]에서 호출
+	public Map<String,Object> getTeacherListAndLectureRoomList(String lectureStartDate,String lectureEndDate){
+		log.debug(A.E+"[LectureService.getTeacherListByDates] lectureStartDate:"+lectureStartDate+A.R);
+		log.debug(A.E+"[LectureService.getTeacherListByDates] lectureEndDate:"+lectureEndDate+A.R);
+		//강의 시간이 겹치지않은 강사 리스트 요청
+		List<Teacher> teacherList = lectureMapper.selectTeacherListByDates(lectureStartDate, lectureEndDate);
+		//강의 시간이 겹치지않은 강의실 리스트 요청
+		log.debug(A.E+"[LectureService.getTeacherListByDates] teacherList:"+teacherList+A.R);
+		List<LectureRoom> lectureRoomList = lectureMapper.selectLectureRoomListByDates(lectureStartDate, lectureEndDate);
+		log.debug(A.E+"[LectureService.getTeacherListByDates] lectureRoomList:"+lectureRoomList+A.R);
+		//모델값 반환
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("teacherList", teacherList);
+		returnMap.put("lectureRoomList", lectureRoomList);
+		return returnMap;
+	}
 }

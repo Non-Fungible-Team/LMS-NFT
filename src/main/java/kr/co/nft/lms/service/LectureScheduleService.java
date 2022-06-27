@@ -28,7 +28,7 @@ public class LectureScheduleService {
 	
 	// lecture_schedule 테이블 lecture_no에 따른 전체 리스트
 	public Map<String,Object> getLectureScheduleListByLectureNo(int lectureNo, int currentPage, int rowPerPage ) {
-		log.debug(A.A + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureNo : " + lectureNo + A.R);
+		log.debug(A.W + "[LectureScheduleService.getLectureScheduleListByLectureNo] lectureNo : " + lectureNo + A.R);
 		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.currentPage] currentPage  : " + currentPage +A.R);
 		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.currentPage] rowPerPage  : " + rowPerPage +A.R);
 		
@@ -41,6 +41,7 @@ public class LectureScheduleService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
+		map.put("lectureNo", lectureNo);
 		log.debug(A.W +"[LectureScheduleService.getLectureScheduleListByLectureNo.map] map(페이지값) : " +map +A.R);//디버깅코드
 		
 		//mapper메소드 호출

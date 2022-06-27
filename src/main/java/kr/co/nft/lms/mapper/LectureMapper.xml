@@ -330,4 +330,42 @@
 		ON l.lecture_room_name = lr.lecture_room_name
 		WHERE l.lecture_no = #{lectureNo}
 	</select>
+	<!-- 10-1. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 수업 가능한 강사 목록 -->
+	<select id ="selectTeacherListByDates"
+				resultType="kr.co.nft.lms.vo.Teacher"
+				parameterType = "String">
+				SELECT
+					t.member_id memberId
+					,t.teacher_name teacherName
+				FROM teacher t
+				LEFT JOIN teacher_lecture tl
+				ON t.member_id = tl.member_id
+				WHERE tl.lecture_no NOT IN (SELECT lecture_no 
+														FROM lecture 
+														WHERE (
+															(<![CDATA[lecture_start_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[lecture_start_date  <= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)
+															OR (<![CDATA[lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]> AND <![CDATA[lecture_end_date  <= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)
+															)
+														)
+				GROUP BY t.member_Id
+	</select>
+	<!-- 10-2. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 사용가능한 강의실 목록 -->
+	<select id ="selectLectureRoomListByDates"
+				resultType="kr.co.nft.lms.vo.LectureRoom"
+				parameterType = "String">
+				SELECT
+					lr.lecture_room_name lectureRoomName
+				FROM lecture_room lr
+				LEFT JOIN lecture l
+				ON	 lr.lecture_room_name = l.lecture_name
+				WHERE l.lecture_no NOT IN (SELECT lecture_no 
+														FROM lecture 
+														WHERE (
+															(<![CDATA[lecture_start_date  >= STR_TO_DATE(#{lectureStartDate},'%y-%m-%d')]]>  AND <![CDATA[lecture_start_date  <= STR_TO_DATE(#{lectureEndDate},'%y-%m-%d'))]]> 
+															OR ( <![CDATA[lecture_end_date >= STR_TO_DATE(#{lectureStartDate},'%y-%m-%d')]]>  AND  <![CDATA[lecture_end_date <= STR_TO_DATE(#{lectureEndDate},'%y-%m-%d')]]> )
+															)
+														)
+				GROUP BY lr.lecture_room
+	</select>
+	
 </mapper>
