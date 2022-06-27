@@ -6,8 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Survey;
+import kr.co.nft.lms.vo.SurveyMultipleAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
+import kr.co.nft.lms.vo.SurveyShortAnswer;
 
 @Mapper
 public interface SurveyMapper {
@@ -44,5 +46,9 @@ public interface SurveyMapper {
 	// 설문조사 상세보기(이너조인)
 	List<Map<String,Object>> getSurveyQuestionList(int surveyNo);
 	
+	// 설문조사 객관식 답변 등록
+	int insertSurveyMultipleAnswer(SurveyMultipleAnswer surveyMultipleAnswer);
 	
+	// 설문조사 주관식 답변 등록
+	int insertSurveyShortAnswer(SurveyShortAnswer surveyShortAnswer);
 }
