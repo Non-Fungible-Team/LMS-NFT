@@ -98,7 +98,7 @@
 		UPDATE board
 		SET board_title = #{noticeTitle}
 			, board_content = #{noticeContent}
-			, board_privilege =#{noticePrivilege}
+			, board_privilege = #{noticePrivilege}
 		WHERE board_no = #{noticeNo}
 	</update>
 	

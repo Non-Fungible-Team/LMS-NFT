@@ -35,10 +35,19 @@
 				<div class="col-lg-12 col-md-12">
 				    <div class="card">
 				        <div class="card-body">
-				            <h4 class="card-title">공지사항 상세보기</h4>
-				            <a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
-								<input type="button" class="btn btn-info" style="float: right" value="목록으로">
-							</a>
+				        	<div>
+				           		<h4 class="card-title">공지사항 상세보기</h4>
+				           	
+				            	<a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
+									<input type="button" class="btn btn-info" style="float: right" value="목록으로">
+								</a>
+								<c:if test="${sessionLoginMember.memberLevel >= 6 }">
+				            		<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
+				            			<input type="button" class="btn btn-outline-success" style="float: right" value="공지사항 내용 수정">
+				            		</a>
+						 	   </c:if>
+							</div>
+	
 				            <div class="mt-2" style="height:auto; width:auto;">
 				            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
 				            		<tr>
@@ -58,7 +67,7 @@
 										<td>${notice.noticeBlind}</td>
 									</tr>
 									<tr>
-										<th>맴버ID</th>
+										<th>작성자ID</th>
 										<td>${notice.memberId}</td>
 									</tr>
 									<tr>
@@ -74,15 +83,7 @@
 										<td>${notice.noticeUpdateDate}</td>
 									</tr>
 				            	</table>
-				            	<div style="text-align: center;">
-				            		<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
-				            			<input type="button" class="btn btn-outline-success" value="공지사항 내용 수정">
-				            		</a>
-							    	
-							    	<a href="${pageContext.request.contextPath}/manager/notice/removeNotice?noticeNo=${notice.noticeNo}">
-							    		<input type="button" class="btn btn-outline-danger" value="삭제">
-							    	</a>
-							    </div>
+
 							    
 				    			<div>
 				    			<br>
@@ -93,7 +94,6 @@
 										    	<th>파일미리보기</th>
 												<th>파일타입</th>
 												<th>파일사이즈</th>
-												<th>삭제</th>
 									    	</tr>
 									    	<c:forEach var ="f" items="${noticeFileList}">
 												<tr>
@@ -105,11 +105,6 @@
 													</td>
 													<td>${f.noticeFileType}</td>
 													<td>${f.noticeFileSize}</td>
-													<td>
-														<a href="${pageContext.request.contextPath}/manager/notice/removeNoticeFile?noticeFileName=${f.noticeFileName}&noticeFileNo=${f.noticeFileNo}&noticeNo=${notice.noticeNo}">
-												    		<input type="button" class="btn btn-outline-danger" value="file삭제">
-												    	</a>
-													</td>
 												</tr>	
 									    	</c:forEach>
 									    </table>

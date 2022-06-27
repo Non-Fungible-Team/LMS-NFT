@@ -25,7 +25,7 @@
 		$('document').ready(function(){ 
 			$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 			
-			//
+			// 파일추가 버튼 생성
 			let flag = true;
 			var fileUploadCount = 0;
 			$('#addNoticeFileUpload').click(function(){
@@ -45,8 +45,9 @@
 					});
 					fileUploadCount = fileUploadCount+1;
 				} else {
-					alert('첨부되지 않은 List가 존재합니다.');
+					alert('첨부되지 않은 noticeFileList가 존재합니다.');
 				}
+				
 			});
 			
 			//유효성검사

@@ -129,14 +129,6 @@ public class NoticeService {
 		log.debug(A.S + "[NoticeService.modifyNotice.row] row : "+ row + A.R); 
 		return row; 
 	}
-	  
-	//Notice 삭제(블라인드로 변경) 
-//	public int removeNotice(int noticeNo) { 
-//		log.debug(A.S + "[NoticeService.removeNotice.param] noticeNo : "+ noticeNo + A.R); 
-//		int row = noticeMapper.deleteNotice(noticeNo);
-//		log.debug(A.S + "[NoticeService.removeNotice.row] row : "+ row + A.R); 
-//		return row;
-//	}
 	
 	//Notice + File 삭제
 	public int removeNotice(int noticeNo, String path) {
@@ -165,7 +157,8 @@ public class NoticeService {
 	//File 만 삭제
 	public int removeNoticeFile(int noticeNo, String noticeFileName,int noticeFileNo, String path) {
 		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeNo : "+ noticeNo + A.R); 
-		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileNo : "+ noticeFileName + A.R); 
+		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileName : "+ noticeFileName + A.R); 
+		log.debug(A.S + "[NoticeService.removeNoticeFile.param] noticeFileNo : "+ noticeFileNo + A.R); 
 		log.debug(A.S + "[NoticeService.removeNoticeFile.param] path : "+ path + A.R); 
 		int row = -1;
 		

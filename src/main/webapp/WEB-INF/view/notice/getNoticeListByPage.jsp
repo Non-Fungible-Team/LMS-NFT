@@ -37,11 +37,13 @@
 					        	<div class="card-body">
 				            		<div>
 				            			<h4 class="card-title">공지사항</h4>
-					            		<div>
-									        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">
-									        	<input type="button" class="btn btn-success" style="float: right" value="게시판입력">
-									        </a>
-								        </div>
+				            			<c:if test="${sessionLoginMember.memberLevel >= 6}">
+						            		<div>
+										        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">
+										        	<input type="button" class="btn btn-success" style="float: right" value="게시판입력">
+										        </a>
+									        </div>
+								        </c:if>
 							   		</div>
 					          		<div class="mt-2" style="height:auto; width:100%;">
 					            		<table id="zero_config" class="table table-striped table-bordered no-wrap">
@@ -49,7 +51,8 @@
 					                            <tr>
 					                                <th>번호</th>
 													<th>제목</th>
-													<th>회원ID</th>
+													<th>읽기권한</th>
+													<th>작성자ID</th>
 													<th>생성날짜</th>
 					                            </tr>
 				                            </thead>
@@ -58,7 +61,8 @@
 													<c:forEach var="n" items="${noticeList}">
 														<tr>
 															<td>${n.noticeNo}</td>
-															<td>[${n.privilegeName}]<a href="${pageContext.request.contextPath}/all/notice/getNoticeOne?noticeNo=${n.noticeNo}">${n.noticeTitle}</a></td>
+															<td><a href="${pageContext.request.contextPath}/all/notice/getNoticeOne?noticeNo=${n.noticeNo}">${n.noticeTitle}</a></td>
+															<td>${n.privilegeName}</td>
 															<td>${n.memberId}</td>
 															<td>${n.noticeCreateDate}</td>
 														</tr>

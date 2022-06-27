@@ -102,13 +102,27 @@ public class NoticeController {
 	//Notice 수정폼
 	@GetMapping("/manager/notice/modifyNotice")
 	public String modifyNotice(Model model
+							,HttpSession session
 							,@RequestParam(name="noticeNo") int noticeNo) {
 		log.debug(A.S + "[NoticeController.modifyNotice.param] noticeNo : " + noticeNo + A.R);
+		//세션에 로그인 정보 요청
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		
 		Map<String, Object> noticeOneReturnMap = noticeService.getNoticeOne(noticeNo);
 		log.debug(A.S + "[NoticeController.modifyNotice] notice : " + noticeOneReturnMap.get("notice") + A.R);
 		log.debug(A.S + "[NoticeController.modifyNotice] noticeFileList : " + noticeOneReturnMap.get("noticeFileList") + A.R);
+		//returnMap 안에 notice는 권한 비교를 위해 notice변수에 저장
+		Notice notice = (Notice)noticeOneReturnMap.get("notice");
+		
 		model.addAttribute("notice", noticeOneReturnMap.get("notice"));
 		model.addAttribute("noticeFileList", noticeOneReturnMap.get("noticeFileList"));
+		log.debug(A.S + "[NoticeController.modifyNotice] model : " + model + A.R);
+		
+		//가져온 상세보기가 로그인한 회원의 권한 밖의 게시물이면 list로 redirect
+			if(notice.getNoticePrivilege() > loginMember.getMemberLevel()){
+				log.debug(A.S + "[NoticeController.getNoticeOne] 권한밖의 notice게시물 수정 요청" + A.R);
+				return "redirect:/all/notice/getNoticeListByPage";
+			}
 		return "/notice/modifyNotice";
 	}
 	
@@ -165,14 +179,14 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileNo : " + noticeFileNo + A.R);
 		int row = noticeService.removeNoticeFile(noticeNo,noticeFileName,noticeFileNo,path);
 		log.debug(A.S + "[NoticeController.removeNoticeFile] row : " + row + A.R);
-		//row가 0 이면 입력 실패
+		//row가 0 이면 삭제실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 실패"+ A.R);
 			return "redirect:/manager/notice/removeNoticeFile?msg=fail";
 		}
-		//입력성공 했을 경우
+		//삭제성공 했을 경우
 		log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 성공"+ A.R);
-		return "redirect:/all/notice/getNoticeOne?noticeNo=" + noticeNo;
+		return "redirect:/manager/notice/modifyNotice?noticeNo=" + noticeNo;
 		
 		
 	}

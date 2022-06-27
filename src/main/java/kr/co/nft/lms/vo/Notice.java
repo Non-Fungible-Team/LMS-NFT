@@ -26,9 +26,9 @@ public class Notice {
 	public void setNoticePrivilege(int noticePrivilege) {
 		this.noticePrivilege = noticePrivilege;
 		if(noticePrivilege == 4) {
-			this.PrivilegeName = "학생만";
+			this.PrivilegeName = "학생,강사,운영자";
 		}else if (noticePrivilege == 5) {
-			this.PrivilegeName = "강사이상";
+			this.PrivilegeName = "강사,운영자";
 		}else if (noticePrivilege == 6) {
 			this.PrivilegeName = "운영자만";
 		}
