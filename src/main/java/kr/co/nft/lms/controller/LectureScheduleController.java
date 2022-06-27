@@ -17,7 +17,7 @@ import kr.co.nft.lms.util.A;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
-public class ScheduleController {
+public class LectureScheduleController {
 	@Autowired private LectureScheduleService lectureScheduleService;
 	@Autowired private LectureService lectureService;
 	
@@ -26,36 +26,37 @@ public class ScheduleController {
 	public String addLectureSchedule() {
 		log.debug(A.A + "[ScheduleController.addLectureSchedule] 실행" + A.R);
 		lectureScheduleService.addLectureSchedule(); 
-		log.debug(A.A + "[ScheduleController.addLectureSchedule] 실행 완료" + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureSchedule] 실행 완료" + A.R);
 		return "/lecture/addLectureSchedule";
 	}
 	
 	
 	//2.강의시간표 목록
-	@GetMapping("/lecture/getLectureScheduleListByLectureNo")
+	@GetMapping("/all/lecture/getLectureScheduleListByLectureNo")
 	public String getLectureScheduleListByLectureNo(Model model
 													,HttpSession session
 													,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
 													,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
-		log.debug(A.W +"[ScheduleController.student.lecture.getLectureScheduleListByLectureNo.currentPage] currentPage : " +currentPage +A.R);
-		log.debug(A.W +"[ScheduleController.student.lecture.getLectureScheduleListByLectureNo.rowPerPage] rowPerPage : " +rowPerPage +A.R);
+		log.debug(A.W +"[LectureScheduleController.student.lecture.getLectureScheduleListByLectureNo.currentPage] currentPage : " +currentPage +A.R);
+		log.debug(A.W +"[LectureScheduleController.student.lecture.getLectureScheduleListByLectureNo.rowPerPage] rowPerPage : " +rowPerPage +A.R);
 		//session에 lectureNo 값 요청
 		int lectureNo = (int)session.getAttribute("sessionLectureNo");
-		log.debug(A.A + "[ScheduleController.student.lecture.getLectureScheduleListByLectureNo] 실행(lectureNo) :" +lectureNo + A.R);
+		log.debug(A.A + "[LectureScheduleController.student.lecture.getLectureScheduleListByLectureNo] 실행(lectureNo) :" +lectureNo + A.R);
 		
 		
 		//서비스 호출해서 list에 저장
 		Map<String,Object> lectureScheduleMap = lectureScheduleService.getLectureScheduleListByLectureNo(lectureNo, currentPage, rowPerPage);
-		log.debug(A.A + "[ScheduleController.getLectureScheduleListByLectureNo.lectureScheduleMap] lectureScheduleMap(전) : " + lectureScheduleMap + A.R);
+		log.debug(A.A + "[LectureScheduleController.getLectureScheduleListByLectureNo.lectureScheduleMap] lectureScheduleMap(전) : " + lectureScheduleMap + A.R);
+		
 		model.addAttribute("lectureScheduleList",lectureScheduleMap.get("lectureScheduleList")); //강의목록
 		model.addAttribute("lectureNo", lectureScheduleMap.get("lectureNo")); //강의 번호
 		model.addAttribute("currentPage", lectureScheduleMap.get("currentPage")); //현재페이지
 		model.addAttribute("lastPage", lectureScheduleMap.get("lastPage")); //마지막페이지
-		log.debug(A.A + "[ScheduleController.getLectureScheduleListByLectureNo.lectureScheduleMap] lectureScheduleMap(후)"+lectureScheduleMap + A.R);
-		log.debug(A.W +"[ScheduleController.getLectureScheduleListByLectureNo.model] model.lectureScheduleList : " +lectureScheduleMap.get("lectureScheduleList") +A.R);
-		log.debug(A.W +"[ScheduleController.getLectureScheduleListByLectureNo.model] model.lectureNo : " +lectureScheduleMap.get("lectureNo") +A.R);
-		log.debug(A.W +"[ScheduleController.getLectureScheduleListByLectureNo.model] model.currentPage : " +lectureScheduleMap.get("currentPage") +A.R);
-		log.debug(A.W +"[ScheduleController.getLectureScheduleListByLectureNo.model] model.lastPage : " +lectureScheduleMap.get("lastPage") +A.R);
+		log.debug(A.A + "[LectureScheduleController.getLectureScheduleListByLectureNo.lectureScheduleMap] lectureScheduleMap(후)"+lectureScheduleMap + A.R);
+		log.debug(A.W +"[LectureScheduleController.getLectureScheduleListByLectureNo.model] model.lectureScheduleList : " +lectureScheduleMap.get("lectureScheduleList") +A.R);
+		log.debug(A.W +"[LectureScheduleController.getLectureScheduleListByLectureNo.model] model.lectureNo : " +lectureScheduleMap.get("lectureNo") +A.R);
+		log.debug(A.W +"[LectureScheduleController.getLectureScheduleListByLectureNo.model] model.currentPage : " +lectureScheduleMap.get("currentPage") +A.R);
+		log.debug(A.W +"[LectureScheduleController.getLectureScheduleListByLectureNo.model] model.lastPage : " +lectureScheduleMap.get("lastPage") +A.R);
 		
 		return "/lecture/getLectureScheduleListByLectureNo";
 	}
@@ -65,17 +66,17 @@ public class ScheduleController {
 	public String removeLectureSchedule(@RequestParam(name = "lectureScheduleDate") String lectureScheduleDate
 										, @RequestParam(name = "lectureNo") int lectureNo) {
 		
-		log.debug(A.A + "[ScheduleController.removeLectureSchedule] lectureScheduleDate : " + lectureScheduleDate + A.R);
-		log.debug(A.A + "[ScheduleController.removeLectureSchedule] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lectureScheduleDate : " + lectureScheduleDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lectureNo : " + lectureNo + A.R);
 		
 		int row = lectureScheduleService.removeLectureSchedule(lectureScheduleDate, lectureNo);
 		
-		log.debug(A.A + "[ScheduleController.removeLectureSchedule] row : " + row + A.R);
+		log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] row : " + row + A.R);
 		
 		if(row == 1) {
-			log.debug(A.A + "[ScheduleController.removeLectureSchedule] lecture_schedule 삭제 성공" + A.R);
+			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 성공" + A.R);
 		} else {
-			log.debug(A.A + "[ScheduleController.removeLectureSchedule] lecture_schedule 삭제 실패" + A.R);
+			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 실패" + A.R);
 		}
 		
 		return "redirect:/lecture/getLectureScheduleListByLectureNo";
