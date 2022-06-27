@@ -32,7 +32,7 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>강사 상세 보기</h1>
+				<h1>운영자 상세 보기</h1>
 				<!-- main화면 body start -->
 
 				<!-- 첫번쨰 문단 -->
@@ -41,12 +41,12 @@
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">강사 정보</h4>
+									<h4 class="card-title">운영자 정보</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
-												<td>강사 사진</td>
+												<td>운영자 사진</td>
 												<td>
 												<!-- 경로  ${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName} 이와같이 작성하면 파일 못찾음 -->
 													<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
@@ -62,36 +62,32 @@
 												<td>${loginMember.memberId}</td>
 											</tr>
 											<tr>
-												<td>강사 이름</td>
-												<td>${getTeacherOneByTeacherVo.teacherName}</td>
+												<td>운영자 이름</td>
+												<td>${getManagerOneByManagerVo.managerName}</td>
 											</tr>
 											<tr>
 												<td>생일</td>
-												<td>${getTeacherOneByTeacherVo.teacherBirth}</td>
+												<td>${getManagerOneByManagerVo.managerBirth}</td>
 											</tr>
 											<tr>
 												<td>성별</td>
-												<td>${getTeacherOneByTeacherVo.teacherGender}</td>
+												<td>${getManagerOneByManagerVo.managerGender}</td>
 											</tr>
 											<tr>
 												<td>이메일</td>
-												<td>${getTeacherOneByTeacherVo.teacherEmail}</td>
+												<td>${getManagerOneByManagerVo.managerEmail}</td>
 											</tr>
 											<tr>
 												<td>입사일</td>
-												<td>${getTeacherOneByTeacherVo.teacherEntryDate}</td>
-											</tr>
-											<tr>
-												<td>담당 과목</td>
-												<td>${getTeacherOneByTeacherVo.teacherSubject}</td>
+												<td>${getManagerOneByManagerVo.managerEntryDate}</td>
 											</tr>
 											<tr>
 												<td>휴대전화</td>
-												<td>${getTeacherOneByMemberVo.memberPhoneNo}</td>
+												<td>${getManagerOneByMemberVo.memberPhoneNo}</td>
 											</tr>
 											<tr>
 												<td>마지막 로그인 날짜</td>
-												<td>${getTeacherOneByMemberVo.memberLastLoginDate}</td>
+												<td>${getManagerOneByMemberVo.memberLastLoginDate}</td>
 											</tr>
 										</table>
 									</div>

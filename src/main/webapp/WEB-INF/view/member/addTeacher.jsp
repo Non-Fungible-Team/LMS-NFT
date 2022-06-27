@@ -136,7 +136,8 @@ table {
 						<option value="naver.com">네이버</option>
 						<option value="daum.net">다음</option>
 						<option value="gmail.com">지메일</option>
-					</select> <span id="teacherEmailIdHelper" class="helper"></span>
+					</select> 
+					<span id="teacherEmailIdHelper" class="helper"></span>
 				</td>
 			</tr>
 			<tr>

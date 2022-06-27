@@ -295,37 +295,79 @@ public class LectureController {
 		// 학생 이름 리스트
 		List<Student> studentTotalList = lectureService.addStudentLecture();
 		
-		int currentPage = 1;
-		int rowPerPage = 1000;
-		
-		// 강의 이름 리스트
-		Map<String,Object> map = lectureService.getLectureByPage(currentPage, rowPerPage); //강의목록 서비스 호출해서 map객체에 저장
-		 //서비스에 저장된 값 가져와서 모델객체에 저장
-		model.addAttribute("lectureList", map.get("lectureList")); //강의목록
-		
-		// 학생 강의 One 리스트
-		StudentLecture studentLectureOne  = lectureService.modifyStudentLectureForm(lectureNo, memberId);
+		// 학생 강의 One 리스트 + 강의 이름과 번호 리스트
+		Map<String , Object> studentLectureOneMap  = lectureService.modifyStudentLectureForm(lectureNo, memberId);
 		
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentTotalList : " + studentTotalList + A.R);
-		// log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureList : " + lectureList + A.R);
-		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentLectureOne : " + studentLectureOne + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNoNameList : " + studentLectureOneMap.get("lectureNoNameList") + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentLectureOne : " + studentLectureOneMap.get("studentLectureOne") + A.R);
 		
 		model.addAttribute("studentTotalList", studentTotalList);
-		model.addAttribute("studentLectureOne", studentLectureOne);
+		model.addAttribute("lectureNoNameList", studentLectureOneMap.get("lectureNoNameList"));
+		model.addAttribute("studentLectureOne", studentLectureOneMap.get("studentLectureOne"));
 		
 		return "/lecture/modifyStudentLecture";
 	}
 	
-	/*
+	
 	// 학생-강의 목록 수정 액션
-	@PostMapping("c")
-	public String modifyStudentLecture() {
+	@PostMapping("/teacher/lecture/modifyStudentLectureAction")
+	public String modifyStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+											, @RequestParam(name = "memberId") String memberId
+											, @RequestParam(name = "studentLectureJob") String studentLectureJob
+											, @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate
+											, @RequestParam(name = "studentLectureEndDate", defaultValue = "null") String studentLectureEndDate
+											, @RequestParam(name = "studentLectureScore", defaultValue = "0") int studentLectureScore) {
 		
-		return "";
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] memberId : " + memberId + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] studentLectureJob : " + studentLectureJob + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] studentLectureLegistrationDate : " + studentLectureLegistrationDate + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] studentLectureEndDate : " + studentLectureEndDate + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] studentLectureScore : " + studentLectureScore + A.R);
+		
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setLectureNo(lectureNo);
+		studentLecture.setMemberId(memberId);
+		studentLecture.setStudentLectureJob(studentLectureJob);
+		studentLecture.setStudentLectureLegistrationDate(studentLectureLegistrationDate);
+		studentLecture.setStudentLectureEndDate(studentLectureEndDate);
+		studentLecture.setStudentLectureScore(studentLectureScore);
+		
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] studentLecture : " + studentLecture + A.R);
+		
+		int row = lectureService.modifyStudentLectureAction(studentLecture);
+		
+		log.debug(A.A + "[LectureController.modifyStudentLectureAction] row : " + row + A.R);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.modifyStudentLectureAction] student_lecture 수정 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.modifyStudentLectureAction] student_lecture 수정 실패" + A.R);
+		}
+		
+		return "redirect:/manager/lecture/getStudentLectureAllByPage";
 	}
 	
-	 */
-	
+	// 5-4. 학생 강의 삭제
+	@GetMapping("/teacher/lecture/removeStudentLectureAction")
+	public String removeStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+											, @RequestParam(name = "memberId") String memberId) {
+		
+		log.debug(A.A + "[LectureController.removeStudentLectureAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureController.removeStudentLectureAction] memberId : " + memberId + A.R);
+		
+		int row = lectureService.removeStudentLectureAction(lectureNo, memberId);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureController.removeStudentLectureAction] student_lecture 삭제 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureController.removeStudentLectureAction] student_lecture 삭제 실패" + A.R);
+		}
+		
+		return "redirect:/manager/lecture/getStudentLectureAllByPage";
+	}
+		
 	//6.강사_강의 목록
 	@GetMapping("/manager/lecture/getManagerLectureByPage")
 	public String getManagerLectureByPage(Model model

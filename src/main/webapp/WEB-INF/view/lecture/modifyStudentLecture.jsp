@@ -58,26 +58,45 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		        <div class="card-body">
 		            <h4 class="card-title">StudentLecture modify</h4>
 		            <br>
-		            <div style="height:294px;">
+		            <div style="height:auto;">
 		            	<form method="post" id="modifyForm" action="${pageContext.request.contextPath}/teacher/lecture/modifyStudentLectureAction">
                             <div class="form-group">
-                               강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo" value="${ studentLectureOne.lectureNo } (${ studentLectureOne.lectureName })">
+                               강의 :
+                               <select name="lectureNo" id="lectureNo" class="form-control">
+                           			<option value="-1">강의 선택</option>
+                           			<c:forEach var ="ln" items="${ lectureNoNameList }">
+                           				<c:if test="${ ln.lectureNo == studentLectureOne.lectureNo }">
+		                        			<option value="${ studentLectureOne.lectureNo }" selected>${ studentLectureOne.lectureNo } (${ studentLectureOne.lectureName })</option>
+				                      	</c:if>
+                           				<c:if test="${ ln.lectureNo != studentLectureOne.lectureNo }">
+                              				<option value="${ ln.lectureNo }">${ ln.lectureNo } (${ ln.lectureName })</option>
+				                      	</c:if>
+                           			</c:forEach>
+                       		   </select>
                                학생 : <select name="memberId" id="memberId" class="form-control">
                                			<option value="-1">학생 선택</option>
                                			<c:forEach var ="s" items="${ studentTotalList }">
                                				<c:if test="${ s.memberId == studentLectureOne.memberId }">
 					                        	<option value="${ s.memberId }" selected>${ studentLectureOne.memberId } (${ studentLectureOne.studentName })</option>
 					                      	</c:if>
+                               				<c:if test="${ s.memberId != studentLectureOne.memberId }">
                                				<option value="${ s.memberId }">${ s.memberId } (${ s.studentName })</option>
+					                      	</c:if>
                                			</c:forEach>
                               		 </select>
                                취업 여부 : <select name="studentLectureJob" id="studentLectureJob" class="form-control">
 		                               		<option value="-1">취업 여부 선택</option>
-		                               		<option value="Y">Y</option>
-		                               		<option value="N">N</option>
+		                               		<c:if test="${ studentLectureOne.studentLectureJob == 'Y' }">
+			                        			<option value="Y" selected>Y</option>
+			                        			<option value="N">N</option>
+					                      	</c:if>
+	                           				<c:if test="${ studentLectureOne.studentLectureJob == 'N' }">
+	                           					<option value="Y">Y</option>
+	                              				<option value="N" selected>N</option>
+					                      	</c:if>
 	                              	    </select>
                                등록일 : <input type="date" name="studentLectureLegistrationDate" class="form-control" id="studentLectureLegistrationDate" value="${ studentLectureOne.studentLectureLegistrationDate }">
-                               수료일 : <input type="date" name="studentLectureEndDate" class="form-control" id="studentLectureEndDate">
+                               수료일 : <input type="date" name="studentLectureEndDate" class="form-control" id="studentLectureEndDate" value="${ studentLectureOne.studentLectureEndDate }">
                                전체 성적 : <input type="number" name="studentLectureScore" class="form-control" id="studentLectureScore" value="${ studentLectureOne.studentLectureScore }">
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="modifyStudentLecture"><i class="fas fa-check"></i>수정</button>

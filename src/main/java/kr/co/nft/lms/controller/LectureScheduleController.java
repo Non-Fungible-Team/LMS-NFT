@@ -77,8 +77,8 @@ public class LectureScheduleController {
 			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 성공" + A.R);
 		} else {
 			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 실패" + A.R);
-		}
+		}  
 		
-		return "redirect:/lecture/getLectureScheduleListByLectureNo";
+		return "/all/lecture/getLectureScheduleListByLectureNo";
 	}
 }

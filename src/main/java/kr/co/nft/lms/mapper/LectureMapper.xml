@@ -261,20 +261,24 @@
 	</select>
 	
 	<!--5-3.학생-강의 목록 수정액션 -->
-	<update id="updateStudentLecture">
+	<update id="updateStudentLecture"
+			parameterType="kr.co.nft.lms.vo.StudentLecture">
 		UPDATE student_lecture
-		SET lecture_no =#{lectureNo}
-		,member_id = #{memberId}
-		,student_lecture_job =#{studentLectureJob}
-		,student_lecture_legistration_date =#{studentLectureLegistrationDate}
-		,student_lecture_end_date = #{studentLectureEndDate}
-		,#{student_lecture_score} =#{studentLectureScore}
+		SET lecture_no = #{lectureNo}
+			, member_id = #{memberId}
+			, student_lecture_job =#{studentLectureJob}
+			, student_lecture_legistration_date =#{studentLectureLegistrationDate}
+			<if test="studentLectureEndDate != 'null'">
+				, student_lecture_end_date = #{studentLectureEndDate}
+			</if>
+			, student_lecture_score = #{studentLectureScore}
 		WHERE member_id = #{memberId}
 	</update>
 	<!-- 5-4.학생-강의 목록 삭제 -->
-	<delete id="deleteStudentLecture" parameterType="int">
+	<delete id="deleteStudentLecture" 
+			parameterType="kr.co.nft.lms.vo.StudentLecture">
 		DELETE FROM
-		student_lecture
+			student_lecture
 		WHERE lecture_no = #{lectureNo}
 		AND member_id = #{memberId}
 	</delete>
@@ -360,6 +364,14 @@
 															(<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d')]]>)
 															OR (<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d') ]]> AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)))
 				GROUP BY lr.lecture_room_name
+	</select>
+	
+	<select id="selectLectureNoNameList"
+			resultType="kr.co.nft.lms.vo.Lecture">
+		SELECT 
+			lecture_no lectureNo
+			, lecture_name lectureName
+		FROM lecture;
 	</select>
 	
 </mapper>
