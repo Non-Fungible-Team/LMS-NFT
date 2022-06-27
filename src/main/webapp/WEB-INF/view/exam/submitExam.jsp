@@ -13,8 +13,9 @@
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>시험 점수 리스트</title>
-<!-- CSS 링크 -->
+<title>getExamOne</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link
 	href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css"
 	rel="stylesheet">
@@ -50,73 +51,95 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>시험 점수 리스트</h1>
+				<h1>시험응시</h1>
+				<!-- main화면 body start -->
+				<!-- 첫번쨰 문단 -->
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">시험 목록</h4>
+								<h4 class="card-title">시험응시</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 									<table id="zero_config"
-										class="table table-striped table-bordered">
+										class="table table-striped table-bordered table table-hover">
 										<thead>
 											<tr>
-												<th>시험 번호</th>
-												<th>시험 제목</th>
-												<th>학생이름</th>
-												<th>점수</th>
-												<th>응시여부</th>
-												<th>시험응시일시</th>
-												<th>상세보기</th>
+												<th class="table-primary">시험 번호</th>
+												<th class="table-primary">시험 제목</th>
+												<th class="table-primary">시험 문항수</th>
+												<th class="table-primary">만점</th>
+												<th class="table-primary">시험 시작 일시</th>
+												<th class="table-primary">시험 종료 일시</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="e" items="${examScoreList}">
-												<tr>
-													<td>${e.examNo}</td>
-													<td>${e.examTitle}</td>
-													<td>${e.memberId}</td>
-													<td>${e.examScore}</td>
-													<td>${e.examAnswerApply}</td>
-													<td>${e.examAnswerEndDate}</td>
-													<td><a
-														href="${pageContext.request.contextPath}/all/exam/getExamScoreOne?examNo=${e.examNo}&memberId=${e.memberId}">상세보기</a></td>
-												</tr>
-											</c:forEach>
+											<tr>
+												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light">${examOne.examTitle}</td>
+												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light">${examOne.examMaxScore}</td>
+												<td class="table-light">${examOne.examStartDate}</td>
+												<td class="table-light">${examOne.examEndDate}</td>
+											</tr>
 										</tbody>
 									</table>
-									<form method="get"
-										action="${pageContext.request.contextPath}/all/exam/getExamScoreListByPage">
-										<c:if test="${currentPage>1}">
-											<button type="submit"
-												class="btn btn-outline-warning btn-rounded"
-												name="currentPage" value="${currentPage-1}">이전</button>
-										</c:if>
-										<!-- 목록 사이 번호 표시 -->
-										<c:forEach begin="1" end="10" step="1" var="i"
-											varStatus="status">
-											<c:if test="${ i< 5 && currentPage-(5-i)> 0 }">
-												<button type="submit" value="${currentPage-(5-i)}"
-													name="currentPage" class="btn btn-outline-info btn-rounded">${currentPage-(5-i)}</button>
-											</c:if>
-											<c:if test="${ i==5 }">
-												<button type="submit" value="${currentPage}"
-													name="currentPage"
-													class="btn btn-outline-danger btn-rounded">${currentPage}</button>
-											</c:if>
-											<c:if test="${ i > 5 && currentPage+(i-5) <= examScoreLastPage }">
-												<button type="submit" value="${currentPage+(i-5)}"
-													name="currentPage" class="btn btn-outline-info btn-rounded">${currentPage+(i-5)}</button>
-											</c:if>
-										</c:forEach>
-										<c:if test="${currentPage<examScoreLastPage}">
-											<button type="submit"
-												class="btn btn-outline-success btn-rounded"
-												name="currentPage" value="${currentPage+1}">다음</button>
-										</c:if>
-									</form>
-									<hr>
+									<c:forEach var="examQuestionOneList" items="${examQuestionOneList}"
+										varStatus="status">
+										<c:set var="qeustionNo" value="Q${examQuestionOneList.examQuestionNo}"></c:set>
+										<c:set var="answerNo" value="A${examQuestionOneList.examQuestionNo}"></c:set>
+										<table id="zero_config"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th class="table-info">문제 번호</th>
+													<th class="table-info">문제 내용</th>
+													<th class="table-info">배점</th>
+													<th class="table-info">문제유형</th>
+													<th class="table-info">답안</th>
+													<th class="table-info">보기</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="table-light">${examQuestionOneList.examQuestionNo}</td>
+													<td class="table-light">${examQuestionOneList.examContent}</td>
+													<td class="table-light">${examQuestionOneList.examPoint}</td>
+													<td class="table-light">${examQuestionOneList.examType}</td>
+													<td class="table-light">
+														<table>
+															<thead>
+																<tr>
+																	<th class="table-info">보기 번호</th>
+																	<th class="table-info">보기 내용</th>
+																</tr>
+															</thead>
+															<c:forEach var="examExampleOneList" items="${examExampleOneList}">
+																<c:forEach var="example" items="${examExampleOneList[qeustionNo]}">
+																	<tbody>
+																		<tr>
+																			<td class="table-light">${example.exampleNo}</td>
+																			<td class="table-light">${example.exampleContent}</td>
+																		</tr>
+																	</tbody>
+																</c:forEach>
+															</c:forEach>
+														</table>
+													</td>
+													<td class="table-light"><input type="text" name="examAnswer" id="examAnswer"></td>
+												</tr>
+											</tbody>
+										</table>
+									</c:forEach>
+									<div style="float: right">
+										<input type="hidden" name="examNo" value="${param.examNo}"
+											readonly="readonly">
+										<button type="button"
+											class="btn btn-outline-success btn-rounded"
+											onclick="location.href='${pageContext.request.contextPath}/all/exam/getExamScoreListByPage'">
+											<i class="fas fa-check"></i>점수 확인
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -59,7 +59,7 @@ public class ExamController {
 		return "/exam/addExam";
 	}
 	@PostMapping("/teacher/exam/addExam")
-	public String addNotice(HttpServletRequest request, Exam exam, ExamQuestion examQuestion, ExamExample examExample) {
+	public String addExam(HttpServletRequest request, Exam exam, ExamQuestion examQuestion, ExamExample examExample) {
 		log.debug(A.C + "[ExamController.addExam.param] request: " + request + A.R);
 		log.debug(A.C + "[ExamController.addExam.param] exam: " + exam+ A.R);
 		
@@ -119,25 +119,43 @@ public class ExamController {
 
 	
 //	examAnswer 시험 학생 제출 및 점수 
-	
 	// 시험 점수 리스트
 		@GetMapping("/all/exam/getExamScoreListByPage")
 		public String getExamScoreListByPage(Model model,
 										Exam exam
 										,@RequestParam(name="currentPage", defaultValue="1") int currentPage
 										,@RequestParam(name="rowPerPage", defaultValue ="10") int rowPerPage) {
-			Map<String, Object> returnMap = examService.getExamListByPage(currentPage, rowPerPage);
-			log.debug(A.C + "[ExamController.getExamListByPage.param] returnMap: " + returnMap + A.R);
-			model.addAttribute("examList", returnMap.get("examList"));
-			model.addAttribute("examLastPage", returnMap.get("examLastPage"));
+			Map<String, Object> returnMap = examService.getExamScoreListByPage(currentPage, rowPerPage);
+			log.debug(A.C + "[ExamController.getExamScoreListByPage.param] returnMap: " + returnMap + A.R);
+			model.addAttribute("examScoreList", returnMap.get("examScoreList"));
+			model.addAttribute("examScoreLastPage", returnMap.get("examScoreLastPage"));
 			model.addAttribute("currentPage", currentPage);
-			return "/exam/getExamListByPage";
+			return "/exam/getExamScoreListByPage";
 		}
 			
-		// 시험문제 보기
-		@GetMapping("/all/exam/getExamOneByMember")
-		public String getExamOneByMember (Model model ,@RequestParam(name="examNo") int examNo, Map<String, Object> examQuestionOneList) {
-			log.debug(A.C + "[ExamController.getExamOne.param] examNo: " + examNo + A.R);
+		// 시험 답안 제출
+		@GetMapping("/student/exam/submitExamAnswer")
+		public String submitExamAnswer() {
+			return "/exam/getExamScoreListByPage";
+		}
+		@PostMapping("/student/exam/submitExamAnswer")
+		public String submitExamAnswer(HttpServletRequest request, Exam exam, ExamQuestion examQuestion, ExamExample examExample) {
+			log.debug(A.C + "[ExamController.submitExamAnswer.param] request: " + request + A.R);
+			log.debug(A.C + "[ExamController.submitExamAnswer.param] exam: " + exam+ A.R);
+			
+			int row = examService.submitExamAnswer(exam);
+			if(row ==1) {
+				log.debug(A.C +"ExamController.submitExamAnswer 답안 제출 성공"+A.R);
+			} else {
+				log.debug(A.C +"ExamController.submitExamAnswer 답안 제출 실패"+A.R);
+			}
+			return "redirect:/exam/getExamScoreListByPage";
+		}
+		
+		// 제출 답안 상세보기
+		@GetMapping("/all/exam/getExamScoreOne")
+		public String getExamScoreOne (Model model ,@RequestParam(name="examNo") int examNo, Map<String, Object> examQuestionOneList) {
+			log.debug(A.C + "[ExamController.getExamScoreOne.param] examNo: " + examNo + A.R);
 			Map<String, Object> map1 = examService.getExamOne(examNo); // 시험 정보 호출
 			map1 = examService.getExamOne(examNo);
 			log.debug(A.C + "[ExamController.getExamOne.map1] examNo: " + examNo + A.R);
@@ -145,9 +163,11 @@ public class ExamController {
 			model.addAttribute("examOne", map1.get("examOne"));	// 시험정보
 			model.addAttribute("examQuestionOneList", map2.get("examQuestionOneList")); // 문제정보
 			model.addAttribute("examExampleOneList", map2.get("examExampleOneList")); // 보기정보
-			log.debug(A.C + "[ExamController.getExamOne.param] examExampleOneList: " + map2.get("examExampleOneList") + A.R);
-			return "/exam/getExamOne";
+			Map<String, Object> map3 = examService.examScoreOne(examNo); // 제출 답안 호출
+			model.addAttribute("examScoreOneList", map3.get("examScoreOneList"));
+			log.debug(A.C + "[ExamController.getExamScoreOne.param] examScoreOneList: " + map3.get("examScoreOneList") + A.R);
+			return "/exam/getExamScoreOne";
 		}
-	
+				
 
 }

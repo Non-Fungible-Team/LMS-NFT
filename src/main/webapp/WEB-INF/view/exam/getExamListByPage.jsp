@@ -36,6 +36,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+<script>
+	$('document').ready(function(){
+	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+	});
+</script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -50,7 +55,7 @@
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">시험 목록</h4>
+								<h4 class="card-title">점수 확인</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 									<table id="zero_config"

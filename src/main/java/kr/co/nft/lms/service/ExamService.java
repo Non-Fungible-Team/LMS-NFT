@@ -14,7 +14,6 @@ import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Exam;
 import kr.co.nft.lms.vo.ExamExample;
 import kr.co.nft.lms.vo.ExamQuestion;
-import kr.co.nft.lms.vo.Homework;
 import lombok.extern.slf4j.Slf4j;	
 
 @Slf4j
@@ -119,4 +118,63 @@ public class ExamService {
 		log.debug(A.C + "[ExamService.removeExam.param] examNo :"+ examNo + A.R);
 		return examMapper.deleteExam(examNo);
 	}
+	
+//	시험 점수 확인 
+	// 시험리스트 페이지
+	public Map<String, Object> getExamScoreListByPage(int currentPage, int rowPerPage) {
+			log.debug(A.C + "[ExamService.getExamScoreListByPage.param] currentPage: " + currentPage + A.R);
+			log.debug(A.C + "[ExamService.getExamScoreListByPage.param] rowPerPage: " + rowPerPage+ A.R);
+
+			// 1) 커터롤러의 입력값 가공
+			int beginRow = (currentPage-1)*rowPerPage;
+					
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("beginRow", beginRow);
+			paramMap.put("rowPerPage", rowPerPage);
+	
+			// 2) 메퍼 반환값 가공
+			List<Exam> examScoreList = examMapper.selectExamScoreListByPage(paramMap);
+			log.debug(A.C + "[ExamService.getExamScoreListByPage.mapper] examScoreList : "+examScoreList + A.R);
+			Map<String, Object> returnMap = new HashMap<>();
+			int examScoreTotalCount = examMapper.countExamScore();
+			log.debug(A.C + "[ExamService.getExamScoreListByPage.ExamMapper] examScoreTotalCount :"+examScoreTotalCount + A.R);
+			int examScoreLastPage = examScoreTotalCount / (int)(rowPerPage);
+			if(examScoreTotalCount % (int)(rowPerPage) != 0) {
+					examScoreLastPage += 1; 
+			}
+			returnMap.put("examScoreList", examScoreList);
+			returnMap.put("examScoreLastPage", examScoreLastPage); 
+			return returnMap;
+	}
+	
+	
+	// 답안 제출
+	public int submitExamAnswer(Exam exam) {
+			log.debug(A.C + "[ExamService.submitExam.param] exam :"+ exam + A.R);
+			return examMapper.insertExamAnswer(exam);
+	}
+	
+	// 답안 상세보기
+	public Map<String, Object> examScoreOne(int examNo) {
+		log.debug(A.C + "[ExamService.getExamScoreOne.param] examNo: " + examNo + A.R);
+		// 문제 리스트
+		List<Exam> examQuestionOneList = examMapper.selectExamQuestionOne(examNo);
+		log.debug(A.C + "[ExamService.examScoreOneList.selectExamQuestionOne] examNo: " + examNo + A.R);
+		// 제출 답안 리스트
+		List<Map<String, Object>> examScoreOneList = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		for(int i=1; i <= examQuestionOneList.size() ;i = i+1 ) {
+			map.put( "A"+i, examMapper.selectExamScoreOne(examNo,i));
+		};
+		examScoreOneList.add(map);
+		log.debug(A.C + "[ExamService.examScoreOneList.examScoreOneList] examScoreOneList: " + examScoreOneList + A.R);
+
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		log.debug(A.C + "[ExamService.examScoreOneList.Mapper] returnMap : " + returnMap + A.R);
+		returnMap.put("examScoreOneList",examScoreOneList);
+		return returnMap;
+	}
+	
+	
+	
 }

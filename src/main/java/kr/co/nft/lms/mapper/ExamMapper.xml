@@ -184,10 +184,17 @@
 
 <!-- 시험 답안 입력 (학생) -->
 	<insert id="insertExamAnswer"
-			parameterType="kr.co.nft.lms.vo.ExamAnswer">
+			parameterType="kr.co.nft.lms.vo.Exam">
 			<selectKey resultType="int" keyProperty="examScore" order="BEFORE">
-				SELECT SUM(exam_score) FROM exam_answer
-				WHERE 
+				SELECT 		ea.member_id memberId
+							,SUM(eq.exam_point) AS examScore
+				FROM 		exam_answer ea
+				LEFT JOIN 	exam_question eq
+				ON 			ea.exam_question_no = ea.exam_question_no
+				WHERE 		eq.exam_no = ea.exam_no 
+				AND	 		eq.exam_question_no= ea.exam_question_no 
+				AND 		ea.exam_answer=eq.exam_correct_answer 
+				AND 		ea.member_id='student'
 			</selectKey>
 			INSERT INTO exam_answer(
 							 exam_question_No		
@@ -197,16 +204,58 @@
 							,exam_answer_start_date
 							,exam_answer_end_date
 			) VALUES (		#{examQuestionNo}
-							,#{memberId}
+							,memberId
 							,#{examAnswer}
-<!-- 							,#{examScore} -->
-							,#{examAnswerStartDate}
-							,#{examAnswerEndDate}
+							,examScore
 							,NOW()
 							,NOW()		
 			);
 	</insert>
+	
+<!-- 시험확인 리스트  -->	
+	<select id="selectExamScoreListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Exam">
+			SELECT 		ea.exam_no 									examNo
+						,e.exam_title 								examTitle
+						,ea.member_id 								memberId
+						,SUM(eq.exam_point) AS 						examScore
+						,if(ea.exam_answer_end_date='','X','O') 	examAnswerApply
+						,ea.exam_answer_end_date 					examAnswerEndDate
+			FROM 		exam_answer ea
+			JOIN 		exam_question eq
+			ON 			eq.exam_question_no = ea.exam_question_no
+			JOIN 		exam e
+			ON 			e.exam_no = eq.exam_no
+			WHERE 		eq.exam_question_no= ea.exam_question_no 
+			AND 		ea.exam_answer=eq.exam_correct_answer 
+			AND 		ea.member_id='student'
+			GROUP BY 	ea.exam_no
+			ORDER BY 	ea.exam_no ASC
+			LIMIT 		#{beginRow}, #{rowPerPage};
+	</select>
+	
+<!--  시험확인 리스트 수 -->
+	<select id="countExamScore"
+			resultType="int">
+		SELECT COUNT(DISTINCT exam_no) 
+		FROM 	exam_answer
+		WHERE 	member_id='student'
+	</select>
 			
+			
+<!-- 제출 시험 상세보기 		 	 -->
+<!--  제출 답안 상세보기  -->
+	<select id="selectExamScoreOne"
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.Exam">
+			SELECT 	ea.exam_no 				examNo
+					,ea.exam_question_no 	examQuestionNo
+					,ea.exam_answer 		examAnswer
+					,ea.exam_score 			examScore
+			FROM exam_answer ea
+			WHERE ea.exam_no= #{examNo} and ea.exam_question_no = #{examQuestionNo} and ea.member_id = 'student'
+	</select>
 		
 	
 

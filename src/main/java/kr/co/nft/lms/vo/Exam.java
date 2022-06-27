@@ -23,4 +23,9 @@ public class Exam {
 	private String exampleContent;
 	private String exampleCreateDate;
 	private String exampleUpdateDate;
+	private String examAnswer;
+	private int examScore;
+	private String examAnswerStartDate;
+	private String examAnswerEndDate;
+	private String examAnswerApply;
 }

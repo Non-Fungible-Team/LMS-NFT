@@ -42,6 +42,19 @@ public interface ExamMapper {
 	// 시험문제 삭제
 	int deleteExam(int examNo);
 	
+	
+	
 //  시험 점수 확인
+	// 시험문제 리스트
+	List<Exam> selectExamScoreListByPage(Map<String, Object> map);
+	
+	// 확인 리스트 수 
+	int countExamScore();
+		
+	// 답안 제출
+	int insertExamAnswer(Exam exam);
+	
+	// 답안 상세보기
+	List<Exam> selectExamScoreOne(int examNo,int examQuestionNo);
 	
 }

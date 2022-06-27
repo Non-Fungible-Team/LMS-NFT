@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ExamAnswer {
+	private int examNo;
 	private int examQuestionNo;
 	private String memberId;
 	private String examAnswer;
