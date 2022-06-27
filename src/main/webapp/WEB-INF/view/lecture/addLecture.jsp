@@ -22,34 +22,40 @@
 	$(document).ready(function() {
 		//개강일, 수료일로 강사, 강의실 검색
 		$('#checkLecture').click(function() {
-			if($('#lectureStartDate').val()== ' '){
+			$('#lectureRoom').text("");
+			$('#teacherList').text("");
+			if($('#lectureStartDate').val()== ''){
 				alert('개강일을 선택해주세요'); 
-			}else if($('#lectureEndDate').val()== ' '){
+			}else if($('#lectureEndDate').val()== ''){
 				alert('수료일을 선택해주세요'); 
 			}else{
 				var lectureStartDate = $('#lectureStartDate').val();
 				var lectureEndDate = $('#lectureEndDate').val();
+				var checkLecture = "abc";
 				var url = '${pageContext.request.contextPath}/manager/getTeacherListAndLectureRoomList?lectureEndDate='+lectureEndDate+'&lectureStartDate='+lectureStartDate; 
 				$.ajax({
 					type:'get'
 					,url: url
 					,success: function(a){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
 					//ajax값 가공
-					console.log(a)
-					var a2 = JSON.stringify(a);
-					var a3 = JSON.parse(a2);
-	            	console.log("▶▶▶a2 : "+a);
-	                console.log("▶▶▶typeof(a3) : "+typeof(a3));
+					console.log(a);
+					//var a2 = JSON.stringify(a);
+					//var a3 = JSON.parse(a2);
+	            	//console.log("▶▶▶a2 : "+a);
+	                //console.log("▶▶▶typeof(a3) : "+typeof(a3));
 	               
 	                // let 변수 선언 자리에 var 사용해도 상관 없다 
-	                let arr = a3.results.juso; // 주소 배열
-	                console.log("▶▶▶arr : "+arr);
+	                let arr1 = a.lectureRoomList; // 강의실 배열
+	                let arr2 = a.teacherList; // 강사목록 배열
+					console.log(arr1);
+					console.log(arr2);
+	                
 						
-						for(var i=0; i<arr.length; i++){
-						$('#roomList').append(`<option name="lectureRoomName" value="a.lecutureRoomList[i]">`+a.lecutureRoomList[i]+`</option>`);
+						for(var i=0; i<arr1.length; i++){
+						$('#lectureRoom').append("<option name='lectureRoomName' value="+arr1[i].lectureRoomName+">"+arr1[i].lectureRoomName+"</option>");
 						}
-						for(var i=0; i<arr.length; i++){
-						$('#roomList').append(`<option name="memberId" value="a.teacherList[i]">`+a.teacherList[i]+`</option>`);
+						for(var i=0; i<arr2.length; i++){
+						$('#teacherList').append("<option name='memberId' value="+arr2[i].memberId+">"+arr2[i].teacherName+"</option>");
 						}
 					}
 				});
@@ -103,16 +109,16 @@
 										<br> 강의명 <input type="text" id="lectureName" name="lectureName" class="form-control" placeholder="강의명 입력해주세요">
 										<br> 개강일 <input type="date" id="lectureStartDate" class="form-control" name="lectureStartDate">
 										<br> 수료일 <input type="date" id="lectureEndDate" class="form-control" name="lectureEndDate"><br>
-										<button type = "button" id="checkLecture">강사,강의실 검색</button>
+										<button type = "button" id="checkLecture" class="btn btn-primary">기간내 사용가능한 강사,강의실 검색</button>
 										<!-- 검색시, 강사, 강의실 리스트가 들어갈 자리 -->
-										강의실 <select id="lectureRoom" name="lectureRoomName">
-										<option value=" ">강의실 선택</option>
-										<div id = "lectureRoomList"></div>
-										</select>
-										강사 <select id="teacherList" name="memberId">
-										<option value=" ">강사 선택</option>
-										<div id = "teacherList"></div>
-										</select>
+											강의실 <select id="lectureRoom" name="lectureRoomName">
+											<option value=" ">강의실 선택</option>
+											<div id = "lectureRoomList"></div>
+											</select>
+											강사 <select id="teacherList" name="memberId">
+											<option value=" ">강사 선택</option>
+											<div id = "teacherList"></div>
+											</select>
 										</div>
 									</div>
 										<!-- 작성자 -->

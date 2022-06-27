@@ -338,15 +338,13 @@
 					t.member_id memberId
 					,t.teacher_name teacherName
 				FROM teacher t
-				LEFT JOIN teacher_lecture tl
-				ON t.member_id = tl.member_id
-				WHERE tl.lecture_no NOT IN (SELECT lecture_no 
-														FROM lecture 
+				WHERE t.member_id NOT IN (SELECT tl.member_id
+														FROM lecture l 
+														INNER JOIN teacher_lecture tl
+														ON tl.lecture_no = l.lecture_no
 														WHERE (
-															(<![CDATA[lecture_start_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[lecture_start_date  <= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)
-															OR (<![CDATA[lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]> AND <![CDATA[lecture_end_date  <= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)
-															)
-														)
+															(<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d')]]>)
+															OR (<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d') ]]> AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)))
 				GROUP BY t.member_Id
 	</select>
 	<!-- 10-2. 강의 삽입시에, 개강일과 수료일이 정해지면, 그 기간에 사용가능한 강의실 목록 -->
@@ -356,16 +354,12 @@
 				SELECT
 					lr.lecture_room_name lectureRoomName
 				FROM lecture_room lr
-				LEFT JOIN lecture l
-				ON	 lr.lecture_room_name = l.lecture_name
-				WHERE l.lecture_no NOT IN (SELECT lecture_no 
-														FROM lecture 
+				WHERE lr.lecture_room_name NOT IN (SELECT l.lecture_room_name 
+														FROM lecture l
 														WHERE (
-															(<![CDATA[lecture_start_date  >= STR_TO_DATE(#{lectureStartDate},'%y-%m-%d')]]>  AND <![CDATA[lecture_start_date  <= STR_TO_DATE(#{lectureEndDate},'%y-%m-%d'))]]> 
-															OR ( <![CDATA[lecture_end_date >= STR_TO_DATE(#{lectureStartDate},'%y-%m-%d')]]>  AND  <![CDATA[lecture_end_date <= STR_TO_DATE(#{lectureEndDate},'%y-%m-%d')]]> )
-															)
-														)
-				GROUP BY lr.lecture_room
+															(<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d') ]]>  AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureStartDate},'%Y-%m-%d')]]>)
+															OR (<![CDATA[l.lecture_start_date  <=  STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d') ]]> AND <![CDATA[l.lecture_end_date  >= STR_TO_DATE(#{lectureEndDate},'%Y-%m-%d')]]>)))
+				GROUP BY lr.lecture_room_name
 	</select>
 	
 </mapper>
