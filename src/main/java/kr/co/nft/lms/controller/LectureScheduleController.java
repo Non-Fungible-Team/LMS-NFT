@@ -96,7 +96,7 @@ public class LectureScheduleController {
 	}
 	
 	//3.강의 시간표 삭제 -> 강의번호 받아오기 수정
-	@GetMapping("manager/lecture/removeLectureSchedule")
+	@GetMapping("/manager/lecture/removeLectureSchedule")
 	public String removeLectureSchedule(@RequestParam(name = "lectureScheduleDate") String lectureScheduleDate
 									  , @RequestParam(name = "lectureNo") int lectureNo) {
 		
@@ -113,6 +113,6 @@ public class LectureScheduleController {
 			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 실패" + A.R);
 		}  
 		
-		return "/all/lecture/getLectureScheduleListByLectureNo";
+		return "redirect:/all/lecture/getLectureScheduleListByLectureNo";
 	}
 }
