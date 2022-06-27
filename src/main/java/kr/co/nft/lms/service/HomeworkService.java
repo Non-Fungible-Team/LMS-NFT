@@ -25,7 +25,7 @@ public class HomeworkService {
 	@Autowired private HomeworkMapper homeworkMapper;
 	
 	// 과제 목록
-	public Map<String, Object> getHomeworkListByPage(int currentPage, int rowPerPage){
+	public Map<String, Object> getHomeworkListByPage(int currentPage, int rowPerPage,int lectureNo){
 		log.debug(A.Q +"HomeworkService.getHomeworkListByPage.param.currentPage" + currentPage +A.R);
 		log.debug(A.Q +"HomeworkService.getHomeworkListByPage.param.rowPerPage" + rowPerPage +A.R);
 		
@@ -33,6 +33,7 @@ public class HomeworkService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
+		map.put("lectureNo", lectureNo);
 		log.debug(A.Q + "HomeworkService.getHomeworkListByPage.map :" + map + A.R);
 		
 		List<Homework> homeworkList = homeworkMapper.selectHomeworkListByPage(map);
@@ -139,7 +140,7 @@ public class HomeworkService {
 		map.put("rowPerPage", rowPerPage);
 		log.debug(A.Q + "HomeworkService.getHomeworkSubmitListByPage.map :" + map + A.R);
 		
-		List<HomeworkSubmit> homeworkSubmitList = homeworkMapper.selectHomeworkSubmitListByPage(map);
+		List<Map<String, Object>> homeworkSubmitList = homeworkMapper.selectHomeworkSubmitListByPage(map);
 		log.debug(A.Q + "HomeworkService.getHomeworkSubmitListByPage.homeworkSubmitList :" + homeworkSubmitList + A.R);
 		
 		int totalCount = homeworkMapper.selectSubmitTotalCount();
@@ -160,7 +161,7 @@ public class HomeworkService {
 		HomeworkSubmit homeworkSubmitOne = homeworkMapper.selectHomeworkSubmitOne(homeworkSubmitNo);
 		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.homeworkSubmitOne :"+ homeworkSubmitOne +A.R);
 		
-		List<HomeworkSubmitFile> homeworkSubmitFileList = (List<HomeworkSubmitFile>) homeworkMapper.selectHomeworkSubmitOne(homeworkSubmitNo);
+		List<HomeworkSubmitFile> homeworkSubmitFileList = homeworkMapper.selectHomeworkSubmitFile(homeworkSubmitNo);
 		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.homeworkSubmitFileList"+ homeworkSubmitFileList+A.R);
 		
 		Map<String, Object> map = new HashMap<>();

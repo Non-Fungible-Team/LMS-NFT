@@ -36,11 +36,14 @@ public interface HomeworkMapper {
 	int insertHomeworkSubmitFile(HomeworkSubmitFile homeworkSubmitFile);
 	int insertHomeworkSubmit(HomeworkSubmit homeworkSubmit);
 	
-	// 학생 과제 목록 
-	List<HomeworkSubmit> selectHomeworkSubmitListByPage(Map<String, Object> map);
+	// 학생 제출과제 목록 
+	List<Map<String, Object>> selectHomeworkSubmitListByPage(Map<String, Object> map);
 	
 	// 학생 제출과제 상세보기
 	HomeworkSubmit selectHomeworkSubmitOne(int homeworkSubmitNo);
+	
+	// File 상세보기
+	List<HomeworkSubmitFile> selectHomeworkSubmitFile(int homeworkSubmitFileNo);
 	
 	// 학생 제출과제 수정
 	int updateHomeworkSubmit(HomeworkSubmit homeworkSubmit);

@@ -17,6 +17,9 @@
 			,homework_create_date homeworkCreateDate
 			,homework_update_date homeworkUpdateDate
 		FROM homework
+		<if test="lectureNo!=0">
+		WHERE lecture_no=#{lectureNo}
+		</if>
 		ORDER BY homework_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
@@ -92,29 +95,9 @@
 	
 	<!-- 학생의 과제 제출 mapper.xml -->
 	<!-- 학생 과제 제출 리스트 -->
-	
-	<!-- <resultMap type="Homework" id="Homework">
-		<result column="homework_no" property="homeworkNo"></result>
-		<result column="member_id" property="memberId"></result>
-		<result column="lecture_no" property="lectureNo"></result>
-	</resultMap>
-	
-	<resultMap type="kr.co.nft.lms.vo.HomeworkSubmit" id="kr.co.nft.lms.vo.HomeworkSubmit">
-		<result column="homework_submit_no" property="homeworkSubmitNo"></result>
-		<result column="homework_no" property="homeworkNo"></result>
-		<result column="member_id" property="memberId"></result>
-		<result column="homework_submit_title" property="homeworkSubmitTitle"></result>
-		<result column="homework_submit_content" property="homeworkSubmitContent"></result>
-		<result column="homework_submit_score" property="homeworkSubmitScore"></result>
-		<result column="homework_submit_feedback" property="homeworkSubmitFeedback"></result>
-		<result column="homework_submit_create_date" property="homeworkSubmitCreateDate"></result>
-		<result column="homework_submit_update_date" property="homeworkSubmitUpdateDate"></result>
-		<collection property="homework" resultMap="kr.co.nft.lms.vo.HomeworkSubmit"></collection>
-	</resultMap> -->
-	
 	<select id="selectHomeworkSubmitListByPage"
 			parameterType="java.util.Map"
-			resultType="kr.co.nft.lms.vo.HomeworkSubmit">
+			resultType="map">
 		SELECT
 			hs.homework_submit_no homeworkSubmitNo
 			,hs.homework_no homeworkNo
@@ -138,14 +121,25 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<!-- 학생 과제 총 갯수 -->
-	<select id="selectSubmitTotalCount"
-			resultType="int">
-		SELECT COUNT(*) FROM homework_submit
-	</select>
-	
 	<!-- 학생 과제 상세보기 -->
-	<select id="selectHomeworkSubmitOne">
+	<select id="selectHomeworkSubmitOne"
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.HomeworkSubmit">
+		<!-- SELECT
+			homework_submit_no homeworkSubmitNo
+			,homework_no homeworkNo
+			,member_id memberId
+			,homework_submit_title homeworkSubmitTitle
+			,homework_submit_content homeworkSubmitContent
+			,homework_submit_score homeworkSubmitScore
+			,homework_submit_feedback homeworkSubmitFeedback
+			,homework_submit_create_date homeworkSubmitCreateDate
+			,homework_submit_update_date homeworkSubmitUpdateDate
+		FROM
+			homework_submit
+			WHERE
+			homework_submit_no = #{homeworkSubmitNo} -->
+	
 		SELECT
 			hs.homework_submit_no homeworkSubmitNo
 			,hs.homework_no homeworkNo
@@ -154,7 +148,7 @@
 			,hs.homework_submit_title homeworkSubmitTitle
 			,hs.homework_submit_content homeworkSubmitContent
 			,hsf.homework_submit_file_name homeworkSubmitFileName
-<!-- 			,hsf.homework_submit_file_type homeworkSubmitFileType -->
+			,hsf.homework_submit_file_type homeworkSubmitFileType
 			,hs.homework_submit_score homeworkSubmitScore
 			,hs.homework_submit_feedback homeworkSubmitFeedback
 			,hs.homework_submit_create_date homeworkSubmitCreateDate
@@ -166,9 +160,31 @@
 		ON hs.member_id = sl.member_id		
 		INNER JOIN homework_submit_file hsf
 		ON hs.homework_submit_no = hsf.homework_submit_no
-<!-- 		WHERE hs.member_id = #{memberId} -->
-	
+		WHERE hs.homework_submit_no = #{homeworkSubmitNo} 
 	</select>
+	<!-- 학생 과제 총 갯수 -->
+	<select id="selectSubmitTotalCount"
+			resultType="int">
+		SELECT COUNT(*) FROM homework_submit
+		WHERE member_id=#{memberId}
+	</select>
+	
+	<select id="selectHomeworkSubmitFile"
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.HomeworkSubmitFile">
+		SELECT 
+			homework_submit_file_no homeworkSubmitFileNo
+			,homework_submit_no homeworkSubmitNo
+			,homework_submit_file_name homeworkSubmitFileName
+			,homework_submit_file_original homeworkSubmitFileOriginal
+			,homework_submit_file_size homeworkSubmitFileSize
+			,homework_submit_file_type homeworkSubmitFileType
+			,homework_submit_file_create_date homeworkSubmitFileCreateDate
+			,homework_submit_file_update_date homeworkSubmitFileUpdateDate
+		FROM homework_submit_file homeworkSubmitFile
+		WHERE homework_submit_no = #{homeworkSubmitNo}
+	</select>
+	
 	
 	<!-- 학생 과제 제출 -->
 	<insert id="insertHomeworkSubmit"
