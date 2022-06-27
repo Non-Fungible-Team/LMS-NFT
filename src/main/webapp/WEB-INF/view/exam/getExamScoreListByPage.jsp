@@ -13,7 +13,7 @@
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>시험 리스트</title>
+<title>시험 점수 리스트</title>
 <!-- CSS 링크 -->
 <link
 	href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css"
@@ -45,7 +45,7 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>시험 리스트</h1>
+				<h1>시험 점수 리스트</h1>
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
@@ -59,12 +59,11 @@
 											<tr>
 												<th>시험 번호</th>
 												<th>시험 제목</th>
-												<th>문항수</th>
-												<th>만점</th>
-												<th>시험시작일시</th>
-												<th>시험종료일시</th>
-												<th>시험</th>
-												<th></th>
+												<th>학생이름</th>
+												<th>점수</th>
+												<th>응시여부</th>
+												<th>시험응시일시</th>
+												<th>상세보기</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -72,12 +71,12 @@
 												<tr>
 													<td>${e.examNo}</td>
 													<td>${e.examTitle}</td>
-													<td>${e.examCount}</td>
-													<td>${e.examMaxScore}</td>
-													<td>${e.examStartDate}</td>
-													<td>${e.examEndDate}</td>
+													<td>${e.memberName}</td>
+													<td>${e.examScore}</td>
+<%--												<td>${e.exam응시}</td> --%>
+													<td>${e.examAnswerEndDate}</td>
 													<td><a
-														href="${pageContext.request.contextPath}/all/exam/getExamOne?examNo=${e.examNo}">문제보기</a></td>
+														href="${pageContext.request.contextPath}/all/exam/getExamOne?examNo=${e.examNo}&memberId=${e.memberId}">상세보기</a></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -113,12 +112,6 @@
 										</c:if>
 									</form>
 									<hr>
-									<div>
-										<button type="button" class="btn btn-success"
-											onclick="location.href='${pageContext.request.contextPath}/teacher/exam/addExam'">
-											<i class="fas fa-check"></i>시험 등록
-										</button>
-									</div>
 								</div>
 							</div>
 						</div>

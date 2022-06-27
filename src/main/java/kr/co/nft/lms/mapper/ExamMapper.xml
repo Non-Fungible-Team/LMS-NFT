@@ -185,6 +185,10 @@
 <!-- 시험 답안 입력 (학생) -->
 	<insert id="insertExamAnswer"
 			parameterType="kr.co.nft.lms.vo.ExamAnswer">
+			<selectKey resultType="int" keyProperty="examScore" order="BEFORE">
+				SELECT SUM(exam_score) FROM exam_answer
+				WHERE 
+			</selectKey>
 			INSERT INTO exam_answer(
 							 exam_question_No		
 							,member_id 

@@ -5,24 +5,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 반응형 웹 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<!-- title icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
 <title>getExamOne</title>
-<!-- bootstrap을 사용하기 위한 CDN주소 -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link
+	href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/static/dist/css/style.min.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<<!-- script>
+<!-- script>
 $('#btnRemove').click(function(){
     let ck = new Array(); // let ck = [];
     $('.ck:checked').each(function(index,item){ 
@@ -43,83 +57,144 @@ $('#').trigger('click');
 </script> -->
 </head>
 <body>
-	<div class="container">
-		<h1>문제보기</h1>
-		<a href="${pageContext.request.contextPath}/exam/getExamListByPage"
-			class="btn">이전으로</a>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th class="text-center">시험 번호</th>
-					<th class="text-center">시험 제목</th>
-					<th class="text-center">시험 문항수</th>
-					<th class="text-center">만점</th>
-					<th class="text-center">시험 시작 일시</th>
-					<th class="text-center">시험 종료 일시</th>
-				</tr>
-			</thead>
-			<tbody>
-					<tr>
-						<td class="text-center">${examOne.examNo}</td>
-						<td class="text-center">${examOne.examTitle}</td>
-						<td class="text-center">${examOne.examNo}</td>
-						<td class="text-center">${examOne.examMaxScore}</td>
-						<td class="text-center">${examOne.examStartDate}</td>
-						<td class="text-center">${examOne.examEndDate}</td>
-					</tr>
-			</tbody>
-		</table>
-		<c:forEach var="q" items="${examQuestionOneList}" varStatus="status">
-			<c:set var="qn" value="Q${q.examQuestionNo}"></c:set>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th class="text-center">문제 번호</th>
-						<th class="text-center">문제 내용</th>
-						<th class="text-center">배점</th>
-						<th class="text-center">문제유형</th>
-						<th class="text-center">정답</th>
-						<th class="text-center">보기</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="text-center">${q.examQuestionNo}</td>
-						<td class="text-center">${q.examContent}</td>
-						<td class="text-center">${q.examPoint}</td>
-						<td class="text-center">${q.examType}</td>
-						<td class="text-center">${q.examCorrectAnswer}</td>
-						<td class="text-center">
-							<table>
-								<thead>
-									<tr>
-										<th class="text-center">보기 번호</th>
-										<th class="text-center">보기 내용</th>
-									</tr>
-								</thead>
-								<c:forEach var="ee" items="${examExampleOneList}">
-									<c:forEach var="example" items="${ee[qn]}">
+	<div id="main-wrapper" data-theme="light" data-layout="vertical"
+		data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed"
+		data-boxed-layout="full">
+		<!-- header include(네비게이션바) -->
+		<div id="navAside"></div>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<h1>시험문제 상세보기</h1>
+				<!-- main화면 body start -->
+				<!-- 첫번쨰 문단 -->
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">문제 보기</h4>
+								<div class="mt-2" style="height: auto; width: auto;">
+									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
+									<table id="zero_config"
+										class="table table-striped table-bordered table table-hover">
+										<thead>
+											<tr>
+												<th class="table-primary">시험 번호</th>
+												<th class="table-primary">시험 제목</th>
+												<th class="table-primary">시험 문항수</th>
+												<th class="table-primary">만점</th>
+												<th class="table-primary">시험 시작 일시</th>
+												<th class="table-primary">시험 종료 일시</th>
+											</tr>
+										</thead>
 										<tbody>
 											<tr>
-												<td class="text-center">${example.exampleNo}</td>
-												<td class="text-center">${example.exampleContent}</td>
+												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light">${examOne.examTitle}</td>
+												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light">${examOne.examMaxScore}</td>
+												<td class="table-light">${examOne.examStartDate}</td>
+												<td class="table-light">${examOne.examEndDate}</td>
 											</tr>
 										</tbody>
+									</table>
+									<c:forEach var="q" items="${examQuestionOneList}"
+										varStatus="status">
+										<c:set var="qn" value="Q${q.examQuestionNo}"></c:set>
+										<table id="zero_config"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th class="table-info">문제 번호</th>
+													<th class="table-info">문제 내용</th>
+													<th class="table-info">배점</th>
+													<th class="table-info">문제유형</th>
+													<th class="table-info">정답</th>
+													<th class="table-info">보기</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="table-light">${q.examQuestionNo}</td>
+													<td class="table-light">${q.examContent}</td>
+													<td class="table-light">${q.examPoint}</td>
+													<td class="table-light">${q.examType}</td>
+													<td class="table-light">${q.examCorrectAnswer}</td>
+													<td class="table-light">
+														<table>
+															<thead>
+																<tr>
+																	<th class="table-info">보기 번호</th>
+																	<th class="table-info">보기 내용</th>
+																</tr>
+															</thead>
+															<c:forEach var="ee" items="${examExampleOneList}">
+																<c:forEach var="example" items="${ee[qn]}">
+																	<tbody>
+																		<tr>
+																			<td class="table-light">${example.exampleNo}</td>
+																			<td class="table-light">${example.exampleContent}</td>
+																		</tr>
+																	</tbody>
+																</c:forEach>
+															</c:forEach>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
 									</c:forEach>
-								</c:forEach>
-							</table>
-						</td>
-					</tr>
-			</table>
-		</c:forEach>
-		<div style="float: right">
-		<form action="removeExam" method="post">
-			<input type="hidden" name="examNo" value="${param.examNo}">
-			<a class="btn btn-info"
-				href="${pageContext.request.contextPath}/exam/modifyExam?examNo=${param.examNo}">수정</a>
-				<button class="btn btn-danger" type="submit">삭제</button>
-			</form>
+									<div style="float: right">
+										<input type="hidden" name="examNo" value="${param.examNo}"
+											readonly="readonly">
+										<button type="button"
+											class="btn btn-outline-success btn-rounded"
+											onclick="location.href='${pageContext.request.contextPath}/all/exam/getExamListByPage'">
+											<i class="fas fa-check"></i>시험 목록
+										</button>
+										<button type="button"
+											class="btn btn-outline-success btn-rounded"
+											onclick="location.href='${pageContext.request.contextPath}/teacher/exam/modifyExam?examNo='+${param.examNo}">
+											<i class="fas fa-check"></i>수정
+										</button>
+									<form
+										action="${pageContext.request.contextPath}/teacher/exam/removeExam?examNo=${param.examNo}" method="post">
+										<button type="submit" class="btn btn-outline-success btn-rounded">
+											<i class="fas fa-check"></i>삭제
+										</button>
+									</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>		
+	</div>
 </body>
+<script
+	src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+<script
+	src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
 </html>

@@ -131,8 +131,8 @@
 					<!-- 시험 -->
 					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">시험 </span></a>
 						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/exam/getExamListByPage" class="sidebar-link"><span class="hide-menu"> 시험 목록 </span></a></li>
-							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/exam/" class="sidebar-link"><span class="hide-menu"> 점수확인 </span></a></li>
+							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/all/exam/getExamListByPage" class="sidebar-link"><span class="hide-menu"> 시험 목록 </span></a></li>
+							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/all/exam/getExamScoreListByPage" class="sidebar-link"><span class="hide-menu"> 점수 확인 </span></a></li>
 						</ul></li>
 					<!-- 강의 설문조사 -->
 					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/survey/getSurveyListByPage" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">강의 설문조사</span></a></li>
