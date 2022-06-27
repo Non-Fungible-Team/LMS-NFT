@@ -114,6 +114,18 @@ public class MemberService {
 		return memberMapper.updateStudentByStudentVo(student);
 	}
 	
+	// --------------------------------------- // 
+	
+	// Member 테이블 활용하여 강사 상세 조회 
+	public Member getTeacherOneReturnMemberVo(Member member) {
+		return memberMapper.selectTeacherOneByMemberVo(member); 
+	}
+	
+	// Teacher 테이블 활용하여 강사 상세 조회 
+	public Teacher getTeacherOneReturnTeacherVo(Member member) {
+		return memberMapper.selectTeacherOneByTeacherVo(member);
+	}
+	
 	// Member 테이블 활용하여 학생 상세 조회 
 	public Member getStudentOneReturnMemberVo(Member member) {
 		return memberMapper.selectStudentOneByMemberVo(member);
@@ -124,35 +136,39 @@ public class MemberService {
 		return memberMapper.selectStudentOneByStudentVo(member);
 	}
 	
+	// --------------------------------------- // 
+	
 	// Manager 테이블에 들어가는 운영자 회원 가입 
 	public int addManager(Manager manager) {
 		return memberMapper.insertManagerByManagerVo(manager);
 	}
+	
+	// Member 테이블에 들어가는 운영자 회원 가입 
+		public int addManager(Member member) {
+			return memberMapper.insertManagerByMemberVo(member);
+		}
 	
 	// Teacher 테이블에 들어가는 강사 회원 가입 
 	public int addTeacher(Teacher teacher) {
 		return memberMapper.insertTeacherByTeacherVo(teacher);
 	}
 	
+	// Member 테이블에 들어가는 강사 회원 가입 
+		public int addTeacher(Member member) {
+			return memberMapper.insertTeacherByMemberVo(member);
+		}
+	
 	// Student 테이블에 들어가는 학생 회원 가입 
 	public int addStudent(Student student) {
 		return memberMapper.insertStudentByStudentVo(student);
 	}
-	
-	// Member 테이블에 들어가는 운영자 회원 가입 
-	public int addManager(Member member) {
-		return memberMapper.insertManagerByMemberVo(member);
-	}
-	
-	// Member 테이블에 들어가는 강사 회원 가입 
-	public int addTeacher(Member member) {
-		return memberMapper.insertTeacherByMemberVo(member);
-	}
-	
+
 	// Member 테이블에 들어가는 학생 회원 가입 
 	public int addStudent(Member member) {
 		return memberMapper.insertStudentByMemberVo(member);
 	}
+	
+	// --------------------------------------- // 
 	
 	// 학생 상세 정보 확인 
 	public Member getMemberOne(Member member) {

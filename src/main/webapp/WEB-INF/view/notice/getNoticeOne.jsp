@@ -90,23 +90,28 @@
 								    <h4>첨부된 파일 정보</h4>
 								    <div>
 									    <table id="zero_config" class="table table-striped table-bordered">
-									    	<tr>
-										    	<th>파일미리보기</th>
-												<th>파일타입</th>
-												<th>파일사이즈</th>
-									    	</tr>
-									    	<c:forEach var ="f" items="${noticeFileList}">
-												<tr>
-													<td>
-														<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
-															<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
-														</c:if>
-														<a href="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}" download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
-													</td>
-													<td>${f.noticeFileType}</td>
-													<td>${f.noticeFileSize}</td>
-												</tr>	
-									    	</c:forEach>
+									    	<thead>
+									    		<tr>
+										    		<th>파일미리보기</th>
+													<th>파일타입</th>
+													<th>파일사이즈</th>
+									    		</tr>
+									    	</thead>
+									    	<tbody>
+									    		<c:forEach var ="f" items="${noticeFileList}">
+													<tr>
+														<td>
+															<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
+																<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
+															</c:if>
+															<a href="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}" download="${f.noticeFileOriginName}">◀ 파일 다운로드</a>
+														</td>
+														<td>${f.noticeFileType}</td>
+														<td>${f.noticeFileSize}</td>
+													</tr>	
+									    		</c:forEach>
+									    	</tbody>
+									    	
 									    </table>
 									 </div>
 								 </div>
