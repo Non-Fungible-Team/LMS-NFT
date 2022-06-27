@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +29,15 @@ public class HomeworkController {
 	// 과제 리스트
 	@GetMapping("/homework/getHomeworkListByPage")
 	public String getHomeworkListByPage(Model model,
+			HttpSession session,
 			@RequestParam(name="currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
 		
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.currentPage :  " + currentPage + A.R);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.rowPerPage :  " + rowPerPage + A.R);
-		
-		Map<String, Object> map = homeworkService.getHomeworkListByPage(currentPage, rowPerPage);
+		//세션에 정보 요청
+		int lectureNo = (int)session.getAttribute("sessionLectureNo");
+		Map<String, Object> map = homeworkService.getHomeworkListByPage(currentPage, rowPerPage,lectureNo);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage map:  "+ map + A.R);
 		
 		model.addAttribute("homeworkList", map.get("homeworkList"));
@@ -170,11 +173,11 @@ public class HomeworkController {
 		
 		return"redirect:/homework/getHomeworkListByPage";
 	}
-	
+	// 학생 제출과제 리스트
 	@GetMapping("/homework/getHomeworkSubmitListByPage")
-	public String getHomeworkSubmitListByPage(Model model,
-			@RequestParam(name="currentPage", defaultValue = "1") int currentPage
-			,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
+	public String getHomeworkSubmitListByPage(Model model
+											,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
+											,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
 		
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.currentPage :  " + currentPage + A.R);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.rowPerPage :  " + rowPerPage + A.R);
@@ -193,16 +196,16 @@ public class HomeworkController {
 	// 학생 과제 상세보기 
 	@GetMapping("/homework/getHomeworkSubmitOne")
 	public String getHomeworkSubmitOne(Model model
-									,@RequestParam(name="homeworkSubmitNo") int homeworkSubmitNo) {
+									,@RequestParam(name="homeworkSubmitNo", defaultValue = "0") int homeworkSubmitNo) {
 		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.param.homeworkSubmitNo : "+ homeworkSubmitNo +A.R);
 		
-		Map<String, Object> returnMap = homeworkService.getHomeworkSubmitOne(homeworkSubmitNo);
-		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.homeworkSubmitOne"+ returnMap.get("homeworkSubmitOne") + A.R);
-		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.homeworkSubmitOne"+ returnMap.get("homeworkSubmitFileList") + A.R);
+		Map<String, Object> map = homeworkService.getHomeworkSubmitOne(homeworkSubmitNo);
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.homeworkSubmitOne"+ map.get("homeworkSubmitOne") + A.R);
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.homeworkSubmitOne"+ map.get("homeworkSubmitFileList") + A.R);
 		
-		model.addAttribute("homeworkSubmitOne", returnMap.get("homeworkSubmitOne"));
-		model.addAttribute("homeworkSubmitFileList", returnMap.get("homeworkSubmitFileList"));
-		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.model :"+model+A.R);
+		model.addAttribute("homeworkSubmitOne", map.get("homeworkSubmitOne"));
+		model.addAttribute("homeworkSubmitFileList", map.get("homeworkSubmitFileList"));
+		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.model :"+ model +A.R);
 		
 		return "/homework/getHomeworkSubmitOne";
 	}
