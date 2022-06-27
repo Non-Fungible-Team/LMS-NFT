@@ -19,7 +19,7 @@ public interface SuggestMapper {
 	List<Suggest> selectSuggestListByPage(Map<String, Object> map);
 	
 	//전체 row
-	int selectSuggestListTotalCount();
+	int selectSuggestListTotalCount(int memberLevel);
 	
 	//상세보기
 	Suggest selectSuggestOne(int SuggestNo);

@@ -30,9 +30,10 @@ public class SuggestService {
 	}
 	
 	//Suggest 목록보기
-	public Map<String, Object> getSuggestListByPage(int currentPage, int rowPerPage){
+	public Map<String, Object> getSuggestListByPage(int currentPage, int rowPerPage, int memberLevel){
 		log.debug(A.S + "[SuggestService.getSuggestListByPage.param] currentPage : "+ currentPage + A.R); 
 		log.debug(A.S + "[SuggestService.getSuggestListByPage.param] rowPerPage : "+ rowPerPage + A.R); 
+		log.debug(A.S + "[SuggestService.getSuggestListByPage.param] memberLevel : "+ memberLevel + A.R); 
 		
 		//1)controller에서 넘어온 매개변수값을 가공 후 매퍼 호출
 		int beginRow = (currentPage - 1) * rowPerPage;
@@ -46,7 +47,7 @@ public class SuggestService {
 		log.debug(A.S + "[SuggestService.getSuggestListByPage] suggestList : "+ suggestList + A.R); 
 		
 		//2) 매퍼에서 반환된 값을 가공, controller에 반환
-		int totalCount = suggestMapper.selectSuggestListTotalCount();
+		int totalCount = suggestMapper.selectSuggestListTotalCount(memberLevel);
 		log.debug(A.S + "[SuggestService.getSuggestListByPage] totalCount : "+ totalCount + A.R);
 		int lastPage = (int)Math.ceil((double)totalCount / (double)rowPerPage);
 		log.debug(A.S + "[SuggestService.getSuggestListByPage] lastPage : "+ lastPage + A.R);

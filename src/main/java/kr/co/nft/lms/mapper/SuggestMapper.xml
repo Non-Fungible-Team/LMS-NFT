@@ -20,7 +20,7 @@
 			,#{suggestContent}
 			,'건의'
 			,#{memberId}
-			,#{suggestPrivilege}
+			,4
 			,'N'
 			,NOW()
 			,NOW()
@@ -37,7 +37,7 @@
 			,suggest_status
 		) VALUES (
 			#{suggestNo}
-			,'공란'
+			,0
 			,'N'
 			,'처리전'
 		)

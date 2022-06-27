@@ -2,6 +2,8 @@ package kr.co.nft.lms.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.SuggestService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Suggest;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,13 +47,16 @@ public class SuggestController {
 	//Suggest 목록보기
 	@GetMapping("/all/suggest/getSuggestListByPage")
 	public String getSuggestListByPage(Model model
+									,HttpSession session
 									,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
 									,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
 		log.debug(A.S + "[SuggestController.getSuggestListByPage.param] currentPage : " + currentPage + A.R);
 		log.debug(A.S + "[SuggestController.getSuggestListByPage.param] rowPerPage : " + rowPerPage + A.R);
+		//세션에 로그인 정보 요청
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		
-		Map<String, Object> suggestRowRetrunMap = suggestService.getSuggestListByPage(currentPage, rowPerPage);
-		log.debug(A.S + "[SuggestController.getSuggestListByPage] suggestRowRetrunMap : "+ A.R);
+		Map<String, Object> suggestRowRetrunMap = suggestService.getSuggestListByPage(currentPage, rowPerPage, loginMember.getMemberLevel());
+		log.debug(A.S + "[SuggestController.getSuggestListByPage] suggestRowRetrunMap : " + suggestRowRetrunMap + A.R);
 		
 		model.addAttribute("suggestList", suggestRowRetrunMap.get("suggestList"));
 		model.addAttribute("lastPage", suggestRowRetrunMap.get("lastPage"));
@@ -97,8 +103,18 @@ public class SuggestController {
 		//입력성공 했을 경우
 		log.debug(A.S + "[SuggestController.modifySuggest.row] 수정성공"+ A.R);
 		return "redirect:/all/suggest/getSuggestOne?suggestNo=" + suggest.getSuggestNo();
-	}		
+	}
 	
+	//Suggest 삭제 폼
+	@GetMapping("/all/suggest/removeSuggest")
+	public String removeSuggest(Model model
+							,@RequestParam(name="suggestNo") int suggestNo) {
+		log.debug(A.S + "[SuggestController.removeSuggest.param] suggestNo : " + suggestNo + A.R);
+		Suggest suggest = suggestService.getSuggestOne(suggestNo);
+		log.debug(A.S + "[SuggestController.removeSuggest] suggest : " + suggest + A.R);
+		model.addAttribute("suggest", suggest);
+		return "/suggest/removeSuggest";
+	}
 	
 	//Suggest 삭제액션
 	@PostMapping("all/suggest/removeSuggest")
