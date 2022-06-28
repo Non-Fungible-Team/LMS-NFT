@@ -22,7 +22,6 @@
 	$(document).ready(function() {
 		$("#navAside").load(
 		'${pageContext.request.contextPath}/include/navAside.jsp');
-	}
 		//개강일, 수료일로 강사, 강의실 검색
 		$('#checkLecture').click(function() {
 			$('#lectureRoom').text("");
