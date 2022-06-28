@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -24,7 +25,7 @@ public class LectureScheduleController {
 	
 	@Autowired private LectureService lectureService;
 	
-	//1.강의시간표 입력 Form
+	// 1. 강의시간표 입력 Form
 	@GetMapping("/manager/lecture/addLectureScheduleForm")
 	public String addLectureScheduleForm(Model model
 										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
@@ -65,7 +66,7 @@ public class LectureScheduleController {
 		return "redirect:/all/lecture/getLectureScheduleListByLectureNo";
 	}
 	
-	//2.강의시간표 목록
+	// 2. 강의시간표 목록
 	@GetMapping("/all/lecture/getLectureScheduleListByLectureNo")
 	public String getLectureScheduleListByLectureNo(Model model
 													,HttpSession session
@@ -95,7 +96,7 @@ public class LectureScheduleController {
 		return "/lecture/getLectureScheduleListByLectureNo";
 	}
 	
-	//3.강의 시간표 삭제 -> 강의번호 받아오기 수정
+	// 3. 강의 시간표 삭제 -> 강의번호 받아오기 수정
 	@GetMapping("/manager/lecture/removeLectureSchedule")
 	public String removeLectureSchedule(@RequestParam(name = "lectureScheduleDate") String lectureScheduleDate
 									  , @RequestParam(name = "lectureNo") int lectureNo) {
@@ -111,6 +112,55 @@ public class LectureScheduleController {
 			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 성공" + A.R);
 		} else {
 			log.debug(A.A + "[LectureScheduleController.removeLectureSchedule] lecture_schedule 삭제 실패" + A.R);
+		}  
+		
+		return "redirect:/all/lecture/getLectureScheduleListByLectureNo";
+	}
+	
+	// 4. 강의 시간표 수정 Form
+	@GetMapping("/manager/lecture/modifyLectureScheduleForm")
+	public String modifyLectureScheduleForm(Model model
+										  , @RequestParam(name = "lectureScheduleDate") String lectureScheduleDate
+			  							  , @RequestParam(name = "lectureNo") int lectureNo) {
+
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleForm] 실행" + A.R);
+		
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleForm] lectureScheduleDate : " + lectureScheduleDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleForm] lectureNo : " + lectureNo + A.R);
+		
+		LectureSchedule lectureScheduleOne = lectureScheduleService.modifyLectureScheduleForm(lectureScheduleDate, lectureNo);
+		
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleForm] lectureScheduleOne : " + lectureScheduleOne + A.R);
+
+		model.addAttribute("lectureScheduleOne", lectureScheduleOne);
+		
+		return "/lecture/modifyLectureSchedule";
+	}
+	
+	// 4-1. 강의 시간표 수정 Action
+	@PostMapping("/manager/lecture/modifyLectureScheduleAction")
+	public String modifyLectureScheduleAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+										    , @RequestParam(name = "lectureScheduleDate", defaultValue = "0") String lectureScheduleDate
+										    , @RequestParam(name = "lectureScheduleStartDate", defaultValue = "0") String lectureScheduleStartDate
+										    , @RequestParam(name = "lectureScheduleEndDate", defaultValue = "0") String lectureScheduleEndDate) {
+		
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleAction] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleAction] lectureScheduleDate : " + lectureScheduleDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleAction] lectureScheduleStartDate : " + lectureScheduleStartDate + A.R);
+		log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleAction] lectureScheduleEndDate : " + lectureScheduleEndDate + A.R);
+		
+		LectureSchedule lectureSchedule = new LectureSchedule();
+		lectureSchedule.setLectureNo(lectureNo);
+		lectureSchedule.setLectureScheduleDate(lectureScheduleDate);
+		lectureSchedule.setLectureScheduleStartDate(lectureScheduleStartDate);
+		lectureSchedule.setLectureScheduleEndDate(lectureScheduleEndDate);
+		
+		int row = lectureScheduleService.modifyLectureScheduleAction(lectureSchedule);
+		
+		if(row == 1) {
+			log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleAction] lecture_schedule 수정 성공" + A.R);
+		} else {
+			log.debug(A.A + "[LectureScheduleController.modifyLectureScheduleAction] lecture_schedule 수정 실패" + A.R);
 		}  
 		
 		return "redirect:/all/lecture/getLectureScheduleListByLectureNo";

@@ -21,4 +21,10 @@ public interface LectureScheduleMapper {
 	
 	//전체 행 수
 	int selectLectureSchedulCount();
+	
+	// lecture_schedule 테이블 lecture_no, lectureScheduleDate에 따른 수정 리스트
+	LectureSchedule selectLectureScheduleOne(String lectureScheduleDate, int lectureNo);
+	
+	// lecture_schedule 테이블 데이터 수정
+	int updateLectureSchedule(LectureSchedule lectureSchedule);
 }

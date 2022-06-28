@@ -63,7 +63,7 @@
 													<div class="btn-group" role="group" aria-label="Basic example">
 													<c:if test="${sessionLoginMember.memberLevel > 5 }">
 														<td>
-															<a href="${pageContext.request.contextPath}/modifyLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-info btn-sm ">수정</a>
+															<a href="${pageContext.request.contextPath}/manager/lecture/modifyLectureScheduleForm?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-info btn-sm ">수정</a>
 															<a href="${pageContext.request.contextPath}/manager/lecture/removeLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-danger btn-sm">삭제</a>
 														</td>
 													</c:if>

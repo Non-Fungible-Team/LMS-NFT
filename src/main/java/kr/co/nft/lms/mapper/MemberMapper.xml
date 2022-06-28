@@ -110,6 +110,25 @@
 		);
 	</insert>
 	
+	<update id="updateManagerByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member">
+		UPDATE member SET 
+			member_pw = #{memberPw}
+			, member_phone_no = #{memberPhoneNo} 
+		WHERE member_id = #{memberId} 		
+	</update>
+	
+	<update id="updateManagerByManagerVo"
+			parameterType="kr.co.nft.lms.vo.Manager">
+		UPDATE manager SET
+			manager_name = #{managerName}
+			, manager_birth = #{managerBirth}
+			, manager_gender = #{managerGender}
+			, manager_email = #{managerEmail}
+			, manager_entry_date = #{managerEntryDate}
+		WHERE member_id = #{memberId} 		
+	</update>
+	
 	<update id="updateTeacherByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
@@ -384,52 +403,7 @@
 			, member_level memberLevel
 		FROM member	
 		WHERE member_id = #{memberId} and member_pw = password(#{memberPw})
-	</select>
-
-	<insert id="insertMember"
-			parameterType="int">
-		INSERT INTO member(
-			member_id memberId
-			,member_pw memberPw
-			,member_pw_update_date memberPwUpdateDate
-			,member_phone_no memberPhoneNo
-			,member_level memberLevel
-			,member_last_login_date memberLastLoginDate
-			,member_create_date memberCreateDate
-			,member_update_date memberUpdateDate
-		) VALUES (
-			#{memberId}
-			,#{memberPw}
-			,#{memberPwUpdateDate}
-			,#{memberPhoneNo}
-			,#{memberLevel}
-			,NOW()
-			,NOW()
-			,NOW()
-		)
-	</insert>
-	
-	<insert id="insertManager"
-			parameterType="int">
-		INSERT INTO manager(
-			member_id memberId
-			,manager_entry_date managerEntryDate
-			,manager_name managerName
-			,manager_birth managerBirth
-			,manager_gender managerGender
-			,manager_email managerEmail
-			,address_detail addressDetail
-		) VALUES (
-			#{memberId}
-			,NOW()
-			,#{managerName}
-			,#{managerBirth}
-			,#{managerGender}
-			,#{managerEmail}
-			,#{addressDetail}
-		)
-		
-	</insert>
+	</select>	
 	
 	<select id="selectIdCheck"
 			parameterType="int">

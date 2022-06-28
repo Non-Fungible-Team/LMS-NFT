@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>getNoticeOne</title>
+<title>removeSuggest</title>
 <!-- CSS 링크 -->
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -18,13 +18,24 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-
+<style type="text/css">textarea{width: 100%; height: 1000em; border: none; resize: none;}</style>
 </head>
 <script>
 	$('document').ready(function(){
-	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+	
+		$('#uploadRemoveSuggest').click(function(){
+			
+			if($('#inputRemoveSuggestNo').val() != $('#removeSuggestNo').val() || $('#inputRemoveSuggestNo').val() == ''){
+				$('#inputRemoveSuggestNoHelper').text('입력한 번호를 다시 확인해주세요')
+			} else {
+				$('#removeSuggestForm').submit();
+			}
+			
+		});
 	});
 </script>
+
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
@@ -35,96 +46,45 @@
 				<div class="col-lg-12 col-md-12">
 				    <div class="card">
 				        <div class="card-body">
-				        	<div>
-				           		<h4 class="card-title">공지사항 상세보기</h4>
-				           	
-				            	<a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
-									<input type="button" class="btn btn-info" style="float: right" value="목록으로">
-								</a>
-								<c:if test="${sessionLoginMember.memberLevel >= 6 }">
-				            		<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
-				            			<input type="button" class="btn btn-outline-success" style="float: right" value="공지사항 내용 수정">
-				            		</a>
-						 	   </c:if>
-							</div>
-	
+				        <div class="card-body">
+				            <h4 class="card-title">건의사항 삭제(블라인드)</h4>
 				            <div class="mt-2" style="height:auto; width:auto;">
-				            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
-				            		<tr>
-										<th>번호</th>
-										<td>${notice.noticeNo}</td>
-									</tr>
-									<tr>
-										<th>제목</th>
-										<td>${notice.noticeTitle}</td>
-									</tr>
-									<tr>
-										<th>내용</th>
-										<td>${notice.noticeContent}</td>
-									</tr>
-									<tr>
-										<th>블라인드여부</th>
-										<td>${notice.noticeBlind}</td>
-									</tr>
-									<tr>
-										<th>작성자ID</th>
-										<td>${notice.memberId}</td>
-									</tr>
-									<tr>
-										<th>읽기권한</th>
-										<td>${notice.privilegeName}</td>
-									</tr>
-									<tr>
-										<th>생성날짜</th>
-										<td>${notice.noticeCreateDate}</td>
-									</tr>
-									<tr>
-										<th>수정날짜</th>
-										<td>${notice.noticeUpdateDate}</td>
-									</tr>
-				            	</table>
-
-							    
-				    			<div>
-				    			<br>
-								    <h4>첨부된 파일 정보</h4>
-								    <div>
-									    <table id="zero_config" class="table table-striped table-bordered">
-									    	<thead>
-									    		<tr>
-										    		<th>파일미리보기</th>
-													<th>파일타입</th>
-													<th>파일사이즈</th>
-									    		</tr>
-									    	</thead>
-									    	<tbody>
-									    		<c:forEach var ="f" items="${noticeFileList}">
-													<tr>
-														<td>
-															<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
-																<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/noticeFile/${f.noticeFileName}">
-															</c:if>
-															<a href="${pageContext.request.contextPath}/static/uploadFile/noticeFile/${f.noticeFileName}"  download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
-														</td>
-														<td>${f.noticeFileType}</td>
-														<td>${f.noticeFileSize}</td>
-													</tr>	
-									    		</c:forEach>
-									    	</tbody>
-									    	
-									    </table>
-									 </div>
-								 </div>
+								<form id="removeSuggestForm" action="${pageContext.request.contextPath}/all/suggest/removeSuggest" method="post">
+									<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<tr>
+											<th>번호</th>
+											<td><input type="text" name="suggestNo" id="removeSuggestNo" class="form-control" value="${suggest.suggestNo}" readonly="readonly"></td>
+										</tr>
+										<tr>
+											<th>제목을 확인해 주세요</th>
+											<td>
+												<input type="text" name="suggestTitle" class="form-control" value="${suggest.suggestTitle}" readonly="readonly">
+											</td>
+										</tr>
+										<tr>
+											<th>삭제할 건의사항 번호 입력</th>
+											<td>
+												<input type="number" name="suggestNo" id="inputRemoveSuggestNo"class="form-control">
+												<span id="inputRemoveSuggestNoHelper" class="helper"></span>
+											</td>
+											
+										</tr>
+									</table>
+									<div>
+					            		<button type="button" id="uploadRemoveSuggest" class="btn btn-outline-danger btn-rounded">삭제(블라인드처리)</button>
+								        <a href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage">
+								        	<input type="button" class="btn btn-info" style="float: right" value="목록으로">
+								        </a>
+						        	</div>
+								</form>
 				             </div>   
-					      </div>
-					   </div>
-					</div>
+				        </div>
+				    </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-
 
     <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

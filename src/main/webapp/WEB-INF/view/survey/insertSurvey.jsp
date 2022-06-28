@@ -58,38 +58,51 @@ $(document).ready(function(){
 	$('#insertQuestionList').click(function(){
 		if($('#surveyTitle').val() == '') {
 			$('#surveyTitleHelper').text('제목을 입력하세요');
-			$('#surveyContentHelper').text('')
-			$('#surveyNameHelper').text('')
+			$('lectureHelper').text('');
+			$('#surveyContentHelper').text('');
+			$('#surveyNameHelper').text('');
 			$('#deadlineHelper').text('');
 			
     		$('#surveyTitle').focus();
+		}else if($('#lectureNo').val() == '') {
+			$('#surveyTitleHelper').text('');
+			$('lectureHelper').text('과목을 선택해주세요');
+			$('#surveyContentHelper').text('');
+			$('#startlineHelper').text('');
+			$('#deadlineHelper').text('');
+			
+			$('#lectureHelper').focus();
 		}else if($('#surveyContent').val() == '') {
 			$('#surveyTitleHelper').text('');
-			$('#surveyContentHelper').text('내용을 입력하세요')
+			$('lectureHelper').text('');
+			$('#surveyContentHelper').text('내용을 입력하세요');
 			$('#startlineHelper').text('');
 			$('#deadlineHelper').text('');
 			
 			$('#surveyContent').focus();
 		}else if($('#surveyStartlineDate').val() == '') {
 			$('#surveyTitleHelper').text('');
-			$('#surveyContentHelper').text('')
+			$('lectureHelper').text('');
+			$('#surveyContentHelper').text('');
 			$('#startlineHelper').text('설문 시작일을 입력하세요');
 			$('#deadlineHelper').text('');
 			
 			$('#surveyDeadlineDate').focus();
 		}else if($('#surveyDeadlineDate').val() == '') {
 			$('#surveyTitleHelper').text('');
-			$('#surveyContentHelper').text('')
+			$('lectureHelper').text('');
+			$('#surveyContentHelper').text('');
 			$('#startlineHelper').text('');
 			$('#deadlineHelper').text('설문 마감일을 입력하세요');
 			
 			$('#surveyDeadlineDate').focus();
 		}else if(appendCount == 1){
 			$('#surveyTitleHelper').text('');
-			$('#surveyContentHelper').text('')
+			$('lectureHelper').text('');
+			$('#surveyContentHelper').text('');
 			$('#startlineHelper').text('');
 			$('#deadlineHelper').text('');
-			$('#qestionFormHelper').text('질문을 선택해주세요')
+			$('#qestionFormHelper').text('질문을 선택해주세요');
 		}else {
 			$('#insertSurvey').submit();
 		}
@@ -132,37 +145,50 @@ $(document).ready(function(){
 
 
 									<form method="post"
-										action='${pageContext.request.contextPath}manager/survey/insertSurvey'
+										action="${pageContext.request.contextPath}/manager/survey/insertSurvey"
 										id="insertSurvey">
 										<table>
 											<tr>
+												<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
+											</tr>
+											<tr>
 												<td>설문조사 제목</td>
 												<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
-													<span id='surveyTitleHelper' class='helper'></span></td>
+													<span id="surveyTitleHelper" class="helper"></span></td>
+											</tr>
+											<tr>
+												<td>강의명</td>
+												<td><select name="lectureNo">
+												<option>-----강의 선택-----</option>
+												<c:forEach var="lT" items="${lectureNoNameList}">
+													<option value="${lT.lectureNo}">${lT.lectureName}</option>
+												</c:forEach>
+												</select>
+												<span id="lectureHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>설문조사 내용</td>
 												<td><input type="text" name="surveyContent" id="surveyContent" class="form-control"> 
-												<span id='surveyContentHelper' class='helper'></span></td>
+												<span id="surveyContentHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>설문 시작일</td>
 												<td><input type="date" name="surveyStartlineDate" id="surveyStartlineDate" class="form-control"> 
-												<span id='startlineHelper' class='helper'></span></td>
+												<span id="startlineHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>설문 마감일</td>
 												<td><input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate" class="form-control">
-												<span id='deadlineHelper' class='helper'></span></td>
+												<span id="deadlineHelper" class="helper"></span></td>
 											</tr>
 										</table>
 										<table>
 											<tr>
 												<td id="surveyQuestionForm">
-												<span id='qestionFormHelper' class='helper'></span></td>
+												<span id="qestionFormHelper" class="helper"></span></td>
 											</tr>
 										</table>
-										<button type='button' id='insertQuestionList' name='insertQuestionList'>생성</button>
+										<button type="button" id="insertQuestionList" name="insertQuestionList">생성</button>
 									</form>
 								</div>
 							</div>

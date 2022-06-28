@@ -107,6 +107,16 @@ public class MemberService {
 		
 	}
 	
+	// Member 테이블 활용하여 운영자 수정 액션 
+	public int modifyManager(Member member) {
+		return memberMapper.updateManagerByMemberVo(member);
+	}
+	
+	// Manager 테이블 활용하여 운영자 수정 액션 
+	public int modifyManager(Manager manager) {
+		return memberMapper.updateManagerByManagerVo(manager);
+	}
+	
 	// Member 테이블 활용하여 강사 수정 액션 
 	public int modifyTeacher(Member member) {
 		return memberMapper.updateTeacherByMemberVo(member);

@@ -84,13 +84,13 @@
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 	<!-- header include(네비게이션바) -->
-		<div id="navAside"></div>
-		<div class="page-wrapper">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12 col-md-12">
-					    <div class="card">
-					        <div class="card-body">
+	<div id="navAside"></div>
+	<div class="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12">
+				    <div class="card">
+				        <div class="card-body">
 					            <h4 class="card-title">공지사항 수정</h4>
 					            <div>
 					            	<a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
@@ -153,9 +153,9 @@
 													<tr>
 														<td>
 															<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
-																<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
+																<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/noticeFile/${f.noticeFileName}">
 															</c:if>
-															<a href="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}" download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
+															<a href="${pageContext.request.contextPath}/static/uploadFile/noticeFile/${f.noticeFileName}" download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
 														</td>
 														<td>${f.noticeFileType}</td>
 														<td>${f.noticeFileSize}</td>
@@ -187,19 +187,18 @@
 		</div>
 	</div>
 </body>
-		     
-
-    <script src="static/dist/js/app-style-switcher.js"></script>
-    <script src="static/dist/js/feather.min.js"></script>
-    <script src="static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="static/dist/js/sidebarmenu.js"></script>
-    <script src="static/dist/js/custom.min.js"></script>
-    <script src="static/assets/extra-libs/c3/d3.min.js"></script>
-    <script src="static/assets/extra-libs/c3/c3.min.js"></script>
-    <script src="static/assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="static/dist/js/pages/dashboards/dashboard1.min.js"></script>
+		    
+    <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
     
 </html>

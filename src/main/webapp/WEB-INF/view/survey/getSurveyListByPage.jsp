@@ -32,7 +32,7 @@
 		<div id="navAside"></div>
 			<div class="page-wrapper">
 				<div class="container-fluid">
-					<h1>설문조사</h1>
+					<h1>${sessionLecture.lectureName} 설문조사</h1>
 						<div class="mt-2" style="height:auto; width:auto;">
 				            <table id="zero_config" class="table table-striped table-bordered no-wrap">
 						<thead>
@@ -51,13 +51,15 @@
 							<c:forEach var="sv" items="${surveyList}">
 								<tr>
 									<td>${sv.surveyNo}</td>
-									<c:if test="${loginMember.memberLevel==4}">
+									<c:if test="${sessionLoginMember.memberLevel==4}">
 										<td><a href="${pageContext.request.contextPath}/student/survey/getSurveyOneS?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
 									</c:if>
-									<c:if test="${loginMember.memberLevel>5}">
+									<c:if test="${sessionLoginMember.memberLevel>5}">
 										<td><a href="${pageContext.request.contextPath}/manager/survey/getSurveyOneM?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
 									</c:if>
-									
+									<c:if test="${sessionLoginMember.memberLevel==5}">
+										<td>${sv.surveyTitle}</td>
+									</c:if>
 									<td>${sv.surveyContent}</td>
 									<td>${sv.surveyCreateDate}</td>
 									<td>${sv.surveyStartlineDate}</td>
@@ -80,7 +82,10 @@
 					</ul>
 	
 					<div>
+						<c:if test="${sessionLoginMember.memberLevel>5}">
 						<a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/insertSurvey">설문조사 등록</a>
+						<a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/getSurveyStatistics">설문조사 통계</a>
+						</c:if>
 					</div>
 				</div>
 			</div>

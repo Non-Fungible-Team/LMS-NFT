@@ -3,21 +3,23 @@
 <mapper namespace="kr.co.nft.lms.mapper.SurveyMapper">
 
 		<select id="selectSurveyListByPage"
-				parameterType="java.util.Map"
-				resultType="kr.co.nft.lms.vo.Survey">
+				resultType="map">
 			SELECT
-				survey_no surveyNo
-				,survey_title surveyTitle
-				,survey_content surveyContent
-				,survey_create_date surveyCreateDate
-				,survey_update_date surveyUpdateDate
-				,survey_startline_date surveyStartlineDate
-				,survey_deadline_date surveyDeadlineDate
-				,lecture_no lectureNo
-				,member_id memberId
-				FROM survey
-				ORDER BY survey_no
-				LIMIT #{beginRow}, #{rowPerPage}
+				l.lecture_no lectureNo
+				,l.lecture_name lectureName
+				,s.survey_no surveyNo
+				,s.survey_title surveyTitle
+				,s.survey_content surveyContent
+				,s.survey_create_date surveyCreateDate
+				,s.survey_update_date surveyUpdateDate
+				,s.survey_startline_date surveyStartlineDate
+				,s.survey_deadline_date surveyDeadlineDate
+				,s.member_id memberId
+				,s.lecture_no
+			FROM lecture AS l
+			INNER JOIN survey AS s
+			WHERE l.lecture_no = #{lectureNo}
+			ORDER BY lecture_no
 		</select>
 		
 		<select id="countSurvey" resultType="int">
@@ -68,6 +70,8 @@
 				,survey_update_date
 				,survey_startline_date
 				,survey_deadline_date
+				,lecture_no
+				,member_id
 			) VALUES (
 				#{surveyTitle}
 				,#{surveyContent}
@@ -75,6 +79,8 @@
 				,NOW()
 				,#{surveyStartlineDate}
 				,#{surveyDeadlineDate}
+				,#{lectureNo}
+				,#{memberId}
 			)
 		</insert>
 		
@@ -175,6 +181,7 @@
 				survey_question_no
 				,survey_no
 				,member_id
+				,survey_answer_type
 				,survey_multiple_answer_content
 				,survey_multiple_answer_create_date
 				,survey_multiple_answer_update_date
@@ -182,6 +189,7 @@
 				#{surveyQuestionNo}
 				,#{surveyNo}
 				,#{memberId}
+				,#{surveyAnswerType}
 				,#{surveyMultipleAnswerContent}
 				,NOW()
 				,NOW()
@@ -195,6 +203,7 @@
 				survey_question_no
 				,survey_no
 				,member_id
+				,survey_answer_type
 				,survey_short_answer_content
 				,survey_short_answer_create_date
 				,survey_short_answer_update_date
@@ -202,6 +211,7 @@
 				#{surveyQuestionNo}
 				,#{surveyNo}
 				,#{memberId}
+				,#{surveyAnswerType}
 				,#{surveyShortAnswerContent}
 				,NOW()
 				,NOW()

@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.service.SurveyService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyAnswer;
@@ -24,24 +26,44 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class SurveyController {
 	@Autowired private SurveyService surveyService;
+	@Autowired private LectureService lectureService;
 	
-	
+	@GetMapping("/manager/survey/getSurveyStatistics")
+	public String getSurveyStatistics() {
+		return "survey/getSurveyStatistics";
+	}
 	
 	@GetMapping("/manager/survey/insertSurvey") // 설문조사 추가 (설문조사 질문도 같이)
-	public String insertSurvey(Survey survey, Model model
+	public String insertSurvey(Survey survey, Model model, HttpSession session
 			,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage
-			,@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {	
+			,@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage
+			,@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {	
+		// 로그인 정보 가져오기
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		// 학생 강의 One 리스트 + 강의 이름과 번호 리스트
+		Map<String , Object> studentLectureOneMap  = lectureService.modifyStudentLectureForm(lectureNo, loginMember.getMemberId());
+		
+		
+		// 질문 항목 가져오기
 		Map<String, Object> map = surveyService.selectSurveyQuestionList(currentPage, rowPerPage);
 		
+		
+		log.debug(A.D+"[SurveyController.insertSurvey] studentLectureOneMap : " + studentLectureOneMap + A.R);
+		log.debug(A.D+"[SurveyController.insertSurvey] loginMember : " + loginMember +A.R);
 		log.debug(A.D+"[SurveyController.insertSurvey] map : " + map + A.R); // 디버깅
 		
 		model.addAttribute("QuestionList",map.get("QuestionList"));
+		model.addAttribute("loginMember",loginMember);
+		model.addAttribute("lectureNoNameList", studentLectureOneMap.get("lectureNoNameList"));
 		
 		return "survey/insertSurvey";
 	}
 	
 	@GetMapping("/manager/survey/updateSurveyQuestionList")
 	public String updateSurveyQuestionList() {
+		
+		
+		
 		return "survey/updateSurveyQuestionList";
 	}
 	
@@ -58,11 +80,11 @@ public class SurveyController {
 		
 		if(row == 0) {
 			log.debug(A.D+"[SurveyController.insertSurvey] 등록실패  " + A.R); // 디버깅
-			return "survey/insertSurvey";
+			return "manager/survey/insertSurvey";
 		}
 		
 		log.debug(A.D+"[SurveyController.insertSurvey] 등록성공  " + A.R); // 디버깅
-		return "redirect:/survey/getSurveyListByPage";
+		return "redirect:/all/survey/getSurveyListByPage";
 	}
 	
 	@GetMapping("manager/survey/getSurveyOneM")// 설문조사 상세보기 페이지
@@ -102,6 +124,14 @@ public class SurveyController {
 		return"survey/getSurveyOneS";
 	}
 	
+	@PostMapping("/student/survey/addSurveyAnswer")// 설문조사 답변 추가
+	public String addSurveyAnswer(SurveyAnswer surveyAnswer) {
+		log.debug(A.D+"[SurveyController.addSurveyAnswer] surveyAnswer : " + surveyAnswer + A.R);
+		int row = surveyService.addSurveyQuestionAnswer(surveyAnswer.getSurveyAnswer());
+		return "redirect:/all/survey/getSurveyListByPage";
+		
+	}
+	
 	@GetMapping("/manager/survey/insertSurveyQuestionList")// 설문조사 질문 항목 추가
 	public String insertSurveyQuestionList() {
 		return "survey/insertSurveyQuestionList";
@@ -115,29 +145,26 @@ public class SurveyController {
 		surveyService.insertSurveyList(surveyQuestionList);
 		return "redirect:/manager/survey/getSurveyQuestionListByPage";
 	}
-	@PostMapping("/student/survey/addSurveyAnswer")
-	public String addSurveyAnswer(SurveyAnswer surveyAnswer) {
-		log.debug(A.E+"[123451534535132]"+surveyAnswer+A.R);
-		int row = surveyService.addSurveyQuestionAnswer(surveyAnswer.getSurveyAnswer());
-		return "redirect:/all/survey/getSurveyListByPages";
-		
-	}
+	
+	
 	
 	
 	
 	@GetMapping("/all/survey/getSurveyListByPage") // 설문조사 페이지
 	public String getSurveyListByPage(Model model, HttpSession session
-			,@RequestParam(name = "currentPage",defaultValue="1")int currentPage
-			,@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {// 디폴트 값 설정
+			,@RequestParam(name = "currentPage",defaultValue="1")int currentPage // 디폴트 값 설정
+			,@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage
+			) {
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		log.debug(A.D+"[SurveyController.getSurveyListByPage] loginMember : "+loginMember+A.R);
+		Lecture lecture = (Lecture)session.getAttribute("sessionLecture");
+		
+		log.debug(A.D+"[SurveyController.getSurveyListByPage] loginMember : " + loginMember + A.R);
 		//뷰를 호출시 모델레이어로 부터 반환된 값을 뷰로 보낸다
-		Map<String, Object> returnMap = surveyService.getSurveyListByPage(currentPage, rowPerPage);
+		Map<String, Object> returnMap = surveyService.getSurveyListByPage(currentPage, rowPerPage,lecture);
 		log.debug(A.D+"[SurveyController.getSurveyListByPage] returnMap : " + returnMap + A.R); // 디버깅
 		
 		//모델에 값들 저장
 		model.addAttribute("surveyList", returnMap.get("surveyList")); // value를 object로 넘겨줌
-		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		
