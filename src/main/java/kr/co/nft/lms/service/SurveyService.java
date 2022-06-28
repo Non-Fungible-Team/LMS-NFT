@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.SurveyMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
@@ -68,13 +69,14 @@ public class SurveyService {
 		
 	}
 	
-	public Map<String,Object> getSurveyListByPage(int currentPage, int rowPerPage) {
+	public Map<String,Object> getSurveyListByPage(int currentPage, int rowPerPage, Lecture lecture) {
 		int beginRow = (currentPage - 1)*rowPerPage;
 		Map<String, Integer> map = new HashMap<>();
+		map.put("lectureNo", lecture.getLectureNo());
 		map.put("rowPerPage", rowPerPage);
 		map.put("beginRow", beginRow);
 		
-		List surveyList = surveyMapper.selectSurveyListByPage(map);
+		List<Map<String,Object>> surveyList = surveyMapper.selectSurveyListByPage(map);
 		log.debug(A.D+"[SurveyService.getSurveyListByPage] surveyList : " + surveyList + A.R);
 		
 		int totalCount = surveyMapper.countSurvey();
@@ -92,7 +94,7 @@ public class SurveyService {
 		int beginRow = (currentPage - 1)*rowPerPage;
 		Map<String, Integer> map = new HashMap<>();
 		map.put("rowPerPage", rowPerPage);
-		map.put("beginRow", beginRow);
+		map.put("beginRow", beginRow);	
 		
 		List SurveyQuestionList = surveyMapper.selectSurveyQuestionListByPage(map);
 		log.debug(A.D+"[SurveyService.getSurveyQuestionListByPage] surveyList : " + SurveyQuestionList + A.R);

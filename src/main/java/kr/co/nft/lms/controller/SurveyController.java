@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.service.SurveyService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyAnswer;
@@ -27,6 +28,10 @@ public class SurveyController {
 	@Autowired private SurveyService surveyService;
 	@Autowired private LectureService lectureService;
 	
+	@GetMapping("/manager/survey/getSurveyStatistics")
+	public String getSurveyStatistics() {
+		return "survey/getSurveyStatistics";
+	}
 	
 	@GetMapping("/manager/survey/insertSurvey") // 설문조사 추가 (설문조사 질문도 같이)
 	public String insertSurvey(Survey survey, Model model, HttpSession session
@@ -56,6 +61,8 @@ public class SurveyController {
 	
 	@GetMapping("/manager/survey/updateSurveyQuestionList")
 	public String updateSurveyQuestionList() {
+		
+		
 		
 		return "survey/updateSurveyQuestionList";
 	}
@@ -145,17 +152,19 @@ public class SurveyController {
 	
 	@GetMapping("/all/survey/getSurveyListByPage") // 설문조사 페이지
 	public String getSurveyListByPage(Model model, HttpSession session
-			,@RequestParam(name = "currentPage",defaultValue="1")int currentPage
-			,@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage) {// 디폴트 값 설정
+			,@RequestParam(name = "currentPage",defaultValue="1")int currentPage // 디폴트 값 설정
+			,@RequestParam(name = "rowPerPage",defaultValue = "10") int rowPerPage
+			) {
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		log.debug(A.D+"[SurveyController.getSurveyListByPage] loginMember : "+loginMember+A.R);
+		Lecture lecture = (Lecture)session.getAttribute("sessionLecture");
+		
+		log.debug(A.D+"[SurveyController.getSurveyListByPage] loginMember : " + loginMember + A.R);
 		//뷰를 호출시 모델레이어로 부터 반환된 값을 뷰로 보낸다
-		Map<String, Object> returnMap = surveyService.getSurveyListByPage(currentPage, rowPerPage);
+		Map<String, Object> returnMap = surveyService.getSurveyListByPage(currentPage, rowPerPage,lecture);
 		log.debug(A.D+"[SurveyController.getSurveyListByPage] returnMap : " + returnMap + A.R); // 디버깅
 		
 		//모델에 값들 저장
 		model.addAttribute("surveyList", returnMap.get("surveyList")); // value를 object로 넘겨줌
-		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
 		
