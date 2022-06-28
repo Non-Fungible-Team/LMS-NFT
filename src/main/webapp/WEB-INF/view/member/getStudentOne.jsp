@@ -82,6 +82,10 @@
 												<td>${getStudentOneByStudentVo.studentEducation}</td>
 											</tr>
 											<tr>
+												<td>주소</td>
+												<td>${getStudentOneByStudentVo.addressDetail}</td>
+											</tr>
+											<tr>
 												<td>휴대전화</td>
 												<td>${getStudentOneByMemberVo.memberPhoneNo}</td>
 											</tr>

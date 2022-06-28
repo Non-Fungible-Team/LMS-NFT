@@ -87,8 +87,10 @@ table {
                 console.log("▶▶▶arr : "+arr);
                
                 let addressDetail = '';
-					for(var i=0; i<arr.length; i++){
-						  $('#addrList').append("<option id='addressDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
+					for(var i=0; i<arr.length; i++){ 
+						// 띄어쓰기된 데이터는 ''로 묶어주자. 
+						// option 태그 name 대신 select 태그의 name이 넘어간다. 
+						$('#addrList').append("<option id='addressDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
 					}
 				}
 					
@@ -122,7 +124,7 @@ table {
 									<h4 class="card-title">학생 회원 가입</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/member/addStudent">
+										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/addStudent">
 											<table id="zero_config" class="table table-striped table-bordered">
 												
 												<!--  
@@ -168,9 +170,9 @@ table {
 														<span id="middle">@</span>
 														<select id="emailUrl" name="emailUrl">
 															<option value="">::선택::</option>
-															<option value="naver.com">네이버</option>
-															<option value="daum.net">다음</option>
-															<option value="gmail.com">지메일</option>
+															<option value="naver.com">naver.com</option>
+															<option value="daum.net">daum.net</option>
+															<option value="gmail.com">gmail.com</option>
 														</select> 
 														<input type="hidden" id="studentEmail" name="studentEmail" value="">
 														<span id="studentEmailIdHelper" class="helper"></span>
@@ -178,15 +180,16 @@ table {
 												</tr>
 												<tr>
 													<td>주소</td>
-													<td><input type="text" id="keyword" name="keyword"
-														value="가산디지털2로">
-													<button type="button" id="addrBtn" class="btn btn-rounded btn-outline-secondary">주소검색</button></td>
+													<td>
+														<input type="text" id="keyword" name="keyword" value="가산디지털2로">
+														<button type="button" id="addrBtn" class="btn btn-rounded btn-outline-secondary">주소검색</button>
+													</td>
 												</tr>
 												<tr>
 													<td>주소리스트</td>
 													<td>
 														<select id="addrList" name="roadAddr">
-														<option>주소검색을 해주세요</option>
+															<option>주소검색을 해주세요</option>
 														</select>
 														상세주소 : <input type = "text" name = "addrDetail">
 													</td>
@@ -213,7 +216,7 @@ table {
 												<tr>
 													<td colspan="2">
 														<!-- 폼 text, radio, checkbox 공백이 있는지 체크 -->
-														<button type="submit" id="signup" class="btn btn-rounded btn-outline-success">학생 회원가입</button>
+														<button type="submit" id="signUp" class="btn btn-rounded btn-outline-success">학생 회원가입</button>
 														<button type="reset" class="btn btn-rounded btn-outline-warning">입력 내용 초기화</button>
 													</td>
 									            </tr>
@@ -283,7 +286,7 @@ table {
 			$('#memberPhoneNoHelper').text('전화번호를 입력하세요');
 			$('#memberPhoneNo').focus();
 		} else {
-			$('#signupStudent').submit();
+			$('#signUpStudent').submit();
 		}
 	});
 </script>

@@ -104,19 +104,5 @@
 	WHERE member_id =#{memberId}
 	</delete>
 	
-	<!-- 전체 학생 출석 목록 전체 행 -->
-	<select id="selectAttendCount" 
-			resultType="int">
-	SELECT COUNT(*) FROM attend
-	WHERE lecture_no #{lectureNo}
-	</select>
-	
-	<!-- 학생이 자신이 듣는 강의별 출석 전체 행 -->
-	<select id="selectStudentAttendCount"
-			resultType="int">
-	SELECT COUNT(*) FROM attend
-	WHERE lecture_no = #{lectureNo}
-	AND member_id = #{memberId}
-	</select>
 	
 </mapper>
