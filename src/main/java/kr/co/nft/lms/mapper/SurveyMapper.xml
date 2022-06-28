@@ -68,6 +68,8 @@
 				,survey_update_date
 				,survey_startline_date
 				,survey_deadline_date
+				,lecture_no
+				,member_id
 			) VALUES (
 				#{surveyTitle}
 				,#{surveyContent}
@@ -75,6 +77,8 @@
 				,NOW()
 				,#{surveyStartlineDate}
 				,#{surveyDeadlineDate}
+				,#{lectureNo}
+				,#{memberId}
 			)
 		</insert>
 		
@@ -175,6 +179,7 @@
 				survey_question_no
 				,survey_no
 				,member_id
+				,survey_answer_type
 				,survey_multiple_answer_content
 				,survey_multiple_answer_create_date
 				,survey_multiple_answer_update_date
@@ -182,6 +187,7 @@
 				#{surveyQuestionNo}
 				,#{surveyNo}
 				,#{memberId}
+				,#{surveyAnswerType}
 				,#{surveyMultipleAnswerContent}
 				,NOW()
 				,NOW()
@@ -195,6 +201,7 @@
 				survey_question_no
 				,survey_no
 				,member_id
+				,survey_answer_type
 				,survey_short_answer_content
 				,survey_short_answer_create_date
 				,survey_short_answer_update_date
@@ -202,6 +209,7 @@
 				#{surveyQuestionNo}
 				,#{surveyNo}
 				,#{memberId}
+				,#{surveyAnswerType}
 				,#{surveyShortAnswerContent}
 				,NOW()
 				,NOW()
