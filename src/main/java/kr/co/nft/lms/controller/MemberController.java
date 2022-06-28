@@ -201,9 +201,11 @@ public class MemberController {
 		log.debug(A.Z+"[MemberController.modifyManager.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
 		
 		// 사진을 업로드하면 저장되는 경로 설정 
-		URL pathurl = this.getClass().getResource("/static/");
-		String path = pathurl.getPath();
-		log.debug(A.Z+"[MemberController.modifyManager.param] path : "+path+A.R);
+		URL pathUrl = this.getClass().getResource("/static/");
+		log.debug(A.Z+"[MemberController.modifyManager] pathUrl : "+pathUrl+A.R);
+		
+		String path = pathUrl.getPath()+"/uploadFile/memberPhoto/managerPhoto/";
+		log.debug(A.Z+"[MemberController.modifyManager] path : "+path+A.R);
 		
 		// 세션에서 아이디와 레벨은 계속 가져온다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
@@ -679,6 +681,12 @@ public class MemberController {
 	}
 	
 	// ------------------ 로그인 / 로그아웃 ------------------ // 
+	
+	// 휴면 처리 계정 접속시 휴면 계정임을 보여주는 페이지로 이동시킴 
+	@GetMapping("/restingMember")
+	public String restingMember(HttpSession session) {
+		return "/member/restingMember";
+	}
 		
 	// 로그아웃 
 	@GetMapping("/all/logout")

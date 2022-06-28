@@ -40,7 +40,7 @@ public class AllLoginFilter implements Filter {
 			//level이 -4,-5,-6인 경우 휴면 계정 관리 페이지 이동
 			}else if(sessionLoginMember.getMemberLevel() == -4 || sessionLoginMember.getMemberLevel() == -5 || sessionLoginMember.getMemberLevel() == -6) {
 				log.debug(A.E+"[AllLoginFilter.doFilter] : 휴면 계정의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
-				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/humanController?msg=humanAccount");///!!!! 꼭 명칭 변경 !!!!!
+				((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/restingMember");///!!!! 꼭 명칭 변경 !!!!!
 				return;
 			//level이 -14,-15,-16인 경우 회원 탈퇴 메세지 출력
 			}else if(sessionLoginMember.getMemberLevel() == -14 || sessionLoginMember.getMemberLevel() == -15 || sessionLoginMember.getMemberLevel() == -16) {

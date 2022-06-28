@@ -50,9 +50,9 @@
 												<td>
 												<!-- 경로  ${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName} 이와같이 작성하면 파일 못찾음 -->
 													<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
-														<img src="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}">
+														<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/memberPhoto/managerPhoto/${getMemberPhoto.photoName}">
 													</c:if>
-													<a href="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
+													<a href="${pageContext.request.contextPath}/static/uploadFile/memberPhoto/managerPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
 														${getMemberPhoto.photoOriginName}
 													</a>
 												</td>
