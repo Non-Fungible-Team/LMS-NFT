@@ -63,11 +63,11 @@ public class AttendService {
 	}
 	
 	//3.학생 출석 삽입 폼
-	public Map<String,Object> addAttendForm(){
+	/*public Map<String,Object> addAttendForm(){
 		log.debug(A.W +"[AttendService.addAttendForm]  출석 삽입 폼" +A.R);
 		
 		
 		return null;
-	}
+	}*/
 	
 }
