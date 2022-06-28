@@ -22,12 +22,12 @@ public interface SuggestMapper {
 	int selectSuggestListTotalCount(int memberLevel);
 	
 	//상세보기
-	Suggest selectSuggestOne(int SuggestNo);
+	Suggest selectSuggestOne(int suggestNo);
 	
 	//update
 	int updateSuggestInBoard(Suggest suggest);
 	
 	//delete (블라인드 처리)
-	int deleteSuggest(int SuggestNo);
+	int deleteSuggest(int suggestNo);
 	
 }

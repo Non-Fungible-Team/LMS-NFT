@@ -38,7 +38,7 @@
 		) VALUES (
 			#{suggestNo}
 			,0
-			,'N'
+			,#{suggestSecret}
 			,'처리전'
 		)
 	</insert>
@@ -51,6 +51,7 @@
 			s.board_no suggestNo
 			,b.board_title suggestTitle
 			,b.member_id memberId
+			,s.suggest_secret suggestSecret
 			,b.board_create_date suggestCreateDate
 		FROM suggest s
 		INNER JOIN board b
@@ -83,6 +84,9 @@
 			,b.board_privilege suggestPrivilege
 			,b.board_create_date suggestCreateDate
 			,b.board_update_date suggestUpdateDate
+			,s.root
+			,s.suggest_secret suggestSecret
+			,s.suggest_status suggestStatus
 		FROM suggest s
 		INNER JOIN board b
 		ON s.board_no = b.board_no
@@ -105,7 +109,7 @@
 	<update id="deleteSuggest"
 			parameterType="int">
 		UPDATE board
-		SET board_bilnd = 'Y'
+		SET board_blind = 'Y'
 		WHERE board_no = #{suggestNo}
 	</update>
 </mapper>
