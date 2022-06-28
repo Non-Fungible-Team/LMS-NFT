@@ -29,72 +29,72 @@
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
-			<div class="page-wrapper">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-12 col-md-12">
-					    	<div class="card">
-					        	<div class="card-body">
-				            		<div>
-				            			<h4 class="card-title">공지사항</h4>
-				            			<c:if test="${sessionLoginMember.memberLevel >= 6}">
-						            		<div>
-										        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">
-										        	<input type="button" class="btn btn-success" style="float: right" value="게시판입력">
-										        </a>
-									        </div>
-								        </c:if>
-							   		</div>
-					          		<div class="mt-2" style="height:auto; width:100%;">
-					            		<table id="zero_config" class="table table-striped table-bordered no-wrap">
-					            			<thead>
-					                            <tr>
-					                                <th>번호</th>
-													<th>제목</th>
-													<th>읽기권한</th>
-													<th>작성자ID</th>
-													<th>생성날짜</th>
-					                            </tr>
-				                            </thead>
-				                            <tbody>
-								                <tr>
-													<c:forEach var="n" items="${noticeList}">
-														<tr>
-															<td>${n.noticeNo}</td>
-															<td><a href="${pageContext.request.contextPath}/all/notice/getNoticeOne?noticeNo=${n.noticeNo}">${n.noticeTitle}</a></td>
-															<td>${n.privilegeName}</td>
-															<td>${n.memberId}</td>
-															<td>${n.noticeCreateDate}</td>
-														</tr>
-													</c:forEach>
-								                </tr>
-				                            </tbody>
-						            	</table>
-						            	<div style="text-align: center;">
-							            	<form method="get" action="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
-												<c:if test="${currentPage>1}">
-													<button type="submit" class="btn btn-outline-warning btn-rounded" name="currentPage" value="${currentPage-1}">이전</button>
-												</c:if>
-												<!-- 목록 사이 번호 표시 -->
-												<c:forEach begin="1" end="10" step="1" var="i" varStatus="status">
-													<c:if test="${ i< 5 && currentPage-(5-i)> 0 }">
-														<button type = "submit" value ="${currentPage-(5-i)}" name = "currentPage" class="btn btn-outline-info btn-rounded">${currentPage-(5-i)}</button>
-													</c:if>
-													<c:if test="${ i==5 }">
-														<button type = "submit" value ="${currentPage}" name = "currentPage" class="btn btn-outline-danger btn-rounded">${currentPage}</button>
-													</c:if>
-													<c:if test="${ i > 5 && currentPage+(i-5) <= lastPage }">
-														<button type = "submit" value ="${currentPage+(i-5)}" name = "currentPage" class="btn btn-outline-info btn-rounded">${currentPage+(i-5)}</button>
-													</c:if>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+				    	<div class="card">
+				        	<div class="card-body">
+			            		<div>
+			            			<h4 class="card-title">공지사항</h4>
+			            			<c:if test="${sessionLoginMember.memberLevel >= 6}">
+					            		<div>
+									        <a href="${pageContext.request.contextPath}/manager/notice/addNotice">
+									        	<input type="button" class="btn btn-success" style="float: right" value="공지사항입력">
+									        </a>
+								        </div>
+							        </c:if>
+						   		</div>
+				          		<div class="mt-2" style="height:auto; width:100%;">
+				            		<table id="zero_config" class="table table-striped table-bordered no-wrap">
+				            			<thead>
+				                            <tr>
+				                                <th>번호</th>
+												<th>제목</th>
+												<th>읽기권한</th>
+												<th>작성자ID</th>
+												<th>생성날짜</th>
+				                            </tr>
+			                            </thead>
+			                            <tbody>
+							                <tr>
+												<c:forEach var="n" items="${noticeList}">
+													<tr>
+														<td>${n.noticeNo}</td>
+														<td><a href="${pageContext.request.contextPath}/all/notice/getNoticeOne?noticeNo=${n.noticeNo}">${n.noticeTitle}</a></td>
+														<td>${n.privilegeName}</td>
+														<td>${n.memberId}</td>
+														<td>${n.noticeCreateDate}</td>
+													</tr>
 												</c:forEach>
-												<c:if test="${currentPage<lastPage}">
-													<button type="submit" class="btn btn-outline-success btn-rounded" name="currentPage" value="${currentPage+1}">다음</button>
+							                </tr>
+			                            </tbody>
+					            	</table>
+					            	<div style="text-align: center;">
+						            	<form method="get" action="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
+											<c:if test="${currentPage>1}">
+												<button type="submit" class="btn btn-outline-warning btn-rounded" name="currentPage" value="${currentPage-1}">이전</button>
+											</c:if>
+											<!-- 목록 사이 번호 표시 -->
+											<c:forEach begin="1" end="10" step="1" var="i" varStatus="status">
+												<c:if test="${ i< 5 && currentPage-(5-i)> 0 }">
+													<button type = "submit" value ="${currentPage-(5-i)}" name = "currentPage" class="btn btn-outline-info btn-rounded">${currentPage-(5-i)}</button>
 												</c:if>
-											</form>
+												<c:if test="${ i==5 }">
+													<button type = "submit" value ="${currentPage}" name = "currentPage" class="btn btn-outline-danger btn-rounded">${currentPage}</button>
+												</c:if>
+												<c:if test="${ i > 5 && currentPage+(i-5) <= lastPage }">
+													<button type = "submit" value ="${currentPage+(i-5)}" name = "currentPage" class="btn btn-outline-info btn-rounded">${currentPage+(i-5)}</button>
+												</c:if>
+											</c:forEach>
+											<c:if test="${currentPage<lastPage}">
+												<button type="submit" class="btn btn-outline-success btn-rounded" name="currentPage" value="${currentPage+1}">다음</button>
+											</c:if>
+										</form>
 									</div>
-								</div>   
-				       		</div>
-				    	</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
