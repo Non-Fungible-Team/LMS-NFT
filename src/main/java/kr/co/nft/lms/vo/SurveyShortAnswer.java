@@ -7,7 +7,7 @@ public class SurveyShortAnswer {
 	private int surveyQuestionNo;
 	private int surveyNo;
 	private String memberId;
-	private String SurveyShortAnswerType;
+	private String SurveyAnswerType;
 	private String SurveyShortAnswerContent;
 	private String SurveyShortAnswerCreateDate;
 	private String SurveyShortAnswerUpdateDate;

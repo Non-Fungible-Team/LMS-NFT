@@ -143,7 +143,7 @@ public class LectureService {
 		returnMap.put("subjectList", subjectList); //과목목록 값
 		returnMap.put("lectureRoomList", lectureRoomList); //강의실목록 값
 		returnMap.put("teacherList", teacherList); //강의실목록 값
-		log.debug(A.W +"[LectureService.addLectureForm.returnMap] returnMap : " +returnMap +A.R);//디버깅코드
+	
 		log.debug(A.W +"[LectureService.modifyLectureForm.returnMap] returnMap  : " + returnMap +A.R);
 		
 		return returnMap;	

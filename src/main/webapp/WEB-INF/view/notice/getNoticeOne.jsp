@@ -102,9 +102,9 @@
 													<tr>
 														<td>
 															<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
-																<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
+																<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/noticeFile/${f.noticeFileName}">
 															</c:if>
-															<a href="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}"  download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
+															<a href="${pageContext.request.contextPath}/static/uploadFile/noticeFile/${f.noticeFileName}"  download>▶${f.noticeFileOriginName}◀ 파일 다운로드</a>
 														</td>
 														<td>${f.noticeFileType}</td>
 														<td>${f.noticeFileSize}</td>

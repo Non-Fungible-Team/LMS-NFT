@@ -42,6 +42,12 @@ public interface MemberMapper {
 	// MemberPhoto 테이블에 회원 사진 등록
 	int insertMemberPhoto(MemberPhoto memberPhoto);
 	
+	// Member 테이블 활용하여 운영자 정보 수정 
+	int updateManagerByMemberVo(Member member);
+	
+	// Manager 테이블 활용하여 운영자 정보 수정 
+	int updateManagerByManagerVo(Manager manager);
+	
 	// Member 테이블 활용하여 강사 정보 수정 
 	int updateTeacherByMemberVo(Member member);
 	
