@@ -43,4 +43,30 @@
 	<select id="selectLectureSchedulCount" resultType="int">
 		SELECT COUNT(*) FROM lecture_schedule
 	</select>
+	
+	<select id="selectLectureScheduleOne"
+			resultType="kr.co.nft.lms.vo.LectureSchedule">
+		SELECT 
+			lecture_no lectureNo
+			, lecture_schedule_date lectureScheduleDate
+			, lecture_schedule_start_date lectureScheduleStartDate
+			, lecture_schedule_end_date lectureScheduleEndDate
+			, lecture_schedule_create_date lectureScheduleCreateDate
+		FROM lecture_schedule
+		WHERE lecture_no = #{ lectureNo }
+		AND lecture_schedule_date = #{ lectureScheduleDate };
+	</select>
+	
+	<update id="updateLectureSchedule"
+			parameterType="kr.co.nft.lms.vo.LectureSchedule">
+		UPDATE lecture_schedule
+		SET 
+			lecture_no = #{ lectureNo }
+			, lecture_schedule_date = #{ lectureScheduleDate }          
+			, lecture_schedule_start_date = #{ lectureScheduleStartDate }
+			, lecture_schedule_end_date = #{ lectureScheduleEndDate }
+			, lecture_schedule_create_date = NOW()
+		WHERE lecture_no = #{ lectureNo }
+		AND lecture_schedule_date = #{ lectureScheduleDate };
+	</update>
 </mapper>
