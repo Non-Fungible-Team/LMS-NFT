@@ -10,7 +10,6 @@ public class StudentLecture {
 	private String studentLectureLegistrationDate;
 	private String studentLectureEndDate;
 	private int studentLectureScore;
-	
 	private String studentName;
 	private String lectureName;
 }

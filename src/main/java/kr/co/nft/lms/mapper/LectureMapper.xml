@@ -157,6 +157,7 @@
 		,lecture_end_date=#{lectureEndDate}
 		,lecture_room_name =#{lectureRoomName}
 		,lecture_writer =#{lectureWriter}
+		,lecture_update_date = NOW()
 		WHERE lecture_no =#{lectureNo}
 	</update>
 	<!-- 강의_강사 수정 -->

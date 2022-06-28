@@ -7,8 +7,6 @@ public class Attend {
 	private String memberId;
 	private int lectureNo;
 	private String attendDate;
-	private String attendStart;
-	private String attendEnd;
 	private String attendStatus;
 	private String attendReason;
 	private String attendCreateDate;
