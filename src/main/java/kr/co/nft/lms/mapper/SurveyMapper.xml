@@ -236,5 +236,23 @@
 			ORDER BY sq.survey_question_list_no
 		</select>
 		
+		<select id="getAnswerAverage"
+				parameterType="double">
+			SELECT
+			AVG(survey_multiple_answer_content) surveyMultipleAnswerContent
+			FROM survey_multiple_answer
+			WHERE survey_question_no = #{surveyQuestionNo}
+		</select>
 		
+		<select id="getAnswerCount"
+				resultType="map">
+			SELECT
+				COUNT(CASE WHEN survey_multiple_answer_content = 1 THEN 1 END)  surveyMultipleAnswerContent1
+				,COUNT(CASE WHEN survey_multiple_answer_content = 2 THEN 1 END)  surveyMultipleAnswerContent2
+				,COUNT(CASE WHEN survey_multiple_answer_content = 3 THEN 1 END)  surveyMultipleAnswerContent3
+				,COUNT(CASE WHEN survey_multiple_answer_content = 4 THEN 1 END)  surveyMultipleAnswerContent4
+				,COUNT(CASE WHEN survey_multiple_answer_content = 5 THEN 1 END)  surveyMultipleAnswerContent5
+			FROM survey_multiple_answer 
+			WHERE survey_question_no = #{surveyQuestionNo}
+		</select>
 </mapper>

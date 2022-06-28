@@ -25,20 +25,40 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
+	public Map<String,Object> getSurveyAnswerStatistics(int surveyQuestioNo){
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] surveyQuestioNo : " + surveyQuestioNo + A.R);
+		
+		List<SurveyMultipleAnswer> answerAverage = surveyMapper.getAnswerAverage(surveyQuestioNo);
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerAverage : " + answerAverage + A.R);
+		
+		List answerCount = surveyMapper.getAnswerCount(surveyQuestioNo);
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
+		
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("answerAverage", answerAverage);
+		returnMap.put("answerCount", answerCount);
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] returnMap : " + returnMap + A.R);
+		
+		return returnMap;
+		
+	}
+	
 	public Map<String,Object> getAllSurveyAnswer(List<SurveyQuestion> questionList
 												,SurveyQuestionList surveyQuestList
 												,SurveyMultipleAnswer surveyMultipleAnswer
 												,SurveyShortAnswer surveyShortAnswer) {
-		
 		Map<String, Object> map = new HashMap<>();
 		map.put("surveyQuestList", surveyQuestList);
 		map.put("surveyMultipleAnswer", surveyMultipleAnswer);
 		map.put("surveyShortAnswer", surveyShortAnswer);
-			
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] map : " + map + A.R);
+		
 		List allAnswer = surveyMapper.getAllSurveyAnswer(map);
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] allAnswer : " + allAnswer + A.R);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("allAnswer", allAnswer);
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] returnMap : " + returnMap + A.R);
 		
 		return returnMap;
 		
@@ -49,8 +69,10 @@ public class SurveyService {
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("rowPerPage", rowPerPage);
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] map : " + map + A.R);
 		
 		List QuestionList = surveyMapper.selectSurveyQuestionList(map);
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] QuestionList : " + QuestionList + A.R);
 		
 		Map<String,Object> select = new HashMap<>();
 		select.put("QuestionList", QuestionList);
@@ -97,6 +119,7 @@ public class SurveyService {
 		map.put("lectureNo", lecture.getLectureNo());
 		map.put("rowPerPage", rowPerPage);
 		map.put("beginRow", beginRow);
+		log.debug(A.D+"[SurveyService.getSurveyListByPage] map : " + map + A.R);
 		
 		List<Map<String,Object>> surveyList = surveyMapper.selectSurveyListByPage(map);
 		log.debug(A.D+"[SurveyService.getSurveyListByPage] surveyList : " + surveyList + A.R);
@@ -117,9 +140,10 @@ public class SurveyService {
 		Map<String, Integer> map = new HashMap<>();
 		map.put("rowPerPage", rowPerPage);
 		map.put("beginRow", beginRow);	
+		log.debug(A.D+"[SurveyService.getSurveyQuestionListByPage] map : " + map + A.R);
 		
 		List SurveyQuestionList = surveyMapper.selectSurveyQuestionListByPage(map);
-		log.debug(A.D+"[SurveyService.getSurveyQuestionListByPage] surveyList : " + SurveyQuestionList + A.R);
+		log.debug(A.D+"[SurveyService.getSurveyQuestionListByPage] SurveyQuestionList : " + SurveyQuestionList + A.R);
 		
 		int totalCount = surveyMapper.countSurveyList();
 		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
@@ -143,6 +167,8 @@ public class SurveyService {
 	      Map<String, Object> returnMap = new HashMap<>();
 	      returnMap.put("surveyOne", surveyOne);
 	      returnMap.put("SurveyQuestionList", SurveyQuestionList);
+	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] returnMap :" + returnMap +A.R);
+	      
 	      return returnMap;
 	   }
 	public int addSurveyQuestionAnswer(List<SurveyAnswer> surveyAnswer) {
@@ -152,8 +178,10 @@ public class SurveyService {
 		for(SurveyAnswer s : surveyAnswer) {
 			if(s.getSurveyAnswerType().equals("객관식")) {
 				row = row + surveyMapper.insertSurveyMultipleAnswer(s);
+				log.debug(A.D+"[SurveyService.addSurveyQuestionAnswer] row :" + row +A.R);
 			} else if(s.getSurveyAnswerType().equals("주관식")) {
 				row = row + surveyMapper.insertSurveyShortAnswer(s);
+				log.debug(A.D+"[SurveyService.addSurveyQuestionAnswer] row :" + row +A.R);
 			}
 		}
 		return row;

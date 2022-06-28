@@ -18,8 +18,10 @@ import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyAnswer;
+import kr.co.nft.lms.vo.SurveyMultipleAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
+import kr.co.nft.lms.vo.SurveyShortAnswer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,7 +31,20 @@ public class SurveyController {
 	@Autowired private LectureService lectureService;
 	
 	@GetMapping("/manager/survey/getSurveyStatistics")
-	public String getSurveyStatistics() {
+	public String getSurveyStatistics(Model model, SurveyQuestion surveyQuestion
+									,SurveyQuestionList surveyQuestionList 
+									,SurveyMultipleAnswer surveyMultipleAnswer 
+									,SurveyShortAnswer surveyShortAnswer) {
+		// 전체 답변 가져오기 
+		Map<String, Object> returnMap = surveyService.getAllSurveyAnswer(surveyQuestion.getSurveyQuestionList(),
+		surveyQuestionList, surveyMultipleAnswer, surveyShortAnswer);
+		
+		log.debug(A.D+"[SurveyController.getSurveyStatistics] returnMap : " + returnMap + A.R); // 디버깅
+		
+		model.addAttribute("allAnswer",returnMap.get("allAnswer"));
+		
+		
+		
 		return "survey/getSurveyStatistics";
 	}
 	

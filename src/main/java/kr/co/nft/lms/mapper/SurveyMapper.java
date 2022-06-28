@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyAnswer;
+import kr.co.nft.lms.vo.SurveyMultipleAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
 
@@ -51,7 +52,12 @@ public interface SurveyMapper {
 	// 설문조사 주관식 답변 등록
 	int insertSurveyShortAnswer(SurveyAnswer surveyShortAnswer);
 	
-	// 설문조사 답변 확인 (전체 리스트형식으로 레프트 조인)
+	// 전체 설문조사 답변 확인 (리스트형식으로 레프트 조인)
 	List<Map<String,Object>> getAllSurveyAnswer(Map<String, Object> map);
 	
+	// 설문조사 질문별 점수평균 (double값 뱉음)
+	List<SurveyMultipleAnswer> getAnswerAverage(int surveyQuestioNo);
+	
+	// 설문조사 질문별, 점수 카운트 (리스트 형식)
+	List getAnswerCount(int surveyQuestioNo);
 }
