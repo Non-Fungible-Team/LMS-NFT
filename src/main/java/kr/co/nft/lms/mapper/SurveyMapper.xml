@@ -217,4 +217,24 @@
 				,NOW()
 			)
 		</insert>
+		
+		<select id="getAllSurveyAnswer"
+				resultType="map">
+			SELECT
+				sq.survey_question_list_no surveyQuestionListNo
+				,sq.survey_no surveyNo
+				,sq.survey_question_no surveyQuestionNo
+				,ql.survey_question_list_name surveyQuestionListName
+				,IFNULL(sm.member_id,ss.member_id) memberId
+				,IFNULL(sm.survey_answer_type,ss.survey_answer_type) surveyAnswerType
+				,sm.survey_multiple_answer_content surveyMultipleAnswerContent
+				,ss.survey_short_answer_content surveyShortAnswerContent
+			FROM survey_question sq
+			LEFT OUTER JOIN survey_question_list ql ON sq.survey_question_list_no = ql.survey_question_list_no
+			LEFT OUTER JOIN survey_multiple_answer sm ON sq.survey_question_no = sm.survey_question_no
+			LEFT OUTER JOIN survey_short_answer ss ON sq.survey_question_no = ss.survey_question_no
+			ORDER BY sq.survey_question_list_no
+		</select>
+		
+		
 </mapper>

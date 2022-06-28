@@ -50,4 +50,8 @@ public interface SurveyMapper {
 	
 	// 설문조사 주관식 답변 등록
 	int insertSurveyShortAnswer(SurveyAnswer surveyShortAnswer);
+	
+	// 설문조사 답변 확인 (전체 리스트형식으로 레프트 조인)
+	List<Map<String,Object>> getAllSurveyAnswer(Map<String, Object> map);
+	
 }

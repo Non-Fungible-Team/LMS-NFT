@@ -13,8 +13,10 @@ import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.Survey;
 import kr.co.nft.lms.vo.SurveyAnswer;
+import kr.co.nft.lms.vo.SurveyMultipleAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
+import kr.co.nft.lms.vo.SurveyShortAnswer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -22,6 +24,26 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
+	
+	public Map<String,Object> getAllSurveyAnswer(List<SurveyQuestion> questionList
+												,SurveyQuestionList surveyQuestList
+												,SurveyMultipleAnswer surveyMultipleAnswer
+												,SurveyShortAnswer surveyShortAnswer) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("surveyQuestList", surveyQuestList);
+		map.put("surveyMultipleAnswer", surveyMultipleAnswer);
+		map.put("surveyShortAnswer", surveyShortAnswer);
+			
+		List allAnswer = surveyMapper.getAllSurveyAnswer(map);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("allAnswer", allAnswer);
+		
+		return returnMap;
+		
+		 
+	}
 	
 	public Map<String,Object> selectSurveyQuestionList(int currentPage, int rowPerPage) {
 		

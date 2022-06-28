@@ -1,5 +1,7 @@
 package kr.co.nft.lms.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -11,4 +13,6 @@ public class SurveyMultipleAnswer {
 	private int surveyMultipleAnswerContent;
 	private String surveyMultipleAnswerCreateDate;
 	private String surveyMultipleAnswerUpdateDate;
+	
+	private List<SurveyMultipleAnswer> SurveyMultipleAnswerList;
 }
