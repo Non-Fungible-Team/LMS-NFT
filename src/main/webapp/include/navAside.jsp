@@ -79,6 +79,71 @@
 						</a>
 						
 						<div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+							<c:if test="${sessionLoginMember.memberLevel==4}">
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/getStudentOne?memberId=${sessionLoginMember.memberId}">
+							
+								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> 
+							
+								<a class="dropdown-item" href="javascript:void(0)">
+								<i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> 
+								
+								<a class="dropdown-item" href="javascript:void(0)">
+								<i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
+								
+							
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
+								<div class="dropdown-divider"></div>
+								<div class="pl-4 p-3">
+									<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
+								</div>
+							</c:if>	
+							
+							<c:if test="${sessionLoginMember.memberLevel==5}">
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/getTeacherOne?memberId=${sessionLoginMember.memberId}">
+							
+								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> 
+							
+								<a class="dropdown-item" href="javascript:void(0)">
+								<i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> 
+								
+								<a class="dropdown-item" href="javascript:void(0)">
+								<i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
+							
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
+								<div class="dropdown-divider"></div>
+								<div class="pl-4 p-3">
+									<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
+								</div>
+							</c:if>
+							
+							<c:if test="${sessionLoginMember.memberLevel==6}">
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/manager/getManagerOne?memberId=${sessionLoginMember.memberId}">
+							
+								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> 
+							
+								<a class="dropdown-item" href="javascript:void(0)">
+								<i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> 
+								
+								<a class="dropdown-item" href="javascript:void(0)">
+								<i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
+							
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
+								<div class="dropdown-divider"></div>
+								<div class="pl-4 p-3">
+									<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
+								</div>
+							</c:if>
+					<!--  
+						<div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/all/getStudentOne?memberId=${sessionLoginMember.memberId}"><i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
@@ -89,7 +154,7 @@
 								<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
 							</div>
 						</div>
-						
+					-->
 					</li>
 					<!-- ============================================================== -->
 					<!-- User profile and search -->
