@@ -306,6 +306,7 @@
 			, student_gender studentGender
 			, student_email studentEmail 
 			, student_education studentEducation 	
+			, address_detail addressDetail 
 		FROM student 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -376,7 +377,8 @@
 			, #{studentBirth}
 			, #{studentGender}
 			, #{studentEmail}
-			, #{addressDetail}
+			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
+			<!-- , #{addressDetail} -->
 		)
 				
 	</insert>

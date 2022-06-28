@@ -584,42 +584,6 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
-	// 강사 회원가입
-	@PostMapping("/addTeacher")
-	public String addTeacher(Member member
-							,Teacher teacher) {
-		// 매개 변수 내용 확인 
-		log.debug(A.Z+"[MemberController.addTeacher.param] member : "+member+A.R);
-		log.debug(A.Z+"[MemberController.addTeacher.param] teacher : "+teacher+A.R);
-		
-		// 한 강사의 정보를 저장하기 위해서 두개의 테이블 Member, Teacher가 필요 
-		int rowOfMember = memberService.addTeacher(member);
-		log.debug(A.Z+"[MemberController.addTeacher] rowOfMember : "+rowOfMember+A.R);
-		int rowOfTeacher = memberService.addTeacher(teacher);
-		log.debug(A.Z+"[MemberController.addTeacher] rowOfTeacher : "+rowOfTeacher+A.R);
-		
-		// 해당하는 뷰 페이지로 이동 
-		return "/member/memberLogin";
-	}
-	
-	// 학생 회원가입 
-	@PostMapping("/addStudent")
-	public String addStudent(Member member
-							,Student student) {
-		// 매개 변수 내용 확인 
-		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
-		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
-		
-		// 한 학생 정보를 저장하기 위해서 두개의 테이블 Member, Student가 필요 
-		int rowOfMember = memberService.addStudent(member);
-		log.debug(A.Z+"[MemberController.addStudent] rowOfMember : "+rowOfMember+A.R);
-		int rowOfStudent = memberService.addStudent(student);
-		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
-		
-		// 해당하는 뷰 페이지로 이동 
-		return "/member/memberLogin";
-	}
-	
 	// 운영자 회원가입
 	@GetMapping("/addManager") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
@@ -640,6 +604,24 @@ public class MemberController {
 		return "/member/addManager";
 	}
 	
+	// 강사 회원가입
+	@PostMapping("/addTeacher")
+	public String addTeacher(Member member
+							,Teacher teacher) {
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.addTeacher.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addTeacher.param] teacher : "+teacher+A.R);
+		
+		// 한 강사의 정보를 저장하기 위해서 두개의 테이블 Member, Teacher가 필요 
+		int rowOfMember = memberService.addTeacher(member);
+		log.debug(A.Z+"[MemberController.addTeacher] rowOfMember : "+rowOfMember+A.R);
+		int rowOfTeacher = memberService.addTeacher(teacher);
+		log.debug(A.Z+"[MemberController.addTeacher] rowOfTeacher : "+rowOfTeacher+A.R);
+		
+		// 해당하는 뷰 페이지로 이동 
+		return "/member/memberLogin";
+	}
+	
 	// 강사 회원가입 
 	@GetMapping("/addTeacher") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
@@ -658,6 +640,24 @@ public class MemberController {
 		
 		// 강사 회원 가입 페이지 양식으로 이동 
 		return "/member/addTeacher";
+	}
+	
+	// 학생 회원가입 
+	@PostMapping("/addStudent")
+	public String addStudent(Member member
+							,Student student) {
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.addStudent.param] member : "+member+A.R);
+		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
+		
+		// 한 학생 정보를 저장하기 위해서 두개의 테이블 Member, Student가 필요 
+		int rowOfMember = memberService.addStudent(member);
+		log.debug(A.Z+"[MemberController.addStudent] rowOfMember : "+rowOfMember+A.R);
+		int rowOfStudent = memberService.addStudent(student);
+		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
+		
+		// 해당하는 뷰 페이지로 이동 
+		return "/member/memberLogin";
 	}
 	
 	// 학생 회원가입 

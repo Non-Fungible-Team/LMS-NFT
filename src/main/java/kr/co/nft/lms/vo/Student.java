@@ -11,4 +11,8 @@ public class Student {
 	private String studentGender;
 	private String studentEmail;
 	private String addressDetail;
+	
+	//테이블에 없는 vo 
+	private String roadAddr;
+	private String addrDetail;
 }
