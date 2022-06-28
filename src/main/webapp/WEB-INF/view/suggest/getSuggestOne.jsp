@@ -40,8 +40,16 @@
 									<a href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage">
 										<input type="button" class="btn btn-info" style="float: right" value="목록으로">
 									</a>
-									
-									<!-- 수정 될지 말지 회의 후 건의사항 수정 버튼 추가 하기 -->
+									<c:if test="${sessionLoginMember.memberId == suggest.memberId}">
+										<a href="${pageContext.request.contextPath}/all/suggest/modifySuggest?suggestNo=${suggest.suggestNo}">
+					            			<input type="button" class="btn btn-outline-success" style="float: right" value="건의사항 수정">
+					            		</a>
+				            		</c:if>
+				            		<c:if test="${sessionLoginMember.memberLevel >=6 }">
+					            		<a href="${pageContext.request.contextPath}/manager/suggest/addSuggest?root=${suggest.suggestNo}">
+						            		<input type="button" class="btn btn-outline-primary" style="float: right" value="건의사항 답글달기">
+						            	</a>
+					            	</c:if>
 								</div>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<table id="zero_config" class="table table-striped table-bordered">
@@ -49,11 +57,12 @@
 											<th>번호</th>
 											<td>${suggest.suggestNo}</td>
 										</tr>
-										
-										<tr>
-											<th>답변할 게시판번호? </th>
-											<td>${suggest.root}</td>
-										</tr>
+										<c:if test="${suggest.root != 0}">
+											<tr>
+												<th>질문 게시판번호</th>
+												<td>${suggest.root}</td>
+											</tr>
+										</c:if>
 										<tr>
 											<th>비밀글여부</th>
 											<td>${suggest.suggestSecret}</td>
@@ -62,8 +71,6 @@
 											<th>처리상태</th>
 											<td>${suggest.suggestStatus}</td>
 										</tr>
-										
-										
 										<tr>
 											<th>제목</th>
 											<td>${suggest.suggestTitle}</td>
@@ -89,9 +96,11 @@
 									</table>
 								</div>
 								<div>
-									<a href="${pageContext.request.contextPath}/all/suggest/removeSuggest?suggestNo=${suggest.suggestNo}">
-								    		<input type="button" class="btn btn-outline-danger" style="float: right" value="건의사항 삭제">
-							    	</a>
+									<c:if test="${sessionLoginMember.memberId == suggest.memberId || sessionLoginMember.memberLevel >=6}">
+										<a href="${pageContext.request.contextPath}/all/suggest/removeSuggest?suggestNo=${suggest.suggestNo}">
+									    		<input type="button" class="btn btn-outline-danger" style="float: right" value="건의사항 삭제[블라인드처리]">
+								    	</a>
+							    	</c:if>
 						    	</div>
 							</div>
 						</div>

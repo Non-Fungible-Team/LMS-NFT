@@ -128,7 +128,6 @@ public class NoticeService {
 		int row = noticeMapper.updateNoticeInBoard(notice); 
 		log.debug(A.S + "[NoticeService.modifyNotice.row] row : "+ row + A.R); 
 		
-		
 		//파일저장 성공 횟수를 셀 디버깅
 		int noticeFileModifyRow = 0;
 		//공지사항에 입력한 파일이 있고 위의 공지 추가 코드가 정상적으로 실행되었을경우(row=1) 아래의 코드 실행

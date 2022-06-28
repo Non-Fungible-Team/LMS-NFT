@@ -32,12 +32,16 @@
 			parameterType="kr.co.nft.lms.vo.Suggest" >
 		INSERT INTO suggest(
 			board_no
-			,root
+			<if test="root != 0">
+		 		,root
+			</if>
 			,suggest_secret
 			,suggest_status
 		) VALUES (
 			#{suggestNo}
-			,0
+			<if test="root != 0">
+				,#{root}
+			</if>
 			,#{suggestSecret}
 			,'처리전'
 		)
@@ -53,12 +57,13 @@
 			,b.member_id memberId
 			,s.suggest_secret suggestSecret
 			,b.board_create_date suggestCreateDate
+			,s.root root
 		FROM suggest s
 		INNER JOIN board b
 		ON s.board_no = b.board_no
 		WHERE b.board_privilege = '4'
 		AND b.board_blind = 'N'
-		ORDER BY s.board_no DESC
+		ORDER BY IF(ISNULL(s.root),s.board_no,s.root) DESC, s.board_no ASC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
@@ -100,7 +105,7 @@
 			parameterType="kr.co.nft.lms.vo.Suggest">
 		UPDATE board
 		SET board_title = #{suggestTitle}
-			,board_content = #{suggestCount}
+			,board_content = #{suggestContent}
 			,board_privilege = #{suggestPrivilege}
 		WHERE board_no = #{suggestNo}
 	</update>

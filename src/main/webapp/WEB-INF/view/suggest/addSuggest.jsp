@@ -45,6 +45,12 @@
 								<div class="mt-2" style="height: auto; width: auto;">
 									<form id="" action="${pageContext.request.contextPath}/all/suggest/addSuggest" method="post">
 										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+											<c:if test="${root != null}">
+												<tr>
+													<th>질문 게시판번호</th>
+													<td><input type = "number" name="root" class="form-control" value="${root}" readonly="readonly"></td>
+												</tr>
+											</c:if>
 											<tr>
 								    			<th>제목</th>
 								    			<td>

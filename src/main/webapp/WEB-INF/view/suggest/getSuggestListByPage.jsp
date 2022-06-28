@@ -57,7 +57,12 @@
 												<c:forEach var="s" items="${suggestList}">
 													<tr>
 														<td>${s.suggestNo}</td>
-														<td><a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a></td>
+														<td>
+															<c:if test="${s.root != 0}">
+																┗【Re:】
+															</c:if>
+															<a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a>
+														</td>
 														<td>${s.memberId}</td>
 														<td>${s.suggestSecret}</td>
 														<td>${s.suggestCreateDate}</td>

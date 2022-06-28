@@ -123,10 +123,10 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.modifyNotice] model : " + model + A.R);
 		
 		//가져온 상세보기가 로그인한 회원의 권한 밖의 게시물이면 list로 redirect
-			if(notice.getNoticePrivilege() > loginMember.getMemberLevel()){
-				log.debug(A.S + "[NoticeController.getNoticeOne] 권한밖의 notice게시물 수정 요청" + A.R);
-				return "redirect:/all/notice/getNoticeListByPage";
-			}
+		if(notice.getNoticePrivilege() > loginMember.getMemberLevel()){
+			log.debug(A.S + "[NoticeController.getNoticeOne] 권한밖의 notice게시물 수정 요청" + A.R);
+			return "redirect:/all/notice/getNoticeListByPage";
+		}
 		return "/notice/modifyNotice";
 	}
 	

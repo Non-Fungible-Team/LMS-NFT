@@ -42,7 +42,7 @@
 									</a>
 					            </div>
 								<div class="mt-2" style="height: auto; width: auto;">
-									<form id="modifySuggestForm" action="${pageContext.request.contextPath}/all/suggest/modifySuggest?suggestNo=${suggest.suggstNo}" method="post">
+									<form id="modifySuggestForm" action="${pageContext.request.contextPath}/all/suggest/modifySuggest?suggestNo=${suggest.suggestNo}" method="post">
 										<table id="zero_config" class="table table-striped table-bordered no-wrap">
 											<tr>
 												<th>번호</th>

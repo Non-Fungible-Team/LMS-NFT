@@ -45,7 +45,7 @@
 				            		<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
 				            			<input type="button" class="btn btn-outline-success" style="float: right" value="공지사항 내용 수정">
 				            		</a>
-						 	   </c:if>
+						 	    </c:if>
 							</div>
 	
 				            <div class="mt-2" style="height:auto; width:auto;">
