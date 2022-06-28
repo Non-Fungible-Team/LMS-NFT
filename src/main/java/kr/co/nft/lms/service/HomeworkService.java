@@ -16,6 +16,7 @@ import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Homework;
 import kr.co.nft.lms.vo.HomeworkSubmit;
 import kr.co.nft.lms.vo.HomeworkSubmitFile;
+import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -24,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeworkService {
 	@Autowired private HomeworkMapper homeworkMapper;
 	
-	// 과제 목록
-	public Map<String, Object> getHomeworkListByPage(int currentPage, int rowPerPage,int lectureNo){
+	// 과제 리스트
+	public Map<String, Object> getHomeworkListByPage(int currentPage, int rowPerPage,int lectureNo, Member loginMember){
 		log.debug(A.Q +"HomeworkService.getHomeworkListByPage.param.currentPage" + currentPage +A.R);
 		log.debug(A.Q +"HomeworkService.getHomeworkListByPage.param.rowPerPage" + rowPerPage +A.R);
 		
@@ -34,9 +35,14 @@ public class HomeworkService {
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("lectureNo", lectureNo);
+		if(loginMember.getMemberLevel()==4) {
+			map.put("studentId", loginMember.getMemberId());
+		} else if(loginMember.getMemberLevel()==5) {
+			map.put("teacherId", loginMember.getMemberId());
+		}
 		log.debug(A.Q + "HomeworkService.getHomeworkListByPage.map :" + map + A.R);
 		
-		List<Homework> homeworkList = homeworkMapper.selectHomeworkListByPage(map);
+		List<Map<String,Object>> homeworkList = homeworkMapper.selectHomeworkListByPage(map);
 		log.debug(A.Q + "HomeworkService.getHomeworkListByPage.homeworkList :" + homeworkList + A.R);
 		
 		int totalCount = homeworkMapper.selectTotalCount();

@@ -46,25 +46,40 @@
 													<th>순번</th>
 													<th>강의번호</th>
 													<th>과제</th>
-													<th>제출 기간</th>
 													<th>작성자</th>
-													<th>homeworkCreateDate</th>
-													<th>homeworkUpdateDate</th>
-<!-- 													<th><input type="hidden" value ="homeworkContent"></th> -->
+													<th>제출 기간</th>
+													<c:if test="${sessionLoginMember.memberLevel == 5}">
+													<th>제출과제 목록보기</th>
+													</c:if>
+													<c:if test="${sessionLoginMember.memberLevel == 4}">
+													<th>과제 제출</th>
+													</c:if>
+													<c:if test="${sessionLoginMember.memberLevel == 4}">
+													<th>과제 상세 보기</th>
+													</c:if>
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="h" items="${homeworkList}" >
+												<c:forEach var="h" items="${homeworkList}">
 													<tr>
-														<td>${h.homeworkNo }</td>
-														<td>${h.lectureNo }</td>
+														<td>${h.homeworkNo}</td>
+														<td>${h.lectureNo}</td>
 														<td><a href="${pageContext.request.contextPath}/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
-														<td>${h.homeworkStartDate } ~ ${h.homeworkEndDate }</td>
-														<td>${h.memberId }</td>
-														<td>${h.homeworkCreateDate }</td>
-														<td>${h.homeworkUpdateDate }</td>
-<%-- 														<td><input type="hidden" value="${h.homeworkContent }"></td> --%>
+														<td>${h.teacherId }</td>
+														<td>${h.homeworkStartDate} ~ ${h.homeworkEndDate }</td>
+														<c:if test="${sessionLoginMember.memberLevel == 5 }">
+															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
+														</c:if>
+														<c:if test="${sessionLoginMember.memberLevel == 4 && empty h.homeworkSubmitNo }">
+															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}">과제제출</a></td>														
+														</c:if> 
+														<c:if test="${sessionLoginMember.memberLevel == 4 && not empty h.homeworkSubmitNo}">
+															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}">과제보기</a></td>														
+														</c:if> 
 													</tr>
+														
+														
+														
 												</c:forEach>
 											</tbody>
 										</table>

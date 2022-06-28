@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import kr.co.nft.lms.service.HomeworkService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Homework;
 import kr.co.nft.lms.vo.HomeworkSubmit;
+import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,17 +30,20 @@ public class HomeworkController {
 	
 	// 과제 리스트
 	@GetMapping("/homework/getHomeworkListByPage")
-	public String getHomeworkListByPage(Model model,
-			HttpSession session,
-			@RequestParam(name="currentPage", defaultValue = "1") int currentPage,
-			@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
+	public String getHomeworkListByPage(Model model
+			,HttpSession session
+			,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
+			,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
 		
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.currentPage :  " + currentPage + A.R);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.rowPerPage :  " + rowPerPage + A.R);
+		
 		//세션에 정보 요청
 		int lectureNo = (int)session.getAttribute("sessionLectureNo");
-		Map<String, Object> map = homeworkService.getHomeworkListByPage(currentPage, rowPerPage,lectureNo);
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		Map<String, Object> map = homeworkService.getHomeworkListByPage(currentPage, rowPerPage, lectureNo, loginMember);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage map:  "+ map + A.R);
+		
 		
 		model.addAttribute("homeworkList", map.get("homeworkList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
@@ -131,19 +136,8 @@ public class HomeworkController {
 	
 	// 학생 과제 제출 입력 폼
 	@GetMapping("/homework/addHomeworkSubmit")
-	public String addHomeworkSubmit(Model model
-									,@RequestParam(name="homeworkNo", defaultValue="0") int homeworkNo) {
-		log.debug(A.Q+" HomeworkController.addHomeworkSubmit.param homeworkNo " + homeworkNo+A.R);
-		
-//		Homework homework = new Homework();
-//		homework.setHomeworkNo(homeworkNo);
-		
-		HomeworkSubmit homeworkSubmit = new HomeworkSubmit();
-		homeworkSubmit.setHomeworkNo(homeworkNo);
-		
-		model.addAttribute("homeworkNo", homeworkSubmit.getHomeworkNo());
-		
-		
+	public String addHomeworkSubmit() {
+
 		return "/homework/addHomeworkSubmit";
 	}
 	
@@ -151,13 +145,12 @@ public class HomeworkController {
 	@PostMapping("/homework/addHomeworkSubmit")
 	public String addHomeworkSubmit(HttpServletRequest request
 									,HomeworkSubmit homeworkSubmit
-									,Homework homework
-									,@RequestParam(name="homeworkNo", defaultValue="0") int homeworkNo) {
-		String path = request.getServletContext().getRealPath("/uploadFile/homeworkFile/");
+									,Homework homework) {
+		
+		URL pathUrl = this.getClass().getResource("/static/");
+		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path :" + path +A.R);
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit" + homeworkSubmit +A.R);
-		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkNo :" + homeworkNo +A.R);
-//		log.debug(A.Q+"HomeworkController.addHomeworkSubmit lectureNo :" + lectureNo + A.R);
 
 		List<MultipartFile> homeworkSubmitFileList = homeworkSubmit.getHomeworkSubmitFileList();
 		if(homeworkSubmitFileList != null && homeworkSubmitFileList.get(0).getSize() > 0) {
@@ -165,13 +158,10 @@ public class HomeworkController {
 				log.debug(A.Q+"HomeworkController.addHomeworkSubmit filename :" + mf.getOriginalFilename() + A.R);
 			}
 		}
-//		homework.setLectureNo(lectureNo);
-		homeworkSubmit.setHomeworkNo(homeworkNo);
+		
 		homeworkService.addHomeworkSubmit(homeworkSubmit, path);
 		
-		
-		
-		return"redirect:/homework/getHomeworkListByPage";
+		return"redirect:/homework/getHomeworkSubmitListByPage";
 	}
 	// 학생 제출과제 리스트
 	@GetMapping("/homework/getHomeworkSubmitListByPage")

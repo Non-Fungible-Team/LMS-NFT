@@ -14,7 +14,7 @@ public interface HomeworkMapper {
 	
 // 강사 과제 입력	
 	// 과제 목록 페이지에서 목록 페이징
-	List<Homework> selectHomeworkListByPage(Map<String, Object> map);
+	List<Map<String,Object>> selectHomeworkListByPage(Map<String, Object> map);
 
 	// 과제 상세보기
 	Homework selectHomeworkOne(int homeworkNo);

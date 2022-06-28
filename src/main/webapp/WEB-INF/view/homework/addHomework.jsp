@@ -42,10 +42,10 @@
 								<form action="${pageContext.request.contextPath}/homework/addHomework"method="post">
 									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
-											<td>작성자</td><td><input type="text" class="form-control" name="memberId"></td>
+											<td>작성자</td><td><input type="text" class="form-control" name="memberId" value="${sessionLoginMember.memberId}"></td>
 										</tr>
 										<tr>
-											<td>강의 번호</td><td><input type="text" class="form-control" name="lectureNo"></td>
+											<td>강의 번호</td><td><input type="text" class="form-control" name="lectureNo" value="${sessionLectureNo}"></td>
 										</tr>
 										<tr>
 											<td>과제 제목</td><td><input type="text" class="form-control" name="homeworkTitle"></td>

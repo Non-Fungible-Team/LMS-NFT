@@ -5,23 +5,68 @@
 	<!-- 과제 리스트 -->
 	<select id="selectHomeworkListByPage"
 			parameterType="java.util.Map"
-			resultType="kr.co.nft.lms.vo.Homework">
-		SELECT
-			homework_no homeworkNo
-			,member_id memberId
-			,lecture_no lectureNo
-			,homework_title homeworkTitle
-			,homework_content homeworkContent
-			,homework_start_date homeworkStartDate
-			,homework_end_date homeworkEndDate
-			,homework_create_date homeworkCreateDate
-			,homework_update_date homeworkUpdateDate
-		FROM homework
-		<if test="lectureNo!=0">
-		WHERE lecture_no=#{lectureNo}
-		</if>
-		ORDER BY homework_no DESC
-		LIMIT #{beginRow}, #{rowPerPage}
+			resultType="map">	
+		 <!-- SELECT
+			h.homework_no homeworkNo
+			,h.member_id teacherId
+			,hs.member_id studentId
+			,h.lecture_no lectureNo
+			,h.homework_title homeworkTitle
+			,h.homework_content homeworkContent
+			,h.homework_start_date homeworkStartDate
+			,h.homework_end_date homeworkEndDate
+			,h.homework_create_date homeworkCreateDate
+			,h.homework_update_date homeworkUpdateDate
+			,hs.homework_submit_no homeworkSubmitNo
+		FROM homework h
+		LEFT JOIN homework_submit hs
+		ON h.homework_no = hs.homework_no -->
+ 		
+ 		SELECT 
+	 		h.homework_no homeworkNo 
+			,h.member_id teacherId 
+			,hs.member_id studentId 
+			,h.lecture_no lectureNo 
+			,h.homework_title homeworkTitle 
+			,h.homework_content homeworkContent 
+			,h.homework_start_date homeworkStartDate 
+			,h.homework_end_date homeworkEndDate 
+			,h.homework_create_date homeworkCreateDate 
+			,h.homework_update_date homeworkUpdateDate 
+			,hs.homework_submit_no homeworkSubmitNo
+		FROM homework h
+		LEFT JOIN homework_submit hs
+		ON h.homework_no = hs.homework_no
+		UNION
+		(SELECT 
+			h.homework_no homeworkNo 
+			,h.member_id teacherId 
+			,hs.member_id studentId 
+			,h.lecture_no lectureNo 
+			,h.homework_title homeworkTitle 
+			,h.homework_content homeworkContent 
+			,h.homework_start_date homeworkStartDate 
+			,h.homework_end_date homeworkEndDate 
+			,h.homework_create_date homeworkCreateDate 
+			,h.homework_update_date homeworkUpdateDate 
+			,hs.homework_submit_no homeworkSubmitNo
+		FROM homework h
+		RIGHT JOIN homework_submit hs
+		ON h.homework_no = hs.homework_no
+ 		<where>
+			<if test="lectureNo!=0">
+				AND h.lecture_no = #{lectureNo}
+			</if>
+			<if test="sudentId !=null">
+				AND hs.member_id = #{stduentId}
+			</if>
+			<if test="teacherId != null">
+				AND h.member_id = #{teacherId}
+			</if>
+		</where>
+		GROUP BY h.homework_no
+		ORDER BY h.homework_no DESC  
+		LIMIT #{beginRow}, #{rowPerPage}) 
 	</select>
 	
 	<!-- 과제 상세보기 -->
@@ -89,7 +134,9 @@
 	<!-- 과제 총 갯수 -->
 	<select id="selectTotalCount"
 			resultType="int">
-		SELECT COUNT(*) FROM homework
+		SELECT COUNT(*) 
+		FROM homework
+		WHERE lecture_no = #{lectureNo}
 	
 	</select>
 	
@@ -117,6 +164,7 @@
 		ON hs.member_id = sl.member_id		
 		INNER JOIN homework_submit_file hsf
 		ON hs.homework_submit_no = hsf.homework_submit_no
+		WHERE hs.homework_no = h.homework_no
 		ORDER BY hs.homework_submit_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
