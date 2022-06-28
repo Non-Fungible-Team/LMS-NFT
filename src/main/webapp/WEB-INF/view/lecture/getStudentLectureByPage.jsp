@@ -68,7 +68,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 					                   <td>${sl.studentLectureLegistrationDate}</td>
 					                   <td>${sl.studentLectureEndDate}</td>
 					                   <td>${sl.studentLectureScore}</td>
-					                   <td><a href="${pageContext.request.contextPath}/manager/lecture/modify####?lectureNo=${l.lectureNo}&memberId=${sl.memberId}" class="btn btn-info">수정</a></td>
+					                   <td><a href="${pageContext.request.contextPath}/teacher/lecture/modifyStudentLecture?lectureNo=${sl.lectureNo}&memberId=${sl.memberId}" class="btn btn-info">수정</a></td>
 					                </tr>
 					            </c:forEach>
 					        </tbody>
