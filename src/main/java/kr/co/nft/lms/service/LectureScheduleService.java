@@ -141,4 +141,29 @@ public class LectureScheduleService {
 		
 		return row;
 	}
+	
+	// 4. lecture_schedule 테이블 데이터 수정 Form
+	public LectureSchedule modifyLectureScheduleForm(String lectureScheduleDate, int lectureNo) {
+		
+		log.debug(A.A + "[LectureScheduleService.modifyLectureScheduleForm] lectureScheduleDate : " + lectureScheduleDate + A.R);
+		log.debug(A.A + "[LectureScheduleService.modifyLectureScheduleForm] lectureNo : " + lectureNo + A.R);
+		
+		LectureSchedule lectureScheduleOne = lectureScheduleMapper.selectLectureScheduleOne(lectureScheduleDate, lectureNo);
+		
+		log.debug(A.A + "[LectureScheduleService.modifyLectureScheduleForm] lectureScheduleOne : " + lectureScheduleOne + A.R);
+		
+		return lectureScheduleOne;
+	}
+	
+	// 4-1. lecture_schdule 테이블 데이터 수정 Action
+	public int modifyLectureScheduleAction(LectureSchedule lectureSchdule) {
+		
+		log.debug(A.A + "[LectureScheduleService.modifyLectureScheduleAction] lectureSchdule : " + lectureSchdule + A.R);
+		
+		int row = lectureScheduleMapper.updateLectureSchedule(lectureSchdule);
+		
+		log.debug(A.A + "[LectureScheduleService.modifyLectureScheduleAction] row : " + row + A.R);
+		
+		return row;
+	}
 }
