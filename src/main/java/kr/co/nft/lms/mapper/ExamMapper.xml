@@ -9,6 +9,8 @@
 			SELECT 
 				exam_no 			examNo
 				,exam_title 		examTitle
+				,lecture_no			lectureNo
+				,member_id			memberId
 				,exam_count 		examCount
 				,exam_max_score 	examMaxScore
 				,exam_start_date 	examStartDate
@@ -182,56 +184,50 @@
 	</delete>
 	
 
-<!-- 시험 답안 입력 (학생) -->
+<!-- 시험 응시 (학생) -->
+<!-- 		시험 답안 제출 -->
 	<insert id="insertExamAnswer"
 			parameterType="kr.co.nft.lms.vo.Exam">
-			<selectKey resultType="int" keyProperty="examScore" order="BEFORE">
-				SELECT 		ea.member_id memberId
-							,SUM(eq.exam_point) AS examScore
-				FROM 		exam_answer ea
-				LEFT JOIN 	exam_question eq
-				ON 			ea.exam_question_no = ea.exam_question_no
-				WHERE 		eq.exam_no = ea.exam_no 
-				AND	 		eq.exam_question_no= ea.exam_question_no 
-				AND 		ea.exam_answer=eq.exam_correct_answer 
-				AND 		ea.member_id='student'
-			</selectKey>
 			INSERT INTO exam_answer(
-							 exam_question_No		
+							exam_no	
+							,exam_question_No		
 							,member_id 
 							,exam_answer
-							,exam_score
 							,exam_answer_start_date
 							,exam_answer_end_date
-			) VALUES (		#{examQuestionNo}
-							,memberId
+			) VALUES (		#{examNo}
+							,#{examQuestionNo}
+							,#{memberId}
 							,#{examAnswer}
-							,examScore
 							,NOW()
 							,NOW()		
 			);
+		<selectKey resultType="int" keyProperty="examScore" order="AFTER">
+			SELECT IF(eq.exam_correct_answer=ea.exam_answer,eq.exam_point,0) AS examScore
+			FROM exam_question eq
+			LEFT JOIN exam_answer ea
+			ON  eq.exam_no = ea.exam_no AND eq.exam_question_no = ea.exam_question_no
+		</selectKey>
 	</insert>
 	
 <!-- 시험확인 리스트  -->	
 	<select id="selectExamScoreListByPage"
 			parameterType="java.util.Map"
 			resultType="kr.co.nft.lms.vo.Exam">
-			SELECT 		ea.exam_no 									examNo
+			SELECT 		eq.exam_no 									examNo
 						,e.exam_title 								examTitle
 						,ea.member_id 								memberId
 						,SUM(eq.exam_point) AS 						examScore
 						,if(ea.exam_answer_end_date='','X','O') 	examAnswerApply
 						,ea.exam_answer_end_date 					examAnswerEndDate
-			FROM 		exam_answer ea
-			JOIN 		exam_question eq
-			ON 			eq.exam_question_no = ea.exam_question_no
-			JOIN 		exam e
-			ON 			e.exam_no = eq.exam_no
-			WHERE 		eq.exam_question_no= ea.exam_question_no 
-			AND 		ea.exam_answer=eq.exam_correct_answer 
-			AND 		ea.member_id='student'
-			GROUP BY 	ea.exam_no
-			ORDER BY 	ea.exam_no ASC
+			FROM 		exam_question eq 
+			LEFT JOIN 	exam_answer ea
+			ON  		eq.exam_no=ea.exam_no AND eq.exam_question_no=ea.exam_question_no
+			LEFT JOIN 	exam e
+			ON 			ea.exam_no = e.exam_no 
+			WHERE 		eq.exam_correct_answer=ea.exam_answer
+			GROUP BY 	eq.exam_no
+			ORDER BY 	eq.exam_no ASC
 			LIMIT 		#{beginRow}, #{rowPerPage};
 	</select>
 	

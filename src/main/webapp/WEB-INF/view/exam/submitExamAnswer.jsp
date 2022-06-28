@@ -67,6 +67,7 @@
 											<tr>
 												<th class="table-primary">시험 번호</th>
 												<th class="table-primary">시험 제목</th>
+												<th class="table-primary">응시자</th>
 												<th class="table-primary">시험 문항수</th>
 												<th class="table-primary">만점</th>
 												<th class="table-primary">시험 시작 일시</th>
@@ -77,7 +78,8 @@
 											<tr>
 												<td class="table-light">${examOne.examNo}</td>
 												<td class="table-light">${examOne.examTitle}</td>
-												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light">${sessionLoginMember.memberId}</td>
+												<td class="table-light">${examOne.examCount}</td>
 												<td class="table-light">${examOne.examMaxScore}</td>
 												<td class="table-light">${examOne.examStartDate}</td>
 												<td class="table-light">${examOne.examEndDate}</td>
@@ -96,8 +98,8 @@
 													<th class="table-info">문제 내용</th>
 													<th class="table-info">배점</th>
 													<th class="table-info">문제유형</th>
-													<th class="table-info">답안</th>
 													<th class="table-info">보기</th>
+													<th class="table-info">답안</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -126,7 +128,7 @@
 															</c:forEach>
 														</table>
 													</td>
-													<td class="table-light"><input type="text" name="examAnswer" id="examAnswer"></td>
+													<td><input type="text" name="examAnswer" id="examAnswer"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -137,7 +139,7 @@
 										<button type="button"
 											class="btn btn-outline-success btn-rounded"
 											onclick="location.href='${pageContext.request.contextPath}/all/exam/getExamScoreListByPage'">
-											<i class="fas fa-check"></i>점수 확인
+											<i class="fas fa-check"></i>제출
 										</button>
 									</div>
 								</div>

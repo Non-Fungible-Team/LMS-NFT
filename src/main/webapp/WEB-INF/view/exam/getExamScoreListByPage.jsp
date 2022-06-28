@@ -37,9 +37,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <script>
-	$('document').ready(function(){
-	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
-	});
+	$('document')
+			.ready(
+					function() {
+						$("#navAside")
+								.load(
+										'${pageContext.request.contextPath}/include/navAside.jsp');
+					});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical"
@@ -74,14 +78,24 @@
 										<tbody>
 											<c:forEach var="e" items="${examScoreList}">
 												<tr>
-													<td>${e.examNo}</td>
-													<td>${e.examTitle}</td>
-													<td>${e.memberId}</td>
-													<td>${e.examScore}</td>
-													<td>${e.examAnswerApply}</td>
-													<td>${e.examAnswerEndDate}</td>
-													<td><a
-														href="${pageContext.request.contextPath}/all/exam/getExamScoreOne?examNo=${e.examNo}&memberId=${e.memberId}">상세보기</a></td>
+													<c:if test="${loginMember.memberLevel == 4 && loginMember.memberId == e.memberId}">
+															<td>${e.examNo}</td>
+															<td>${e.examTitle}</td>
+															<td>${e.memberId}</td>
+															<td>${e.examScore}</td>
+															<td>${e.examAnswerApply}</td>
+															<td>${e.examAnswerEndDate}</td>
+															<td><a href="${pageContext.request.contextPath}/all/exam/getExamScoreOne?examNo=${e.examNo}&memberId=${e.memberId}">상세보기</a></td>
+													</c:if>
+													<c:if test="${loginMember.memberLevel==5}">
+															<td>${e.examNo}</td>
+															<td>${e.examTitle}</td>
+															<td>${e.memberId}</td>
+															<td>${e.examScore}</td>
+															<td>${e.examAnswerApply}</td>
+															<td>${e.examAnswerEndDate}</td> 
+															<td><a href="${pageContext.request.contextPath}/all/exam/getExamScoreOne?examNo=${e.examNo}&memberId=${e.memberId}">상세보기</a></td>
+													</c:if>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -105,7 +119,8 @@
 													name="currentPage"
 													class="btn btn-outline-danger btn-rounded">${currentPage}</button>
 											</c:if>
-											<c:if test="${ i > 5 && currentPage+(i-5) <= examScoreLastPage }">
+											<c:if
+												test="${ i > 5 && currentPage+(i-5) <= examScoreLastPage }">
 												<button type="submit" value="${currentPage+(i-5)}"
 													name="currentPage" class="btn btn-outline-info btn-rounded">${currentPage+(i-5)}</button>
 											</c:if>

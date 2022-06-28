@@ -23,7 +23,7 @@ public class ExamService {
 	@Autowired private ExamMapper examMapper;
 	
 	// 시험리스트 페이지
-	public Map<String, Object> getExamListByPage(int currentPage, int rowPerPage) {
+	public Map<String, Object> getExamListByPage(int currentPage, int rowPerPage, int sessionLectureNo) {
 			log.debug(A.C + "[ExamService.getExamListByPage.param] currentPage: " + currentPage + A.R);
 			log.debug(A.C + "[ExamService.getExamListByPage.param] rowPerPage: " + rowPerPage+ A.R);
 
@@ -33,6 +33,7 @@ public class ExamService {
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("beginRow", beginRow);
 			paramMap.put("rowPerPage", rowPerPage);
+			paramMap.put("sessionLectureNo", sessionLectureNo);
 	
 			// 2) 메퍼 반환값 가공
 			List<Exam> examList = examMapper.selectExamListByPage(paramMap);
@@ -121,16 +122,19 @@ public class ExamService {
 	
 //	시험 점수 확인 
 	// 시험리스트 페이지
-	public Map<String, Object> getExamScoreListByPage(int currentPage, int rowPerPage) {
+	public Map<String, Object> getExamScoreListByPage(int currentPage, int rowPerPage, int sessionLectureNo) {
 			log.debug(A.C + "[ExamService.getExamScoreListByPage.param] currentPage: " + currentPage + A.R);
 			log.debug(A.C + "[ExamService.getExamScoreListByPage.param] rowPerPage: " + rowPerPage+ A.R);
 
+			
 			// 1) 커터롤러의 입력값 가공
 			int beginRow = (currentPage-1)*rowPerPage;
 					
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("beginRow", beginRow);
 			paramMap.put("rowPerPage", rowPerPage);
+			paramMap.put("sessionLectureNo", sessionLectureNo);
+			log.debug(A.C + "[ExamService.getExamScoreListByPage.mapper] paramMap : "+paramMap + A.R);
 	
 			// 2) 메퍼 반환값 가공
 			List<Exam> examScoreList = examMapper.selectExamScoreListByPage(paramMap);
@@ -148,7 +152,7 @@ public class ExamService {
 	}
 	
 	
-	// 답안 제출
+	// 시험 응시
 	public int submitExamAnswer(Exam exam) {
 			log.debug(A.C + "[ExamService.submitExam.param] exam :"+ exam + A.R);
 			return examMapper.insertExamAnswer(exam);

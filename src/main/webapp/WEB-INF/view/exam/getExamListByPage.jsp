@@ -37,9 +37,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <script>
-	$('document').ready(function(){
-	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
-	});
+	$('document')
+			.ready(
+					function() {
+						$("#navAside")
+								.load(
+										'${pageContext.request.contextPath}/include/navAside.jsp');
+					});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical"
@@ -58,35 +62,55 @@
 								<h4 class="card-title">점수 확인</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-									<table id="zero_config"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<th>시험 번호</th>
-												<th>시험 제목</th>
-												<th>문항수</th>
-												<th>만점</th>
-												<th>시험시작일시</th>
-												<th>시험종료일시</th>
-												<th>시험</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="e" items="${examList}">
+									
+<!-- 													-->
+<!-- 									강사 페이지 	-->
+<!-- 												 	-->
+										<table id="zero_config"
+											class="table table-striped table-bordered">
+											<thead>
 												<tr>
-													<td>${e.examNo}</td>
-													<td>${e.examTitle}</td>
-													<td>${e.examCount}</td>
-													<td>${e.examMaxScore}</td>
-													<td>${e.examStartDate}</td>
-													<td>${e.examEndDate}</td>
-													<td><a
-														href="${pageContext.request.contextPath}/all/exam/getExamOne?examNo=${e.examNo}">문제보기</a></td>
+													<th>시험 번호</th>
+													<th>시험 제목</th>
+													<th>문항수</th>
+													<th>만점</th>
+													<th>시험시작일시</th>
+													<th>시험종료일시</th>
+													<th>시험</th>
+													<th></th>
 												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
+											</thead>
+											<tbody>
+												<c:forEach var="e" items="${examList}">
+													<tr>
+<!-- 													강사 페이지 -->
+<!-- 													강사 페이지 -->
+<!-- 													강사 페이지 -->
+													<c:if test="${sessionLoginMember.memberLevel==5 && sessionLoginMember.memberId == e.memberId && sessionLectureNo== e.lectureNo}">
+														<td>${e.examNo}</td>
+														<td>${e.examTitle}</td>
+														<td>${e.examCount}</td>
+														<td>${e.examMaxScore}</td>
+														<td>${e.examStartDate}</td>
+														<td>${e.examEndDate}</td>
+														<td><a href="${pageContext.request.contextPath}/all/exam/getExamOne?examNo=${e.examNo}">문제보기</a></td>
+													</c:if>
+<!-- 													학생 페이지 -->
+<!-- 													학생 페이지 -->
+<!-- 													학생 페이지 -->
+													<c:if test="${sessionLoginMember.memberLevel == 4 && sessionLectureNo== e.lectureNo}">
+														<td>${e.examNo}</td>
+														<td>${e.examTitle}</td>
+														<td>${e.examCount}</td>
+														<td>${e.examMaxScore}</td>
+														<td>${e.examStartDate}</td>
+														<td>${e.examEndDate}</td>
+														<td><a href="${pageContext.request.contextPath}/student/exam/submitExamAnswer?examNo=${e.examNo}">시험응시</a></td>
+													</c:if>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
 									<form method="get"
 										action="${pageContext.request.contextPath}/all/exam/getExamListByPage">
 										<c:if test="${currentPage>1}">
@@ -118,12 +142,14 @@
 										</c:if>
 									</form>
 									<hr>
+									<c:if test="${sessionLoginMember.memberLevel==5}">
 									<div>
 										<button type="button" class="btn btn-success"
 											onclick="location.href='${pageContext.request.contextPath}/teacher/exam/addExam'">
 											<i class="fas fa-check"></i>시험 등록
 										</button>
 									</div>
+									</c:if>
 								</div>
 							</div>
 						</div>

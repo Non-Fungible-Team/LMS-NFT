@@ -51,7 +51,7 @@ public interface ExamMapper {
 	// 확인 리스트 수 
 	int countExamScore();
 		
-	// 답안 제출
+	// 시험 응시
 	int insertExamAnswer(Exam exam);
 	
 	// 답안 상세보기
