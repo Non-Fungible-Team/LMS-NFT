@@ -22,6 +22,8 @@
 </head>
 <script>
 	$('document').ready(function(){
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
 		$('#uploadRemoveNotice').click(function(){
 			
 			if($('#inputRemoveNoticeNo').val() != $('#removeNoticeNo').val() || $('#inputRemoveNoticeNo').val() == ''){
