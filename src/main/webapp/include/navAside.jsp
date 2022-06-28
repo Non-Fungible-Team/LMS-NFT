@@ -117,6 +117,8 @@
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage" aria-expanded="false"><i data-feather="feather" class="feather-icon"></i><span class="hide-menu">공지사항 </span></a>
 					<!-- 학원일정 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">학원 일정</span></a></li>
+					<!-- 건의 게시판 -->
+					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">건의 게시판</span></a></li>
 					<!-- 강의 선택시에 강의에 대한 세부 메뉴 시작 -->
 					<c:if test="${not empty sessionLecture }">
 					<li class="list-divider"></li>
