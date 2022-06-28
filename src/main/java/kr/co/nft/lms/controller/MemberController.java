@@ -1,5 +1,7 @@
 package kr.co.nft.lms.controller;
 
+import java.net.URL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,106 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	
 	// ------------------ 개인 정보 휴면(삭제) 처리 ------------------ //
+	
+	// 운영자 휴면 처리 ( 삭제 대체 ) 
+	@PostMapping("/manager/freezeManager")
+	public String removeManager(HttpSession session
+								, Member member) {
+		
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.removeManager.param] member : "+member+A.R);
+		
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.removeManager.param] loginMember : "+loginMember+A.R);
+		
+		// int rowOfTeacherTbl = memberService.freezeTeacherOfTeacherTbl(member);
+		// log.debug(A.Z+"[MemberController.removeTeacher] rowOfteacherTbl : "+rowOfTeacherTbl+A.R);
+		
+		// Member 테이블에 변경된 내용 확인 
+		
+		int rowOfMemberTbl = memberService.freezeManagerOfMemberTbl(member);
+		log.debug(A.Z+"[MemberController.removeManager] rowOfMemberTbl : "+rowOfMemberTbl+A.R);
+		
+		// 액터별 레벨 이력 테이블 변경 여부 확인 
+		int rowOfLevelHistoryTbl = memberService.addLevelHistoryOfManagerRecord(loginMember);
+		log.debug(A.Z+"[MemberController.removeManager] rowOfLevelHistoryTbl : "+rowOfLevelHistoryTbl+A.R);
+		
+		// GetMapping(/login) 
+		return "redirect:/all/logout";
+	}
+	
+	// 운영자 휴면 처리 ( 삭제 대체 ) 
+	@GetMapping("/manager/freezeManager")
+	public String removeManager(HttpSession session) {
+		
+		// 매개 변수 내용 확인 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.removeManager.param] loginMember : "+loginMember+A.R);
+		
+		// 계정 정보 없으면 로그인 실패 
+		if(loginMember == null) {
+			log.debug(A.Z+"MemberController.removeManager : "+"로그인 실패"+A.R);
+			// member/memberLogin.jsp 
+			return "/member/memberLogin";
+		}
+		
+		// 세션에 로그인 사용자 정보와 과목 번호 저장 
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLectureNo", "");
+		
+		// 해당하는 경로의 뷰 페이지로 이동 
+		return "/member/freezeManager";
+	}
+	
+	// 강사 휴면 처리 ( 삭제 대체 ) 
+	@PostMapping("/teacher/freezeTeacher")
+	public String removeTeacher(HttpSession session
+								, Member member) {
+		
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.removeTeacher.param] member : "+member+A.R);
+		
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.removeTeacher.param] loginMember : "+loginMember+A.R);
+		
+		// int rowOfTeacherTbl = memberService.freezeTeacherOfTeacherTbl(member);
+		// log.debug(A.Z+"[MemberController.removeTeacher] rowOfteacherTbl : "+rowOfTeacherTbl+A.R);
+		
+		// Member 테이블에 변경된 내용 확인 
+		
+		int rowOfMemberTbl = memberService.freezeTeacherOfMemberTbl(member);
+		log.debug(A.Z+"[MemberController.removeTeacher] rowOfMemberTbl : "+rowOfMemberTbl+A.R);
+		
+		// 액터별 레벨 이력 테이블 변경 여부 확인 
+		int rowOfLevelHistoryTbl = memberService.addLevelHistoryOfTeacherRecord(loginMember);
+		log.debug(A.Z+"[MemberController.removeTeacher] rowOfLevelHistoryTbl : "+rowOfLevelHistoryTbl+A.R);
+		
+		// GetMapping(/login) 
+		return "redirect:/all/logout";
+	}
+	
+	// 강사 휴면 처리 ( 삭제 대체 ) 
+	@GetMapping("/teacher/freezeTeacher")
+	public String removeTeacher(HttpSession session) {
+		
+		// 매개 변수 내용 확인 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.removeTeacher.param] loginMember : "+loginMember+A.R);
+		
+		// 계정 정보 없으면 로그인 실패 
+		if(loginMember == null) {
+			log.debug(A.Z+"MemberController.removeTeacher : "+"로그인 실패"+A.R);
+			// member/memberLogin.jsp 
+			return "/member/memberLogin";
+		}
+		
+		// 세션에 로그인 사용자 정보와 과목 번호 저장 
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLectureNo", "");
+		
+		// 해당하는 경로의 뷰 페이지로 이동 
+		return "/member/freezeTeacher";
+	}
 	
 	// 학생 휴면 처리 ( 삭제 대체 ) 
 	@PostMapping("/all/freezeStudent")
@@ -53,7 +154,7 @@ public class MemberController {
 		log.debug(A.Z+"[MemberController.removeStudent] rowOfLevelHistoryTbl : "+rowOfLevelHistoryTbl+A.R);
 		
 		// GetMapping(/login) 
-		return "redirect:/login";
+		return "redirect:/all/logout";
 	}
 	
 	// 학생 휴면 처리 ( 삭제 대체 ) 
@@ -100,8 +201,11 @@ public class MemberController {
 		log.debug(A.Z+"[MemberController.modifyManager.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
 		
 		// 사진을 업로드하면 저장되는 경로 설정 
-		String path = request.getServletContext().getRealPath("/memberPhoto/managerPhoto");
-		log.debug(A.Z+"[MemberController.modifyManager.param] path : "+path+A.R);
+		URL pathUrl = this.getClass().getResource("/static/");
+		log.debug(A.Z+"[MemberController.modifyManager] pathUrl : "+pathUrl+A.R);
+		
+		String path = pathUrl.getPath()+"/uploadFile/memberPhoto/managerPhoto/";
+		log.debug(A.Z+"[MemberController.modifyManager] path : "+path+A.R);
 		
 		// 세션에서 아이디와 레벨은 계속 가져온다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
@@ -578,6 +682,12 @@ public class MemberController {
 	
 	// ------------------ 로그인 / 로그아웃 ------------------ // 
 	
+	// 휴면 처리 계정 접속시 휴면 계정임을 보여주는 페이지로 이동시킴 
+	@GetMapping("/restingMember")
+	public String restingMember(HttpSession session) {
+		return "/member/restingMember";
+	}
+		
 	// 로그아웃 
 	@GetMapping("/all/logout")
 	public String logout(HttpSession session) {
@@ -610,7 +720,12 @@ public class MemberController {
 		session.setAttribute("sessionLectureNo", 0);
 		
 		// 로그인 성공하면 홈 화면으로 이동 
-		return "redirect:/all/home";
+		if(sessionLoginMember.getMemberLevel() < 0) {
+			return "/member/memberLogin";
+		} else {
+			return "redirect:/all/home";
+		}
+		
 	}
 	
 	// 로그인 폼 

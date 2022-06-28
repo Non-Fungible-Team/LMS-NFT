@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>getTeacherOne</title>
+<title>운영자 정보 삭제</title>
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -22,17 +22,17 @@
 </head>
 <script>
 	$('document').ready(function() {
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAsideTeacher.jsp');
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		});
 </script>
 <body>
 
-<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>운영자 상세 보기</h1>
+				<h1>운영자 정보 삭제</h1>
 				<!-- main화면 body start -->
 
 				<!-- 첫번쨰 문단 -->
@@ -41,60 +41,30 @@
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">운영자 정보</h4>
+									<h4 class="card-title">운영자 정보 삭제</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
+										<form action="${pageContext.request.contextPath}/manager/freezeManager" method="post">
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
-												<td>운영자 사진</td>
+												<td>운영자 아이디</td>
 												<td>
-												<!-- 경로  ${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName} 이와같이 작성하면 파일 못찾음 -->
-													<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
-														<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/memberPhoto/managerPhoto/${getMemberPhoto.photoName}">
-													</c:if>
-													<a href="${pageContext.request.contextPath}/static/uploadFile/memberPhoto/managerPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
-														${getMemberPhoto.photoOriginName}
-													</a>
+													<input type="text" name="memberId" id="memberId" value="${loginMember.memberId}" readonly="readonly">
 												</td>
 											</tr>
 											<tr>
-												<td>아이디</td>
-												<td>${loginMember.memberId}</td>
+												<td>레벨</td>
+												<td>
+													<input type="text" name="memberLevel" id="memberPw" value="${loginMember.memberLevel}">
+												</td>
 											</tr>
 											<tr>
-												<td>운영자 이름</td>
-												<td>${getManagerOneByManagerVo.managerName}</td>
-											</tr>
-											<tr>
-												<td>생일</td>
-												<td>${getManagerOneByManagerVo.managerBirth}</td>
-											</tr>
-											<tr>
-												<td>성별</td>
-												<td>${getManagerOneByManagerVo.managerGender}</td>
-											</tr>
-											<tr>
-												<td>이메일</td>
-												<td>${getManagerOneByManagerVo.managerEmail}</td>
-											</tr>
-											<tr>
-												<td>입사일</td>
-												<td>${getManagerOneByManagerVo.managerEntryDate}</td>
-											</tr>
-											<tr>
-												<td>휴대전화</td>
-												<td>${getManagerOneByMemberVo.memberPhoneNo}</td>
-											</tr>
-											<tr>
-												<td>마지막 로그인 날짜</td>
-												<td>${getManagerOneByMemberVo.memberLastLoginDate}</td>
+												<td colspan="2">
+													<button type = "submit" id="submit" class="btn btn-rounded btn-outline-danger">운영자 정보 삭제</button> <!-- 삭제라 쓰고 휴면으로 처리한다 -->
+												</td>
 											</tr>
 										</table>
-									</div>
-									<div>
-										<a href="${pageContext.request.contextPath}/manager/modifyManager?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-info">운영자 정보 수정</a>
-										<span></span>
-										<a href="${pageContext.request.contextPath}/manager/freezeManager?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-danger">운영자 정보 삭제</a>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -104,6 +74,7 @@
 			</div>
 		</div>
 	</div>
+						
 </body>
 <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

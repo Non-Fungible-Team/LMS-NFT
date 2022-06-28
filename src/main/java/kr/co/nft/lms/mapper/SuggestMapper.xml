@@ -112,4 +112,6 @@
 		SET board_blind = 'Y'
 		WHERE board_no = #{suggestNo}
 	</update>
+	
+	
 </mapper>

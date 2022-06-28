@@ -81,10 +81,7 @@
 												<td>입사일</td>
 												<td>${getTeacherOneByTeacherVo.teacherEntryDate}</td>
 											</tr>
-											<tr>
-												<td>담당 과목</td>
-												<td>${getTeacherOneByTeacherVo.teacherSubject}</td>
-											</tr>
+											
 											<tr>
 												<td>휴대전화</td>
 												<td>${getTeacherOneByMemberVo.memberPhoneNo}</td>

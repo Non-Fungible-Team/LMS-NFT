@@ -25,6 +25,23 @@ public interface MemberMapper {
 	// 강사 전체 리스트
 	List<Teacher> selectTeacherList();
 	
+	// -------------- 개인 정보 삭제(휴면) ------------------ // 
+	
+	// Member 테이블의 운영자 레코드 삭제 
+	int updateManagerOfMemberTbl(Member member);
+	
+	// LEVEL_HISTORY 테이블에 이력 남기기 
+	int insertLevelHistoryOfManagerRecord(Member member);
+	
+	// Member 테이블의 강사 레코드 삭제 
+	int updateTeacherOfMemberTbl(Member member); 
+	
+	// LEVEL_HISTORY 테이블에 이력 남기기 
+	int insertLevelHistoryOfTeacherRecord(Member member);
+	
+	// Teacher 테이블의 강사 튜플 삭제 
+	int updateTeacherOfTeacherTbl(Member member);
+	
 	// Member 테이블의 학생 레코드 삭제 
 	int updateStudentOfMemberTbl(Member member);
 	

@@ -23,21 +23,50 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class MemberService {
-	
+
+	// Service 여기서 사진 파일 가공 
+
 	@Autowired MemberMapper memberMapper;
 	
-	// 학생의 레벨이 변경되면 `level_history` 테이블에 튜플을 남긴다 
-	// 여기서 사진 파일 가공 
+	// --------------------------------------- //
+	// 회원 정보 삭제(휴면) 
+	
+	// 운영자의 레벨이 변경되면 `LEVEL_HISTORY` 테이블에 튜플을 남긴다. 
+	public int addLevelHistoryOfManagerRecord(Member member) {
+		return memberMapper.insertLevelHistoryOfManagerRecord(member);
+	}
+	
+	// Member 테이블의 운영자 레코드 삭제 
+	public int freezeManagerOfMemberTbl(Member member) {
+		return memberMapper.updateManagerOfMemberTbl(member);
+	}
+	
+	// 강사의 레벨이 변경되면 `LEVEL_HISTORY` 테이블에 튜플을 남긴다 
+	public int addLevelHistoryOfTeacherRecord(Member member) {
+		return memberMapper.insertLevelHistoryOfTeacherRecord(member);
+	}
+	
+	// Member 테이블의 강사 레코드 삭제, 삭제시 순서가 밀린다 
+	public int freezeTeacherOfMemberTbl(Member member) {
+		return memberMapper.updateTeacherOfMemberTbl(member);
+	}
+	
+	// Teacher 테이블의 강사 튜플 삭제, 삭제시 순서가 먼저 와야한다 
+	public int freezeTeacherOfTeacherTbl(Member member) {
+		return memberMapper.updateTeacherOfTeacherTbl(member);
+	}
+	
+	// 학생의 레벨이 변경되면 `LEVEL_HISTORY` 테이블에 튜플을 남긴다 
 	public int addLevelHistoryOfStudentRecord(Member member) {
 		return memberMapper.insertLevelHistoryOfStudentRecord(member);
 	}
 	
-	// Member 테이블의 학생 튜플 삭제, 삭제시 순서가 밀린다 
+	// Member 테이블의 학생 레코드 삭제, 삭제시 순서가 밀린다 
 	public int freezeStudentOfMemberTbl(Member member) {
 		return memberMapper.updateStudentOfMemberTbl(member);
 	}
 	
-	// Student 테이블의 학생 레코드 삭제, 삭제시 순서가 먼저 와야한다 
+	// Student 테이블의 학생 튜플 삭제, 삭제시 순서가 먼저 와야한다 
 	public int freezeStudentOfStudentTbl(Member member) {
 		return memberMapper.updateStudentOfStudentTbl(member);
 	}
