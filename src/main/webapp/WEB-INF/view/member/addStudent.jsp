@@ -88,8 +88,7 @@ table {
                
                 let addressDetail = '';
 					for(var i=0; i<arr.length; i++){
-						  $('#addrList').append(`<option id="addressDetail" name="addressDetail" value="arr[i].roadAddr">`+arr[i].roadAddr+`</option>`);
-						  addressDetail = arr[i].roadAddr;
+						  $('#addrList').append("<option id='addressDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
 					}
 				}
 					
@@ -187,8 +186,9 @@ table {
 													<td>주소리스트</td>
 													<td>
 														<select id="addrList" name="roadAddr">
-														
+														<option>주소검색을 해주세요</option>
 														</select>
+														상세주소 : <input type = "text" name = "addrDetail">
 													</td>
 												</tr>
 												<tr>

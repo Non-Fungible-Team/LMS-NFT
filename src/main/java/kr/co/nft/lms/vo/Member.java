@@ -15,5 +15,6 @@ public class Member {
 	
 	//테이블에 없는 vo
 	private String roadAddr;
+	private String addrDetail;
 	private String photoName;
 }

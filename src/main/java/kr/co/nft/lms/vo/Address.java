@@ -10,5 +10,5 @@ public class Address {
 	private String city;
 	private String town;
 	private String roadAddr;
-	private String addr_detail;
+	private String addrDetail;
 }
