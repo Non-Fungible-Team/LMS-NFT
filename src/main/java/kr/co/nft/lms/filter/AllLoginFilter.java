@@ -35,7 +35,7 @@ public class AllLoginFilter implements Filter {
 			//level이 1,2,3 인 경우 승인 대기 메세지와 함께 homeController로 redirect
 			if(sessionLoginMember.getMemberLevel() == 1 || sessionLoginMember.getMemberLevel() == 2 || sessionLoginMember.getMemberLevel() == 3) {
 				log.debug(A.E+"[AllLoginFilter.doFilter] : 가입 승인대기자의 요청 sessionLoginMember : "+sessionLoginMember+A.R);
-					((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/all/home?watingApproval");
+					((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/home?watingApproval");
 					return;
 			//level이 -4,-5,-6인 경우 휴면 계정 관리 페이지 이동
 			}else if(sessionLoginMember.getMemberLevel() == -4 || sessionLoginMember.getMemberLevel() == -5 || sessionLoginMember.getMemberLevel() == -6) {
