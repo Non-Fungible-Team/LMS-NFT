@@ -23,5 +23,5 @@ public interface AttendMapper {
 	int updateAttend(Attend attend);//ACTION
 	
 	//5.학생 출석 삭제  
-	int deleteAttend(Attend attend);
+	int deleteAttend(String memberId);
 }

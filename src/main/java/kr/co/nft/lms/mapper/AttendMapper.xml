@@ -99,7 +99,7 @@
 	
 	<!-- 5.학생 출석 삭제 -->
 	<delete id="deleteAttend"
-				parameterType="kr.co.nft.lms.vo.Attend">
+				parameterType="String">
 	DELETE FROM attend 
 	WHERE member_id =#{memberId}
 	</delete>
