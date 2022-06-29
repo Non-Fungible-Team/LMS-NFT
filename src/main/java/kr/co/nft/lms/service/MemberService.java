@@ -30,6 +30,12 @@ public class MemberService {
 	
 	// --------------------------------------- //
 	// 회원 정보 삭제(휴면) 
+	public int modifyDormantMember() {
+		return memberMapper.updateDormantMember();
+	}
+	
+	// --------------------------------------- //
+	// 회원 정보 삭제(탈퇴) 
 	
 	// 운영자의 레벨이 변경되면 `LEVEL_HISTORY` 테이블에 튜플을 남긴다. 
 	public int addLevelHistoryOfManagerRecord(Member member) {

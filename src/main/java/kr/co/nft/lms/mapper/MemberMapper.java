@@ -25,7 +25,12 @@ public interface MemberMapper {
 	// 강사 전체 리스트
 	List<Teacher> selectTeacherList();
 	
-	// -------------- 개인 정보 삭제(휴면) ------------------ // 
+	// -------------- 개인 정보 휴면 처리 ------------------ // 
+	
+	// 일정 기간이 지나도 접속을 하지 않은 사용자 휴면 계정 처리 
+	int updateDormantMember();
+	
+	// -------------- 개인 정보 삭제(탈퇴) ------------------ // 
 	
 	// Member 테이블의 운영자 레코드 삭제 
 	int updateManagerOfMemberTbl(Member member);

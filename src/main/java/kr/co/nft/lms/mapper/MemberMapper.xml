@@ -47,6 +47,17 @@
 	
 	<!-- 휴면 처리 -->
 	
+	<!-- member_level 필드에 들어간 데이터값에 그대로 음수를 씌우는 방법 ? -->
+	<update id="updateDormantMember">
+		UPDATE member 
+		SET member_level = 0-member_level
+		WHERE DATEDIFF(NOW(), member_last_login_date > 180)
+	</update>
+	
+	<!-- 휴면 처리 -->
+	
+	<!-- 탈퇴 처리 -->
+	
 	<insert id="insertLevelHistoryOfManagerRecord"
 			parameterType="kr.co.nft.lms.vo.Member">
 		INSERT INTO level_history (
@@ -57,7 +68,7 @@
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
-			, -6
+			, -10-#{member_level}
 			, NULL
 			, 'system'
 			, NOW() 
@@ -67,7 +78,7 @@
 	<update id="updateManagerOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_level = -6
+			member_level = -10-#{member_level}
 		WHERE member_id = #{memberId}	
 	</update>
 	
@@ -81,7 +92,7 @@
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
-			, -5
+			, -10-#{member_level}
 			, NULL
 			, 'system'
 			, NOW() 
@@ -91,14 +102,14 @@
 	<update id="updateTeacherOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_level = -5
+			member_level = -10-#{member_level}
 		WHERE member_id = #{memberId}	
 	</update>
 	
 	<update id="updateTeacherOfTeacherTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE teacher SET 
-			member_level = -5
+			member_level = -10-#{member_level}
 		WHERE member_id = #{memberId}
 	</update>
 	
@@ -112,7 +123,7 @@
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
-			, -4
+			, -10-#{member_level}
 			, NULL
 			, 'system'
 			, NOW() 
@@ -122,18 +133,18 @@
 	<update id="updateStudentOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_level = -4
+			member_level = -10-#{member_level}
 		WHERE member_id = #{memberId}	
 	</update>
 
 	<update id="updateStudentOfStudentTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE student SET 
-			member_level = -4
+			member_level = -10-#{member_level}
 		WHERE member_id = #{memberId}
 	</update>
 
-	<!-- 휴면 처리 -->
+	<!-- 탈퇴 처리 -->
 	
 	<!-- 개인 정보 수정 -->
 
