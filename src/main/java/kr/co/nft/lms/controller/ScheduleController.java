@@ -93,6 +93,59 @@ public class ScheduleController {
 		
 	}
 	
+	// Schedule 테이블 데이터 수정 - Form
+	@GetMapping("/manager/schedule/modifySchedule")
+	public String modifySchedule(Model model
+			   				   , @RequestParam(name = "scheduleNo") int scheduleNo) {
+		
+		log.debug(A.A + "[ScheduleController.modifySchedule] scheduleNo : " + scheduleNo + A.R);
+		
+		Schedule scheduleOne = scheduleService.getScheduleOne(scheduleNo);
+		
+		log.debug(A.A + "[ScheduleController.modifySchedule] scheduleOne : " + scheduleOne + A.R);
+		
+		model.addAttribute("scheduleOne", scheduleOne);
+		
+		return "/schedule/modifySchedule";
+	}
+	
+	// Schedule 테이블 데이터 수정 - Action
+	@PostMapping("/manager/schedule/modifyScheduleAction")
+	public String modifyScheduleAction(@RequestParam(name = "scheduleNo") int scheduleNo
+									 , @RequestParam(name = "scheduleTitle") String scheduleTitle
+									 , @RequestParam(name = "scheduleMemberId") String scheduleMemberId
+									 , @RequestParam(name = "scheduleContent") String scheduleContent
+									 , @RequestParam(name = "scheduleDate") String scheduleDate) {
+
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] scheduleNo : " + scheduleNo + A.R);
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] scheduleTitle : " + scheduleTitle + A.R);
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] scheduleMemberId : " + scheduleMemberId + A.R);
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] scheduleContent : " + scheduleContent + A.R);
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] scheduleDate : " + scheduleDate + A.R);
+		
+		Schedule schedule = new Schedule();
+		schedule.setScheduleNo(scheduleNo);
+		schedule.setScheduleTitle(scheduleTitle);
+		schedule.setMemberId(scheduleMemberId);
+		schedule.setScheduleContent(scheduleContent);
+		schedule.setScheduleDate(scheduleDate);
+		
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] schedule : " + schedule + A.R);
+		
+		int row = scheduleService.modifySchedule(schedule);
+		
+		log.debug(A.A + "[ScheduleController.modifyScheduleAction] row : " + row + A.R);
+		
+		if(row == 1) {
+			log.debug(A.A + "[ScheduleController.modifyScheduleAction] schedule 수정 성공 " + A.R);
+			
+		} else {
+			log.debug(A.A + "[ScheduleController.modifyScheduleAction] schedule 수정 실패 " + A.R);
+		}
+		
+		return "redirect:/all/schedule/getScheduleList";		
+	}
+	
 	// Schedule 테이블 데이터 삭제
 	@GetMapping("/manager/schedule/removeSchedule")
 	public String removeSchedule(@RequestParam(name = "scheduleNo") int scheduleNo) {

@@ -52,6 +52,18 @@ public class ScheduleService {
 		return row;
 	}
 	
+	// Schedule 테이블 데이터 수정
+	public int modifySchedule(Schedule schedule) {
+		
+		log.debug(A.A + "[ScheduleService.modifySchedule] schedule : " + schedule + A.R);
+		
+		int row = scheduleMapper.updateSchedule(schedule);
+		
+		log.debug(A.A + "[ScheduleService.modifySchedule] row : " + row + A.R);
+		
+		return row;
+	}
+	
 	// Schedule 테이블 데이터 삭제
 	public int removeSchedule(int scheduleNo) {
 		

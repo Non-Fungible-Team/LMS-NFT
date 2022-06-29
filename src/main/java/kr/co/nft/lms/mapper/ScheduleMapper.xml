@@ -47,11 +47,20 @@
 			, NOW()
 		)
 	</insert>
-	<!-- 
-	<update id="updateSchedule">
 	
+	<update id="updateSchedule"
+			parameterType="kr.co.nft.lms.vo.Schedule">
+		UPDATE schedule
+		SET
+			schedule_no = #{ scheduleNo }
+			, schedule_title = #{ scheduleTitle }
+			, schedule_content = #{ scheduleContent }
+			, schedule_date = #{ scheduleDate }
+			, schedule_update_date = NOW()
+			, member_id = #{ memberId }
+		WHERE schedule_no = #{ scheduleNo }
 	</update>
-	 -->
+	
 	<delete id="deleteSchedule"
 			parameterType="int">
 		DELETE FROM schedule
