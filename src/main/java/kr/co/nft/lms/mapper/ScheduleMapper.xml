@@ -51,9 +51,11 @@
 	<update id="updateSchedule">
 	
 	</update>
-	
-	<delete id="deleteSchedule">
-	
-	</delete>
 	 -->
+	<delete id="deleteSchedule"
+			parameterType="int">
+		DELETE FROM schedule
+		WHERE schedule_no = #{ scheduleNo }
+	</delete>
+	
 </mapper>

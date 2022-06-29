@@ -19,8 +19,8 @@ public interface ScheduleMapper {
 	int insertSchedule(Schedule schedule);
 	
 	// Schedule 테이블 데이터 수정
-	int updateSchedule();
+	int updateSchedule(Schedule schedule);
 	
 	// Schedule 테이블 데이터 삭제
-	int deleteSchedule();
+	int deleteSchedule(int scheduleNo);
 }

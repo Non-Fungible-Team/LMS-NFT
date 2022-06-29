@@ -92,4 +92,23 @@ public class ScheduleController {
 		}
 		
 	}
+	
+	// Schedule 테이블 데이터 삭제
+	@GetMapping("/manager/schedule/removeSchedule")
+	public String removeSchedule(@RequestParam(name = "scheduleNo") int scheduleNo) {
+				
+		log.debug(A.A + "[ScheduleController.removeSchedule] scheduleNo : " + scheduleNo + A.R);
+		
+		int row = scheduleService.removeSchedule(scheduleNo);
+		
+		log.debug(A.A + "[ScheduleController.removeSchedule] row : " + row + A.R);
+		
+		if(row == 1) {
+			log.debug(A.A + "[ScheduleController.removeSchedule] schedule 삭제 성공 " + A.R);
+		} else {
+			log.debug(A.A + "[ScheduleController.removeSchedule] schedule 삭제 실패 " + A.R);
+		}
+		
+		return "redirect:/all/schedule/getScheduleList";
+	}
 }

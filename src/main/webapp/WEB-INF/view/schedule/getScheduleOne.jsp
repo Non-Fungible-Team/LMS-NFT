@@ -36,6 +36,14 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title">getScheduleOne - ${ scheduleOne.scheduleTitle }</h4>
+								<br>
+								<a href="${pageContext.request.contextPath}/manager/schedule/modifySchedule?scheduleNo=${ scheduleOne.scheduleNo }" class="btn btn-primary btn-rounded">
+									<i class="fas fa-check"></i>수정
+								</a>
+								<a href="${pageContext.request.contextPath}/manager/schedule/removeSchedule?scheduleNo=${ scheduleOne.scheduleNo }" class="btn btn-primary btn-rounded">
+									<i class="fas fa-check"></i>삭제
+								</a>
+					
 								<div class="mt-2" style="height: auto; width: auto;">
 
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
