@@ -32,16 +32,14 @@
 	<insert id="insertSchedule"
 			parameterType="kr.co.nft.lms.vo.Schedule">
 		INSERT INTO schedule (
-			schedule_no
-			, schedule_title
+			schedule_title
 			, schedule_content
 			, member_id
 			, schedule_date
 			, schedule_create_date
 			, schedule_update_date
 		) VALUES (
-			#{ scheduleNo }
-			, #{ scheduleTitle }
+			#{ scheduleTitle }
 			, #{ scheduleContent }
 			, #{ memberId }
 			, #{ scheduleDate }

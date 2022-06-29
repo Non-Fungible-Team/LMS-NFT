@@ -54,13 +54,42 @@ public class ScheduleController {
 	@GetMapping("/manager/schedule/addSchedule")
 	public String addScheduleForm() {
 		
+		log.debug(A.A + "[ScheduleController.addScheduleForm] 실행" + A.R);
+		
 		return "/schedule/addSchedule";
 	}
 	
 	// Schedule 테이블 데이터 입력 - Action
 	@PostMapping("/manager/schedule/addScheduleAction")
-	public String addScheduleAction() {
+	public String addScheduleAction(@RequestParam(name = "scheduleTitle") String scheduleTitle
+								  , @RequestParam(name = "scheduleMemberId") String scheduleMemberId
+								  , @RequestParam(name = "scheduleContent") String scheduleContent
+								  , @RequestParam(name = "scheduleDate") String scheduleDate) {
 		
-		return "redirect:/all/schedule/getScheduleList";
+		log.debug(A.A + "[ScheduleController.addScheduleAction] scheduleTitle : " + scheduleTitle + A.R);
+		log.debug(A.A + "[ScheduleController.addScheduleAction] scheduleMemberId : " + scheduleMemberId + A.R);
+		log.debug(A.A + "[ScheduleController.addScheduleAction] scheduleContent : " + scheduleContent + A.R);
+		log.debug(A.A + "[ScheduleController.addScheduleAction] scheduleDate : " + scheduleDate + A.R);
+		
+		Schedule schedule = new Schedule();
+		schedule.setScheduleTitle(scheduleTitle);
+		schedule.setMemberId(scheduleMemberId);
+		schedule.setScheduleContent(scheduleContent);
+		schedule.setScheduleDate(scheduleDate);
+		
+		log.debug(A.A + "[ScheduleController.addScheduleAction] schedule : " + schedule + A.R);
+		
+		int row = scheduleService.addSchedule(schedule);
+		
+		log.debug(A.A + "[ScheduleController.addScheduleAction] row : " + row + A.R);
+		
+		if(row == 1) {
+			log.debug(A.A + "[ScheduleController.addScheduleAction] schedule 입력 성공 " + A.R);
+			return "redirect:/all/schedule/getScheduleList";
+		} else {
+			log.debug(A.A + "[ScheduleController.addScheduleAction] schedule 입력 실패 " + A.R);
+			return "redirect:/manager/schedule/addSchedule";
+		}
+		
 	}
 }

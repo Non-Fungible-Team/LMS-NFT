@@ -44,7 +44,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		        <div class="card-body">
 		            <h4 class="card-title">getScheduleList - 달력 형식으로 수정 필요</h4>
 		            <br>
-		            <a href="${pageContext.request.contextPath}/teacher/lecture/add########" class="btn btn-primary btn-rounded">
+		            <a href="${pageContext.request.contextPath}/manager/schedule/addSchedule" class="btn btn-primary btn-rounded">
 						<i class="fas fa-check"></i>입력
 					</a>
 		            <div class="mt-2" style="height:auto; width:auto;">
