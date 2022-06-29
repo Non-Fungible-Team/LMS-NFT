@@ -51,13 +51,24 @@
 													<td><input type = "number" name="root" class="form-control" value="${root}" readonly="readonly"></td>
 												</tr>
 											</c:if>
-											<tr>
-								    			<th>제목</th>
-								    			<td>
-								    				<input type="text" name="suggestTitle" id="suggestTitle" class="form-control">
-								    				<span id="suggestTitleHelper" class="helper"></span>
-								    			</td>
-								    		</tr>
+											<c:if test="${empty root}">
+												<tr>
+									    			<th>제목</th>
+									    			<td>
+									    				<input type="text" name="suggestTitle" id="suggestTitle" class="form-control">
+									    				<span id="suggestTitleHelper" class="helper"></span>
+									    			</td>
+									    		</tr>
+								    		</c:if>
+								    		<c:if test="${not empty root}">
+												<tr>
+									    			<th>제목</th>
+									    			<td>
+									    				<input type="text" name="suggestTitle" id="suggestTitle" class="form-control" value="${suggestTitle}" readonly="readonly">
+									    				<span id="suggestTitleHelper" class="helper"></span>
+									    			</td>
+									    		</tr>
+									    	</c:if>
 											<tr>
 												<th>작성자ID</th>
 												<td>
@@ -72,17 +83,27 @@
 								    				<span id="suggestContentHelper" class="helper"></span>
 								    			</td>
 											</tr>
-											<tr>
-												<th>비밀글 여부</th>
-												<td>
-													<select name = "suggestSecret" id="suggestSecret">
-								    					<option value="-1">::비밀글여부를 선택하세요::</option>
-								    					<option value="N">공개글로 작성</option>
-								    					<option value="Y">비밀글로 작성</option>
-								    				</select>
-													<span id="suggestSecretHelper" class="helper"></span>
-												</td>
-											</tr>
+											<c:if test="${empty root}">
+												<tr>
+													<th>비밀글 여부</th>
+													<td>
+														<select name = "suggestSecret" id="suggestSecret">
+									    					<option value="-1">::비밀글여부를 선택하세요::</option>
+									    					<option value="N">공개글로 작성</option>
+									    					<option value="Y">비밀글로 작성</option>
+									    				</select>
+														<span id="suggestSecretHelper" class="helper"></span>
+													</td>
+												</tr>
+											</c:if>
+											<c:if test="${not empty root}">
+												<tr>
+													<th>비밀글 여부</th>
+													<td>
+														<input type="text" name ="suggestSecret" value="${suggestSecret}" class="form-control" readonly="readonly">
+													</td>
+												</tr>
+											</c:if>
 										</table>
 										<div>
 											<button type="submit" id = "uploadSuggest" class ="btn btn-outline-success btn-rounded">등록</button>

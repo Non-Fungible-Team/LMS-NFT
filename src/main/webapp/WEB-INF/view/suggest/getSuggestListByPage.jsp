@@ -36,16 +36,75 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
+							<div class="mt-2" style="height: auto; width: auto;">
+									<!-- 운영자만 보이는 건의 처리전 목록테이블 -->
+								<c:if test="${sessionLoginMember.memberLevel >=6 }">
+									<div class="card-body">
+									<h4 class="card-title">건의 처리전 목록</h4>
+										<table id="zero_config" class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>번호</th>
+													<th>처리상태</th>
+													<th>제목</th>
+													<th>작성자ID</th>
+													<th>비밀글여부</th>
+													<th>생성날짜</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<c:forEach var="s" items="${rootNullSuggestList}">
+														<tr>
+															<td>${s.suggestNo}</td>
+															<td>${s.suggestStatus}</td>
+															<td>
+																<a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a>
+															</td>
+															<td>${s.memberId}</td>
+															<td>${s.suggestSecret}</td>
+															<td>${s.suggestCreateDate}</td>
+														</tr>
+													</c:forEach>
+												</tr>
+											</tbody>
+										</table>
+										<div style="text-align: center;">
+						            	<form method="get" action="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage">
+											<c:if test="${rootNullCurrentPage>1}">
+												<button type="submit" class="btn btn-outline-warning btn-rounded" name="rootNullCurrentPage" value="${rootNullCurrentPage-1}">이전</button>
+											</c:if>
+											<!-- 목록 사이 번호 표시 -->
+											<c:forEach begin="1" end="10" step="1" var="i" varStatus="status">
+												<c:if test="${ i< 5 && rootNullCurrentPage-(5-i)> 0 }">
+													<button type = "submit" value ="${rootNullCurrentPage-(5-i)}" name = "rootNullCurrentPage" class="btn btn-outline-info btn-rounded">${rootNullCurrentPage-(5-i)}</button>
+												</c:if>
+												<c:if test="${ i==5 }">
+													<button type = "submit" value ="${rootNullCurrentPage}" name = "rootNullCurrentPage" class="btn btn-outline-danger btn-rounded">${rootNullCurrentPage}</button>
+												</c:if>
+												<c:if test="${ i > 5 && rootNullCurrentPage+(i-5) <= rootNullLastPage }">
+													<button type = "submit" value ="${rootNullCurrentPage+(i-5)}" name = "rootNullCurrentPage" class="btn btn-outline-info btn-rounded">${rootNullCurrentPage+(i-5)}</button>
+												</c:if>
+											</c:forEach>
+											<c:if test="${rootNullCurrentPage<rootNullLastPage}">
+												<button type="submit" class="btn btn-outline-success btn-rounded" name="rootNullCurrentPage" value="${rootNullCurrentPage+1}">다음</button>
+											</c:if>
+										</form>
+									</div>
+								</div>
+							</c:if>							
+								
+							<!-- 모두가 보이는 건의사항 목록 -->
 							<div class="card-body">
 								<h4 class="card-title">건의게시판</h4>
 								<a href="${pageContext.request.contextPath}/all/suggest/addSuggest">
 									<input type="button" class="btn btn-success" style="float: right" value="건의사항입력">
 								</a>
-								<div class="mt-2" style="height: auto; width: auto;">
 									<table id="zero_config" class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th>번호</th>
+												<th>처리상태</th>
 												<th>제목</th>
 												<th>작성자ID</th>
 												<th>비밀글여부</th>
@@ -57,11 +116,21 @@
 												<c:forEach var="s" items="${suggestList}">
 													<tr>
 														<td>${s.suggestNo}</td>
+														<td>${s.suggestStatus}</td>
 														<td>
-															<c:if test="${s.root != 0}">
-																┗【Re:】
+															<c:if test="${sessionLoginMember.memberLevel>=6 || sessionLoginMember.memberId == s.memberId || sessionLoginMember.memberLevel < 6 && s.suggestSecret =='N'}">
+																<c:if test="${s.root != 0}">
+																	┗【Re:】
+																</c:if>
+																<a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a>
 															</c:if>
-															<a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a>
+															<c:if test="${sessionLoginMember.memberLevel < 6 && s.suggestSecret =='Y' && sessionLoginMember.memberId != s.memberId}">
+																<c:if test="${s.root != 0}">
+																	┗【Re:】
+																</c:if>
+																<div>비밀글입니다.</div>
+															</c:if>
+																
 														</td>
 														<td>${s.memberId}</td>
 														<td>${s.suggestSecret}</td>

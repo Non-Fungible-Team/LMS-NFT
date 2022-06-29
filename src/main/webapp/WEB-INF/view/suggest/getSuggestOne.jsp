@@ -46,7 +46,7 @@
 					            		</a>
 				            		</c:if>
 				            		<c:if test="${sessionLoginMember.memberLevel >=6 }">
-					            		<a href="${pageContext.request.contextPath}/manager/suggest/addSuggest?root=${suggest.suggestNo}">
+					            		<a href="${pageContext.request.contextPath}/manager/suggest/addSuggest?root=${suggest.suggestNo}&suggestSecret=${suggest.suggestSecret}&suggestTitle=${suggest.suggestTitle}">
 						            		<input type="button" class="btn btn-outline-primary" style="float: right" value="건의사항 답글달기">
 						            	</a>
 					            	</c:if>

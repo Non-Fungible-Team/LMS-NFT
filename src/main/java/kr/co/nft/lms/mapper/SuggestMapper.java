@@ -15,17 +15,23 @@ public interface SuggestMapper {
 	//Suggest 입력 내용중 suggest테이블에 해당하는 내용을 suggest테이블에 insert
 	int insertSuggest(Suggest suggest);
 	
-	//select
+	//전체select
 	List<Suggest> selectSuggestListByPage(Map<String, Object> map);
-	
 	//전체 row
 	int selectSuggestListTotalCount(int memberLevel);
+
+	//처리전 상태 select
+	List<Suggest> selectRootNullSuggestListByPage(Map<String, Object> map);
+	//처리전 상태 row
+	int selectRootNullSuggestListTotalCount(int memberLevel);
 	
 	//상세보기
 	Suggest selectSuggestOne(int suggestNo);
 	
 	//update
 	int updateSuggestInBoard(Suggest suggest);
+	//updateSuggestStatus
+	int updateSuggestStatus(Suggest suggest);
 	
 	//delete (블라인드 처리)
 	int deleteSuggest(int suggestNo);

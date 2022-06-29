@@ -30,9 +30,15 @@ public class SuggestController {
 	//Suggest 답글 입력폼(운영자만)
 	@GetMapping("/manager/suggest/addSuggest")
 	public String addSuggestAnswer(Model model
-								,@RequestParam(name="root") int root) {
+								,@RequestParam(name="root") int root 
+								,@RequestParam(name="suggestSecret") String suggestSecret
+								,@RequestParam(name="suggestTitle") String suggestTitle) {
 		log.debug(A.S + "[SuggestController.addSuggestAnswer.param] root : "+ root + A.R);
+		log.debug(A.S + "[SuggestController.addSuggestAnswer.param] suggestSecret : "+ suggestSecret + A.R);
+		log.debug(A.S + "[SuggestController.addSuggestAnswer.param] suggestTitle : "+ suggestTitle + A.R);
 		model.addAttribute("root", root);
+		model.addAttribute("suggestSecret", suggestSecret);
+		model.addAttribute("suggestTitle", suggestTitle);
 		log.debug(A.S + "[SuggestController.addSuggestAnswer] model : " + model + A.R);
 		return "/suggest/addSuggest";
 	}
@@ -53,27 +59,35 @@ public class SuggestController {
 		return "redirect:/all/suggest/getSuggestListByPage";
 	}
 	
-	//Suggest 목록보기
+	//Suggest 전체 목록보기
 	@GetMapping("/all/suggest/getSuggestListByPage")
 	public String getSuggestListByPage(Model model
 									,HttpSession session
 									,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
-									,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
+									,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage
+									,@RequestParam(name="rootNullCurrentPage", defaultValue = "1") int rootNullCurrentPage
+									,@RequestParam(name="rootNullRowPerPage", defaultValue = "5") int rootNullRowPerPage) {
 		log.debug(A.S + "[SuggestController.getSuggestListByPage.param] currentPage : " + currentPage + A.R);
 		log.debug(A.S + "[SuggestController.getSuggestListByPage.param] rowPerPage : " + rowPerPage + A.R);
+		log.debug(A.S + "[SuggestController.getSuggestListByPage.param] rootNullCurrentPage : " + rootNullCurrentPage + A.R);
+		log.debug(A.S + "[SuggestController.getSuggestListByPage.param] rootNullRowPerPage : " + rootNullRowPerPage + A.R);
 		//세션에 로그인 정보 요청
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		
-		Map<String, Object> suggestRowRetrunMap = suggestService.getSuggestListByPage(currentPage, rowPerPage, loginMember.getMemberLevel());
+		Map<String, Object> suggestRowRetrunMap = suggestService.getSuggestListByPage(currentPage, rowPerPage, loginMember.getMemberLevel(),rootNullCurrentPage,rootNullRowPerPage);
 		log.debug(A.S + "[SuggestController.getSuggestListByPage] suggestRowRetrunMap : " + suggestRowRetrunMap + A.R);
 		
 		model.addAttribute("suggestList", suggestRowRetrunMap.get("suggestList"));
 		model.addAttribute("lastPage", suggestRowRetrunMap.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rootNullSuggestList", suggestRowRetrunMap.get("rootNullSuggestList"));
+		model.addAttribute("rootNullLastPage", suggestRowRetrunMap.get("rootNullLastPage"));
+		model.addAttribute("rootNullCurrentPage", rootNullCurrentPage);
 		log.debug(A.S + "[SuggestController.getSuggestListByPage] model : " + model + A.R);
 		
 		return "/suggest/getSuggestListByPage";
 	}
+	
 	
 	//Suggest 상세보기
 	@GetMapping("/all/suggest/getSuggestOne")
