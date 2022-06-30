@@ -54,9 +54,7 @@
 													<c:if test="${sessionLoginMember.memberLevel == 4}">
 													<th>과제 제출</th>
 													</c:if>
-													<c:if test="${sessionLoginMember.memberLevel == 4}">
-													<th>과제 상세 보기</th>
-													</c:if>
+												
 												</tr>
 											</thead>
 											<tbody>
@@ -71,7 +69,7 @@
 															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
 														</c:if>
 														<c:if test="${sessionLoginMember.memberLevel == 4 && empty h.homeworkSubmitNo }">
-															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}">과제제출</a></td>														
+															<td><a href="${pageContext.request.contextPath}/homework/addHomeworkSubmit?homeworkNo=${h.homeworkNo}">과제제출</a></td>														
 														</c:if> 
 														<c:if test="${sessionLoginMember.memberLevel == 4 && not empty h.homeworkSubmitNo}">
 															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}">과제보기</a></td>														

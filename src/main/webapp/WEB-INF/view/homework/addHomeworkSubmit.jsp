@@ -84,7 +84,7 @@
 												<td>작성자</td><td><input type="text" name="memberId" value="${sessionLoginMember.memberId}" readonly="readonly"></td>
 											</tr>										
 											<tr>
-												<td>과제번호</td><td><input type="text" name="homeworkNo" value="${homeworkNo}" readonly="readonly"></td>
+												<td>과제번호</td><td><input type="text" name="homeworkNo" value="${param.homeworkNo}" readonly="readonly"></td>
 											</tr>										
 											<tr>
 												<td>강의번호</td><td><input type="text" name="lectureNo" value="${sessionLectureNo}" readonly="readonly"></td>
@@ -100,6 +100,8 @@
 											<div id="fileSection"></div>
 											<!-- 파일업로드 input 추가될 영역 -->
 											<button type="submit" class="btn btn-outline-success btn-rounded" id="addHomeworkSubmit"><i class="fas fa-check"></i>과제 등록</button>
+											<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
+											
 									</form>
 									</div>
 								</div>

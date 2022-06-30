@@ -43,11 +43,11 @@
 									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
 											<td>homeworkSubmitNo</td>
-											<td><input type="number" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}"></td>
+											<td><input type="number" class="form-control" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}"></td>
 										</tr>
 										<tr>
 											<td>homeworkNo</td>
-											<td><input type="text" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}"></td>
+											<td><input type="text" class="form-control" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}"></td>
 										</tr>
 <!-- 										<tr> -->
 <!-- 											<td>lectureNo</td> -->
@@ -55,15 +55,15 @@
 <!-- 										</tr> -->
 										<tr>
 											<td>memberId</td>
-											<td><input type="text" name="memberId" value="${homeworkSubmitOne.memberId }"></td>
+											<td><input type="text" class="form-control" name="memberId" value="${homeworkSubmitOne.memberId }"></td>
 										</tr>
 										<tr>
 											<td>homeworkSubmitTitle</td>
-											<td><input type="text" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }"></td>
+											<td><input type="text" class="form-control" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }"></td>
 										</tr>
 										<tr>
 											<td>homeworkSubmitContent</td>
-											<td><textarea name="homeworkSubmitContent" >${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
+											<td><textarea name="homeworkSubmitContent" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
 										</tr>
 <!-- 										<tr> -->
 <!-- 											<td>homeworkSubmitFileName</td> -->
@@ -71,23 +71,52 @@
 <!-- 										</tr> -->
 										<tr>
 											<td>homeworkSubmitCreateDate</td>
-											<td><input type="text" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }"></td>
+											<td><input type="text" class="form-control" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }"></td>
 										</tr>
 										<tr>
 											<td>homeworkSubmitUpdateDate</td>
-											<td><input type="text" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }"></td>
+											<td><input type="text" class="form-control" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }"></td>
 										</tr>
 										<tr>
 											<td>homeworkSubmitScore</td>
-											<td><input type="text" name="homeworkSubmitScore" value="${homeworkSubmitOne.homeworkSubmitScore }"></td>
+											<td><input type="text" class="form-control" name="homeworkSubmitScore" value="${homeworkSubmitOne.homeworkSubmitScore }"></td>
 										</tr>
 										<tr>
 											<td>homeworkSubmitFeedback</td>
-											<td><input type="text" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
+											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
 										</tr>
 									 
 									</table>
 									</div>
+									<h4>첨부된 파일 정보</h4>
+								    <div>
+									    <table id="zero_config" class="table table-striped table-bordered">
+									    	<thead>
+									    		<tr>
+										    		<th>파일미리보기</th>
+													<th>파일타입</th>
+													<th>파일사이즈</th>
+									    		</tr>
+									    	</thead>
+									    	<tbody>
+									    		<c:forEach var ="hf" items="${homeworkSubmitFileList}">
+													<tr>
+														<td>
+															<c:if test="${hf.homeworkSubmitFileType=='image/gif'||hf.homeworkSubmitFileType=='image/png'||hf.homeworkSubmitFileType == 'image/jpeg'}">
+																<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
+															</c:if>
+															<a href="${pageContext.request.contextPath}/static/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
+														</td>
+														<td>${hf.homeworkSubmitFileType}</td>
+														<td>${hf.homeworkSubmitFileSize}</td>
+													</tr>	
+									    		</c:forEach>
+									    	</tbody>
+									    	
+									    </table>
+									 </div>
+									 <button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
+									 
 								</div>
 							</div>
 						</div>

@@ -22,7 +22,8 @@
 		LEFT JOIN homework_submit hs
 		ON h.homework_no = hs.homework_no -->
  		
- 		SELECT 
+ 		
+ 		(SELECT 
 	 		h.homework_no homeworkNo 
 			,h.member_id teacherId 
 			,hs.member_id studentId 
@@ -37,6 +38,8 @@
 		FROM homework h
 		LEFT JOIN homework_submit hs
 		ON h.homework_no = hs.homework_no
+		GROUP BY h.homework_no
+		ORDER BY h.homework_no DESC)
 		UNION
 		(SELECT 
 			h.homework_no homeworkNo 
@@ -66,7 +69,7 @@
 		</where>
 		GROUP BY h.homework_no
 		ORDER BY h.homework_no DESC  
-		LIMIT #{beginRow}, #{rowPerPage}) 
+		LIMIT #{beginRow}, #{rowPerPage})
 	</select>
 	
 	<!-- 과제 상세보기 -->
@@ -151,10 +154,7 @@
 			,hs.member_id memberId
 			,h.lecture_no lectureNo
 			,hs.homework_submit_title homeworkSubmitTitle
-<!-- 			,hs.homework_submit_content homeworkSubmitContent -->
 			,hsf.homework_submit_file_name homeworkSubmitFileName
-<!-- 			,hs.homework_submit_score homeworkSubmitScore -->
-<!-- 			,hs.homework_submit_feedback homeworkSubmitFeedback -->
 			,hs.homework_submit_create_date homeworkSubmitCreateDate
 			,hs.homework_submit_update_date homeworkSubmitUpdateDate
 		FROM homework_submit hs
@@ -164,9 +164,11 @@
 		ON hs.member_id = sl.member_id		
 		INNER JOIN homework_submit_file hsf
 		ON hs.homework_submit_no = hsf.homework_submit_no
-		WHERE hs.homework_no = h.homework_no
+		<!-- WHERE hs.homework_no = #{homeworkNo}
+		AND h.lecture_no = #{lectureNo} -->
 		ORDER BY hs.homework_submit_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
+		
 	</select>
 	
 	<!-- 학생 과제 상세보기 -->
