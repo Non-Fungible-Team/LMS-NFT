@@ -5,7 +5,9 @@ import lombok.Data;
 @Data
 public class LectureBoard {
 	private int lectureNo;
-	private int boardNo;
+	//private int boardNo;
+	private int lectureBoardNo;
+	
 	
 	private String lectureBoardTitle;
 	private String lectureBoardContent;

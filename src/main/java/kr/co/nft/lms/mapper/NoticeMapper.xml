@@ -92,6 +92,7 @@
 		WHERE b.board_blind = 'N'
 		AND n.board_no = #{noticeNo}
 	</select>
+	
 	<!-- 수정 -->
 	<update id="updateNoticeInBoard"
 			parameterType="kr.co.nft.lms.vo.Notice">

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.LectureBoardMapper">
+	<insert id="insertLectureBoardInBoard"
+			parameterType="kr.co.nft.lms.vo.LectureBoard">
+		<selectKey resultType="int" keyProperty="lectureBoardNo" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey> 
+		INSERT INTO board(
+			board_title
+			,board_content
+			,board_category
+			,member_id
+			,board_privilege
+			,board_blind
+			,board_create_date
+			,board_update_date
+		) VALUES (
+			#{lectureBoardTitle}
+			,#{lectureBoardContent}
+			,'강의'
+			,#{memberId}
+			,4
+			,'N'
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	
+	<!-- LectureBoard 테이블에 insert -->
+	<insert id="insertLectureBoard"
+			parameterType="kr.co.nft.lms.vo.LectureBoard">
+		INSERT INTO lectrue_board(
+			lecture_no
+			,board_no
+		) VALUES (
+			#{lectureNo}
+			,#{lectureBoardNo}
+		)
+	</insert>
+	
+	<!-- 목록보기 -->
+	<select id="selectLectureBoardListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.LectureBoard">
+		SELECT 
+			l.lecture_no lectureNo
+			,l.lecture_name lectureName
+			,lb.board_no lectureBoardNo
+			, b.board_title lectureBoardTitle
+			, b.board_content lectureBoardContent
+			, b.board_category lectureBoardCategory
+			, b.member_id memberId
+			, b.board_privilege lectureBoardPrivilege
+			, b.board_blind lectureBoardBlind
+			, b.board_create_date lectureBoardCreateDate
+			, b.board_update_date lectureBoardUpdateDate
+		FROM lecture_board lb
+		INNER JOIN board b
+		ON lb.board_no = b.board_no
+		INNER JOIN lecture l
+		ON l.lecture_no = lb.lecture_no
+		WHERE  b.board_blind = 'N'
+		ORDER BY lb.board_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}	
+	</select>
+	
+	<select id="selectLectureBoardListTotalCount"
+			parameterType="int"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM lecture_board lb
+		INNER JOIN board b
+		ON n.board_no = b.board_no
+		INNER JOIN lecture l
+		ON l.lecture_no = lb.lecture_no
+		WHERE b.board_privilege = 4
+		AND b.board_blind = 'N'
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="selectLectureBoardOne"
+			resultType="kr.co.nft.lms.vo.LectureBoard"
+			parameterType="int">		
+		SELECT 
+			l.lecture_no lectureNo
+			,l.lecture_name lectureName
+			,lb.board_no lectureBoardNo
+			, b.board_title lectureBoardTitle
+			, b.board_content lectureBoardContent			
+			, b.board_blind lectureBoardBlind
+			, b.member_id memberId
+			, b.board_category lectureBoardCategory
+			, b.board_privilege lectureBoardPrivilege
+			, b.board_create_date lectureBoardCreateDate
+			, b.board_update_date lectureBoardUpdateDate
+		FROM lecture_board lb
+		INNER JOIN board b
+		ON lb.board_no = b.board_no
+		INNER JOIN lecture l
+		ON l.lecture_no = lb.lecture_no
+		WHERE b.board_blind = 'N'
+		AND lb.board_no = #{lectureBoardNo}
+	</select>
+	
+	<!-- board항목 수정 -->
+	<update id="updateLectureBoardInBoard"
+			parameterType="kr.co.nft.lms.vo.LectureBoard">
+		UPDATE board
+		SET board_title = #{lectureBoardTitle}
+			,board_content = #{lectureBoardContent}
+			,board_privilege = #{lectureBoardPrivilege}
+		WHERE board_no = #{lectureBoardNo}
+	</update>
+	
+	<!-- lectureNo 수정 -->
+	<update id="updateLectureBoardInLectureNo"
+			parameterType="kr.co.nft.lms.vo.LectureBoard">
+		UPDATE lecture_board
+		SET lecture_no = #{lectureNo}
+		WHERE board_no = #{lectureBoardNo}
+	</update>
+	
+	<!-- 삭제(블라인드로 변경) -->
+	<update id="deleteLectureBoard"
+			parameterType="int">
+		UPDATE board
+		SET board_blind = 'Y'
+		WHERE board_no =#{lectureBoardNo}
+	</update>
+	
+	<!-- ■■■■■■■■■■■■■■■■LectureBoardFile■■■■■■■■■■■■■■■■ -->	
+	
+	<insert id="insertlectureFile"
+			parameterType="kr.co.nft.lms.vo.LectureFile">
+		INSERT INTO board_file(
+			board_no
+			,board_file_name
+			,board_file_origin_name
+			,board_file_type
+			,board_file_size
+		) VALUES (
+			#{lectureBoardNo}
+			,#{lectureFileName}
+			,#{lectureFileOriginName}
+			,#{lectureFileType}
+			,#{lectureFileSize}
+		)
+	</insert>
+	
+	<select id="selectLectureFileOneList"
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.LectureFile">
+		SELECT
+			board_file_no lectureFileNo
+			,board_file_name lectureFileName
+			,board_file_origin_name lectureFileOriginName
+			,board_file_type lectureFileType
+			,board_file_size lectureFileSize
+		FROM board_file
+		WHERE board_no = #{lectureBoardNo}
+	</select>
+	
+	<select id="selectLectureFileNameList"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			board_file_name lectureFileName
+		FROM board_file
+		WHERE board_no = #{lectureBoardNo}
+	</select>
+	
+	<delete id="deleteLectureFileList"
+			parameterType="int">
+		DELETE FROM board_file
+		WHERE board_no = #{lectureBoardNo}
+	</delete>
+	
+	<delete id="deleteLectureFileOne"
+			parameterType="int">
+		DELETE FROM board_file
+		WHERE board_file_no = #{lectureFileNo}
+	</delete>
+	
+</mapper>
