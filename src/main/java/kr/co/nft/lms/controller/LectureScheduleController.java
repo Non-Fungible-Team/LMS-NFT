@@ -1,6 +1,5 @@
 package kr.co.nft.lms.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,18 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.nft.lms.service.AttendService;
 import kr.co.nft.lms.service.LectureScheduleService;
-import kr.co.nft.lms.service.LectureService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.LectureSchedule;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class LectureScheduleController {
-	
-	@Autowired private LectureScheduleService lectureScheduleService;
-	
-	@Autowired private LectureService lectureService;
+	//서비스 객체 생성
+	@Autowired private LectureScheduleService lectureScheduleService; //강의시간표
+	@Autowired private AttendService attendService; //출석
 	
 	// 1. 강의시간표 입력 Form
 	@GetMapping("/manager/lecture/addLectureScheduleForm")
@@ -165,4 +163,31 @@ public class LectureScheduleController {
 		
 		return "redirect:/all/lecture/getLectureScheduleListByLectureNo";
 	}
+	
+	//***************출석*******************//
+	//1.강의별 전체 학생 출석 목록 - 운영자,강사
+	@GetMapping("/teacher/lecture/getAttendList")
+	public String getAttendList(Model model
+							,@RequestParam(name = "lectureNo") int lectureNo) {
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] model(전체학생출석목록실행) : " +model +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] lectureNo(강의번호) : " +lectureNo +A.R);
+		
+		//출석 서비스 호출
+		Map<String,Object> map = attendService.getAttendList(lectureNo);
+		model.addAttribute("lectureNo", map.get("lectureNo"));
+		model.addAttribute("attendList", map.get("attendList"));
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.map] map(서비스호출) : " +map +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.lectureNo] lectureNo(model) : " +map.get("lectureNo") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.attendList] attendList(model) : " +map.get("attendList") +A.R);
+		
+		return "/lecture/getAttendList";
+		
+	}
+	//2.수강중인 강의별 출석 확인 - 학생
+	
+	//3.학생 출석 삽입
+	
+	//4.학생 출석 수정
+	
+	//5.학생 출석 삭제
 }

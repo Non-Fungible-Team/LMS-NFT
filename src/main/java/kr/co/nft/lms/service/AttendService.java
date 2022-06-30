@@ -1,25 +1,19 @@
 package kr.co.nft.lms.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import kr.co.nft.lms.mapper.AttendMapper;
 import kr.co.nft.lms.mapper.LectureMapper;
 import kr.co.nft.lms.mapper.LectureScheduleMapper;
-import kr.co.nft.lms.mapper.MemberMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Attend;
-import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureSchedule;
-import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.StudentLecture;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,12 +27,12 @@ public class AttendService {
 	@Autowired private LectureScheduleMapper lectureScheduleMapper;
 	
 	//1.강의별 전체 학생의 출석 목록(운영자,강사)  + 전체 행수
-	public Map<String,Object> getAttendListByPage(int lectureNo){
+	public Map<String,Object> getAttendList(int lectureNo){
 		log.debug(A.W +"[AttendService.getAttendListByPage.출석목록] 출석목록 서비스 " +A.R);
 		log.debug(A.W +"[AttendService.getAttendListByPage.param] lectureNo : "+lectureNo +A.R);
 		
 		//출석목록 mapper메소드 호출
-		List<Attend> attendList = attendMapper.selectAttendListByPage(lectureNo);
+		List<Attend> attendList = attendMapper.selectAttendList(lectureNo);
 		log.debug(A.W +"[AttendService.getAttendListByPage.attendList(매퍼호출)] attendList : "+ attendList +A.R);
 		
 		//결과값 map으로 반환

@@ -1,7 +1,6 @@
 package kr.co.nft.lms.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,7 +9,7 @@ import kr.co.nft.lms.vo.Attend;
 public interface AttendMapper {
 	
 	//1.강의별 전체 학생 출석 목록 - 강사/운영자
-	List<Attend> selectAttendListByPage(int lectureNo);
+	List<Attend> selectAttendList(int lectureNo);
 	
 	//2.학생이 자신이 듣는 강의별 출석 확인 
 	List<Attend> selectStudentAttendOne(int lectureNo, String memberId);
