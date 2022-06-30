@@ -38,6 +38,7 @@ public class AttendService {
 		//결과값 map으로 반환
 		Map<String, Object> returnMap = new HashMap<>(); //객체생성
 		returnMap.put("lectureNo", lectureNo); //번호값 저장
+		returnMap.put("attendList",attendList);
 		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(강의번호 값)] returnMap : "+ returnMap +A.R);
 		
 		return returnMap;
