@@ -14,6 +14,7 @@ import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Exam;
 import kr.co.nft.lms.vo.ExamExample;
 import kr.co.nft.lms.vo.ExamQuestion;
+import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;	
 
 @Slf4j
@@ -152,9 +153,9 @@ public class ExamService {
 	}
 	
 	
-	// 시험 응시
+	// 답안 제출
 	public int submitExamAnswer(Exam exam) {
-			log.debug(A.C + "[ExamService.submitExam.param] exam :"+ exam + A.R);
+			log.debug(A.C + "[ExamService.submitExamAnswer.param] exam :"+ exam + A.R);
 			return examMapper.insertExamAnswer(exam);
 	}
 	

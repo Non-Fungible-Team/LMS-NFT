@@ -151,9 +151,18 @@ public class ExamController {
 		}
 			
 		// 시험 응시 페이지
+		// 문제정보
 		@GetMapping("/student/exam/submitExamAnswer")
-		public String submitExamAnswer(Model model ,@RequestParam(name="examNo") int examNo, Map<String, Object> examQuestionOneList) {
+		public String submitExamAnswer(Model model 
+									,HttpSession session
+									,@RequestParam(name="examNo") int examNo
+									,Map<String, Object> examQuestionOneList) {
 			log.debug(A.C + "[ExamController.submitExamAnswer.param] examNo: " + examNo + A.R);
+			
+			// 세션 정보 호출
+			Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
+			log.debug(A.C + "[ExamController.submitExamAnswer.param] loginMember: " + sessionLoginMember + A.R);
+						
 			Map<String, Object> map1 = examService.getExamOne(examNo); // 시험 정보 호출
 			map1 = examService.getExamOne(examNo);
 			log.debug(A.C + "[ExamController.submitExamAnswer.map1] examNo: " + examNo + A.R);
@@ -164,23 +173,13 @@ public class ExamController {
 			log.debug(A.C + "[ExamController.submitExamAnswer.param] examExampleOneList: " + map2.get("examExampleOneList") + A.R);
 			return "/exam/submitExamAnswer";
 		}
+		// 시험 제출
 		@PostMapping("/student/exam/submitExamAnswer")
-		public String submitExamAnswer(HttpServletRequest request
-														,Model model
-														,Exam exam
-														,int examNo
-														,HttpSession session
-														,ExamQuestion examQuestion
-														,ExamExample examExample) {
-			log.debug(A.C + "[ExamController.submitExamAnswer.param] examNo: " + examNo + A.R);
-			log.debug(A.C + "[ExamController.submitExamAnswer.param] request: " + request + A.R);
-			log.debug(A.C + "[ExamController.submitExamAnswer.param] exam: " + exam+ A.R);
-			
-			// 세션 정보 호출
-			Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
-			log.debug(A.C + "[ExamController.submitExamAnswer.param] loginMember: " + sessionLoginMember + A.R);
+		public String submitExamAnswer(Exam exam) {
+			log.debug(A.C + "[ExamController.submitExamAnswer.param] exam: " + exam + A.R);
 			
 			int row = examService.submitExamAnswer(exam);
+			log.debug(A.C + "[ExamController.submitExamAnswer.param] row: " + row + A.R);
 			if(row ==1) {
 				log.debug(A.C +"ExamController.submitExamAnswer 답안 제출 성공"+A.R);
 			} else {
