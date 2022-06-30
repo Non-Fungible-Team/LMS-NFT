@@ -9,5 +9,6 @@
 <body>
 	<h1>임시 페이지 - ${ lectureNo }</h1>
 	<a href="${pageContext.request.contextPath}/teacher/lecture/getStudentLectureByPage?lectureNo=${ lectureNo }">학생 목록</a>	
+	<a href="${pageContext.request.contextPath}/teacher/lecture/getAttendList?lectureNo=${ lectureNo }">출석 목록</a>	
 </body>
 </html>

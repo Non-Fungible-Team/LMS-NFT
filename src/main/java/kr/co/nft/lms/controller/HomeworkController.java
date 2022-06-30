@@ -159,9 +159,9 @@ public class HomeworkController {
 			}
 		}
 		
-		homeworkService.addHomeworkSubmit(homeworkSubmit, path);
+		homeworkService.addHomeworkSubmit(homeworkSubmit,homework, path);
 		
-		return"redirect:/homework/getHomeworkSubmitListByPage";
+		return"redirect:/homework/getHomeworkListByPage";
 	}
 	// 학생 제출과제 리스트
 	@GetMapping("/homework/getHomeworkSubmitListByPage")

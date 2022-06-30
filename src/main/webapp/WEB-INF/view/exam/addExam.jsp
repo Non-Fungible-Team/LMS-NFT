@@ -37,44 +37,94 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-	$(document)
-			.ready(
-					function() {
-						var appendCountQuestion = 1;
-						var appendCountExample = 1;
-
-						$('#addExamQuestion')
-								.click(
-										function() {
-											if (appendCountQuestion >= 20)
-												return;
-											$('#questionSection')
-													.append(
-															"<table border='1'><tr><td>문제 번호"
-																	+ appendCountQuestion
-																	+ "번<input type='hidden' name='examQuestionNo' id='examQuestionNo'></td></tr><tr><td>시험 문제 내용</td><td><input type='text' name='examContent'></td></tr><tr><td>시험 문제 답안</td><td><input type='text' name='examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examPoint'></td></tr><tr><td>시험 문제 타입</td><td><input type='radio' name='examType' id='examType' value='객관식'>객관식<input type='radio' name='examType' id='examType' value='주관식'>주관식</td></tr></table>");
-											appendCountQuestion++;
-										});
-
-						$('#addExample')
-								.click(
-										function() {
-											$('#exampleSection')
-													.appendTo(
-															"<table border='1'><tr><td>보기 번호"
-																	+ appendCountExample
-																	+ "번<input type='hidden' name='exampleNo' id='exampleNo'></td></tr><tr><td>보기 내용</td><td><input type='text' name='exampleContent' id='exampleContent''></td></tr>");
-											appendCountExample++;
-										});
-
-						$('#deleteExamQuestion').click(function() {
-							$('#questionSection table:last').remove();
-							appendCountQuestion--;
-							if (appendCountQuestion < 0) {
-								appendCountQuestion = 1;
-							}
-						});
-					});
+	$(document).ready(function() {
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		var appendCount = 1;
+		var appendCountList = 0;
+// 		객관식 문제 추가
+		$('#addExamMultiQuestion').click(function() {
+			if (appendCount >= 20)	return;
+			appendCountList = appendCount-1;
+			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td>보기 1번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>보기 2번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>보기 3번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>보기 4번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType'>객관식</td></tr></table><br>");
+				appendCount++;
+			});
+// 		주관식 문제 추가
+		$('#addExamShortQuestion').click(function() {
+			if (appendCount >= 20)	return;
+			appendCountList = appendCount-1;
+			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType'>주관식</td></tr></table><br>");
+				appendCount++;
+			});
+// 		문제 삭제
+		$('#deleteExamQuestion').click(function() {
+			$('#questionSection table:last').remove();
+				appendCount--;
+				appendCountList--;
+				if(appendCount <= 0) {
+					appendCount = 1;
+					appendCountList = 0;
+				}
+			});
+		
+		$('#addExam').click(function(){
+			if($('#examTitle').val() == '') {
+				$('#examTitleHelper').text('제목을 입력하세요');
+				$('examCountHelper').text('');
+				$('#examMaxScoreHelper').text('');
+				$('#examStartDateHelper').text('');
+				$('#examEndDateHelper').text('');
+				$('#questionSectionHelper').text('');
+				
+	    		$('#examTitle').focus();
+			} else if($('#examCount').val() == '') {
+				$('#examTitleHelper').text('');
+				$('#examCountHelper').text('문항 수를 입력하세요');
+				$('#examMaxScoreHelper').text('');
+				$('#examStartDateHelper').text('');
+				$('#examEndDateHelper').text('');
+				$('#questionSectionHelper').text('');
+				
+	    		$('#examCount').focus();
+			} else if($('#examMaxScore').val() == '') {
+				$('#examTitleHelper').text('');
+				$('examCountHelper').text('');
+				$('#examMaxScoreHelper').text('만점을 입력하세요');
+				$('#examStartDateHelper').text('');
+				$('#examEndDateHelper').text('');
+				$('#questionSectionHelper').text('');
+				
+	    		$('#examMaxScore').focus();
+			} else if($('#examStartDate').val() == '') {
+				$('#examTitleHelper').text('');
+				$('examCountHelper').text('');
+				$('#examMaxScoreHelper').text('');
+				$('#examStartDateHelper').text('시작일시를 선택하세요');
+				$('#examEndDateHelper').text('');
+				$('#questionSectionHelper').text('');
+				
+	    		$('#examStartDate').focus();
+			} else if($('#examEndDate').val() == '') {
+				$('#examTitleHelper').text('');
+				$('examCountHelper').text('');
+				$('#examMaxScoreHelper').text('');
+				$('#examStartDateHelper').text('');
+				$('#examEndDateHelper').text('종료일시를 선택하세요');
+				$('#questionSectionHelper').text('');
+				
+	    		$('#examEndDate').focus();
+			} else if($('#questionSectionHelper').val() == '') {
+				$('#examTitleHelper').text('');
+				$('examCountHelper').text('');
+				$('#examMaxScoreHelper').text('');
+				$('#examStartDateHelper').text('');
+				$('#examEndDateHelper').text('');
+				$('#questionSectionHelper').text('문제를 입력하세요');
+			} else {
+	    		$('#addExam').submit();
+			}
+			});
+		});
 </script>
 </head>
 <script>
@@ -105,95 +155,45 @@
 											<!-- 	    시험등록 -->
 											<tr>
 												<td>시험 이름 :</td>
-												<td><input type="text" class="form-control"
-													name="examTitle" id="examTitle"></td>
+												<td><input type="text" class="form-control"	name="examTitle" id="examTitle">
+												<span id="examTitleHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>시험 문항 수 :</td>
-												<td><input type="text" class="form-control"
-													name="examCount" id="examCount"></td>
+												<td><input type="text" class="form-control"	name="examCount" id="examCount">
+												<span id="examCountHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>만점 :</td>
-												<td><input type="text" class="form-control"
-													name="examMaxScore" id="examMaxScore"></td>
+												<td><input type="text" class="form-control"	name="examMaxScore" id="examMaxScore">
+												<span id="examMaxScoreHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>시험시작일시 :</td>
-												<td><input type="datetime-local" class="form-control"
-													name="examStartDate" id="examStartDate"></td>
+												<td><input type="datetime-local" class="form-control" name="examStartDate" id="examStartDate">
+												<span id="examStartDateHelper" class="helper"></span></td>
 											</tr>
 											<tr>
 												<td>시험종료일시:</td>
-												<td><input type="datetime-local" class="form-control"
-													name="examEndDate" id="examEndDate"></td>
-											</tr>
-											<!--		   	문제 등록 -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>시험 문제 번호 : </td> -->
-											<!-- 	    		<td><input type="text" name="examQuestionNo" id="examQuestionNo"></td> -->
-											<!-- 	    	</tr> -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>시험 문제 내용 : </td> -->
-											<!-- 	    		<td><input type="text" name="examContent" id="examContent"></td> -->
-											<!-- 	    	</tr> -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>시험 문제 답안 : </td> -->
-											<!-- 	    		<td><input type="text" name="examCorrectAnswer" id="examCorrectAnswer"></td> -->
-											<!-- 	    	</tr> -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>시험 문제 배점 : </td> -->
-											<!-- 	    		<td><input type="text" name="examPoint" id="examPoint"></td> -->
-											<!-- 	    	</tr> -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>시험 문제 타입 : </td> -->
-											<!-- 			    <td><input type="radio" name="examType" id="examType" value="객관식">객관식 -->
-											<!--       			<input type="radio" name="examType" id="examType" value="주관식">주관식 -->
-											<!-- 				</td> -->
-											<!-- 	    	</tr> -->
-											<tr>
-												<td id="questionSection"></td>
+												<td><input type="datetime-local" class="form-control" name="examEndDate" id="examEndDate">
+												<span id="examEndDateHelper" class="helper"></span></td>
 											</tr>
 											<tr>
-												<td><button type="button"
-														class="btn btn-outline-success btn-rounded"
-														id="addExamQuestion" name="addExamQuestion">
-														<i class="fas fa-check"></i>문제 추가
-													</button></td>
-												<td><button type="button"
-														class="btn btn-outline-success btn-rounded"
-														id="deleteExamQuestion" name="deleteExamQuestion">
-														<i class="fas fa-check"></i>문제 삭제
-													</button></td>
+												<td id="questionSection"><span id="questionSectionHelper" class="helper"></span></td>
 											</tr>
-											<tr>
-												<td id="exampleSection"></td>
-											</tr>
-											<tr>
-												<td><button type="button"
-														class="btn btn-outline-success btn-rounded"
-														id="addExamExample" name="addExample">
-														<i class="fas fa-check"></i>보기 추가
-													</button></td>
-												<td><button type="button"
-														class="btn btn-outline-success btn-rounded"
-														id="deleteExample" name="deleteExample">
-														<i class="fas fa-check"></i>보기 삭제
-													</button></td>
-											</tr>
-											<!--    	보기 등록 -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>보기 번호 : </td> -->
-											<!-- 	    		<td><input type="text" name="exampleNo" id="exampleNo"></td> -->
-											<!-- 	    	</tr> -->
-											<!-- 	    	<tr> -->
-											<!-- 	    		<td>보기 내용 : </td> -->
-											<!-- 	    		<td><input type="text" name="exampleContent" id="exampleContent"></td> -->
-											<!-- 	    	</tr> -->
 										</table>
+											<button type="button" class="btn btn-outline-success btn-rounded" id="addExamMultiQuestion" name="addExamMultiQuestion">
+												<i class="fas fa-check"></i>객관식 문제 추가
+											</button>
+											<button type="button" class="btn btn-outline-success btn-rounded" id="addExamShortQuestion" name="addExamShortQuestion">
+												<i class="fas fa-check"></i>주관식 문제 추가
+											</button>
+											<button type="button" class="btn btn-outline-danger btn-rounded" id="deleteExamQuestion" name="deleteExamQuestion">
+												<i class="fas fa-check"></i>문제 삭제
+											</button>
+										<hr>
 										<div>
-											<button type="submit"
-												class="btn btn-outline-success btn-rounded" id="addExam">
+											<button type="submit" class="btn btn-success" id="addExam">
 												<i class="fas fa-check"></i>시험등록
 											</button>
 										</div>

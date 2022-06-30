@@ -88,13 +88,12 @@ public class HomeworkService {
 	}
 	
 	// 학생 과제 제출
-	public Map<String, Object> addHomeworkSubmit(HomeworkSubmit homeworkSubmit, String path) {
+	public Map<String, Object> addHomeworkSubmit(HomeworkSubmit homeworkSubmit,Homework homework, String path) {
 		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param homeworkSubmit : " + homeworkSubmit+ A.R);
 		log.debug(A.Q+"HomeworkService.addHomeworkSubmit.param path : " + path + A.R);
 		
 		int lectureNo = 0;
 		
-		Homework homework = new Homework();
 		homework.setLectureNo(lectureNo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("lectureNo", homework.getLectureNo());

@@ -197,17 +197,22 @@
 							,exam_answer_end_date
 			) VALUES (		#{examNo}
 							,#{examQuestionNo}
-							,#{memberId}
+							,#{sessionLoginMember.memberId}
 							,#{examAnswer}
 							,NOW()
 							,NOW()		
 			);
-		<selectKey resultType="int" keyProperty="examScore" order="AFTER">
-			SELECT IF(eq.exam_correct_answer=ea.exam_answer,eq.exam_point,0) AS examScore
-			FROM exam_question eq
-			LEFT JOIN exam_answer ea
-			ON  eq.exam_no = ea.exam_no AND eq.exam_question_no = ea.exam_question_no
-		</selectKey>
+			<selectKey resultType="int" keyProperty="examScore" order="AFTER">
+			UPDATE 		exam_answer ea
+			JOIN 		exam_question eq
+			ON 			ea.exam_no=eq.exam_no 
+			AND 		ea.exam_question_no = eq.exam_question_no
+			SET 		ea.exam_score= 
+			CASE WHEN  	ea.exam_answer=eq.exam_correct_answer 
+			THEN 		eq.exam_point
+			ELSE 		0
+			END;
+			</selectKey>
 	</insert>
 	
 <!-- 시험확인 리스트  -->	

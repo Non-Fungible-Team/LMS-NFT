@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.AttendMapper">
 	<!--1. 강의별 전체 학생 출석 목록 -->
-	<select id="selectAttendListByPage"
+	<select id="selectAttendList"
 			resultType="kr.co.nft.lms.vo.Attend"
 			parameterType="int">
 	SELECT
@@ -20,7 +20,7 @@
 		ON a.member_id = s.member_id
 	INNER JOIN lecture l 
 		ON a.lecture_no = l.lecture_no
-	WHERE lecture_no = #{lectureNo} 
+	WHERE l.lecture_no = #{lectureNo} 
 	ORDER BY s.student_name
 	</select>
 	
@@ -44,7 +44,7 @@
 	AND member_id = #{memberId}
 	</select>
 	
-	<!-- 3.학생 출입 삽입 -->
+	<!-- 3.학생 출석 삽입 -->
 	<insert id="insertAttend" 
 			parameterType="kr.co.nft.lms.vo.Attend">
 	INSERT INTO(

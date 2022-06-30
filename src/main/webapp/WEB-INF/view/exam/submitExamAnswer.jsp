@@ -76,7 +76,7 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light"><input type="hidden" name="examNo">${examOne.examNo}</td>
 												<td class="table-light">${examOne.examTitle}</td>
 												<td class="table-light">${sessionLoginMember.memberId}</td>
 												<td class="table-light">${examOne.examCount}</td>
@@ -104,7 +104,7 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td class="table-light">${examQuestionOneList.examQuestionNo}</td>
+													<td class="table-light"><input type="hidden" name="examQuestionNo">${examQuestionOneList.examQuestionNo}</td>
 													<td class="table-light">${examQuestionOneList.examContent}</td>
 													<td class="table-light">${examQuestionOneList.examPoint}</td>
 													<td class="table-light">${examQuestionOneList.examType}</td>
@@ -134,13 +134,13 @@
 										</table>
 									</c:forEach>
 									<div style="float: right">
+										<form action="${pageContext.request.contextPath}/student/exam/submitExamAnswer"method="post">
 										<input type="hidden" name="examNo" value="${param.examNo}"
 											readonly="readonly">
-										<button type="button"
-											class="btn btn-outline-success btn-rounded"
-											onclick="location.href='${pageContext.request.contextPath}/all/exam/getExamScoreListByPage'">
+										<button type="submit" class="btn btn-outline-success btn-rounded">
 											<i class="fas fa-check"></i>제출
 										</button>
+										</form>
 									</div>
 								</div>
 							</div>

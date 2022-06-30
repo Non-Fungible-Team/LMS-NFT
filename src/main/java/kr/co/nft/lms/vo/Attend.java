@@ -11,4 +11,7 @@ public class Attend {
 	private String attendReason;
 	private String attendCreateDate;
 	private String attendUpdateDate;
+	
+	private String lectureName;
+	private String StudentName;
 }
