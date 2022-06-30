@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.nft.lms.vo.LevelHistory;
+import kr.co.nft.lms.dto.AddStudent;
 import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
@@ -119,8 +119,14 @@ public interface MemberMapper {
 	// Member VO 필드 활용하여 강사 회원가입
 	int insertTeacherByMemberVo(Member member);
 	
-	// Member VO 필드 활용하여 학생 회원가입 
-	int insertStudentByMemberVo(Member member);
+	// addStudent DTO 필드 활용하여 member 테이블 기입 
+	int insertMemberByAddstudentDto(AddStudent member);
+
+	// addStudent DTO 필드 활용하여 학생 테이블 기입 
+	int insertStudentByAddstudentDto(AddStudent student);
+	
+	// addStudent DTO 필드 활용하여 학생 테이블 기입
+	int insertAddressByAddstudentDto(AddStudent student);
 	
 	// --------------------------------------------- //  
 	

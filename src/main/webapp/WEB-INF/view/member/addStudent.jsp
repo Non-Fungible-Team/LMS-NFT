@@ -36,67 +36,138 @@ table {
 <script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+	//페이지 전부 로딩후 실행
 	$('document').ready(function(){
-	//데이터 호출
-	var currentPage = 1;
-	var countPerPage = 20;
-	var keyword = $('#keyword').val();
-		console.log('[addStudent.html.keyword] keyword : ' + keyword)
-	var confmKey = "U01TX0FVVEgyMDIyMDYxNjE2MzExNTExMjY5ODQ=";
-	var resultType = "json";
-	var url ="https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+keyword+"&confmKey="+confmKey+"&resultType="+resultType;
-	
-	/*
-		$('#idBtn').click(function(){
-			if($('#idck').val().length > 3) {
-				$.ajax({
-					type:'post'
-					,url:'/lms/idCheck'
-					,data:{memberId:$('#idck').val()}
-					,success:function(ck) {
-						console.log('[addStudent.html.param] ck : ' + ck)
-						if(ck == 'false') {
-							alert('이미 사용중인 아이디입니다');
-						} else {
-							alert('id는 4자 이상');
+		//주소 검색 버튼 부분
+		$('#addrBtn').click(function(){
+			//주소 api 요청값 부분
+			var currentPage = 1;
+			var countPerPage = 20;
+			var keyword = $('#keyword').val();
+				console.log('[addStudent.jsp.keyword] keyword : ' + keyword)
+			var confmKey = "U01TX0FVVEgyMDIyMDYxNjE2MzExNTExMjY5ODQ=";
+			var resultType = "json";
+			var url ="https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+keyword+"&confmKey="+confmKey+"&resultType="+resultType;
+			//주소 api 요청
+			$.ajax({
+					type:'get'
+					,url: url
+					,success:function(a) {
+						console.log(a)
+						//json파일을 json문자열타입으로 변경
+						var a2 = JSON.stringify(a);
+		            	console.log("▶▶▶a2 : "+a);
+						//json문자열을 javascript 값으로 변경
+						var a3 = JSON.parse(a2);
+		                console.log("▶▶▶typeof(a3) : "+typeof(a3));
+		               	// 값을 배열로 가공
+		                let arr = a3.results.juso;
+		                console.log("▶▶▶arr : "+arr);
+		                //검색된 주소 리스트 요청
+						for(var i=0; i<arr.length; i++){
+							  $('#addrList').append("<option id='addressDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
 						}
 					}
+			});
+		});
+		
+		// submit 버튼 클릭시 유효성 검사 
+		$('#signUp').click(function(){
+			//버튼누를때마다 helper 값 초기화
+			$('#memberIdHelper').text('');
+			$('#memberPwHelper').text('');
+			$('#studentNameHelper').text('');
+			$('#studentBirthHelper').text('');
+			$('#studentGenderHelper').text('');
+			$('#studentEmailIdHelper').text('');
+			$('#studentEducationHelper').text('');
+			$('#memberPhoneNoHelper').text('');
+			$('#addressHelper').text('');
+			
+			//아이디검사
+			if($('#memberId').val()=='') {
+				$('#memberIdHelper').text('아이디를 입력하세요');
+				$('#memberId').focus();
+			//비밀번호 검사
+			} else if($('#memberPw').val()=='') {
+				$('#memberPwHelper').text('비밀번호를 입력하세요');
+				$('#memberPw').focus();
+			} else if($('#memberPwCheck').val() != $('#memberPw').val()) {
+				$('#memberPwHelper').text('비밀번호를 확인하세요');
+				$('#memberPw').focus();
+				//이름화인
+			} else if($('#studentName').val()=='') {
+				$('#studentNameHelper').text('이름을 입력하세요');
+				$('#studentName').focus();
+				//생년월일 확인
+			} else if($('#studentBirth').val()=='') {
+				$('#studentBirthHelper').text('생년월일을 입력하세요');
+				$('#studentBirth').focus();
+			} else if($('.studentGender:checked').length == 0) {
+				$('#studentGenderHelper').text('성별을 고르세요');
+				$('.studentGender').focus();
+			} else if($('#studentEmailId').val()=='' || $('#emailUrl option:selected').val()=='') {
+				$('#emailHelper').text('이메일을 입력하세요');
+				$('#studentEmailId').focus();
+			} else if($('#addrList option:selected').val()=='') {
+				$('#addressHelper').text('주소를 선택해주세요');
+				$('#keyword').focus();
+			} else if($('#studentEducation').val()=='') {
+				$('#studentEducationHelper').text('최종 학력을 입력하세요');
+				$('#studentEducation').focus();	
+			} else if($('#memberPhoneNo').val()=='') {
+				$('#memberPhoneNoHelper').text('전화번호를 입력하세요');
+				$('#memberPhoneNo').focus();
+			} else {	
+				//유효성 검사 완료, 주소에서 선택한 값으로 추가 검색하는 기능
+				//선택한 버튼 값 변수에 저장
+				var addrSelected = $('#addrList option:selected').val();
+				//주소 api 요청
+				var currentPage = 1;
+				var countPerPage = 20;
+				var keyword = $('#keyword').val();
+					console.log('[addStudent.html.keyword] keyword : ' + keyword)
+				var confmKey = "U01TX0FVVEgyMDIyMDYxNjE2MzExNTExMjY5ODQ=";
+				var resultType = "json";
+				var url ="https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+keyword+"&confmKey="+confmKey+"&resultType="+resultType;
+				//주소 api 요청
+				$.ajax({
+					type:'get'
+					,url: url
+					,success:function(a) {
+						console.log(a)
+						//json파일을 json문자열타입으로 변경
+						var a2 = JSON.stringify(a);
+			           	console.log("▶▶▶a2 : "+a);
+						//json문자열을 javascript 값으로 변경
+						var a3 = JSON.parse(a2);
+			               console.log("▶▶▶typeof(a3) : "+typeof(a3));
+			              	// 값을 배열로 가공
+			               let arr = a3.results.juso;
+			               console.log("▶▶▶arr : "+arr);
+			               //검색된 주소 리스트 요청
+						for(var i=0; i<arr.length; i++){
+							//selected 된 검색값과 같은 정보 추가 입력
+							if(addrSelected==arr[i].roadAddr){
+								//우편번호 입력
+								 $('#abc').append("<input type='text' name='zipCode' value='"+arr[i].zipNo+"'>");	
+								//시 입력
+								 $('#abc').append("<input type='text' name='province' value='"+arr[i].siNm+"'>");
+								 //일반시, 군, 도 입력
+								 $('#abc').append("<input type='text' name='city' value='"+arr[i].sggNm+"'>");
+								 //읍면동 입력
+								 $('#abc').append("<input type='text' name='town' value='"+arr[i].emdNm+"'>");	
+							}
+						}
+			          // 입력한 email 값으로 email 재입력     
+			          $('#abc').append("<input type='text' name='studentEmail' value='"+$('#studentEmailId').val()+$('#middleEmail').val()+$('#emailUrl option:selected').val()+"'>");
+		             //유효성 검사 및 추가 주소 정보 입력 완료 후 submit
+					$('#signUpStudent').submit();
+ 					}
 				});
-			} else {
-				alert('id는 4자 이상');
 			}
 		});
-	*/
-	
-		$('#addrBtn').click(function(){
-			$.ajax({
-				type:'get'
-				,url: url
-				,success:function(a) {
-				console.log(a)
-				var a2 = JSON.stringify(a);
-				var a3 = JSON.parse(a2);
-            	console.log("▶▶▶a2 : "+a);
-                console.log("▶▶▶typeof(a3) : "+typeof(a3));
-               
-                // let 변수 선언 자리에 var 사용해도 상관 없다 
-                let arr = a3.results.juso; // 주소 배열
-                console.log("▶▶▶arr : "+arr);
-               
-                let addressDetail = '';
-					for(var i=0; i<arr.length; i++){ 
-						// 띄어쓰기된 데이터는 ''로 묶어주자. 
-						// option 태그 name 대신 select 태그의 name이 넘어간다. 
-						$('#addrList').append("<option id='addressDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
-					}
-				}
-					
-				});
-			});
-		
 	});
 </script>
 </head>
@@ -124,7 +195,7 @@ table {
 									<h4 class="card-title">학생 회원 가입</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/addStudent">
+										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/member/addStudent">
 											<table id="zero_config" class="table table-striped table-bordered">
 												
 												<!--  
@@ -137,17 +208,21 @@ table {
 												
 												<tr>
 													<td>학생 아이디</td>
-													<td><input type="text" id="memberId" name="memberId" value="stud3"> <span
+													<td><input type="text" id="memberId" name="memberId" > <span
 														id="memberIdHelper" class="helper"></span></td>
 												</tr>
 												<tr>
 													<td>학생 비밀번호</td>
-													<td><input type="password" id="memberPw" name="memberPw" value="1234">
+													<td><input type="password" id="memberPw" name="memberPw" >
 														<span id="memberPwHelper" class="helper"></span></td>
 												</tr>
 												<tr>
+													<td>비밀번호 확인</td>
+													<td><input type="password" id="memberPwCheck">
+												</tr>
+												<tr>
 													<td>이름</td>
-													<td><input type="text" id="studentName" name="studentName" value="학생3">
+													<td><input type="text" id="studentName" name="studentName" >
 														<span id="studentNameHelper" class="helper"></span></td>
 												</tr>
 												<tr>
@@ -158,8 +233,8 @@ table {
 												<tr>
 													<td>성별</td>
 													<td>
-														<input type="radio" value="M" name="studentGender" class="gender">남 
-														<input type="radio" value="F" name="studentGender" class="gender">여 
+														<input type="radio" value="M" id="studentGender" name="studentGender" class="studentGender">남 
+														<input type="radio" value="F" id="studentGender" name="studentGender" class="studentGender">여 
 														<span id="studentGenderHelper" class="helper"></span>
 													</td>
 												</tr>
@@ -167,31 +242,30 @@ table {
 													<td>이메일</td>
 													<td>
 														<input type="text" id="studentEmailId" name="studentEmailId" value="stud3">
-														<span id="middle">@</span>
+														<span id="middleEmail">@</span>
 														<select id="emailUrl" name="emailUrl">
 															<option value="">::선택::</option>
-															<option value="naver.com">naver.com</option>
-															<option value="daum.net">daum.net</option>
-															<option value="gmail.com">gmail.com</option>
+															<option value="naver.com">네이버</option>
+															<option value="daum.net">다음</option>
+															<option value="gmail.com">지메일</option>
 														</select> 
-														<input type="hidden" id="studentEmail" name="studentEmail" value="">
+														<input type="hidden" id="studentEmail" name="studentEmail">
 														<span id="studentEmailIdHelper" class="helper"></span>
 													</td>
 												</tr>
 												<tr>
 													<td>주소</td>
-													<td>
-														<input type="text" id="keyword" name="keyword" value="가산디지털2로">
-														<button type="button" id="addrBtn" class="btn btn-rounded btn-outline-secondary">주소검색</button>
-													</td>
+													<td><input type="text" id="keyword" name="keyword">
+													<span id="addressHelper" class="helper"></span>
+													<button type="button" id="addrBtn" class="btn btn-rounded btn-outline-secondary">주소검색</button></td>
 												</tr>
 												<tr>
 													<td>주소리스트</td>
 													<td>
 														<select id="addrList" name="roadAddr">
-															<option>주소검색을 해주세요</option>
+														<option value="">주소검색을 해주세요</option>
 														</select>
-														상세주소 : <input type = "text" name = "addrDetail">
+														상세주소 : <input type = "text" name = "addressDetail">
 													</td>
 												</tr>
 												<tr>
@@ -212,11 +286,11 @@ table {
 														<input type="number" id="memberLevel" name="memberLevel" value="4" readonly="readonly">
 													</td>
 												</tr>
-												
+												<div id ="abc"></div>
 												<tr>
 													<td colspan="2">
 														<!-- 폼 text, radio, checkbox 공백이 있는지 체크 -->
-														<button type="submit" id="signUp" class="btn btn-rounded btn-outline-success">학생 회원가입</button>
+														<button type="button" id="signUp" class="btn btn-rounded btn-outline-success">학생 회원가입</button>
 														<button type="reset" class="btn btn-rounded btn-outline-warning">입력 내용 초기화</button>
 													</td>
 									            </tr>
@@ -252,43 +326,7 @@ table {
 		}
 	};
 	
-	// 유효성 검사 
-	$('#signUp').click(function(){
-		if($('#memberId').val()=='') {
-			$('#memberIdHelper').text('아이디를 입력하세요');
-			$('#memberId').focus();
-		} else if($('#memberPw').val()=='') {
-			$('#memberIdHelper').text('');
-			$('#memberPwHelper').text('비밀번호를 입력하세요');
-			$('#memberPw').focus();
-		} else if($('studentName').val()=='') {
-			$('#memberPwHelper').text('');
-			$('#studentNameHelper').text('이름을 입력하세요');
-			$('#studentName').focus();
-		} else if($('studentBirth').val()=='') { // *
-			$('#studentNameHelper').text('');
-			$('#studentBirthHelper').text('생년월일을 입력하세요');
-			$('#studentBirth').focus();
-		} else if($('.studentGender:checked').length == 0) {
-			$('#studentBirthHelper').text('');
-			$('#studentGenderHelper').text('성별을 고르세요');
-			$('.studentGender').focus();
-		} else if($('#studentEmailId').val()=='' || $('#emailUrl').val()=='') {
-			$('#studentGenderHelper').text('');
-			$('#emailHelper').text('이메일을 입력하세요');
-			$('#emailId').focus();
-		} else if($('#studentEducation'.val()=='')) {
-			$('#studentBirthHelper').text('');
-			$('#studentEducationHelper').text('최종 학력을 입력하세요');
-			$('#studentEducation').focus();	
-		} else if($('#memberPhoneNo').val()=='') {
-			$('#studentEducationHelper').text('');
-			$('#memberPhoneNoHelper').text('전화번호를 입력하세요');
-			$('#memberPhoneNo').focus();
-		} else {
-			$('#signUpStudent').submit();
-		}
-	});
+
 </script>
 <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

@@ -1,16 +1,15 @@
 package kr.co.nft.lms.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.nft.lms.dto.AddStudent;
 import kr.co.nft.lms.mapper.MemberMapper;
 import kr.co.nft.lms.util.A;
-import kr.co.nft.lms.vo.LevelHistory;
 import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
@@ -229,14 +228,25 @@ public class MemberService {
 		}
 	
 	// Student 테이블에 들어가는 학생 회원 가입 
-	public int addStudent(Student student) {
-		return memberMapper.insertStudentByStudentVo(student);
+	public int addStudent(AddStudent addstudent) {
+		log.debug(A.E+"[MemberService.addStudent.param] student : "+addstudent+A.R);
+		int row = -1; //성공여부 출력할 변수 초기화
+		//Member 테이블에 입력
+		row = memberMapper.insertMemberByAddstudentDto(addstudent);
+		log.debug(A.E+"[MemberService.addStudent.insertMemberByAddstudentDto] row : "+row+A.R);
+		row = -1;
+		
+		//student 테이블에 입력
+		row = memberMapper.insertStudentByAddstudentDto(addstudent);
+		log.debug(A.E+"[MemberService.addStudent.insertStudentByAddstudentDto] row : "+row+A.R);
+		row = -1;
+		//address 테이블에 입력
+		row = memberMapper.insertAddressByAddstudentDto(addstudent);
+		log.debug(A.E+"[MemberService.addStudent.insertAddressByAddstudentDto] row : "+row+A.R);
+		// 마지막 까지 성공해야 성공 -> @Transactional 때문 -> 마지막 성공행수만 return
+		return row;
 	}
 
-	// Member 테이블에 들어가는 학생 회원 가입 
-	public int addStudent(Member member) {
-		return memberMapper.insertStudentByMemberVo(member);
-	}
 	
 	// --------------------------------------- // 
 	

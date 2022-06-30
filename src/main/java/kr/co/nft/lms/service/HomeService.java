@@ -4,15 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.LectureMapper;
+import kr.co.nft.lms.mapper.MemberMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Lecture;
+import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
+import kr.co.nft.lms.vo.Student;
+import kr.co.nft.lms.vo.Teacher;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,6 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class HomeService {
 	@Autowired private LectureMapper lectureMapper;
+	@Autowired private MemberMapper memberMapper;
+	@Autowired private UtilService utilService;
+	@Autowired private ServletContext application;
+	
 	//수강목록 조회 서비스
 	public Map<String,Object> getLectureByMemberId(Member loginMember,int currentPage,int rowPerPage) {
 		//parameter 값 디버깅
@@ -84,5 +98,41 @@ public class HomeService {
 				log.debug(A.E+"[HomeService.getLectureByLectureNo.selectLecturebyLectureNo] lecture :" +lecture+A.R);
 			return lecture;
 	}
+		//휴면 계정 이메일 인증번호 요청 기능
+		public String cancelRestingMember(Member loginMember) {
+			//DB에 email 회원 정보 요청
+			String email = null;
+			//휴면 학생인경우
+			if(loginMember.getMemberLevel() ==-4) {
+				Student student = memberMapper.selectStudentOneByStudentVo(loginMember);
+				email = student.getStudentEmail();
+			//휴면 강사인 경우
+			}else if(loginMember.getMemberLevel() ==-5) {
+				Teacher teacher  = memberMapper.selectTeacherOneByTeacherVo(loginMember);
+				email = teacher.getTeacherEmail();
+			//휴먼 운영자의 경우
+			}else if(loginMember.getMemberLevel() ==-6){
+				Manager manager = memberMapper.selectManagerOneByManagerVo(loginMember);
+				email = manager.getManagerEmail();
+			}
+			log.debug(A.E+"[MemberController.cancelRestingMember] 휴면 계정 해제 요청 email :"+email+A.R);
+			//메일 인증코드 생성
+			//중복되지 않는 새로운 문자열 필요 (UUID API 사용)
+			String randomUUID = UUID.randomUUID().toString();
+			//6글자로 잘라서 전송
+			String verificationCode = randomUUID.substring(0,6);
+			
+			//메일에 인증번호 요청
+			utilService.sendMail(email, verificationCode);
+			//인증번호와 아이디를 application Scope에 저장
+			application.setAttribute(loginMember.getMemberId()+"verify", verificationCode);
+			log.debug(A.E+"[MemberController.cancelRestingMember] 휴면 계정 해제 요청 verificationCode :"+application.getAttribute(loginMember.getMemberId()+"verify")+A.R);
+			//email 리턴
+			return email;
+		}
+		
+	
+
+	
 
 }

@@ -371,8 +371,8 @@
 				
 	</insert>
 		
-	<insert id="insertStudentByStudentVo"
-			parameterType="kr.co.nft.lms.vo.Student">
+	<insert id="insertStudentByAddstudentDto"
+			parameterType="kr.co.nft.lms.dto.AddStudent">
 		INSERT INTO student (
 			member_id
 			, student_education
@@ -444,8 +444,8 @@
 		
 	</insert>
 
-	<insert id="insertStudentByMemberVo"
-			parameterType="kr.co.nft.lms.vo.Member">
+	<insert id="insertMemberByAddstudentDto"
+			parameterType="kr.co.nft.lms.dto.AddStudent">
 			
 		INSERT INTO member(
 			member_id
@@ -465,6 +465,29 @@
 			,NOW()
 			,NOW()
 			,NOW()
+		)
+		
+	</insert>
+	
+	<insert id="insertAddressByAddstudentDto"
+			parameterType="kr.co.nft.lms.dto.AddStudent">
+			
+		INSERT INTO address(
+			,member_id
+			,zip_code
+			, province
+			, city 
+			, town
+			, roadAddr
+			,addr_detail
+		) VALUES (
+			#{memberId}
+			#{zipCode}
+			,#{province}
+			,#{city}
+			,#{town}
+			,#{roadAddr}
+			,#{addrDetail}
 		)
 		
 	</insert>

@@ -24,6 +24,11 @@
           <artifactId>tomcat-embed-jasper</artifactId>
           <scope>provided</scope>
       </dependency>
+      <!-- 구글 메일 -->
+    <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-mail</artifactId>
+	</dependency>
       <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
        <dependency>
           <groupId>javax.servlet</groupId>
