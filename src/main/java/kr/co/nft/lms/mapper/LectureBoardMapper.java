@@ -20,7 +20,7 @@ public interface LectureBoardMapper {
 	List<LectureBoard> selectLectureBoardListByPage(Map<String, Object> map);
 	
 	//전체 row
-	int selectLectureBoardListTotalCount();
+	int selectLectureBoardListTotalCount(int lectureNo);
 	
 	//상세보기
 	LectureBoard selectLectureBoardOne(int LectureBoardNo);
@@ -32,7 +32,7 @@ public interface LectureBoardMapper {
 	int updateLectureBoardInLectureNo(LectureBoard lectureBoard);
 	
 	//delete(블라인드처리)
-	int deleteLectureBoard(int LectureBoardNo);
+	int deleteLectureBoard(int lectureBoardNo);
 	
 	//■■■■■■■■■■■■■■■■LectureFile■■■■■■■■■■■■■■■■
 	

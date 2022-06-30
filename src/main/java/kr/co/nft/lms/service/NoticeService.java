@@ -125,6 +125,8 @@ public class NoticeService {
 	//Notice 수정액션 
 	public int modifyNotice(Notice notice, NoticeFile noticeFile, String path) {
 		log.debug(A.S + "[NoticeService.modifyNotice.param] notice : "+ notice + A.R); 
+		log.debug(A.S + "[NoticeService.modifyNotice.param] noticeFile : "+ noticeFile + A.R); 
+		log.debug(A.S + "[NoticeService.modifyNotice.param] path : "+ path + A.R); 
 		int row = noticeMapper.updateNoticeInBoard(notice); 
 		log.debug(A.S + "[NoticeService.modifyNotice.row] row : "+ row + A.R); 
 		
