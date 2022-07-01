@@ -230,20 +230,20 @@ public class MemberService {
 	// Student 테이블에 들어가는 학생 회원 가입 
 	public int addStudent(AddStudent addstudent) {
 		log.debug(A.E+"[MemberService.addStudent.param] student : "+addstudent+A.R);
-		int row = -1; //성공여부 출력할 변수 초기화
-		//Member 테이블에 입력
+		int row = -1; // 성공 여부 출력할 변수 초기화
+		// Member 테이블에 입력
 		row = memberMapper.insertMemberByAddstudentDto(addstudent);
 		log.debug(A.E+"[MemberService.addStudent.insertMemberByAddstudentDto] row : "+row+A.R);
 		row = -1;
 		
-		//student 테이블에 입력
+		// student 테이블에 입력
 		row = memberMapper.insertStudentByAddstudentDto(addstudent);
 		log.debug(A.E+"[MemberService.addStudent.insertStudentByAddstudentDto] row : "+row+A.R);
 		row = -1;
-		//address 테이블에 입력
+		// address 테이블에 입력
 		row = memberMapper.insertAddressByAddstudentDto(addstudent);
 		log.debug(A.E+"[MemberService.addStudent.insertAddressByAddstudentDto] row : "+row+A.R);
-		// 마지막 까지 성공해야 성공 -> @Transactional 때문 -> 마지막 성공행수만 return
+		// 마지막까지 성공해야 성공 -> @Transactional 때문 -> 마지막 성공 행 수만 return
 		return row;
 	}
 

@@ -83,7 +83,7 @@
 											</tr>
 											<tr>
 												<td>주소</td>
-												<td>${getStudentOneByStudentVo.addressDetail}</td>
+												<td>${getStudentOneByStudentVo.addrDetail}</td>
 											</tr>
 											<tr>
 												<td>휴대전화</td>

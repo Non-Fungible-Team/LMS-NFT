@@ -27,4 +27,7 @@ public interface LectureScheduleMapper {
 	
 	// lecture_schedule 테이블 데이터 수정
 	int updateLectureSchedule(LectureSchedule lectureSchedule);
+	
+	//강의시간표 날짜만 출력 - 출석에 이용
+	List<LectureSchedule> selectLectureScheduleDateByLectureNo(Map<String,Object> map);
 }

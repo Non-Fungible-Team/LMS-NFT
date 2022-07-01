@@ -119,13 +119,13 @@ public interface MemberMapper {
 	// Member VO 필드 활용하여 강사 회원가입
 	int insertTeacherByMemberVo(Member member);
 	
-	// addStudent DTO 필드 활용하여 member 테이블 기입 
+	// addStudent DTO 필드 활용하여 MEMBER 테이블 기입 
 	int insertMemberByAddstudentDto(AddStudent member);
 
-	// addStudent DTO 필드 활용하여 학생 테이블 기입 
+	// addStudent DTO 필드 활용하여 STUDENT 테이블 기입 
 	int insertStudentByAddstudentDto(AddStudent student);
 	
-	// addStudent DTO 필드 활용하여 학생 테이블 기입
+	// addStudent DTO 필드 활용하여 ADDRESS 테이블 기입
 	int insertAddressByAddstudentDto(AddStudent student);
 	
 	// --------------------------------------------- //  

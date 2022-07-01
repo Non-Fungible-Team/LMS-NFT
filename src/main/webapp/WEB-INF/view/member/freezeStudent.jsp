@@ -52,12 +52,9 @@
 													<input type="text" name="memberId" id="memberId" value="${loginMember.memberId}" readonly="readonly">
 												</td>
 											</tr>
-											<tr>
-												<td>레벨</td>
-												<td>
-													<input type="text" name="memberLevel" id="memberPw" value="${loginMember.memberLevel}">
-												</td>
-											</tr>
+											<div>
+												<input type="hidden" name="memberLevel" id="memberLevel" value="${loginMember.memberLevel}">
+											</div>
 											<tr>
 												<td colspan="2">
 													<button type = "submit" id="submit" class="btn btn-rounded btn-outline-danger">학생 정보 삭제</button> <!-- 삭제라 쓰고 휴면으로 처리한다 -->

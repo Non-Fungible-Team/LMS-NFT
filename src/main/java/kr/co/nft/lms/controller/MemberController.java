@@ -362,7 +362,7 @@ public class MemberController {
 		return "/member/modifyTeacher";
 	}
 	
-	// 학생 정보 수정 
+	// 학생 정보 수정 POST 
 	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
 								, HttpServletRequest request
@@ -412,7 +412,7 @@ public class MemberController {
 	    return "redirect:/all/getStudentOne";
 	}
 	
-	// 학생 정보 수정 
+	// 학생 정보 수정 GET 
 	@GetMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
 								, @RequestParam(value="memberId") String memberId
@@ -568,7 +568,7 @@ public class MemberController {
 	
 	// ------------------ 회원가입 ------------------ //
 	
-	// 운영자 회원가입 
+	// 운영자 회원가입 POST 
 	@PostMapping("/addManager")
 	public String addManager(Member member
 							,Manager manager) {
@@ -586,25 +586,7 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
-
-	
-	// 학생 회원가입 
-	@PostMapping("/member/addStudent")
-	public String addStudent(AddStudent student) {
-		// 매개 변수 내용 확인 
-		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
-		
-		// memberService에 DB에 회원가입 정보 기입 요청 
-		int rowOfStudent = memberService.addStudent(student);
-		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
-		if(rowOfStudent==0) {//최종 입력실패 -> 가입페이지로 리턴
-			return "redirect:/member/addStudent";
-		}
-		// 성공! 로그인 페이지로 이동 
-		return "/member/memberLogin";
-	}
-	
-	// 운영자 회원가입
+	// 운영자 회원가입 GET 
 	@GetMapping("/addManager") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
 	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
@@ -624,7 +606,7 @@ public class MemberController {
 		return "/member/addManager";
 	}
 	
-	// 강사 회원가입
+	// 강사 회원가입 POST 
 	@PostMapping("/addTeacher")
 	public String addTeacher(Member member,Teacher teacher) {
 		// 매개 변수 내용 확인 
@@ -641,7 +623,7 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
-	// 강사 회원가입 
+	// 강사 회원가입 GET 
 	@GetMapping("/addTeacher") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
 	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 
@@ -661,8 +643,23 @@ public class MemberController {
 		return "/member/addTeacher";
 	}
 
+	// 학생 회원가입 POST 
+	@PostMapping("/addStudent")
+	public String addStudent(AddStudent student) {
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
+		
+		// memberService에 DB에 회원가입 정보 기입 요청 
+		int rowOfStudent = memberService.addStudent(student);
+		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
+		if(rowOfStudent==0) {//최종 입력실패 -> 가입페이지로 리턴
+			return "redirect:/member/addStudent";
+		}
+		// 성공! 로그인 페이지로 이동 
+		return "/member/memberLogin";
+	}
 	
-	// 학생 회원가입 
+	// 학생 회원가입 GET 
 	@GetMapping("/addStudent") 
 	// `member_level` 필드 값 받기 위해 파라미터로 Member VO 넣음 
 	// `memberLevel` 데이터 잘 받으면 VO로 안받아도 상관 없을듯 

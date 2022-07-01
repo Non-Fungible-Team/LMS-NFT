@@ -63,7 +63,7 @@
 												<tr>
 													<td>비밀번호</td>
 													<td>
-														<input type="text" name="memberPw" id="memberPw" value="${getStudentOneByMemberVo.memberPw}">
+														<input type="text" name="memberPw" id="memberPw" >
 													</td>
 												</tr>
 												<tr>
