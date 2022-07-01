@@ -36,10 +36,10 @@ public class NoticeController {
 		//파일 저장 경로 설정
 		URL pathUrl = this.getClass().getResource("/static/");
 	    String path = pathUrl.getPath()+"/uploadFile/noticeFile/";
-	    log.debug(A.S + "[NoticeController.addNotice.param] path : "+ path + A.R);
-	    
+	    log.debug(A.S + "[NoticeController.addNotice] path : "+ path + A.R);
 		log.debug(A.S + "[NoticeController.addNotice.param] notice : "+ notice + A.R);
 		log.debug(A.S + "[NoticeController.addNotice.param] noticeFile : "+ noticeFile + A.R);
+		
 		int row = noticeService.addNotice(notice,noticeFile,path);
 		log.debug(A.S + "[NoticeController.addNotice] row : "+ row + A.R);
 		//row가 0 이면 입력 실패
@@ -173,12 +173,12 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
 		int row = noticeService.removeNotice(noticeNo,path);
 		log.debug(A.S + "[NoticeController.removeNotice] row : " + row + A.R);
-		//row가 0 이면 입력 실패
+		//row가 0 이면 삭제 실패
 		if(row==0) {
 			log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)실패"+ A.R);
 			return "redirect:/manager/notice/removeNotice?msg=fail";
 		}
-		//입력성공 했을 경우
+		//삭제성공 했을 경우
 		log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)성공"+ A.R);
 		return "redirect:/all/notice/getNoticeListByPage";
 	}
