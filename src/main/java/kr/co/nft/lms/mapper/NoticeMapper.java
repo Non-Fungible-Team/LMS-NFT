@@ -42,7 +42,7 @@ public interface NoticeMapper {
 	List<NoticeFile> selectNoticeFileOneList(int noticeFileNo);
 	
 	//NoticeFile delete
-	int deleteNoticeFileList(int noticeFileNo);
+	int deleteNoticeFileList(int noticeNo);
 	int deleteNoticeFileOne(int noticeFileNo);
 	List<String> selectNoticeFileNameList(int noticeFileNo);
 	

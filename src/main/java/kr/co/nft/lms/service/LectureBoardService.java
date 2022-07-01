@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.mapper.LectureBoardMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Comment;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureBoard;
 import kr.co.nft.lms.vo.LectureFile;
@@ -28,6 +29,8 @@ public class LectureBoardService {
 	//LectureBoard 입력 액션
 	public int addLectureBoard(LectureBoard lectureBoard, LectureFile lectureFile, String path) {
 		log.debug(A.S + "[LectureBoardService.addLectureBoard.param] lectureBoard : "+ lectureBoard + A.R);
+		log.debug(A.S + "[LectureBoardService.addLectureBoard.param] lectureFile : "+ lectureFile + A.R);
+		log.debug(A.S + "[LectureBoardService.addLectureBoard.param] path : "+ path + A.R);
 		int row1 = lectureBoardMapper.insertLectureBoardInBoard(lectureBoard);
 		log.debug(A.S + "[LectureBoardService.addLectureBoard.boardNo] row1 : "+ row1 + A.R);
 		int row = lectureBoardMapper.insertLectureBoard(lectureBoard);
@@ -103,11 +106,33 @@ public class LectureBoardService {
 		return lectureBoardRowReturnMap;
 	}
 	
-	//Lecture 상세보기(File추가) + 수정폼
-	public Map<String, Object> getLectureBoardOne(int lectureBoardNo){
+	//Lecture 상세보기(File추가) + 수정폼 + ■■■■■■■■■■■■■■comment List■■■■■■■■■■■■■■
+	public Map<String, Object> getLectureBoardOne(int lectureBoardNo /*, Map<String, Object> map*/){
 		log.debug(A.S + "[LectureBoardService.getLectureBoardOne.param] lectureBoardNo : " + lectureBoardNo + A.R);
 		LectureBoard lectureBoard = lectureBoardMapper.selectLectureBoardOne(lectureBoardNo);
 		log.debug(A.S + "[LectureBoardService.getLectureBoardOne] lectureBoard : " + lectureBoard + A.R);
+/*
+		//comment List 페이징
+		//1)컨트롤러 입력값 가공
+		int commentCurrentPage = (int)map.get("commentCurrentPage");
+		int rowPerPage = (int)map.get("rowPerPage");
+		int beginRow = (commentCurrentPage - 1) * rowPerPage;
+		//Map으로 묶어줌
+		Map<String, Object> commentParamMap = new HashMap<>();
+		commentParamMap.put("beginRow", beginRow);
+		commentParamMap.put("rowPerPage", rowPerPage);
+		//2)매퍼의 반환값 가공
+		List<Comment> commentList = lectureBoardMapper.selectCommentListByPage(commentParamMap);
+		Map<String, Object> commentReturnMap = new HashMap<>();
+		int commentTotalCount = lectureBoardMapper.selectCommentTotalCount(lectureBoardNo);
+		int commentLastPage = commentTotalCount /(int)(map.get("rowPerPage"));
+		if(commentTotalCount % (int)(map.get("rowPerPage")) != 0) {
+			commentLastPage = commentLastPage + 1;
+		}
+		commentReturnMap.put("lectureBoard", lectureBoard);
+		commentReturnMap.put("commentList", commentList);
+		commentReturnMap.put("commentTotalCount", commentTotalCount);
+*/		
 		
 		//File Part
 		List<LectureFile> lectureFileList = lectureBoardMapper.selectLectureFileOneList(lectureBoardNo);
@@ -224,5 +249,14 @@ public class LectureBoardService {
 		row = lectureBoardMapper.deleteLectureFileOne(lectureFileNo);		
 		return row;
 	}
+	//■■■■■■■■■■■■■■■■comment■■■■■■■■■■■■■■■■
+	
+	//comment 입력액션
+	public int addComment(Comment comment) {
+		log.debug(A.S + "[LectureBoardService.addComment.param] comment : "+ comment + A.R); 
+		int row = lectureBoardMapper.insertComment(comment);
+		return row;
+	}
+	
 	
 }
