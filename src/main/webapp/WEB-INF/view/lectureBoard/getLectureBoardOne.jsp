@@ -34,7 +34,36 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12">
 				    <div class="card">
-				        <div class="card-body">
+				   		<div class ="card-body">
+		    				<br>
+						    <h4 class="card-title">첨부된 파일</h4>
+						    <div>
+							    <table id="zero_config" class="table table-striped table-bordered">
+							    	<thead>
+							    		<tr>
+								    		<th>파일미리보기</th>
+											<th>파일타입</th>
+											<th>파일사이즈</th>
+							    		</tr>
+							    	</thead>
+							    	<tbody>
+							    		<c:forEach var ="f" items="${lectureFileList}">
+											<tr>
+												<td>
+													<c:if test="${f.lectureFileType=='image/gif'||f.lectureFileType=='image/png'||f.lectureFileType == 'image/jpeg'}">
+														<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/lectureFile/${f.lectureFileName}">
+													</c:if>
+													<a href="${pageContext.request.contextPath}/static/uploadFile/lectureFile/${f.lectureFileName}"  download>▶${f.lectureFileOriginName}◀ 파일 다운로드</a>
+												</td>
+												<td>${f.lectureFileType}</td>
+												<td>${f.lectureFileSize}</td>
+											</tr>	
+							    		</c:forEach>
+							    	</tbody>
+							    </table>
+							 </div>
+						 </div>
+				         <div class="card-body">
 				        	<div>
 				           		<h4 class="card-title">건의게시판 상세보기</h4>
 				           	
@@ -93,36 +122,7 @@
 				            	</table>
 
 							    
-				    			<div>
-				    			<br>
-								    <h4>첨부된 파일 정보</h4>
-								    <div>
-									    <table id="zero_config" class="table table-striped table-bordered">
-									    	<thead>
-									    		<tr>
-										    		<th>파일미리보기</th>
-													<th>파일타입</th>
-													<th>파일사이즈</th>
-									    		</tr>
-									    	</thead>
-									    	<tbody>
-									    		<c:forEach var ="f" items="${lectureFileList}">
-													<tr>
-														<td>
-															<c:if test="${f.lectureFileType=='image/gif'||f.lectureFileType=='image/png'||f.lectureFileType == 'image/jpeg'}">
-																<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/lectureFile/${f.lectureFileName}">
-															</c:if>
-															<a href="${pageContext.request.contextPath}/static/uploadFile/lectureFile/${f.lectureFileName}"  download>▶${f.lectureFileOriginName}◀ 파일 다운로드</a>
-														</td>
-														<td>${f.lectureFileType}</td>
-														<td>${f.lectureFileSize}</td>
-													</tr>	
-									    		</c:forEach>
-									    	</tbody>
-									    	
-									    </table>
-									 </div>
-								 </div>
+				    			
 				             </div>   
 					      </div>
 					   </div>
