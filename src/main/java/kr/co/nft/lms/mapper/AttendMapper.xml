@@ -40,9 +40,9 @@
 	FROM attend a
 	INNER JOIN lecture l
 		ON a.lecture_no = l.lecture_no
-	ORDER BY a.attendDate DESC
-	WHERE lecture_no = #{lectureNo}
+	WHERE l.lecture_no = #{lectureNo}
 	AND member_id = #{memberId}
+	ORDER BY a.attend_date DESC
 	</select>
 	
 	<!-- 3.학생 출석 삽입 -->

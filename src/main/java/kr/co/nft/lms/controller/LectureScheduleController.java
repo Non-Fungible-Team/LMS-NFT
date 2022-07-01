@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.AttendService;
 import kr.co.nft.lms.service.LectureScheduleService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Attend;
 import kr.co.nft.lms.vo.LectureSchedule;
 import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -208,17 +210,56 @@ public class LectureScheduleController {
 		//model에 값 추가
 		model.addAttribute("lectureNo", lectureNo);
 		model.addAttribute("memberId", memberId);
-		model.addAttribute("attendList", paramMap.get("attendList"));
+		model.addAttribute("studentAttendList", paramMap.get("studentAttendList"));
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.map] map(서비스호출) : " +paramMap +A.R);
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.lectureNo] lectureNo(model) : " +lectureNo +A.R);
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.memberId] memberId(model) : " + memberId +A.R);
-		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.attendList] attendList(model) : " +paramMap.get("attendList") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.studentAttendList] studentAttendList(model) : " +paramMap.get("studentAttendList") +A.R);
 
 		return "/lecture/getStudentAttendOne";
 	}
 	
 	//3.학생 출석 삽입
-	
+	//폼
+	@GetMapping("/manager/lecture/addAttend")
+	public String addAttend(Model model
+						,@RequestParam(name ="attendDate") String attendDate
+						,@RequestParam(name = "lectureNo") int lectureNo) {
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.param] model(controller실행) : " + model +A.R);
+		
+		//값 가져와서 저장
+		Map<String,Object> map = new HashMap<>();
+		map.put("attendDate", attendDate);
+		map.put("lectureNo", lectureNo);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.map] map : " + map +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.attendDate] attendDate : " + attendDate +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.lectureNo] lectureNo : " + lectureNo +A.R);
+		
+		//service 호출
+		Map<String,Object> returnMap = attendService.addAttendForm(map);
+		model.addAttribute("attendDate", returnMap.get("attendDate"));
+		model.addAttribute("lectureNo", returnMap.get("lectureNo"));
+		model.addAttribute("attendList",returnMap.get("attendList"));
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.returnMap] returnMap : " + returnMap +A.R);
+		
+		return "lecture/addAttend";
+	}
+	//액션
+	@PostMapping("/manager/lecture/addAttend")
+	public String addAttend(Attend attend) {
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.attend] attend(출석 삽입실행) : " + attend +A.R);
+		
+		//서비스 호출
+		int row = attendService.addAttend(attend);
+		if(row ==1) { 
+			log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.row] row(출석 삽입 완료) : " + row +A.R);
+		}else {
+			log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.row] 출석 삽입 실패 " +A.R);
+		}
+		
+		return "redirect:/teacher/lecture/getAttendList";
+		
+	}
 	//4.학생 출석 수정
 	
 	//5.학생 출석 삭제

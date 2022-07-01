@@ -48,7 +48,7 @@
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach var="a" items="${attendList}">
+										<c:forEach var="a" items="${studentAttendList}">
 											<tr>
 												<td>${a.attendDate}</td>
 												<td>${a.lectureNo}</td>
