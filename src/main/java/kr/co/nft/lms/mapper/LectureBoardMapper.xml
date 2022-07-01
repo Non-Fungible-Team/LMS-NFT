@@ -172,16 +172,56 @@
 		WHERE board_no = #{lectureBoardNo}
 	</select>
 	
+	<!-- LectureBoard 삭제시 파일 전체 삭제 -->
 	<delete id="deleteLectureFileList"
 			parameterType="int">
 		DELETE FROM board_file
 		WHERE board_no = #{lectureBoardNo}
 	</delete>
 	
+	<!-- file 하나씩 삭제 -->
 	<delete id="deleteLectureFileOne"
 			parameterType="int">
 		DELETE FROM board_file
 		WHERE board_file_no = #{lectureFileNo}
 	</delete>
+	
+	<!-- ■■■■■■■■■■■■■■■■comment■■■■■■■■■■■■■■■■ -->
+	<insert id="insertComment"
+			parameterType="kr.co.nft.lms.vo.Comment">
+		INSERT INTO comment(
+			board_no
+			,comment_title
+			,comment_content
+			,comment_blind
+			,member_id
+			,comment_create_date
+			,comment_update_date
+		) VALUES(
+			#{boardNo}
+			,#{commentTitle}
+			,#{commentContent}
+			,'N'
+			,#{memberId}
+			,NOW()
+			,NOW()
+		)		
+	</insert>
+	
+	<!-- LectureBoard 삭제시 댓글 전체 삭제(블라인드처리) -->
+	<update id="deleteCommentList"
+			parameterType="int">
+		UPDATE comment
+		SET comment_blind ='Y'
+		WHERE board_no = #{boardNo}
+	</update>
+	
+	<!-- 댓글 하나씩 삭제(블라인드처리) -->
+	<update id="deleteCommentOne"
+			parameterType="int">
+		UPDATE comment
+		SET comment_blind = 'Y'
+		WHERE comment_no = #{commentNo}
+	</update>
 	
 </mapper>

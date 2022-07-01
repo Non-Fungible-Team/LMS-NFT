@@ -48,7 +48,7 @@
 				        <div class="card-body">
 				            <h4 class="card-title">강의게시글 삭제(블라인드)</h4>
 				            <div class="mt-2" style="height:auto; width:auto;">
-								<form id="removeNoticeForm" action="${pageContext.request.contextPath}/teacher/lectureBoard/removeLectureBoard" method="post">
+								<form id="removeLectureBoardForm" action="${pageContext.request.contextPath}/teacher/lectureBoard/removeLectureBoard" method="post">
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
 										<tr>
 											<th>강의게시글 번호</th>

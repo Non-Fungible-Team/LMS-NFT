@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.nft.lms.vo.Comment;
 import kr.co.nft.lms.vo.LectureBoard;
 import kr.co.nft.lms.vo.LectureFile;
 
@@ -45,7 +46,22 @@ public interface LectureBoardMapper {
 	List<LectureFile> selectLectureFileOneList(int lectureFileNo);
 	
 	//LectureFile delete
-	int deleteLectureFileList(int lectureFileNo);
+	int deleteLectureFileList(int lectureBoardNo);
 	int deleteLectureFileOne(int lectureFileNo);
 	List<String> selectLectureFileNameList(int lectureFileNo);
+	
+	
+	//■■■■■■■■■■■■■■■■comment■■■■■■■■■■■■■■■■
+	
+	//comment insert
+	int insertComment(Comment comment);
+	
+	//댓글목록
+	List<Comment> selectCommentListByPage(Map<String, Object> map);
+	int selectCommentTotalCount(int boardNo);
+	
+	//Comment delete
+	int deleteCommentList(int boardNo);
+	int deleteCommentOne(int commentNo);
+	
 }
