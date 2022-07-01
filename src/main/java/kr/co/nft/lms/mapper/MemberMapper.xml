@@ -3,6 +3,20 @@
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
 	<!-- 목록 뽑기 -->
+	
+	<select id="selectMemberList"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT
+			member_id memberId
+			, member_pw memberPw
+			, member_pw_update_date memberPwUpdateDate
+			, member_phone_no memberPhoneNo
+			, member_level memberLevel 
+			, member_last_origin_date memberLastOriginDate
+			, member_create_date memberCreateDate
+			, member_update_date memberUpdateDate 
+		FROM member
+	</select>
 
 	<select id="selectManagerList"
 			resultType="kr.co.nft.lms.vo.Manager">
@@ -494,6 +508,8 @@
 
 	<!-- 회원 가입  -->	
 
+	<!-- 로그인  -->	
+	
 	<select id="selectMemberOne"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="kr.co.nft.lms.vo.Member">
@@ -504,6 +520,10 @@
 		WHERE member_id = #{memberId} and member_pw = password(#{memberPw})
 	</select>	
 	
+	<!-- 로그인  -->	
+	
+	<!-- 아이디 중복 체크  -->	
+	
 	<select id="selectIdCheck"
 			parameterType="String"
 			resultType="int">
@@ -513,4 +533,6 @@
 		WHERE member_id = #{memberId}
 	</select>
 
+	<!-- 아이디 중복 체크  -->	
+	
 </mapper>

@@ -30,6 +30,17 @@ public class MemberController {
 	
 	@Autowired MemberService memberService;
 
+	// ------------------ 사용자 목록 뽑기 ( 운영자가 사용 ) ------------------ //
+	
+	@GetMapping("/manager/selectStudentListByManager")
+	public String selectStudentList(HttpSession session
+									, Model model) {
+		
+		// 뷰 페이지에 사용자 레벨 넘긴다. 운영자만 이용 가능 
+		
+		
+		return "/member/getStudentList";
+	}
 	
 	// ------------------ 개인 정보 휴면(삭제) 처리 ------------------ //
 	

@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class MemberService {
 
-	// Service 여기서 사진 파일 가공 
+	// Service ← 여기서 사진 파일 가공 
 
 	@Autowired MemberMapper memberMapper;
 	
@@ -250,11 +250,14 @@ public class MemberService {
 	
 	// --------------------------------------- // 
 	
-	// 학생 상세 정보 확인 
+	// --------------------------------------- // 
+	// 로그인 정보 확인 
 	public Member getMemberOne(Member member) {
 		return memberMapper.selectMemberOne(member);
 	}
 	
+	// --------------------------------------- // 
+	// 아이디 중복 체크 
 	public int selectIdCheck(String memberId) {
 		log.debug(A.Z+"[MemberService.selectIdCheck.param] memberId : "+memberId+A.R);
 		

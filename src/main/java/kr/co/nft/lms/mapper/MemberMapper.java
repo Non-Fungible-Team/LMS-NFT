@@ -16,6 +16,9 @@ public interface MemberMapper {
 	
 	// -------------- 목록 뽑기 ------------------ //  
 	
+	// 사용자 전체 리스트
+	List<Member> selectMemberList();
+	
 	// 관리자 전체 리스트
 	List<Manager> selectManagerList();
 	
@@ -131,10 +134,14 @@ public interface MemberMapper {
 	// --------------------------------------------- //  
 	
 	// 로그인
+	
 	Member selectMemberOne(Member member);
 	
-	//id 체크
+	// --------------------------------------------- //  
+	
+	// id 중복 체크
+	
 	int selectIdCheck(String memberId);
 
-	
+	// --------------------------------------------- //  
 }
