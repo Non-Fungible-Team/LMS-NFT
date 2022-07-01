@@ -134,7 +134,7 @@ public interface MemberMapper {
 	Member selectMemberOne(Member member);
 	
 	//id 체크
-	int selectIdCheck(Member member);
+	int selectIdCheck(String memberId);
 
 	
 }

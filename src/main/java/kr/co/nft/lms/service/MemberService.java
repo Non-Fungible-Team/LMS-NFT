@@ -255,8 +255,10 @@ public class MemberService {
 		return memberMapper.selectMemberOne(member);
 	}
 	
-	public void selectIdCheck(Member member) {
-		memberMapper.selectIdCheck(member);
+	public int selectIdCheck(String memberId) {
+		log.debug(A.Z+"[MemberService.selectIdCheck.param] memberId : "+memberId+A.R);
+		
+		return memberMapper.selectIdCheck(memberId);
 	}
 	
 }

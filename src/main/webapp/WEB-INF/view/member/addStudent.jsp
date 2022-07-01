@@ -74,7 +74,7 @@ table {
 		
 		// submit 버튼 클릭시 유효성 검사 
 		$('#signUp').click(function(){
-			//버튼누를때마다 helper 값 초기화
+			// 버튼 누를 때마다 helper 값 초기화
 			$('#memberIdHelper').text('');
 			$('#memberPwHelper').text('');
 			$('#studentNameHelper').text('');
@@ -169,6 +169,27 @@ table {
 				});
 			}
 		});
+		
+		$('#idBtn').click(function(){
+			if($('#idck').val().length > 3) {
+				$.ajax({
+					type:'post'
+					, url:'/lms/idCheck'
+					, data:{memberId:$('#idck').val()}
+					, success : function(ck) {
+						console.log('ck:',ck);
+						if(ck="false") {
+							alert('이미 사용중인 아이디입니다');
+						} else {
+							$('#memberId').val(ck);
+						}
+					}
+				});
+			} else {
+				alert('id는 4자 이상');
+			}
+		});
+		
 	});
 </script>
 </head>
@@ -199,13 +220,15 @@ table {
 										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/addStudent">
 											<table id="zero_config" class="table table-striped table-bordered">
 												
-												<!--  
+												 
 													<tr>
 														<td>아이디 중복 검사</td>
-														<td><input type="text" id="idck">
-														<button type="button" id="idBtn">중복 검사</button></td>
+														<td>
+															<input type="text" id="idck" name="idck">
+															<button type="button" id="idBtn">중복 검사</button>
+														</td>
 													</tr>
-												-->
+												
 												
 												<tr>
 													<td>학생 아이디</td>

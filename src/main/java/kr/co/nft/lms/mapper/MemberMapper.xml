@@ -26,7 +26,7 @@
 			, student_birth studentBirth
 			, student_gender studentGender
 			, student_email studentEmail
-			, address_detail addressDetail
+			, addr_detail addrDetail
 		FROM student	
 	</select>
 
@@ -505,8 +505,11 @@
 	</select>	
 	
 	<select id="selectIdCheck"
-			parameterType="int">
-		SELECT * FROM member 
+			parameterType="String"
+			resultType="int">
+		SELECT 
+			COUNT(#{memberId})
+		FROM member 
 		WHERE member_id = #{memberId}
 	</select>
 
