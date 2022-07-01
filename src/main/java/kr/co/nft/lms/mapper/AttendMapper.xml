@@ -4,7 +4,7 @@
 	<!--1. 강의별 전체 학생 출석 목록 -->
 	<select id="selectAttendList"
 			resultType="kr.co.nft.lms.vo.Attend"
-			parameterType="int">
+			parameterType="map">
 	SELECT
 		l.lecture_no lectureNo
 		,l.lecture_name lectureName
@@ -20,7 +20,8 @@
 		ON a.member_id = s.member_id
 	INNER JOIN lecture l 
 		ON a.lecture_no = l.lecture_no
-	WHERE l.lecture_no = #{lectureNo} 
+	WHERE l.lecture_no = #{lectureNo}
+	AND a.attend_date = #{attendDate}
 	ORDER BY s.student_name
 	</select>
 	

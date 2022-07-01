@@ -27,19 +27,33 @@ public class AttendService {
 	@Autowired private LectureScheduleMapper lectureScheduleMapper;
 	
 	//1.강의별 전체 학생의 출석 목록(운영자,강사)  + 전체 행수
-	public Map<String,Object> getAttendList(int lectureNo){
+	public Map<String,Object> getAttendList(int lectureNo, String attendDate){
 		log.debug(A.W +"[AttendService.getAttendListByPage.출석목록] 출석목록 서비스 " +A.R);
 		log.debug(A.W +"[AttendService.getAttendListByPage.param] lectureNo : "+lectureNo +A.R);
+		log.debug(A.W +"[AttendService.getAttendListByPage.param] attendDate : "+attendDate +A.R);
+		
+		//가져온 번호값 저장
+		Map<String,Object>  map = new HashMap<>();
+		map.put("lectureNo", lectureNo);
+		map.put("attendDate",attendDate);
+		log.debug(A.W +"[AttendService.getAttendListByPage.map] map : "+map +A.R);
 		
 		//출석목록 mapper메소드 호출
-		List<Attend> attendList = attendMapper.selectAttendList(lectureNo);
-		log.debug(A.W +"[AttendService.getAttendListByPage.attendList(매퍼호출)] attendList : "+ attendList +A.R);
+		List<Attend> attendList = attendMapper.selectAttendList(map);
+		log.debug(A.W +"[AttendService.getAttendListByPage.attendList(출석목록 매퍼호출)] attendList : "+ attendList +A.R);
+		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleDateByLectureNo(map);
+		log.debug(A.W +"[AttendService.getAttendListByPage.param] lectureScheduleList(강의시간표) : "+lectureScheduleList +A.R);
 		
 		//결과값 map으로 반환
 		Map<String, Object> returnMap = new HashMap<>(); //객체생성
 		returnMap.put("lectureNo", lectureNo); //번호값 저장
-		returnMap.put("attendList",attendList);
-		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(강의번호 값)] returnMap : "+ returnMap +A.R);
+		returnMap.put("attendDate",attendDate);
+		returnMap.put("attendList",attendList); //출석 목록
+		returnMap.put("lectureScheduleList", lectureScheduleList);
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] lectureNo : "+ lectureNo +A.R);
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] attendDate : "+ attendDate +A.R);
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] attendList : "+ attendList +A.R);
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] returnMap : "+ returnMap +A.R);
 		
 		return returnMap;
 	}
@@ -49,6 +63,7 @@ public class AttendService {
 		log.debug(A.W +"[AttendService.getStudentAttendOne.학생 개인 출석목록] 출석목록 서비스 " +A.R);
 		log.debug(A.W +"[AttendService.getStudentAttendOne.param] lectureNo : "+lectureNo +A.R);
 		log.debug(A.W +"[AttendService.getStudentAttendOne.param] memberId : "+memberId +A.R);
+
 		
 		List<Attend> studentAttendList = attendMapper.selectStudentAttendOne(lectureNo, memberId);
 		log.debug(A.W +"[AttendService.getAttendListByPage.studentAttendList(매퍼호출)] studentAttendList : "+ studentAttendList +A.R);
@@ -57,7 +72,8 @@ public class AttendService {
 		Map<String, Object> returnMap = new HashMap<>(); //객체생성
 		returnMap.put("lectureNo", lectureNo); //번호값 저장
 		returnMap.put("memberId", memberId); //학생아이디값 저장
-		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(강의번호 값)] returnMap : "+ returnMap +A.R);
+		returnMap.put("studentAttendList", studentAttendList); //학생 출석값
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] returnMap : "+ returnMap +A.R);
 		
 		return returnMap;
 	}

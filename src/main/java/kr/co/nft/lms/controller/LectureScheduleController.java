@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.AttendService;
 import kr.co.nft.lms.service.LectureScheduleService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Attend;
 import kr.co.nft.lms.vo.LectureSchedule;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -168,22 +169,49 @@ public class LectureScheduleController {
 	//1.강의별 전체 학생 출석 목록 - 운영자,강사
 	@GetMapping("/teacher/lecture/getAttendList")
 	public String getAttendList(Model model
-							,@RequestParam(name = "lectureNo") int lectureNo) {
+							,@RequestParam(name = "lectureNo") int lectureNo
+							,@RequestParam(name= "attendDate", defaultValue = "") String attendDate
+							,Map<String,Object> map) {
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] model(전체학생출석목록실행) : " +model +A.R);
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] lectureNo(강의번호) : " +lectureNo +A.R);
+		if(attendDate == "") {
+			attendDate = "2022-07-01";
+		}
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] attendDate(출석날짜) : " +attendDate +A.R);
 		
 		//출석 서비스 호출
-		Map<String,Object> map = attendService.getAttendList(lectureNo);
-		model.addAttribute("lectureNo", map.get("lectureNo"));
-		model.addAttribute("attendList", map.get("attendList"));
-		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.map] map(서비스호출) : " +map +A.R);
-		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.lectureNo] lectureNo(model) : " +map.get("lectureNo") +A.R);
-		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.attendList] attendList(model) : " +map.get("attendList") +A.R);
+		Map<String,Object> paramMap = attendService.getAttendList(lectureNo, attendDate);
+		model.addAttribute("lectureNo", paramMap.get("lectureNo"));
+		model.addAttribute("attendList", paramMap.get("attendList"));
+		model.addAttribute("lectureScheduleList", paramMap.get("lectureScheduleList"));
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.map] map(서비스호출) : " +paramMap +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.lectureNo] lectureNo(model) : " +paramMap.get("lectureNo") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.attendList] attendList(model) : " +paramMap.get("attendList") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.model.lectureScheduleList] lectureScheduleList(model) : " +paramMap.get("lectureScheduleList") +A.R);
 		
 		return "/lecture/getAttendList";
 		
 	}
 	//2.수강중인 강의별 출석 확인 - 학생
+	@GetMapping("/teacher/lecture/getStudentAttendOne")
+	public String getStudentAttendOne(Model model
+							,@RequestParam(name = "lectureNo") int lectureNo
+							,@RequestParam(name="memberId") String memberId) {
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.param] model(전체학생출석목록실행) : " +model +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.param] lectureNo(강의번호) : " +lectureNo +A.R);
+		
+		//출석 서비스 호출
+		Map<String,Object> paramMap = attendService.getStudentAttendOne(lectureNo, memberId);
+		model.addAttribute("lectureNo", paramMap.get("lectureNo"));
+		model.addAttribute("memberId", paramMap.get("memberId"));
+		model.addAttribute("attendList", paramMap.get("attendList"));
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.map] map(서비스호출) : " +paramMap +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.lectureNo] lectureNo(model) : " +paramMap.get("lectureNo") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.memberId] memberId(model) : " +paramMap.get("memberId") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.attendList] attendList(model) : " +paramMap.get("attendList") +A.R);
+
+		return "/lecture/getStudentAttendOne";
+	}
 	
 	//3.학생 출석 삽입
 	
