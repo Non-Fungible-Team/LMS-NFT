@@ -94,6 +94,7 @@ public class AttendService {
 		
 		//mapper 호출(학생,강의 목록 및 강의시간표)
 		List<Attend> attendList = attendMapper.selectAttendList(map);
+		//List<Attend> attendList = attendMapper.addAttendFormTest(map);
 		log.debug(A.W +"[AttendService.addAttendForm.attendList] attendList : " +attendList +A.R);//디버깅코드
 		
 		

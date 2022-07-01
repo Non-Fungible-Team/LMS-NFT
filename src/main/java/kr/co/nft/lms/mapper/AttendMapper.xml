@@ -16,10 +16,10 @@
 		,attend_create_date attendCreateDate
 		,attend_update_date attendUpdateDate
 	FROM attend a
-	INNER JOIN student s
-		ON a.member_id = s.member_id
-	INNER JOIN lecture l 
+	INNER JOIN lecture l
 		ON a.lecture_no = l.lecture_no
+	RIGHT JOIN student s
+		ON a.member_id = s.member_id
 	WHERE l.lecture_no = #{lectureNo}
 	AND a.attend_date = #{attendDate}
 	ORDER BY s.student_name
@@ -104,6 +104,5 @@
 	DELETE FROM attend 
 	WHERE member_id =#{memberId}
 	</delete>
-	
 	
 </mapper>

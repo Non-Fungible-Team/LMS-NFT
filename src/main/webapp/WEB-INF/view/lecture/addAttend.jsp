@@ -83,14 +83,13 @@
 									</c:forEach>
 								</table>
 							</div>
-							</form>
-							</div>
 							<!-- 작성자 -->
 							<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
 							<button type="button" id="addAttendBtn" class="btn btn-outline-success btn-rounded">
 								<i class="fas fa-check"></i>출석 체크
 							</button>
-							
+							</form>
+							</div>
 						</div>
 					</div>
 				</div>

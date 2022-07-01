@@ -24,4 +24,5 @@ public interface AttendMapper {
 	
 	//5.학생 출석 삭제  
 	int deleteAttend(String memberId);
+	
 }
