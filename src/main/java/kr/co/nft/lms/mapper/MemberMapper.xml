@@ -68,7 +68,7 @@
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
-			, -10-#{member_level}
+			, -10-#{memberLevel}
 			, NULL
 			, 'system'
 			, NOW() 
@@ -78,7 +78,7 @@
 	<update id="updateManagerOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_level = -10-#{member_level}
+			member_level = -10-#{memberLevel}
 		WHERE member_id = #{memberId}	
 	</update>
 	
@@ -92,7 +92,7 @@
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
-			, -10-#{member_level}
+			, -10-#{memberLevel}
 			, NULL
 			, 'system'
 			, NOW() 
@@ -102,14 +102,14 @@
 	<update id="updateTeacherOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_level = -10-#{member_level}
+			member_level = -10-#{memberLevel}
 		WHERE member_id = #{memberId}	
 	</update>
 	
 	<update id="updateTeacherOfTeacherTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE teacher SET 
-			member_level = -10-#{member_level}
+			member_level = -10-#{memberLevel}
 		WHERE member_id = #{memberId}
 	</update>
 	
@@ -123,7 +123,7 @@
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
-			, -10-#{member_level}
+			, -10-#{memberLevel}
 			, NULL
 			, 'system'
 			, NOW() 
@@ -133,14 +133,14 @@
 	<update id="updateStudentOfMemberTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_level = -10-#{member_level}
+			member_level = -10-#{memberLevel}
 		WHERE member_id = #{memberId}	
 	</update>
 
 	<update id="updateStudentOfStudentTbl"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE student SET 
-			member_level = -10-#{member_level}
+			member_level = -10-#{memberLevel}
 		WHERE member_id = #{memberId}
 	</update>
 
@@ -225,7 +225,7 @@
 	<update id="updateStudentByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_pw = #{memberPw}
+			member_pw = password(#{memberPw})
 			, member_phone_no = #{memberPhoneNo} 
 		WHERE member_id = #{memberId} 		
 	</update>
@@ -303,7 +303,7 @@
 			member_id memberId
 			, member_phone_no memberPhoneNo
 			, member_last_login_date memberLastLoginDate
-			, member_pw memberPw 
+			, member_pw memberPw  
 		FROM member 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -317,7 +317,7 @@
 			, student_gender studentGender
 			, student_email studentEmail 
 			, student_education studentEducation 	
-			, address_detail addressDetail 
+			, addr_detail addrDetail 
 		FROM student 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -367,29 +367,6 @@
 			, #{teacherGender}
 			, #{teacherEmail}
 			, #{addressDetail}
-		)
-				
-	</insert>
-		
-	<insert id="insertStudentByAddstudentDto"
-			parameterType="kr.co.nft.lms.dto.AddStudent">
-		INSERT INTO student (
-			member_id
-			, student_education
-			, student_name
-			, student_birth
-			, student_gender
-			, student_email 
-			, address_detail 
-		) VALUES (
-			#{memberId}
-			, #{studentEducation}
-			, #{studentName}
-			, #{studentBirth}
-			, #{studentGender}
-			, #{studentEmail}
-			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
-			<!-- , #{addressDetail} -->
 		)
 				
 	</insert>
@@ -443,6 +420,29 @@
 		)
 		
 	</insert>
+	
+	<insert id="insertStudentByAddstudentDto"
+			parameterType="kr.co.nft.lms.dto.AddStudent">
+		INSERT INTO student (
+			member_id
+			, student_education
+			, student_name
+			, student_birth
+			, student_gender
+			, student_email 
+			, addr_detail 
+		) VALUES (
+			#{memberId}
+			, #{studentEducation}
+			, #{studentName}
+			, #{studentBirth}
+			, #{studentGender}
+			, #{studentEmail}
+			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
+			<!-- , #{addressDetail} -->
+		)
+				
+	</insert>
 
 	<insert id="insertMemberByAddstudentDto"
 			parameterType="kr.co.nft.lms.dto.AddStudent">
@@ -459,12 +459,12 @@
 		) VALUES (
 			#{memberId}
 			, password(#{memberPw})
-			,NOW()
-			,#{memberPhoneNo}
-			,#{memberLevel}
-			,NOW()
-			,NOW()
-			,NOW()
+			, NOW()
+			, #{memberPhoneNo}
+			, #{memberLevel}
+			, NOW()
+			, NOW()
+			, NOW()
 		)
 		
 	</insert>
@@ -473,21 +473,21 @@
 			parameterType="kr.co.nft.lms.dto.AddStudent">
 			
 		INSERT INTO address(
-			,member_id
-			,zip_code
+			member_id
+			, zip_code
 			, province
 			, city 
 			, town
 			, roadAddr
-			,addr_detail
+			, addr_detail
 		) VALUES (
 			#{memberId}
-			#{zipCode}
-			,#{province}
-			,#{city}
-			,#{town}
-			,#{roadAddr}
-			,#{addrDetail}
+			, #{zipCode}
+			, #{province}
+			, #{city}
+			, #{town}
+			, #{roadAddr}
+			, #{addrDetail}
 		)
 		
 	</insert>

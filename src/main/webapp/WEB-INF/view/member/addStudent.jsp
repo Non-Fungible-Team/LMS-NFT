@@ -55,10 +55,10 @@ table {
 					,url: url
 					,success:function(a) {
 						console.log(a)
-						//json파일을 json문자열타입으로 변경
+						// json 파일을 json 문자열 타입으로 변경
 						var a2 = JSON.stringify(a);
 		            	console.log("▶▶▶a2 : "+a);
-						//json문자열을 javascript 값으로 변경
+						// json문자열을 javascript 값으로 변경
 						var a3 = JSON.parse(a2);
 		                console.log("▶▶▶typeof(a3) : "+typeof(a3));
 		               	// 값을 배열로 가공
@@ -66,7 +66,7 @@ table {
 		                console.log("▶▶▶arr : "+arr);
 		                //검색된 주소 리스트 요청
 						for(var i=0; i<arr.length; i++){
-							  $('#addrList').append("<option id='addressDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
+							  $('#addrList').append("<option id='addrDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
 						}
 					}
 			});
@@ -160,9 +160,10 @@ table {
 								 $('#abc').append("<input type='text' name='town' value='"+arr[i].emdNm+"'>");	
 							}
 						}
-			          // 입력한 email 값으로 email 재입력     
-			          $('#abc').append("<input type='text' name='studentEmail' value='"+$('#studentEmailId').val()+$('#middleEmail').val()+$('#emailUrl option:selected').val()+"'>");
-		             //유효성 검사 및 추가 주소 정보 입력 완료 후 submit
+			        // 입력한 email 값으로 email 재입력     
+			        // $('#abc').append("<input type='text' name='studentEmail' value='"+$('#studentEmailId').val()+$('#middleEmail').val()+$('#emailUrl option:selected').val()+"'>");
+			        
+		            // 유효성 검사 및 추가 주소 정보 입력 완료 후 submit
 					$('#signUpStudent').submit();
  					}
 				});
@@ -195,7 +196,7 @@ table {
 									<h4 class="card-title">학생 회원 가입</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/member/addStudent">
+										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/addStudent">
 											<table id="zero_config" class="table table-striped table-bordered">
 												
 												<!--  
@@ -265,7 +266,7 @@ table {
 														<select id="addrList" name="roadAddr">
 														<option value="">주소검색을 해주세요</option>
 														</select>
-														상세주소 : <input type = "text" name = "addressDetail">
+														상세주소 : <input type = "text" name = "addrDetail">
 													</td>
 												</tr>
 												<tr>
@@ -280,12 +281,9 @@ table {
 													<td><input type="text" id="memberPhoneNo" name="memberPhoneNo" value="010-1234-1234">
 														<span id="memberPhoneNoHelper" class="helper"></span></td>
 												</tr>
-												<tr>
-													<td>레벨</td>
-													<td>
-														<input type="number" id="memberLevel" name="memberLevel" value="4" readonly="readonly">
-													</td>
-												</tr>
+												<div>
+													<input type=hidden id="memberLevel" name="memberLevel" value="4" readonly="readonly">
+												</div>
 												<div id ="abc"></div>
 												<tr>
 													<td colspan="2">
@@ -309,6 +307,7 @@ table {
 
 <script>
 	//이메일주소 가져오기
+	// 이 부분 밑에 있어야 함 
 	$("#studentEmailId").blur(function(){
 		email();	
 	});
@@ -319,14 +318,12 @@ table {
 	
 	function email() {
 		const email = $("#studentEmailId").val();
-		const middle = $("#middle").text();
+		const middle = $("#middleEmail").text();
 		const address = $("#emailUrl").val();
 		if(email != "" && address != "") {
 			$("#studentEmail").val(email+middle+address);
 		}
 	};
-	
-
 </script>
 <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
