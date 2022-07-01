@@ -23,13 +23,15 @@ public interface LectureBoardMapper {
 	int selectLectureBoardListTotalCount(int lectureNo);
 	
 	//상세보기
-	LectureBoard selectLectureBoardOne(int LectureBoardNo);
+	LectureBoard selectLectureBoardOne(int lectureBoardNo);
 	
 	//update
 	int updateLectureBoardInBoard(LectureBoard lectureBoard);
 	
+	/*
 	//lectureNo update
 	int updateLectureBoardInLectureNo(LectureBoard lectureBoard);
+	*/
 	
 	//delete(블라인드처리)
 	int deleteLectureBoard(int lectureBoardNo);

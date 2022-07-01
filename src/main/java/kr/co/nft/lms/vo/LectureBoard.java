@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class LectureBoard {
 	private int lectureNo;
+	private String lectureName;
 	//private int boardNo;
 	private int lectureBoardNo;
 	

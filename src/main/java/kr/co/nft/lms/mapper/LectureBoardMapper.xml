@@ -30,7 +30,7 @@
 	<!-- LectureBoard 테이블에 insert -->
 	<insert id="insertLectureBoard"
 			parameterType="kr.co.nft.lms.vo.LectureBoard">
-		INSERT INTO lectrue_board(
+		INSERT INTO lecture_board(
 			lecture_no
 			,board_no
 		) VALUES (
@@ -61,6 +61,7 @@
 		INNER JOIN lecture l
 		ON l.lecture_no = lb.lecture_no
 		WHERE  b.board_blind = 'N'
+		AND l.lecture_no = #{lectureNo}
 		ORDER BY lb.board_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}	
 	</select>
@@ -71,11 +72,13 @@
 		SELECT COUNT(*)
 		FROM lecture_board lb
 		INNER JOIN board b
-		ON n.board_no = b.board_no
+		ON lb.board_no = b.board_no
 		INNER JOIN lecture l
 		ON l.lecture_no = lb.lecture_no
 		WHERE b.board_privilege = 4
 		AND b.board_blind = 'N'
+		AND l.lecture_no = #{lectureNo}
+		ORDER BY lb.board_no DESC
 	</select>
 	
 	<!-- 상세보기 -->
@@ -109,18 +112,17 @@
 		UPDATE board
 		SET board_title = #{lectureBoardTitle}
 			,board_content = #{lectureBoardContent}
-			,board_privilege = #{lectureBoardPrivilege}
 		WHERE board_no = #{lectureBoardNo}
 	</update>
-	
-	<!-- lectureNo 수정 -->
+<!-- 	
+	 lectureNo 수정 
 	<update id="updateLectureBoardInLectureNo"
 			parameterType="kr.co.nft.lms.vo.LectureBoard">
 		UPDATE lecture_board
 		SET lecture_no = #{lectureNo}
 		WHERE board_no = #{lectureBoardNo}
 	</update>
-	
+	 -->
 	<!-- 삭제(블라인드로 변경) -->
 	<update id="deleteLectureBoard"
 			parameterType="int">

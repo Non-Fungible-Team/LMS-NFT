@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.mapper.LectureBoardMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureBoard;
 import kr.co.nft.lms.vo.LectureFile;
 import lombok.extern.slf4j.Slf4j;
@@ -73,10 +74,10 @@ public class LectureBoardService {
 	}
 	
 	//LectureBoard 목록 보기
-	public Map<String, Object> getLectureBoardListByPage(int currentPage, int rowPerPage, int lectureNo){
+	public Map<String, Object> getLectureBoardListByPage(int currentPage, int rowPerPage, Lecture lecture){
 		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage.param] currentPage : " + currentPage + A.R); 
 		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage.param] rowPerPage : " + rowPerPage + A.R); 
-		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage.param] lectureNo : " + lectureNo + A.R); 
+		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage.param] lecture : " + lecture + A.R); 
 		
 		//1)controller에서 넘어온 매개변수값을 가공 후 매퍼 호출
 		int beginRow = (currentPage - 1) * rowPerPage;
@@ -84,13 +85,13 @@ public class LectureBoardService {
 		Map<String, Object> lectureBoardRowMap = new HashMap<>();
 		lectureBoardRowMap.put("rowPerPage", rowPerPage);
 		lectureBoardRowMap.put("beginRow", beginRow);
-		lectureBoardRowMap.put("memberLevel", lectureNo);
+		lectureBoardRowMap.put("lectureNo", lecture.getLectureNo());
 		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage] lectureBoardRowMap : " + lectureBoardRowMap + A.R); 
 		List<LectureBoard> lectureBoardList = lectureBoardMapper.selectLectureBoardListByPage(lectureBoardRowMap);
 		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage] lectureBoardList : " + lectureBoardList + A.R);
 		
 		//2)매퍼에서 반환된 값을 가공, controller에 반환
-		int totalCount = lectureBoardMapper.selectLectureBoardListTotalCount(lectureNo);
+		int totalCount = lectureBoardMapper.selectLectureBoardListTotalCount(lecture.getLectureNo());
 		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage] totalCount : " + totalCount + A.R);
 		int lastPage = (int)Math.ceil((double)totalCount / (double)rowPerPage);
 		log.debug(A.S + "[LectureBoardService.getLectureBoardListByPage] lastPage : " + lastPage + A.R);
