@@ -31,13 +31,9 @@ public class SurveyController {
 	@Autowired private LectureService lectureService;
 	
 	@GetMapping("/manager/survey/getSurveyStatistics")
-	public String getSurveyStatistics(Model model, SurveyQuestion surveyQuestion
-									,SurveyQuestionList surveyQuestionList 
-									,SurveyMultipleAnswer surveyMultipleAnswer 
-									,SurveyShortAnswer surveyShortAnswer) {
+	public String getSurveyStatistics(Model model, int surveyQuestionNo) {
 		// 전체 답변 가져오기 
-		Map<String, Object> returnMap = surveyService.getAllSurveyAnswer(surveyQuestion.getSurveyQuestionList(),
-		surveyQuestionList, surveyMultipleAnswer, surveyShortAnswer);
+		Map<String, Object> returnMap = surveyService.getAllSurveyAnswer(surveyQuestionNo);
 		
 		log.debug(A.D+"[SurveyController.getSurveyStatistics] returnMap : " + returnMap + A.R); // 디버깅
 		
@@ -175,7 +171,7 @@ public class SurveyController {
 		
 		log.debug(A.D+"[SurveyController.getSurveyListByPage] loginMember : " + loginMember + A.R);
 		//뷰를 호출시 모델레이어로 부터 반환된 값을 뷰로 보낸다
-		Map<String, Object> returnMap = surveyService.getSurveyListByPage(currentPage, rowPerPage,lecture);
+		Map<String, Object> returnMap = surveyService.getSurveyListByPage(currentPage, rowPerPage, lecture);
 		log.debug(A.D+"[SurveyController.getSurveyListByPage] returnMap : " + returnMap + A.R); // 디버깅
 		
 		//모델에 값들 저장

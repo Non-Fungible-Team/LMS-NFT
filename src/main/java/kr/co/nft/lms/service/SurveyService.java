@@ -25,35 +25,32 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
-	public Map<String,Object> getSurveyAnswerStatistics(int surveyQuestioNo){
-		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] surveyQuestioNo : " + surveyQuestioNo + A.R);
-		
-		List<SurveyMultipleAnswer> answerAverage = surveyMapper.getAnswerAverage(surveyQuestioNo);
-		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerAverage : " + answerAverage + A.R);
-		
-		List answerCount = surveyMapper.getAnswerCount(surveyQuestioNo);
-		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
-		
+	public Map<String,Object> getSurveyAnswerStatistics(int surveyQuestionNo ){
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] surveyQuestioNo : " + surveyQuestionNo + A.R);
 		Map<String,Object> returnMap = new HashMap<>();
-		returnMap.put("answerAverage", answerAverage);
-		returnMap.put("answerCount", answerCount);
+		
+//		for (SurveyMultipleAnswer ma : SurveyMultipleAnswerList) {
+			List<SurveyMultipleAnswer> answerAverage = surveyMapper.getAnswerAverage(surveyQuestionNo);
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerAverage : " + answerAverage + A.R);
+			
+			List answerCount = surveyMapper.getAnswerCount(surveyQuestionNo);
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
+			
+			
+			returnMap.put("answerAverage", answerAverage);
+			returnMap.put("answerCount", answerCount);
+			
+//		}
 		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] returnMap : " + returnMap + A.R);
 		
 		return returnMap;
 		
+		
 	}
 	
-	public Map<String,Object> getAllSurveyAnswer(List<SurveyQuestion> questionList
-												,SurveyQuestionList surveyQuestList
-												,SurveyMultipleAnswer surveyMultipleAnswer
-												,SurveyShortAnswer surveyShortAnswer) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("surveyQuestList", surveyQuestList);
-		map.put("surveyMultipleAnswer", surveyMultipleAnswer);
-		map.put("surveyShortAnswer", surveyShortAnswer);
-		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] map : " + map + A.R);
+	public Map<String,Object> getAllSurveyAnswer(int surveyQuestionNo) {
 		
-		List allAnswer = surveyMapper.getAllSurveyAnswer(map);
+		List<Map<String,Object>> allAnswer = surveyMapper.getAllSurveyAnswer();
 		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] allAnswer : " + allAnswer + A.R);
 		
 		Map<String, Object> returnMap = new HashMap<>();
