@@ -237,7 +237,8 @@
 		</select>
 		
 		<select id="getAnswerAverage"
-				parameterType="double">
+				resultType="map"
+				parameterType="int">
 			SELECT
 			AVG(survey_multiple_answer_content) surveyMultipleAnswerContent
 			FROM survey_multiple_answer

@@ -23,13 +23,8 @@
 $(document).ready(function() {
 	$("#navAside").load(
 	'${pageContext.request.contextPath}/include/navAside.jsp');
-	
 	getGraph();
-	
-	
 	function getGraph(){
-		let AnswerContent = [];
-		
 		var url = '${pageContext.request.contextPath}/rest/manager/survey/getSurveyStatistics?surveyQuestionNo=1'; 
 		console.log(url);
 		$.ajax({
@@ -37,9 +32,8 @@ $(document).ready(function() {
 			,url: url
 			,success: function(data){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
 				console.log(data);
-				for(var i=0; i<jsonData.length; i++){
-					AnswerContent[i].push(data[i]);
-				}
+				var answerCount = [data.answerCount[0].surveyMultipleAnswerContent1,data.answerCount[0].surveyMultipleAnswerContent2,data.answerCount[0].surveyMultipleAnswerContent3,data.answerCount[0].surveyMultipleAnswerContent4,data.answerCount[0].surveyMultipleAnswerContent5];
+				console.log(answerCount);
 				
 				
 
@@ -50,7 +44,7 @@ $(document).ready(function() {
 					,datasets:[{
 					label:"123"
 					,backgroundColor:["#22ca80","#e83e8c","#5f76e8","#fdc16a","#343a40"]
-					,data:[8478,6267,5534,4784,3433]}]
+					,data:answerCount}]
 					},
 					options:{legend:{display:!1}
 					,title:{display:!0,text:"${answerAverage.surveyQuestionListName} 점수 분포도"}}});

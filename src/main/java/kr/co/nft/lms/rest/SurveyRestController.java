@@ -23,19 +23,13 @@ public class SurveyRestController {
 	@Autowired SurveyService surveyService;
 	
 	@GetMapping("/rest/manager/survey/getSurveyStatistics") 
-	public List<Map<String,Object>> getSurveyStatistics(Model model, int surveyQuestionNo){
-		log.debug(A.D+"[SurveyRestController.getSurveyStatistics] surveyQuestionNo : " + surveyQuestionNo + A.R); // 디버깅
-		List<Map<String, Object>> surveyStatistics = new ArrayList<>();
-		
-		
-		Map<String,Object> returnMap = surveyService.getAllSurveyAnswer(surveyQuestionNo);
-		log.debug(A.D+"[SurveyRestController.getSurveyStatistics] surveyStatistics : " + surveyStatistics + A.R); // 디버깅
+	public Map<String,Object> getSurveyStatistics(int surveyQuestionNo){
+//		log.debug(A.D+"[SurveyRestController.getSurveyStatistics] surveyQuestionNo : " + surveyQuestionNo + A.R); // 디버깅
+		Map<String,Object> returnMap = surveyService.getSurveyAnswerStatistics(surveyQuestionNo);
 		log.debug(A.D+"[SurveyRestController.getSurveyStatistics] returnMap : " + returnMap + A.R); // 디버깅
 		
-		model.addAttribute("answerAverage",returnMap.get("answerAverage"));
-		model.addAttribute("answerCount",returnMap.get("answerCount"));
 		
-		return surveyStatistics;
+		return returnMap;
 	}
 	 
 }

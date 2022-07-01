@@ -31,9 +31,9 @@ public class SurveyController {
 	@Autowired private LectureService lectureService;
 	
 	@GetMapping("/manager/survey/getSurveyStatistics")
-	public String getSurveyStatistics(Model model, int surveyQuestionNo) {
+	public String getSurveyStatistics(Model model) {
 		// 전체 답변 가져오기 
-		Map<String, Object> returnMap = surveyService.getAllSurveyAnswer(surveyQuestionNo);
+		Map<String, Object> returnMap = surveyService.getAllSurveyAnswer();
 		
 		log.debug(A.D+"[SurveyController.getSurveyStatistics] returnMap : " + returnMap + A.R); // 디버깅
 		
