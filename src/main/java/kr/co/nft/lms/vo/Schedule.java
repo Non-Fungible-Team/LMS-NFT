@@ -11,4 +11,6 @@ public class Schedule {
 	private String scheduleDate;
 	private String scheduleCreateDate;
 	private String scheduleUpdateDate;
+	
+	private int scheduleDateDay;
 }

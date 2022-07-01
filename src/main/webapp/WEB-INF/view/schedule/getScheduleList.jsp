@@ -35,56 +35,87 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 	<!-- header include(네비게이션바) -->
     <div id="navAside"></div>
   
-<div class="page-wrapper">
-<div class="container-fluid">
-	<div class="row">
-	
-		<div class="col-lg-12 col-md-6">
-		    <div class="card">
-		        <div class="card-body">
-		            <h4 class="card-title">getScheduleList - 달력 형식으로 수정 필요</h4>
-		            <br>
-		            <a href="${pageContext.request.contextPath}/manager/schedule/addSchedule" class="btn btn-primary btn-rounded">
-						<i class="fas fa-check"></i>입력
-					</a>
-		            <div class="mt-2" style="height:auto; width:auto;">
-		            <!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-		            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
-		            		<thead>
-	                            <tr>
-					                <th>번호</th>
-					                <th>날짜</th>
-					                <th>일정 제목</th>
-					                <th>내용</th>
-					                <th>작성자</th>
-					                <th>생성일</th>
-					                <th>수정일</th>
-					            </tr>
-                            </thead>
-                            <tbody>
-				                <c:forEach var="s" items="${scheduleList}">
-					                <tr>
-					                   <td>${s.scheduleNo}</td>
-					                   <td>${s.scheduleDate}</td>
-					                   <td>
-					                   		<a href="${pageContext.request.contextPath}/all/schedule/getScheduleOne?scheduleNo=${s.scheduleNo}">${s.scheduleTitle}</a>
-					                   </td>
-					                   <td>${s.scheduleContent}</td>
-					                   <td>${s.memberId}</td>
-					                   <td>${s.scheduleCreateDate}</td>
-					                   <td>${s.scheduleUpdateDate}</td>
-					                </tr>
-					            </c:forEach>
-                            </tbody>
-		            	</table>
-		             </div>   
-		        </div>
-		    </div>
+	<div class="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+			
+				<div class="col-lg-12 col-md-6">
+				    <div class="card">
+				        <div class="card-body">
+				        
+				            <h4 class="card-title">
+				        		<a href = "${pageContext.request.contextPath}/all/schedule/getScheduleList?year=${ year }&month=${ month - 1 }" class = "btn btn-outline-secondary">이전 달</a>
+				            	&nbsp;
+				            	${ year }년 ${ month }월
+				            	&nbsp;
+				           		<a href = "${pageContext.request.contextPath}/all/schedule/getScheduleList?year=${ year }&month=${ month + 1 }" class = "btn btn-outline-secondary">다음 달</a>
+				            </h4>
+				            <br>
+				            <a href="${pageContext.request.contextPath}/manager/schedule/addSchedule" class="btn btn-primary btn-rounded">
+								<i class="fas fa-check"></i>입력
+							</a>
+							
+				            <div class="mt-2" style="height:auto; width:auto;">
+				            
+				            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
+				            		<thead>
+			                            <tr>
+							                <th>일</th>
+								 			<th>월</th>
+								 			<th>화</th>
+								 			<th>수</th>
+								 			<th>목</th>
+								 			<th>금</th>
+								 			<th>토</th>
+							            </tr>
+		                            </thead>
+		                            
+		                            <tbody>
+		                            
+						                <tr>
+											<c:forEach var="i" begin="1" end="${ totalTd }" step="1">
+												<c:choose>
+													<c:when test="${(i - startBlank) > 0 && i <= endDay+startBlank}">
+														<td style="height : 110px;" width="10%">
+															${i - startBlank}
+															<div>
+																<c:forEach var="s" items="${ scheduleListByMonth }">
+																	<c:if test="${(s.scheduleDateDay) ==  (i - startBlank)}">
+																		<div>
+																			<a href="${pageContext.request.contextPath}/all/schedule/getScheduleOne?scheduleNo=${s.scheduleNo}">${s.scheduleTitle}</a>
+																		</div>
+																	</c:if>
+																</c:forEach>
+															</div>
+														</td>
+													</c:when>
+													
+													<c:when test="${(i - startBlank) < 1 }">
+														<td> </td>
+													</c:when>
+													
+													<c:when test="${i > endDay}">
+														<td> </td>
+													</c:when>
+												</c:choose>
+												
+												<c:if test="${ i % 7 == 0}">
+													</tr>
+													<tr>
+												</c:if>
+											</c:forEach>
+											</tr>
+		                            </tbody>
+		                            
+				            	</table>
+				             </div>   
+				        </div>
+				    </div>
+				</div>
+				
+			</div>
 		</div>
-		
 	</div>
-</div>
-</div>
 </div>
 </body>
   	

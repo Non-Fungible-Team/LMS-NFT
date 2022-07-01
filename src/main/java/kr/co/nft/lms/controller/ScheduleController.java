@@ -1,6 +1,7 @@
 package kr.co.nft.lms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,24 @@ public class ScheduleController {
 	
 	// Schedule 테이블 전체 리스트
 	@GetMapping("/all/schedule/getScheduleList")
-	public String getScheduleList(Model model) {
+	public String getScheduleList(Model model
+								, @RequestParam(name = "year", defaultValue = "-1") int year
+								, @RequestParam(name = "month", defaultValue = "-1") int month) {
 		
-		List<Schedule> scheduleList = scheduleService.getScheduleList();
+		log.debug(A.A + "[ScheduleController.getScheduleList] year : " + year + A.R);
+		log.debug(A.A + "[ScheduleController.getScheduleList] month : " + month + A.R);
 		
-		log.debug(A.A + "[ScheduleController.getScheduleList] scheduleList : " + scheduleList + A.R);
+		Map<String, Object> map = scheduleService.getScheduleListByMonth(year, month);
 		
-		model.addAttribute("scheduleList", scheduleList);
+		log.debug(A.A + "[ScheduleController.getScheduleList] map : " + map + A.R);
+		
+		model.addAttribute("scheduleListByMonth", map.get("scheduleListByMonth"));
+		model.addAttribute("startBlank", map.get("startBlank"));
+		model.addAttribute("endDay", map.get("endDay"));
+		model.addAttribute("endBlank", map.get("endBlank"));
+		model.addAttribute("totalTd", map.get("totalTd"));
+		model.addAttribute("year", map.get("year"));
+		model.addAttribute("month", map.get("month"));
 		
 		return "/schedule/getScheduleList";
 	}

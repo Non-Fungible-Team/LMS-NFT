@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.ScheduleMapper">
 
-	<select id="selectScheduleList"
+	<select id="selectScheduleListByMonth"
 			resultType="kr.co.nft.lms.vo.Schedule">
 		SELECT 
 			schedule_no scheduleNo
@@ -12,7 +12,10 @@
 			, schedule_date scheduleDate
 			, schedule_create_date scheduleCreateDate
 			, schedule_update_date scheduleUpdateDate
+			, DAY(schedule_date) scheduleDateDay
 		FROM schedule
+		WHERE YEAR(schedule_date) = #{ year } AND MONTH(schedule_date) = #{ month }
+		ORDER BY DAY(schedule_date) ASC
 	</select>
 	
 	<select id="selectScheduleOne"

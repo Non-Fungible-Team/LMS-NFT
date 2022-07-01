@@ -1,6 +1,7 @@
 package kr.co.nft.lms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,7 +11,7 @@ import kr.co.nft.lms.vo.Schedule;
 public interface ScheduleMapper {
 	
 	// Schedule 테이블 전체 리스트
-	List<Schedule> selectScheduleList();
+	List<Schedule> selectScheduleListByMonth(int year, int month);
 	
 	// Schedule 테이블 schedule_no에 따른 상세보기
 	Schedule selectScheduleOne(int scheduleNo);
