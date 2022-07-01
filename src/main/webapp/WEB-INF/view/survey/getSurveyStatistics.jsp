@@ -23,7 +23,13 @@
 $(document).ready(function() {
 	$("#navAside").load(
 	'${pageContext.request.contextPath}/include/navAside.jsp');
+	
+	
+	
 	getGraph();
+	
+	
+	
 	function getGraph(){
 		var url = '${pageContext.request.contextPath}/rest/manager/survey/getSurveyStatistics?surveyQuestionNo=1'; 
 		console.log(url);
@@ -32,23 +38,33 @@ $(document).ready(function() {
 			,url: url
 			,success: function(data){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
 				console.log(data);
-				var answerCount = [data.answerCount[0].surveyMultipleAnswerContent1,data.answerCount[0].surveyMultipleAnswerContent2,data.answerCount[0].surveyMultipleAnswerContent3,data.answerCount[0].surveyMultipleAnswerContent4,data.answerCount[0].surveyMultipleAnswerContent5];
-				console.log(answerCount);
+				var questionListCount = [data.questionListCount];
+				console.log(questionListCount);
+				
+				for(var r=0;r<questionListCount[0].length;r++){
+					
+					console.log(r);
+					console.log(questionListCount[0].length);
+					var answerCount = [data.answerCount[r].surveyMultipleAnswerContent1,data.answerCount[r].surveyMultipleAnswerContent2,data.answerCount[r].surveyMultipleAnswerContent3,data.answerCount[r].surveyMultipleAnswerContent4,data.answerCount[r].surveyMultipleAnswerContent5];
+					console.log(answerCount);
+					var answerAverage = [data.answerAverage[r].surveyMultipleAnswerContent];
+					console.log(answerAverage);
+					
+			new Chart("bar-chart-horizontal"+r, {
+					type:"horizontalBar"
+					,data:{
+						labels:["1점","2점","3점","4점","5점"]
+						,datasets:[{
+						label:"설문조사 참여인원"
+						,backgroundColor:["#22ca80","#e83e8c","#5f76e8","#fdc16a","#343a40"]
+						,data:answerCount}]
+						},
+						options:{legend:{display:!1}
+						,title:{display:!0,text:" 평균 점수 " + answerAverage+"점"}}});
+				
+				}
 				
 				
-
-		new Chart("bar-chart-horizontal", {
-				type:"horizontalBar"
-				,data:{
-					labels:["1점","2점","3점","4점","5점"]
-					,datasets:[{
-					label:"123"
-					,backgroundColor:["#22ca80","#e83e8c","#5f76e8","#fdc16a","#343a40"]
-					,data:answerCount}]
-					},
-					options:{legend:{display:!1}
-					,title:{display:!0,text:"${answerAverage.surveyQuestionListName} 점수 분포도"}}});
-		
 			}
 		});
 	};
@@ -67,16 +83,18 @@ $(document).ready(function() {
 		<div class="page-wrapper">
 			<div class="container-fluid">
 				<h4>객관식 답변 통계</h4>
-				<c:forEach var="multi" items="${allAnswer}">
+				<c:set var="cnt" value="0"></c:set>
+				<c:forEach var="multi" items="${allAnswer}" varStatus="status">
 					<c:if test="${multi.surveyAnswerType=='객관식'}">
 						<div class="col-lg-6">
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">${multi.surveyQuestionListName}</h4>
-									<canvas id="bar-chart-horizontal" height="150"> </canvas>
+									<canvas id="bar-chart-horizontal${cnt}" height="150"> </canvas>
 								</div>
 							</div>
 						</div>
+					<c:set var="cnt" value="${cnt+1}"></c:set>
 					</c:if>
 				</c:forEach>
 				<h4>주관식 답변 통계</h4>

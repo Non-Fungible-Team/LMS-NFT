@@ -36,9 +36,16 @@ public class SurveyService {
 			List<Map<String,Object>> answerCount = surveyMapper.getAnswerCount(surveyQuestionNo);
 			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
 			
+			List<Map<String,Object>> allAnswer = surveyMapper.getAllSurveyAnswer();
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] allAnswer : " + allAnswer + A.R);
 			
+			List<Map<String,Object>> questionListCount = surveyMapper.questionListCount();
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] questionListCount : " + questionListCount + A.R);
+			
+			returnMap.put("questionListCount", questionListCount);
 			returnMap.put("answerAverage", answerAverage);
 			returnMap.put("answerCount", answerCount);
+			returnMap.put("allAnswer", allAnswer);
 			
 //		}
 		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] returnMap : " + returnMap + A.R);

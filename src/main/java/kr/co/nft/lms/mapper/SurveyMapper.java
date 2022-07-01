@@ -60,4 +60,6 @@ public interface SurveyMapper {
 	
 	// 설문조사 질문별, 점수 카운트 (리스트 형식)
 	List<Map<String, Object>> getAnswerCount(int surveyQuestioNo);
+	
+	List<Map<String, Object>> questionListCount();
 }

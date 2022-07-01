@@ -240,20 +240,47 @@
 				resultType="map"
 				parameterType="int">
 			SELECT
-			AVG(survey_multiple_answer_content) surveyMultipleAnswerContent
-			FROM survey_multiple_answer
-			WHERE survey_question_no = #{surveyQuestionNo}
+			AVG(sma.survey_multiple_answer_content) surveyMultipleAnswerContent 
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INner join survey_multiple_answer AS sma
+			ON sma.survey_question_no = sq.survey_question_no
+			GROUP BY ql.survey_question_list_no;
 		</select>
 		
 		<select id="getAnswerCount"
 				resultType="map">
 			SELECT
-				COUNT(CASE WHEN survey_multiple_answer_content = 1 THEN 1 END)  surveyMultipleAnswerContent1
+				sma.survey_no surveyNo
+				,ql.survey_question_list_no
+				,sma.survey_question_no
+				,COUNT(CASE WHEN survey_multiple_answer_content = 1 THEN 1 END)  surveyMultipleAnswerContent1
 				,COUNT(CASE WHEN survey_multiple_answer_content = 2 THEN 1 END)  surveyMultipleAnswerContent2
 				,COUNT(CASE WHEN survey_multiple_answer_content = 3 THEN 1 END)  surveyMultipleAnswerContent3
 				,COUNT(CASE WHEN survey_multiple_answer_content = 4 THEN 1 END)  surveyMultipleAnswerContent4
 				,COUNT(CASE WHEN survey_multiple_answer_content = 5 THEN 1 END)  surveyMultipleAnswerContent5
-			FROM survey_multiple_answer 
-			WHERE survey_question_no = #{surveyQuestionNo}
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INner join survey_multiple_answer AS sma
+			ON sma.survey_question_no = sq.survey_question_no
+			GROUP BY ql.survey_question_list_no
+		</select>
+		
+		
+		
+		<select id="questionListCount"
+				resultType="map">
+			SELECT
+			ql.survey_question_list_no surveyQuestionListNo
+			FROM survey_question_list AS ql
+			INNER JOIN survey_question AS sq
+			ON ql.survey_question_list_no = sq.survey_question_list_no
+			WHERE sq.survey_question_type = '객관식'
 		</select>
 </mapper>
