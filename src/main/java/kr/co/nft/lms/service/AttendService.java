@@ -99,7 +99,7 @@ public class AttendService {
 		
 		//결과값 반환하는 객체 생성
 		Map<String,Object> returnMap = new HashMap<>();
-		returnMap.put("studentLectureList", attendList);
+		returnMap.put("attendList", attendList);
 		log.debug(A.W +"[AttendService.addAttendForm.returnMap] returnMap : " +returnMap +A.R);//디버깅코드
 		
 		return returnMap;

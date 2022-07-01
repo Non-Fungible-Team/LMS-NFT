@@ -42,61 +42,51 @@
 		<!-- main화면 body start -->
 		<div class="container p-5 my-5">
 			<div class="row">
-				<div class="col-lg-10 col-md-6">
+				<div class="col-lg-12 col-md-6">
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">출석 체크</h4>
-							<div style="height: auto;">
-							<form method="post" action="${pageContext.request.contextPath}/teacher/lecture/getAttendList">
-								<input type ="hidden" name="lectureNo" value="${lectureNo}">
-								<select name="attendDate" onchange ="this.form.submit()">
-									<option value="">출석 날짜 선택</option>
-									<c:forEach var="ls" items="${lectureScheduleList}">
-										<option value="${ls.lectureScheduleDate}">${ls.lectureScheduleDate}</option>
-									</c:forEach>
-								</select>
-							</form>
+							<div style="height: auto; width: auto;">
 							<form class="mt-4" method="post" id="addAttendForm" action="${pageContext.request.contextPath}/manager/lecture/addLecture">
 							<div class="form-group">
 								<table id="zero_config" class="table table-striped table-bordered no-wrap">
-								<c:forEach var="a" items="${attendList}">
 									<tr>
-										<td>학생아이디</td>
-										<td>
-											<input type="text" name="memberId" value="${a.memberId }">
-										</td>
+										<th>출석 날짜</th>
+										<th>강의 번호</th>
+										<th>강의명</th>
+										<th>학생 아이디</th>
+										<th>학생 이름</th>
+										<th>출석 상태</th>
+										<th>사유</th>
+										<th>체크 날짜</th>
 									</tr>
 									<tr>
-										<td>학생이름</td>
-										<td>
-											<input type="text" name="studentName" value="${a.studentName}">
-										</td>
-									</tr>
-									<tr>
-										<td>강의 번호</td>
-										<td>
-											<input type="number" name="lectureNo" value="${a.lectureNo}">
-										</td>
-									</tr>
-									<tr>
-										<td>출석 상태</td>
-										<td>
-											<select name="attendStatus" id="attendStatus">
-												<option value="출석">출석</option>
-												<option value="지각">지각</option>
-												<option value="결석">결석</option>
-												<option value="병결">병결</option>
-												<option value="공결">공결</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>사유</td>
-										<td>
-											<input type="text" name="attendReason">
-										</td>
-									</tr>
-								</c:forEach>
+									<form>
+									<c:forEach var="a" items="${attendList}">
+										<tr>
+											<td>${a.attendDate}</td>
+											<td>${a.lectureNo}</td>
+											<td>${a.lectureName}</td>
+											<td>${a.memberId}</td>
+											<td>${a.studentName}</td>
+											<td>
+												<select name="attendStatus">
+													<option value="출석">출석</option>
+													<option value="지각">지각</option>
+													<option value="결석">결석</option>
+													<option value="병결">병결</option>
+													<option value="공결">공결</option>
+												</select>
+											</td>
+											<td>
+												<input type="text" name="attendReason" maxlength="50"> 
+											</td>
+											<td>
+												<input type="text" name="attendCreateDate" value="${a.attendCreateDate}">
+											</td>
+										</tr>
+									</c:forEach>
+									</form>
 								</table>
 							</div>
 							</form>
