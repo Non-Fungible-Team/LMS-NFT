@@ -144,28 +144,26 @@
 	</select>
 	
 	<!-- 학생의 과제 제출 mapper.xml -->
+	
 	<!-- 학생 과제 제출 리스트 -->
 	<select id="selectHomeworkSubmitListByPage"
 			parameterType="java.util.Map"
 			resultType="map">
 		SELECT
 			hs.homework_submit_no homeworkSubmitNo
-			,hs.homework_no homeworkNo
+			,h.homework_no homeworkNo
 			,hs.member_id memberId
 			,h.lecture_no lectureNo
 			,hs.homework_submit_title homeworkSubmitTitle
-			,hsf.homework_submit_file_name homeworkSubmitFileName
+<!-- 			,hsf.homework_submit_file_name homeworkSubmitFileName -->
 			,hs.homework_submit_create_date homeworkSubmitCreateDate
 			,hs.homework_submit_update_date homeworkSubmitUpdateDate
 		FROM homework_submit hs
-		INNER JOIN homework h
-		ON hs.homework_no = h.homework_no
-		INNER JOIN student_lecture sl
-		ON hs.member_id = sl.member_id		
-		INNER JOIN homework_submit_file hsf
+		RIGHT JOIN homework h
+		ON hs.homework_no = h.homework_no		
+		LEFT JOIN homework_submit_file hsf
 		ON hs.homework_submit_no = hsf.homework_submit_no
-		<!-- WHERE hs.homework_no = #{homeworkNo}
-		AND h.lecture_no = #{lectureNo} -->
+		WHERE hs.homework_no = #{homeworkNo}
 		ORDER BY hs.homework_submit_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 		
@@ -212,11 +210,12 @@
 		ON hs.homework_submit_no = hsf.homework_submit_no
 		WHERE hs.homework_submit_no = #{homeworkSubmitNo} 
 	</select>
+	
 	<!-- 학생 과제 총 갯수 -->
 	<select id="selectSubmitTotalCount"
 			resultType="int">
 		SELECT COUNT(*) FROM homework_submit
-		WHERE member_id=#{memberId}
+		WHERE homework_no = #{homeworkNo}
 	</select>
 	
 	<select id="selectHomeworkSubmitFile"

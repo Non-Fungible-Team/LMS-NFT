@@ -35,47 +35,51 @@
 			<div class="container-fluid">
 <h1>getHomeworkSubmitOne</h1>
 	<div class="row">
-					<div class="col-lg-12 col-md-12">
-						<div class="card">
-							<div class="card-body">
-								<h4 class="card-title">제출과제 상세보기</h4>
-									<div class="mt-2" style="height: auto; width: auto;">
-									<table id="zero_config" class="table table-striped table-bordered">
-										<tr>
-											<td>homeworkSubmitNo</td>
-											<td><input type="number" class="form-control" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}"></td>
-										</tr>
-										<tr>
-											<td>homeworkNo</td>
-											<td><input type="text" class="form-control" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}"></td>
-										</tr>
+				<div class="col-lg-12 col-md-12">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">제출과제 상세보기</h4>
+								<div class="mt-2" style="height: auto; width: auto;">
+								<table id="zero_config" class="table table-striped table-bordered">
+									<tr>
+										<td>homeworkSubmitNo</td>
+										<td><input type="number" class="form-control" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly"></td>
+									</tr>
+									<tr>
+										<td>homeworkNo</td>
+										<td><input type="text" class="form-control" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}" readonly="readonly"></td>
+									</tr>
 <!-- 										<tr> -->
 <!-- 											<td>lectureNo</td> -->
 <%-- 											<td><input type="text" name="lectureNo" value="${homeworkSubmitOne.lectureNo}"></td> --%>
 <!-- 										</tr> -->
-										<tr>
-											<td>memberId</td>
-											<td><input type="text" class="form-control" name="memberId" value="${homeworkSubmitOne.memberId }"></td>
-										</tr>
-										<tr>
-											<td>homeworkSubmitTitle</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }"></td>
-										</tr>
-										<tr>
-											<td>homeworkSubmitContent</td>
-											<td><textarea name="homeworkSubmitContent" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
-										</tr>
+									<tr>
+										<td>memberId</td>
+										<td><input type="text" class="form-control" name="memberId" value="${homeworkSubmitOne.memberId }" readonly="readonly"></td>
+									</tr>
+									<tr>
+										<td>homeworkSubmitTitle</td>
+										<td><input type="text" class="form-control" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }" readonly="readonly"></td>
+									</tr>
+									<tr>
+										<td>homeworkSubmitContent</td>
+										<td><textarea name="homeworkSubmitContent" rows="8" cols="70" class="form-control" readonly="readonly">${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
+									</tr>
 <!-- 										<tr> -->
 <!-- 											<td>homeworkSubmitFileName</td> -->
 <%-- 											<td><input type="text" name="homeworkSubmitFileName" value="${homeworkSubmitFileList.homeworkSubmitFileName }"></td> --%>
 <!-- 										</tr> -->
+									<tr>
+										<td>homeworkSubmitCreateDate</td>
+										<td><input type="text" class="form-control" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }" readonly="readonly"></td>
+									</tr>
+									<tr>
+										<td>homeworkSubmitUpdateDate</td>
+										<td><input type="text" class="form-control" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }" readonly="readonly"></td>
+									</tr>
+									<c:if test="${sessionLoginMember.memberLevel == 5}">
 										<tr>
-											<td>homeworkSubmitCreateDate</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }"></td>
-										</tr>
-										<tr>
-											<td>homeworkSubmitUpdateDate</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }"></td>
+											<td colspan="2" align="center">점수와 피드백을 입력해 주세요</td>
 										</tr>
 										<tr>
 											<td>homeworkSubmitScore</td>
@@ -85,45 +89,58 @@
 											<td>homeworkSubmitFeedback</td>
 											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
 										</tr>
-									 
-									</table>
-									</div>
-									<h4>첨부된 파일 정보</h4>
-								    <div>
-									    <table id="zero_config" class="table table-striped table-bordered">
-									    	<thead>
-									    		<tr>
-										    		<th>파일미리보기</th>
-													<th>파일타입</th>
-													<th>파일사이즈</th>
-									    		</tr>
-									    	</thead>
-									    	<tbody>
-									    		<c:forEach var ="hf" items="${homeworkSubmitFileList}">
-													<tr>
-														<td>
-															<c:if test="${hf.homeworkSubmitFileType=='image/gif'||hf.homeworkSubmitFileType=='image/png'||hf.homeworkSubmitFileType == 'image/jpeg'}">
-																<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
-															</c:if>
-															<a href="${pageContext.request.contextPath}/static/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
-														</td>
-														<td>${hf.homeworkSubmitFileType}</td>
-														<td>${hf.homeworkSubmitFileSize}</td>
-													</tr>	
-									    		</c:forEach>
-									    	</tbody>
-									    	
-									    </table>
-									 </div>
-									 <button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
-									 
+									</c:if>
+									<c:if test="${sessionLoginMember.memberLevel == 4 && not empty homeworkSubmitScore}">
+										<tr>
+											<td>homeworkSubmitScore</td>
+											<td><input type="text" class="form-control" name="homeworkSubmitScore" value="${homeworkSubmitOne.homeworkSubmitScore }"></td>
+										</tr>
+									</c:if>
+									<c:if test="${sessionLoginMember.memberLevel == 4 &&not empty homeworkSubmitFeedback }">
+										<tr>
+											<td>homeworkSubmitFeedback</td>
+											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
+										</tr>
+									</c:if>
+								 
+								</table>
 								</div>
+								<h4>첨부된 파일 정보</h4>
+							    <div>
+								    <table id="zero_config" class="table table-striped table-bordered">
+								    	<thead>
+								    		<tr>
+									    		<th>파일미리보기</th>
+												<th>파일타입</th>
+												<th>파일사이즈</th>
+								    		</tr>
+								    	</thead>
+								    	<tbody>
+								    		<c:forEach var ="hf" items="${homeworkSubmitFileList}">
+												<tr>
+													<td>
+														<c:if test="${hf.homeworkSubmitFileType=='image/gif'||hf.homeworkSubmitFileType=='image/png'||hf.homeworkSubmitFileType == 'image/jpeg'}">
+															<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
+														</c:if>
+														<a href="${pageContext.request.contextPath}/static/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
+													</td>
+													<td>${hf.homeworkSubmitFileType}</td>
+													<td>${hf.homeworkSubmitFileSize}</td>
+												</tr>	
+								    		</c:forEach>
+								    	</tbody>
+								    	
+								    </table>
+								 </div>
+								 <button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
+								 
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

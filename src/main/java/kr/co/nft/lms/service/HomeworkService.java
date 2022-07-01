@@ -35,9 +35,10 @@ public class HomeworkService {
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("lectureNo", lectureNo);
-		if(loginMember.getMemberLevel()==4) {
+		
+		if(loginMember.getMemberLevel()==4) { // level 4인 학생의 경우
 			map.put("studentId", loginMember.getMemberId());
-		} else if(loginMember.getMemberLevel()==5) {
+		} else if(loginMember.getMemberLevel()==5) { // level 5인 강사의 경우
 			map.put("teacherId", loginMember.getMemberId());
 		}
 		log.debug(A.Q + "HomeworkService.getHomeworkListByPage.map :" + map + A.R);
@@ -135,7 +136,7 @@ public class HomeworkService {
 		return map;
 	}
 	// 학생 과제 목록
-	public Map<String, Object> getHomeworkSubmitListByPage(int currentPage, int rowPerPage){
+	public Map<String, Object> getHomeworkSubmitListByPage(int currentPage, int rowPerPage, int homeworkNo){
 		log.debug(A.Q +"HomeworkService.getHomeworkSubmitListByPage.param.currentPage" + currentPage +A.R);
 		log.debug(A.Q +"HomeworkService.getHomeworkSubmitListByPage.param.rowPerPage" + rowPerPage +A.R);
 		
@@ -143,6 +144,7 @@ public class HomeworkService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
+		map.put("homeworkNo", homeworkNo);
 		log.debug(A.Q + "HomeworkService.getHomeworkSubmitListByPage.map :" + map + A.R);
 		
 		List<Map<String, Object>> homeworkSubmitList = homeworkMapper.selectHomeworkSubmitListByPage(map);
@@ -172,7 +174,7 @@ public class HomeworkService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("homeworkSubmitOne", homeworkSubmitOne);
 		map.put("homeworkSubmitFileList", homeworkSubmitFileList);
-		
+		map.put("homeworkSubmitNo", homeworkSubmitNo);
 		log.debug(A.Q+"HomeworkService.getHomeworkSubmitOne.map :" + map +A.R);
 		
 		return map;

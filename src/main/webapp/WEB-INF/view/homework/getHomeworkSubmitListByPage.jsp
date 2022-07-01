@@ -42,8 +42,8 @@
 									<table id="zero_config" class="table table-striped table-bordered">
 		<thead>
 			<tr>
-				<th>제출번호</th>
 				<th>과제번호</th>
+				<th>제출번호</th>
 				<th>강의번호</th>
 				<th>memberId</th>
 				<th>과제제목</th>
@@ -54,8 +54,8 @@
 		<tbody>
 			<c:forEach var="hs" items="${homeworkSubmitList}">
 				<tr>
-					<td>${hs.homeworkSubmitNo }</td>
 					<td>${hs.homeworkNo }</td>
+					<td>${hs.homeworkSubmitNo }</td>
 					<td>${hs.lectureNo }</td>
 					<td>${hs.memberId }</td>
 					<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${hs.homeworkSubmitNo}">${hs.homeworkSubmitTitle }</a></td>

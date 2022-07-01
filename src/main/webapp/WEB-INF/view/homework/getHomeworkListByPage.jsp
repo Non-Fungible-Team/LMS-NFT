@@ -72,7 +72,7 @@
 															<td><a href="${pageContext.request.contextPath}/homework/addHomeworkSubmit?homeworkNo=${h.homeworkNo}">과제제출</a></td>														
 														</c:if> 
 														<c:if test="${sessionLoginMember.memberLevel == 4 && not empty h.homeworkSubmitNo}">
-															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}">과제보기</a></td>														
+															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}"><u>과제보기</u></a></td>														
 														</c:if> 
 													</tr>
 														

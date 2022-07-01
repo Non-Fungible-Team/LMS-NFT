@@ -44,22 +44,28 @@
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
-											<td>번호</td><td><input type="text" class="form-control" size="4" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly"></td>
+											<td>번호</td>
+											<td><input type="text" class="form-control" size="4" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly"></td>
 										</tr>
 										<tr>
-											<td>강의번호</td><td><input type="text" class="form-control" size="4" name ="lectureNo" value ="${homeworkOne.lectureNo}" readonly="readonly"></td>
+											<td>강의번호</td>
+											<td><input type="text" class="form-control" size="4" name ="lectureNo" value ="${homeworkOne.lectureNo}" readonly="readonly"></td>
 										</tr>
 										<tr>
-											<td>제목</td><td><input type="text" class="form-control" name ="homeworkTitle"  value ="${homeworkOne.homeworkTitle}" readonly="readonly"></td>
+											<td>제목</td>
+											<td><input type="text" class="form-control" name ="homeworkTitle"  value ="${homeworkOne.homeworkTitle}" readonly="readonly"></td>
 										</tr>
 										<tr>
-											<td>작성자</td><td><input type="text" class="form-control" name="memberId" value="${homeworkOne.memberId }" readonly="readonly"></td>
+											<td>작성자</td>
+											<td><input type="text" class="form-control" name="memberId" value="${homeworkOne.memberId }" readonly="readonly"></td>
 										</tr>
 										<tr>
-											<td>내용</td><td><textarea name=homeworkContent class="form-control" rows ="8" cols="70"  readonly="readonly">${homeworkOne.homeworkContent}</textarea></td>
+											<td>내용</td>
+											<td><textarea name=homeworkContent class="form-control" rows ="8" cols="70"  readonly="readonly">${homeworkOne.homeworkContent}</textarea></td>
 										</tr>
 										<tr>
-											<td>날짜</td><td><input type="text" class="form-control" name="homeworkCreateDate" size="16" value = "${homeworkOne.homeworkCreateDate}"readonly="readonly"></td>
+											<td>날짜</td>
+											<td><input type="text" class="form-control" name="homeworkCreateDate" size="16" value = "${homeworkOne.homeworkCreateDate}"readonly="readonly"></td>
 										</tr>
 									</table>
 										<form action="${pageContext.request.contextPath}/homework/removeHomework" method="post">
