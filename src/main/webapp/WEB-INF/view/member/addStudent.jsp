@@ -178,7 +178,7 @@ table {
 					, data:{memberId:$('#idck').val()}
 					, success : function(ck) {
 						console.log('ck:',ck);
-						if(ck="false") {
+						if(ck=="false") {
 							alert('이미 사용중인 아이디입니다');
 						} else {
 							$('#memberId').val(ck);
