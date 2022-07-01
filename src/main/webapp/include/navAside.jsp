@@ -186,25 +186,30 @@
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">건의 게시판</span></a></li>
 					<!-- 강의 선택시에 강의에 대한 세부 메뉴 시작 -->
 					<c:if test="${not empty sessionLecture }">
-					<li class="list-divider"></li>
-					<!-- 선택한 강의 이름 -->
-					<li class="nav-small-cap"><span class="hide-menu">${sessionLecture.lectureName}</span></li>
-					<!-- 강의 게시판 -->
-					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
-					<!-- 강의 시간표 -->
-					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/lecture/getLectureScheduleListByLectureNo" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
-					<!-- 출석 -->
-					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
-					<!-- 과제 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/homework/getHomeworkListByPage" aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">과제 </span></a></li>
-					<!-- 시험 -->
-					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">시험 </span></a>
-						<ul aria-expanded="false" class="collapse  first-level base-level-line">
-							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/all/exam/getExamListByPage" class="sidebar-link"><span class="hide-menu"> 시험 목록 </span></a></li>
-							<li class="sidebar-item"><a href="${pageContext.request.contextPath}/all/exam/getExamScoreListByPage" class="sidebar-link"><span class="hide-menu"> 점수 확인 </span></a></li>
-						</ul></li>
-					<!-- 강의 설문조사 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">강의 설문조사</span></a></li>
+						<li class="list-divider"></li>
+						<!-- 선택한 강의 이름 -->
+						<li class="nav-small-cap"><span class="hide-menu">${sessionLecture.lectureName}</span></li>
+						<!-- 강의 게시판 -->
+						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/lectureBoard/getLectureBoardListByPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
+						<!-- 강의 시간표 -->
+						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/lecture/getLectureScheduleListByLectureNo" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
+						<!-- 출석 -->
+						<c:if test="${sessionLoginMember.memberLevel > 4 }">
+							<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/getAttendList?lectureNo=${sessionLectureNo}" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
+						</c:if>
+						<c:if test="${sessionLoginMember.memberLevel == 4 }">
+							<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/student/lecture/getStudentAttendOne?lectureNo=${sessionLectureNo}" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
+						</c:if>
+						<!-- 과제 -->
+						<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/homework/getHomeworkListByPage" aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">과제 </span></a></li>
+						<!-- 시험 -->
+						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">시험 </span></a>
+							<ul aria-expanded="false" class="collapse  first-level base-level-line">
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/all/exam/getExamListByPage" class="sidebar-link"><span class="hide-menu"> 시험 목록 </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/all/exam/getExamScoreListByPage" class="sidebar-link"><span class="hide-menu"> 점수 확인 </span></a></li>
+							</ul></li>
+						<!-- 강의 설문조사 -->
+						<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">강의 설문조사</span></a></li>
 					</c:if>
 					<!-- 강의에 대한 세부 메뉴 끝 -->
 					
