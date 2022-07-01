@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.nft.lms.service.AttendService;
 import kr.co.nft.lms.service.LectureScheduleService;
 import kr.co.nft.lms.util.A;
-import kr.co.nft.lms.vo.Attend;
 import kr.co.nft.lms.vo.LectureSchedule;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -193,7 +192,7 @@ public class LectureScheduleController {
 		
 	}
 	//2.수강중인 강의별 출석 확인 - 학생
-	@GetMapping("/teacher/lecture/getStudentAttendOne")
+	@GetMapping("/student/lecture/getStudentAttendOne")
 	public String getStudentAttendOne(Model model
 							,@RequestParam(name = "lectureNo") int lectureNo
 							,@RequestParam(name="memberId") String memberId) {

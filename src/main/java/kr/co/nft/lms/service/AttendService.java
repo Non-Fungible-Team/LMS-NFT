@@ -64,16 +64,26 @@ public class AttendService {
 		log.debug(A.W +"[AttendService.getStudentAttendOne.param] lectureNo : "+lectureNo +A.R);
 		log.debug(A.W +"[AttendService.getStudentAttendOne.param] memberId : "+memberId +A.R);
 
+		//가져온 번호값 저장
+		Map<String,Object> map = new HashMap<>();
+		map.put("lectureNo", lectureNo);
+		map.put("memberId", memberId);
+		log.debug(A.W +"[AttendService.getStudentAttendOne.map] map : "+map +A.R);
+		log.debug(A.W +"[AttendService.getStudentAttendOne.map] lectureNo : "+lectureNo +A.R);
+		log.debug(A.W +"[AttendService.getStudentAttendOne.map] memberId : "+memberId +A.R);
 		
+		//mapper 호출
 		List<Attend> studentAttendList = attendMapper.selectStudentAttendOne(lectureNo, memberId);
 		log.debug(A.W +"[AttendService.getAttendListByPage.studentAttendList(매퍼호출)] studentAttendList : "+ studentAttendList +A.R);
 		
-		//결과값 map으로 반환
+		//결과값 map에 저장
 		Map<String, Object> returnMap = new HashMap<>(); //객체생성
 		returnMap.put("lectureNo", lectureNo); //번호값 저장
 		returnMap.put("memberId", memberId); //학생아이디값 저장
 		returnMap.put("studentAttendList", studentAttendList); //학생 출석값
 		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] returnMap : "+ returnMap +A.R);
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] lectureNo : "+ lectureNo +A.R);
+		log.debug(A.W +"[AttendService.getAttendListByPage.returnMap(결과값)] memberId : "+ memberId +A.R);
 		
 		return returnMap;
 	}
@@ -88,7 +98,7 @@ public class AttendService {
 		log.debug(A.W +"[AttendService.addAttendForm.studentLectureList] studentLectureList : " +studentLectureList +A.R);//디버깅코드
 		log.debug(A.W +"[AttendService.addAttendForm.lectureScheduleList] lectureScheduleList : " +lectureScheduleList +A.R);//디버깅코드
 		
-		//결과값 반환하는 갹체 생성
+		//결과값 반환하는 객체 생성
 		Map<String,Object> returnMap = new HashMap<>();
 		returnMap.put("studentLectureList", studentLectureList);
 		returnMap.put("lectureScheduleList", lectureScheduleList);

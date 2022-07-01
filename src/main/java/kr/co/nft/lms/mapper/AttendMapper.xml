@@ -40,7 +40,7 @@
 	FROM attend a
 	INNER JOIN lecture l
 		ON a.lecture_no = l.lecture_no
-	ORDER BY l.lecture_no
+	ORDER BY a.attendDate DESC
 	WHERE lecture_no = #{lectureNo}
 	AND member_id = #{memberId}
 	</select>
