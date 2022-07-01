@@ -69,4 +69,15 @@
 		WHERE lecture_no = #{ lectureNo }
 		AND lecture_schedule_date = #{ lectureScheduleDate };
 	</update>
+	
+	<!-- 강의시간표 날짜만 출력 -->
+	<select id="selectLectureScheduleDateByLectureNo"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.LectureSchedule">
+		SELECT 
+			lecture_no lectureNo
+			,lecture_schedule_date lectureScheduleDate
+		FROM lecture_schedule
+		WHERE lecture_no = #{ lectureNo }
+	</select>
 </mapper>
