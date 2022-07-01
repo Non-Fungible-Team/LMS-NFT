@@ -58,10 +58,8 @@
 										<th>학생 이름</th>
 										<th>출석 상태</th>
 										<th>사유</th>
-										<th>체크 날짜</th>
 									</tr>
 									<tr>
-									<form>
 									<c:forEach var="a" items="${attendList}">
 										<tr>
 											<td>${a.attendDate}</td>
@@ -83,7 +81,6 @@
 											</td>
 										</tr>
 									</c:forEach>
-									</form>
 								</table>
 							</div>
 							</form>
