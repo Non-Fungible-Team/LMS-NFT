@@ -36,6 +36,7 @@ public class ExamController {
 		//세션에 정보 요청
 		int sessionLectureNo = (int)session.getAttribute("sessionLectureNo");
 		Member sessionLoginMember = (Member)session.getAttribute("sessionLoginMember");
+		//세션에 정보 요청
 		
 		Map<String, Object> returnMap = examService.getExamListByPage(currentPage, rowPerPage, sessionLectureNo);
 		log.debug(A.C + "[ExamController.getExamListByPage.param] returnMap: " + returnMap + A.R);
@@ -74,14 +75,16 @@ public class ExamController {
 		log.debug(A.C + "[ExamController.addExam.param] exam: " + exam+ A.R);
 		
 		int row = examService.addExam(exam);
-		examService.addExamQeustion(examQuestion);
-		examService.addExamExample(examExample);
+		examService.addExamQeustion(examQuestion.getExamQuestionList());
+		if(examQuestion.getExamQuestionListExamType()=="객관식") {
+		examService.addExamExample(examQuestion.getExamQuestionList());
+		}
 		if(row ==1) {
 			log.debug(A.C +"ExamController.addExam 시험 입력 성공"+A.R);
 		} else {
 			log.debug(A.C +"ExamController.addExam 시험 입력 실패"+A.R);
 		}
-		return "redirect:/exam/getExamListByPage";
+		return "redirect:/all/exam/getExamListByPage";
 	}
 	
 	// 시험 수정 폼

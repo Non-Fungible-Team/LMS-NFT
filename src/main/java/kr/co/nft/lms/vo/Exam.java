@@ -1,5 +1,7 @@
 package kr.co.nft.lms.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -29,4 +31,14 @@ public class Exam {
 	private String examAnswerStartDate;
 	private String examAnswerEndDate;
 	private String examAnswerApply;
+	private int examQuestionListExamCount;
+	private int examQuestionListExamMaxScore;
+	private int examQuestionListExamQuestionNo;
+	private String examQuestionListExamContent;
+	private String examQuestionListExamCorrectAnswer;
+	private int examQuestionListExamPoint;
+	private String examQuestionListExamType;
+	private int examQuestionListExampleNo;
+	private String examQuestionListExampleContent;
+	private List<Exam> examQuestionList;
 }

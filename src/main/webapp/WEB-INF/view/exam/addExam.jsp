@@ -46,14 +46,14 @@
 		$('#addExamMultiQuestion').click(function() {
 			if (appendCount >= 20)	return;
 			appendCountList = appendCount-1;
-			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td>보기 1번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>보기 2번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>보기 3번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>보기 4번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleNo'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType'>객관식</td></tr></table><br>");
+			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList[0].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList[0].examContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='1'>보기 1번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleOneContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='2'>보기 2번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleTwoContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='3'>보기 3번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleThreeContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='4'>보기 4번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleFourContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='객관식'>객관식</td></tr></table><br>");
 				appendCount++;
 			});
 // 		주관식 문제 추가
 		$('#addExamShortQuestion').click(function() {
 			if (appendCount >= 20)	return;
 			appendCountList = appendCount-1;
-			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType'>주관식</td></tr></table><br>");
+			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='주관식'>주관식</td></tr></table><br>");
 				appendCount++;
 			});
 // 		문제 삭제
@@ -155,7 +155,10 @@
 											<!-- 	    시험등록 -->
 											<tr>
 												<td>시험 이름 :</td>
-												<td><input type="text" class="form-control"	name="examTitle" id="examTitle">
+												<td>
+												<input type="hidden" class="form-control"	name="memberId" value="${sessionLoginMember.memberId}">
+												<input type="hidden" class="form-control"	name="lectureNo" value="${sessionLectureNo}">
+												<input type="text" class="form-control"	name="examTitle" id="examTitle">
 												<span id="examTitleHelper" class="helper"></span></td>
 											</tr>
 											<tr>

@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.nft.lms.vo.*;
+import kr.co.nft.lms.vo.Exam;
+import kr.co.nft.lms.vo.ExamExample;
+import kr.co.nft.lms.vo.ExamQuestion;
 
 @Mapper
 public interface ExamMapper {
@@ -30,7 +32,7 @@ public interface ExamMapper {
 	// 문제 등록
 	int insertExamQuestion(ExamQuestion examQuestion);
 	// 보기 등록
-	int insertExamExample(ExamExample examExample);
+	int insertExamExample(ExamQuestion examQuestion);
 // 	시험 수정
 	// 시험 수정
 	int updateExam(Exam exam);

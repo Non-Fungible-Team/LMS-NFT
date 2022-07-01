@@ -97,9 +97,9 @@
 	</insert>
 <!-- 문제 등록  -->
 	<insert id="insertExamQuestion"
-			parameterType="kr.co.nft.lms.vo.Exam">
+			parameterType="kr.co.nft.lms.vo.ExamQuestion">
 			<selectKey resultType="int" keyProperty="examNo" order="BEFORE">
-				SELECT MAX(exam_no) FROM exam
+			SELECT MAX(exam_no) FROM exam
 			</selectKey>
 			INSERT INTO exam_question(	 exam_no			
 										,exam_question_no
@@ -121,23 +121,81 @@
 	</insert>
 <!-- 보기 등록  -->
 	<insert id="insertExamExample"
-			parameterType="kr.co.nft.lms.vo.Exam">
-			<selectKey resultType="int" keyProperty="examNo" order="BEFORE">
-				SELECT MAX(exam_no) FROM exam
+			parameterType="kr.co.nft.lms.vo.ExamQuestion">
+			<selectKey resultType="map" keyProperty="examNo,examQuestionNo" order="BEFORE">
+				SELECT 	MAX(exam_no) AS examNo
+						,MAX(exam_question_no) AS examQuestionNo 
+				FROM exam_question
+				WHERE exam_no=#{examNo}
 			</selectKey>
-			INSERT INTO exam_example(	 exam_no		
-										,exam_question_no
-										,example_no
-										,example_content
-										,example_create_date
-										,example_update_date
-			) VALUES( 					#{examNo}
-										,#{examQuestionNo}
-										,#{exampleNo}
-										,#{exampleContent}
-										,NOW()
-										,NOW()
-			);	
+			
+			INSERT ALL
+			INTO exam_example (	 exam_no		
+								,exam_question_no
+								,example_no
+								,example_content
+								,example_create_date
+								,example_update_date
+			) VALUES( 	#{examNo}
+						,#{examQuestionNo}
+						,1
+						,#{exampleOneContent}
+						,NOW()
+						,NOW()
+			)
+			INTO exam_example (	 exam_no		
+								,exam_question_no
+								,example_no
+								,example_content
+								,example_create_date
+								,example_update_date
+			) VALUES( 	#{examNo}
+						,#{examQuestionNo}
+						,2
+						,#{exampleTwoContent}
+						,NOW()
+						,NOW()
+			)
+			INTO exam_example (	 exam_no		
+								,exam_question_no
+								,example_no
+								,example_content
+								,example_create_date
+								,example_update_date
+			) VALUES( 	#{examNo}
+						,#{examQuestionNo}
+						,3
+						,#{exampleThreeContent}
+						,NOW()
+						,NOW()
+			)
+			INTO exam_example (	 exam_no		
+								,exam_question_no
+								,example_no
+								,example_content
+								,example_create_date
+								,example_update_date
+			) VALUES( 	#{examNo}
+						,#{examQuestionNo}
+						,4
+						,#{exampleFourContent}
+						,NOW()
+						,NOW()
+			)
+			SELECT * FROM dual;
+<!-- 			INSERT INTO exam_example(	 exam_no		 -->
+<!-- 										,exam_question_no -->
+<!-- 										,example_no -->
+<!-- 										,example_content -->
+<!-- 										,example_create_date -->
+<!-- 										,example_update_date -->
+<!-- 			) VALUES( 					#{examNo} -->
+<!-- 										,#{examQuestionNo} -->
+<!-- 										,#{exampleNo} -->
+<!-- 										,#{exampleContent} -->
+<!-- 										,NOW() -->
+<!-- 										,NOW() -->
+<!-- 			);	 -->
 	</insert>
 	
 <!-- 시험 수정  -->

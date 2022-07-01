@@ -14,7 +14,6 @@ import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Exam;
 import kr.co.nft.lms.vo.ExamExample;
 import kr.co.nft.lms.vo.ExamQuestion;
-import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;	
 
 @Slf4j
@@ -90,14 +89,26 @@ public class ExamService {
 			return examMapper.insertExam(exam);
 	}
 	// 문제 등록
-	public int addExamQeustion(ExamQuestion examQuestion)  {
-		log.debug(A.C + "[ExamService.addExamQuestion.param] exam :"+ examQuestion + A.R);
-		return examMapper.insertExamQuestion(examQuestion);
+	public int addExamQeustion(List<ExamQuestion> examQuestionList)  {
+		log.debug(A.C + "[ExamService.addExamQuestion.param] examQuestionList :"+ examQuestionList + A.R);
+		
+		int row =0;
+		for (ExamQuestion e : examQuestionList) {
+			row= row + examMapper.insertExamQuestion(e);
+			log.debug(A.C + "[ExamService.addExamQuestion.param] row :"+ row + A.R);	
+		}
+		return row;
 	}
 	// 보기 등록
-	public int addExamExample(ExamExample examExample) {
-		log.debug(A.C + "[ExamService.addExamExample.param] exam :"+ examExample + A.R);
-		return examMapper.insertExamExample(examExample);
+	public int addExamExample(List<ExamQuestion> examQuestionList) {
+		log.debug(A.C + "[ExamService.addExamExample.param] examQuestionList :"+ examQuestionList + A.R);
+		
+		int row =0;
+		for (ExamQuestion e : examQuestionList) {
+			row= row + examMapper.insertExamExample(e);
+			log.debug(A.C + "[ExamService.addExamExample.param] row :"+ row + A.R);	
+		}
+		return row;
 	}
 	
 	// 시험 수정
