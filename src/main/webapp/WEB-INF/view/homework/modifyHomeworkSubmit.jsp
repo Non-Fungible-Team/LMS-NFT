@@ -11,9 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-
-<title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>학생 과제 수정 페이지</title>
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -21,6 +19,47 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="http://ajax.googLeapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#addFileUpload').click(function(){
+			
+			let flag = true;
+			
+			$('.homeworkSubmitFileList').each(function(){
+				if($(this).val() == ''){
+					flag = false;
+				}
+			});
+				
+			if(flag){
+				$('#fileSection').append("<div class='card'><input type='file' class='homeworkSubmitFileList' name='homeworkSubmitFileList'/></div>")
+			} else {
+				alert('파일이 첨부되지 않은 list가 존재합니다')					
+			}
+		});
+		
+		
+		$('#addHomeworkSubmit').click(function(){
+			if($('#homeworkSubmitTitle').val() == ''){
+				alert('제목을 입력하세요');
+			} else if($('#homeworkSubmitContent').val() == '') {
+				alert('내용을 입력하세요');
+			} else {
+				$('.homeworkSubmitFileList').each(function(){
+					if($(this).val()=''){
+						flag = false;
+					}
+				});
+				if(flag){
+					$('#addHomeworkSubmitFileForm').submit();
+				} else {
+					alert('파일이 첨부되지 않은 list가 존재합니다');
+				}
+			}
+		});
+	});
+</script>
 </head>
 <script>
 	$('document').ready(function() {
@@ -33,13 +72,14 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-<h1>getHomeworkSubmitOne</h1>
+	<h1>학생 과제 수정</h1>
 	<div class="row">
 				<div class="col-lg-12 col-md-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">제출과제 상세보기</h4>
+							<h4 class="card-title">과제 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
+								<form action="${pageContext.request.contextPath }/homework/modifyHomeworkSubmit" method="post" enctype="multipart/form-data">
 								<table id="zero_config" class="table table-striped table-bordered">
 									<tr>
 										<td>homeworkSubmitNo</td>
@@ -49,38 +89,18 @@
 										<td>homeworkNo</td>
 										<td><input type="text" class="form-control" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}" readonly="readonly"></td>
 									</tr>
-<!-- 										<tr> -->
-<!-- 											<td>lectureNo</td> -->
-<%-- 											<td><input type="text" name="lectureNo" value="${homeworkSubmitOne.lectureNo}"></td> --%>
-<!-- 										</tr> -->
 									<tr>
 										<td>memberId</td>
 										<td><input type="text" class="form-control" name="memberId" value="${homeworkSubmitOne.memberId }" readonly="readonly"></td>
 									</tr>
 									<tr>
 										<td>homeworkSubmitTitle</td>
-										<td><input type="text" class="form-control" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }" readonly="readonly"></td>
+										<td><input type="text" class="form-control" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }"></td>
 									</tr>
 									<tr>
 										<td>homeworkSubmitContent</td>
-										<td><textarea name="homeworkSubmitContent" rows="8" cols="70" class="form-control" readonly="readonly">${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
+										<td><textarea name="homeworkSubmitContent" rows="8" cols="70" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
 									</tr>
-<!-- 										<tr> -->
-<!-- 											<td>homeworkSubmitFileName</td> -->
-<%-- 											<td><input type="text" name="homeworkSubmitFileName" value="${homeworkSubmitFileList.homeworkSubmitFileName }"></td> --%>
-<!-- 										</tr> -->
-									<c:if test="${sessionLoginMember.memberLevel == 4 && homeworkSubmitOne.homeworkSubmitScore !=0 }">
-										<tr>
-											<td>homeworkSubmitScore</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitScore" value="${homeworkSubmitOne.homeworkSubmitScore }"></td>
-										</tr>
-									</c:if>
-									<c:if test="${sessionLoginMember.memberLevel == 4 && not empty homeworkSubmitOne.homeworkSubmitFeedback}">
-										<tr>
-											<td>homeworkSubmitFeedback</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
-										</tr>
-									</c:if>
 									<tr>
 										<td>homeworkSubmitCreateDate</td>
 										<td><input type="text" class="form-control" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }" readonly="readonly"></td>
@@ -89,30 +109,23 @@
 										<td>homeworkSubmitUpdateDate</td>
 										<td><input type="text" class="form-control" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }" readonly="readonly"></td>
 									</tr>
-									<c:if test="${sessionLoginMember.memberLevel == 5}">
-										<tr>
-											<td colspan="2" align="center">점수와 피드백을 입력해 주세요</td>
-										</tr>
-										<tr>
-											<td>homeworkSubmitScore</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitScore" value="${homeworkSubmitOne.homeworkSubmitScore }"></td>
-										</tr>
-										<tr>
-											<td>homeworkSubmitFeedback</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
-										</tr>
-									</c:if>
 								 
 								</table>
+								<button type="button" class="btn btn-outline-success btn-rounded" id="addFileUpload">파일업로드</button>
+								<div id="fileSection"></div>
+								<!-- 파일업로드 input 추가될 영역 -->
+								<hr>
 								</div>
-								<h4>첨부된 파일 정보</h4>
+									<h4>첨부된 파일 정보</h4>
 							    <div>
-								    <table id="zero_config" class="table table-striped table-bordered">
+							   	<form method="post" action="${pageContext.request.contextPath }/homework/removeHomeworkSubmitFileOne">
+									<table id="zero_config" class="table table-striped table-bordered">
 								    	<thead>
 								    		<tr>
 									    		<th>파일미리보기</th>
 												<th>파일타입</th>
 												<th>파일사이즈</th>
+												<th>파일삭제</th>
 								    		</tr>
 								    	</thead>
 								    	<tbody>
@@ -120,27 +133,26 @@
 												<tr>
 													<td>
 														<c:if test="${hf.homeworkSubmitFileType=='image/gif'||hf.homeworkSubmitFileType=='image/png'||hf.homeworkSubmitFileType == 'image/jpeg'}">
-															<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}">
+															<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
 														</c:if>
 														<a href="${pageContext.request.contextPath}/static/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
 													</td>
 													<td>${hf.homeworkSubmitFileType}</td>
 													<td>${hf.homeworkSubmitFileSize}</td>
+													<td>
+														<input type="hidden" name="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo }">
+														<button type="submit" class="btn btn-outline-success btn-rounded">파일 삭제</button>
+													</td>
 												</tr>	
 								    		</c:forEach>
 								    	</tbody>
 								    	
 								    </table>
+							   	</form>
+<%-- 								    	<input type="hidden" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}"> --%>
+								    	<button type ="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">수정 완료</i></button>
+								    </form>
 								</div>
-								<form action = "${pageContext.request.contextPath}/homework/removeHomeworkSubmit" method="post">
-									<input type="hidden" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly">
-									<c:if test="${sessionLoginMember.memberLevel==4 && sessionLoginMember.memberId == homeworkSubmitOne.memberId }">
-										<button type="button" class="btn btn-outline-success btn-rounded float-left" onclick="location.href='${pageContext.request.contextPath}/homework/modifyHomeworkSubmit?homeworkSubmitNo='+${homeworkSubmitOne.homeworkSubmitNo}"><i class="fas fa-check">과제 수정</i></button>
-										<button type="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">과제 삭제</i></button>
-									</c:if>
-									<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check">과제 목록</i></button>
-								</form>
-								 
 							</div>
 						</div>
 					</div>
@@ -148,6 +160,8 @@
 			</div>
 		</div>
 	</div>
+								 
+	
 </body>
 <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>

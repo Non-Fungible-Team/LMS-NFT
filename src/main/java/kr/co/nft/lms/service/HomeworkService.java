@@ -180,7 +180,63 @@ public class HomeworkService {
 		return map;
 	}
 	
+	// 학생 과제 수정
+	public int modifyHomeworkSubmit(Homework homework, HomeworkSubmit homeworkSubmit, String path) {
+		log.debug(A.Q+"HomeworkService.modifyHomeworkSubmit homeworkSubmit : "+ homeworkSubmit +A.R);
+		
+		int row = homeworkMapper.updateHomeworkSubmit(homeworkSubmit);
+		
+		int fileRow = 0;
+		if(homeworkSubmit.getHomeworkSubmitFileList() != null && homeworkSubmit.getHomeworkSubmitFileList().get(0).getSize() > 0 && fileRow ==1) {
+			log.debug(A.Q+"HomeworkService.addHomeworkSubmit :"+"첨부된 파일이 있습니다."+A.R);
+			
+			for(MultipartFile mf : homeworkSubmit.getHomeworkSubmitFileList()) {
+				HomeworkSubmitFile homeworkSubmitFileModify = new HomeworkSubmitFile();
+				
+				String originName = mf.getOriginalFilename();
+				
+				// originName에서 마지막 .문자열 위치
+				String ext = originName.substring(originName.lastIndexOf("."));
+				
+				// 파일을 저장할때 사용할 중복되지않는 새로운 이름 필요(UUID API사용)
+				String fileName = UUID.randomUUID().toString();
+				
+				fileName = fileName + ext;
+				
+				homeworkSubmitFileModify.setHomeworkSubmitNo(homeworkSubmit.getHomeworkSubmitNo());
+				homeworkSubmitFileModify.setHomeworkSubmitFileName(fileName);
+				homeworkSubmitFileModify.setHomeworkSubmitFileOriginal(mf.getOriginalFilename());
+				homeworkSubmitFileModify.setHomeworkSubmitFileType(mf.getContentType());
+				homeworkSubmitFileModify.setHomeworkSubmitFileSize(mf.getSize());
+				
+				homeworkMapper.insertHomeworkSubmitFile(homeworkSubmitFileModify);
+				log.debug(A.Q+"HomeworkService.addHomeworkSubmit homeworkSubmitFile :"+ homeworkSubmitFileModify +A.R);
+				
+				fileRow = fileRow + homeworkMapper.insertHomeworkSubmitFile(homeworkSubmitFileModify);
+				try {
+					mf.transferTo(new File(path + fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException();
+				}
+			}
+		}
+		
+		return homeworkMapper.updateHomeworkSubmit(homeworkSubmit);
+	}
 	
+	// 학생 과제 삭제
+	public int removeHomeworkSubmit(int homeworkSubmitNo) {
+		log.debug(A.Q+"HomeworkService.removeHomeworkSubmit.param.homeworkSubmitNo :" + homeworkSubmitNo +A.R);
+		
+		return homeworkMapper.deleteHomeworkSubmit(homeworkSubmitNo);
+	}
+	
+	public int removeHomeworkSubmitFileOne(int homeworkSubmitFileNo) {
+		log.debug(A.Q+"HomeworkService.removeHomeworkSubmitFileOne.homeworkSubmitFileNo :" + homeworkSubmitFileNo+A.R);
+		
+		return homeworkMapper.deleteHomeworkSubmitFileOne(homeworkSubmitFileNo);
+	}
 	
 	
 	

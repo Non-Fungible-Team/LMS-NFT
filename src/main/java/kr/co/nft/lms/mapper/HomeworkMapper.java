@@ -42,14 +42,12 @@ public interface HomeworkMapper {
 	// 학생 제출과제 상세보기
 	HomeworkSubmit selectHomeworkSubmitOne(int homeworkSubmitNo);
 	
-	// File 상세보기
-	List<HomeworkSubmitFile> selectHomeworkSubmitFile(int homeworkSubmitFileNo);
 	
 	// 학생 제출과제 수정
 	int updateHomeworkSubmit(HomeworkSubmit homeworkSubmit);
 	
 	// 학생 제출과제 삭제
-	int deleteHomeworkSubmit(HomeworkSubmit homeworkSubmit);
+	int deleteHomeworkSubmit(int homeworkSubmitNo);
 	
 	// 학생 과제 피드백 점수 입력
 	int updateHomeworkSubmitScore(HomeworkSubmit homeworkSubmit);
@@ -57,5 +55,11 @@ public interface HomeworkMapper {
 	// 학생 과제 총 갯수
 	int selectSubmitTotalCount();
 	
+	// File 상세보기
+	List<HomeworkSubmitFile> selectHomeworkSubmitFile(int homeworkSubmitFileNo);
+	List<String> selectHomeworkSubmitFileNameList(int homeworkSubmitFileNo);
+	// File 삭제
+	int deleteHomeworkSubmitFileOne(int homeworkSubmitFileNo);
+	int deleteHomeworkSubmitFileList(int homeworkSubmitFileNo);
 	
 }

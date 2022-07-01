@@ -203,6 +203,77 @@ public class HomeworkController {
 		return "/homework/getHomeworkSubmitOne";
 	}
 	
+	// 학생 과제 수정 폼
+	@GetMapping("/homework/modifyHomeworkSubmit")
+	public String modifyHomeworkSubmit(Model model
+									,@RequestParam(name="homeworkSubmitNo", required=false) int homeworkSubmitNo) {
+		log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit homeworkSubmitNo :"+ homeworkSubmitNo +A.R);
+		
+		Map<String, Object> map = homeworkService.getHomeworkSubmitOne(homeworkSubmitNo);
+		log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit.map"+ map +A.R);
+		
+		model.addAttribute("homeworkSubmitOne", map.get("homeworkSubmitOne"));
+		model.addAttribute("homeworkSubmitFileList", map.get("homeworkSubmitFileList"));
+		return "/homework/modifyHomeworkSubmit";
+	}
+	
+	// 학생 과제 수정 액션
+	@PostMapping("/homework/modifyHomeworkSubmit")
+	public String modifyHomeworkSubmit(HttpServletRequest request
+									,HomeworkSubmit homeworkSubmit
+									,Homework homework) {
+		log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit.param.homework : " + homeworkSubmit +A.R);
+		
+		URL pathUrl = this.getClass().getResource("/static/");
+		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
+		
+		// homeworkService.addHomeworkSubmit(homeworkSubmit, homework, path);
+		
+		List<MultipartFile> homeworkSubmitFileList = homeworkSubmit.getHomeworkSubmitFileList();
+		if(homeworkSubmitFileList != null && homeworkSubmitFileList.get(0).getSize() > 0) {
+			for(MultipartFile mf : homeworkSubmitFileList ) {
+				log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit filename :" + mf.getOriginalFilename() + A.R);
+			}
+		}
+		
+		int row = homeworkService.modifyHomeworkSubmit(homework, homeworkSubmit, path);
+		if(row == 1) {
+			log.debug(A.Q+"과제 수정 성공"+A.R);
+		} else {
+			log.debug(A.Q+"과제 수정 실패"+A.R);
+		}
+		
+		return "redirect:/homework/getHomeworkSubmitOne?homeworkSubmitNo=" + homeworkSubmit.getHomeworkSubmitNo();
+	}
+	
+	// 학생 과제 삭제 액션
+	@PostMapping("/homework/removeHomeworkSubmit")
+	public String removeHomeworkSubmit(@RequestParam(name="homeworkSubmitNo") int homeworkSubmitNo) {
+		log.debug(A.Q+"HomeworkController.removeHomeworkSubmit.param.homeworkSubmitNo :" + homeworkSubmitNo + A.R);
+		
+		int row = homeworkService.removeHomeworkSubmit(homeworkSubmitNo);
+		if(row == 1) {
+			log.debug(A.Q+ "과제 삭제 성공" + A.R);
+		} else {
+			log.debug(A.Q+ "과제 삭제 실패" + A.R);
+		}
+		
+		return "redirect:/homework/getHomeworkListByPage";
+	}
+	// 학생 과제 파일 삭제 액션
+	@PostMapping("/homework/removeHomeworkSubmitFileOne")
+	public String removeHomeworkSubmitFileOne(HomeworkSubmit homeworkSubmit
+										,@RequestParam(name="homeworkSubmitFileNo") int homeworkSubmitFileNo) {
+		int row = homeworkService.removeHomeworkSubmitFileOne(homeworkSubmitFileNo);
+		if(row ==1) {
+			log.debug(A.Q+"파일 삭제 성공"+A.R);
+		} else {
+			log.debug(A.Q+"파일 삭제 실패" + A.R);
+		}
+		
+		return "redirect:/homework/modifyHomeworkSubmit?homeworkSubmitNo=" + homeworkSubmit.getHomeworkSubmitNo();
+	}
+	
 	
 	
 	

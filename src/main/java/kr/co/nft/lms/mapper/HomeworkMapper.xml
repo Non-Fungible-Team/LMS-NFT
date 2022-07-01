@@ -6,23 +6,6 @@
 	<select id="selectHomeworkListByPage"
 			parameterType="java.util.Map"
 			resultType="map">	
-		 <!-- SELECT
-			h.homework_no homeworkNo
-			,h.member_id teacherId
-			,hs.member_id studentId
-			,h.lecture_no lectureNo
-			,h.homework_title homeworkTitle
-			,h.homework_content homeworkContent
-			,h.homework_start_date homeworkStartDate
-			,h.homework_end_date homeworkEndDate
-			,h.homework_create_date homeworkCreateDate
-			,h.homework_update_date homeworkUpdateDate
-			,hs.homework_submit_no homeworkSubmitNo
-		FROM homework h
-		LEFT JOIN homework_submit hs
-		ON h.homework_no = hs.homework_no -->
- 		
- 		
  		(SELECT 
 	 		h.homework_no homeworkNo 
 			,h.member_id teacherId 
@@ -173,20 +156,6 @@
 	<select id="selectHomeworkSubmitOne"
 			parameterType="int"
 			resultType="kr.co.nft.lms.vo.HomeworkSubmit">
-		<!-- SELECT
-			homework_submit_no homeworkSubmitNo
-			,homework_no homeworkNo
-			,member_id memberId
-			,homework_submit_title homeworkSubmitTitle
-			,homework_submit_content homeworkSubmitContent
-			,homework_submit_score homeworkSubmitScore
-			,homework_submit_feedback homeworkSubmitFeedback
-			,homework_submit_create_date homeworkSubmitCreateDate
-			,homework_submit_update_date homeworkSubmitUpdateDate
-		FROM
-			homework_submit
-			WHERE
-			homework_submit_no = #{homeworkSubmitNo} -->
 	
 		SELECT
 			hs.homework_submit_no homeworkSubmitNo
@@ -232,6 +201,18 @@
 			,homework_submit_file_update_date homeworkSubmitFileUpdateDate
 		FROM homework_submit_file homeworkSubmitFile
 		WHERE homework_submit_no = #{homeworkSubmitNo}
+	</select>
+	
+	<select id="selectHomeworkSubmitFileNameList"
+			parameterType="int"
+			resultType="String">
+		SELECT
+			homework_submit_file_name homeworkSubmitFileName
+		FROM
+			homework_submit_file
+		WHERE
+			homework_submit_no = #{homeworkSubmitNo}
+			
 	</select>
 	
 	
@@ -288,12 +269,39 @@
 		)
 		
 	</insert>
-	<update id="updateHomeworkSubmit">
+	
+	<!-- 학생 과제 수정 -->
+	<update id="updateHomeworkSubmit"
+			parameterType="kr.co.nft.lms.vo.HomeworkSubmit">
+		UPDATE
+			homework_submit
+		SET
+			homework_submit_title = #{homeworkSubmitTitle}
+			,homework_submit_content = #{homeworkSubmitContent}
+			,homework_submit_update_date = NOW()
+		WHERE
+			homework_submit_no = #{homeworkSubmitNo}
 	
 	</update>
 
-	<delete id="deleteHomeworkSubmit">
+	<!-- 학생 과제 삭제 -->
+	<delete id="deleteHomeworkSubmit"
+			parameterType="int">
+		DELETE FROM homework_submit
+		WHERE homework_submit_no = #{homeworkSubmitNo}
 	
+	</delete>
+	
+	<delete id="deleteHomeworkSubmitFileOne"
+			parameterType="int">
+		DELETE FROM homework_submit_file
+		WHERE homework_submit_file_no = #{homeworkSubmitFileNo}
+	</delete>
+	
+	<delete id="deleteHomeworkSubmitFileList"
+			parameterType="int">
+		DELETE FROM homework_submit_file
+		WHERE homework_submit_no = #{homeworkSubmitNo}
 	</delete>
 
 	<!-- 과제 점수와 피드백 입력을 위한 쿼리 -->
