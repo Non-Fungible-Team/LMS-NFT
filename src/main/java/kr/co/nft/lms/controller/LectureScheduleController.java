@@ -15,6 +15,7 @@ import kr.co.nft.lms.service.AttendService;
 import kr.co.nft.lms.service.LectureScheduleService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.LectureSchedule;
+import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
@@ -193,20 +194,24 @@ public class LectureScheduleController {
 	}
 	//2.수강중인 강의별 출석 확인 - 학생
 	@GetMapping("/student/lecture/getStudentAttendOne")
-	public String getStudentAttendOne(Model model
-							,@RequestParam(name = "lectureNo") int lectureNo
-							,@RequestParam(name="memberId") String memberId) {
+	public String getStudentAttendOne(Model model,HttpSession session) {
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.param] model(전체학생출석목록실행) : " +model +A.R);
+		//session에 memberId와 lectureNo 요청
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		String memberId = loginMember.getMemberId();
+		int lectureNo = (int)session.getAttribute("sessionLectureNo");
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.param] lectureNo(강의번호) : " +lectureNo +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.param] memberId(학생아이디) : " +memberId +A.R);
 		
 		//출석 서비스 호출
 		Map<String,Object> paramMap = attendService.getStudentAttendOne(lectureNo, memberId);
-		model.addAttribute("lectureNo", paramMap.get("lectureNo"));
-		model.addAttribute("memberId", paramMap.get("memberId"));
+		//model에 값 추가
+		model.addAttribute("lectureNo", lectureNo);
+		model.addAttribute("memberId", memberId);
 		model.addAttribute("attendList", paramMap.get("attendList"));
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.map] map(서비스호출) : " +paramMap +A.R);
-		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.lectureNo] lectureNo(model) : " +paramMap.get("lectureNo") +A.R);
-		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.memberId] memberId(model) : " +paramMap.get("memberId") +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.lectureNo] lectureNo(model) : " +lectureNo +A.R);
+		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.memberId] memberId(model) : " + memberId +A.R);
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getStudentAttendOne.model.attendList] attendList(model) : " +paramMap.get("attendList") +A.R);
 
 		return "/lecture/getStudentAttendOne";

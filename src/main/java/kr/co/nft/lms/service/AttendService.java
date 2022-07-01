@@ -73,7 +73,7 @@ public class AttendService {
 		log.debug(A.W +"[AttendService.getStudentAttendOne.map] memberId : "+memberId +A.R);
 		
 		//mapper 호출
-		List<Attend> studentAttendList = attendMapper.selectStudentAttendOne(lectureNo, memberId);
+		List<Attend> studentAttendList = attendMapper.selectStudentAttendOne(map);
 		log.debug(A.W +"[AttendService.getAttendListByPage.studentAttendList(매퍼호출)] studentAttendList : "+ studentAttendList +A.R);
 		
 		//결과값 map에 저장
