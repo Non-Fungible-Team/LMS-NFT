@@ -49,9 +49,7 @@ public class ScheduleService {
 		log.debug(A.A + "[ScheduleService.getScheduleList] year : " + year + A.R);
 		log.debug(A.A + "[ScheduleService.getScheduleList] month : " + month + A.R);
 		
-		
-		// 시작 시 필요한 공백 <TD>의 개수를 구하는 알고리즘 -> startBlank
-		// firstDay는 오늘 날짜를 먼저 구하여 날짜만 1일로 변경해서 구하자
+		// firstDay : 오늘 날짜를 먼저 구하여 날짜만 1일로 변경
 		Calendar firstDay = Calendar.getInstance(); // ex) 2022.04.19
 		firstDay.set(Calendar.YEAR, year);
 		firstDay.set(Calendar.MONTH, month - 1); // 자바 달력 API는 1월을 0으로, 2월을 1로, ... 12월을 11로 설정되어있다.
