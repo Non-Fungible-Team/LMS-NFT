@@ -81,9 +81,6 @@
 											<td>
 												<input type="text" name="attendReason" maxlength="50"> 
 											</td>
-											<td>
-												<input type="text" name="attendCreateDate" value="${a.attendCreateDate}">
-											</td>
 										</tr>
 									</c:forEach>
 									</form>
