@@ -13,7 +13,7 @@ public interface AttendMapper {
 	List<Attend> selectAttendList(Map<String,Object> map);
 	
 	//2.학생이 자신이 듣는 강의별 출석 확인 
-	List<Attend> selectStudentAttendOne(int lectureNo, String memberId);
+	List<Attend> selectStudentAttendOne(Map<String,Object> map);
 	
 	//3.학생 출석 삽입
 	int insertAttend(Attend attend); 
