@@ -275,13 +275,20 @@ public class LectureService {
 	}
 		
 	//5-2.학생-강의 삽입 폼
-	public List<Student> addStudentLecture() { //controller 넘겨오는 값
+	public Map<String, Object> addStudentLecture() {
 		
 		//mapper 메소드 호출
 		List<Student> studentList = memberMapper.selectStudentList();
-		log.debug(A.A +"[LectureService.addStudentLecture.studentList] studentList : " + studentList + A.R);
+		List<Lecture> lectureNoNameList = lectureMapper.selectLectureNoNameList();
 		
-		return studentList;
+		log.debug(A.A +"[LectureService.addStudentLecture] studentList : " + studentList + A.R);
+		log.debug(A.A +"[LectureService.addStudentLecture] lectureNoNameList : " + lectureNoNameList + A.R);
+
+		Map<String , Object> returnMap = new HashMap<>();
+		returnMap.put("studentList", studentList);
+		returnMap.put("lectureNoNameList", lectureNoNameList);
+		
+		return returnMap;
 	}
 	
 	//5-2.학생-강의 삽입 액션
@@ -297,7 +304,7 @@ public class LectureService {
 	}
 	
 	//5-3. 학생-강의 목록 수정폼
-	public Map<String , Object> modifyStudentLectureForm(int lectureNo, String memberId) {
+	public StudentLecture modifyStudentLectureForm(int lectureNo, String memberId) {
 		
 		// 파라미터 값 디버깅
 		log.debug(A.A +"[LectureService.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
@@ -310,21 +317,17 @@ public class LectureService {
 		
 		log.debug(A.A +"[LectureService.modifyStudentLectureForm] studentLecture : " + studentLecture + A.R);
 		
-		List<Lecture> lectureNoNameList = lectureMapper.selectLectureNoNameList();
-		
 		// 매퍼 반환 값 가공해서 controller에 넘겨줌 (수정폼 mapper 메소드 호출 및 저장객체 생성)
 		StudentLecture studentLectureOne = lectureMapper.updateStudentLectureForm(studentLecture);
 		
-		Map<String , Object> returnMap = new HashMap<>();
-		returnMap.put("lectureNoNameList", lectureNoNameList);
-		returnMap.put("studentLectureOne", studentLectureOne);
+		log.debug(A.A +"[LectureService.modifyStudentLectureForm] studentLectureOne : " + studentLectureOne + A.R);
 		
-		return returnMap;
+		return studentLectureOne;
 	}
 	
 	//학생-강의 목록 수정액션
 	public int modifyStudentLectureAction(StudentLecture studentLecture) {
-		log.debug(A.A +"[LectureService.modifyStudentLecture.studentLecture] studentLecture  : " + studentLecture +A.R);
+		log.debug(A.A +"[LectureService.modifyStudentLectureAction.studentLecture] studentLecture  : " + studentLecture +A.R);
 		
 		int row = lectureMapper.updateStudentLecture(studentLecture);
 		log.debug(A.A +"[LectureService.modifyStudentLectureAction.row] row  : " + row + A.R);

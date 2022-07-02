@@ -42,7 +42,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		        <div class="card-body">
 		            <h4 class="card-title">StudentLecture List</h4>
 		            <br>
-		            <a href="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture" class="btn btn-primary btn-rounded">
+		            <a href="${pageContext.request.contextPath}/teacher/lecture/addStudentLecture?lectureNo=${lectureNo}" class="btn btn-primary btn-rounded">
 						<i class="fas fa-check"></i>입력
 					</a>
 		            <div class="mt-2" style="height:auto; width:auto;">

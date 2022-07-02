@@ -61,7 +61,18 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            <div style="height:294px;">
 		            	<form method="post" id="addForm" action="${pageContext.request.contextPath}/teacher/lecture/addStudentLectureAction">
                             <div class="form-group">
-                               <!-- 강의 : <input type="text" name="lectureNo" class="form-control" id="lectureNo">  -->
+                              강의 :
+                               <select name="lectureNo" id="lectureNo" class="form-control">
+                           			<option value="-1">강의 선택</option>
+                           			<c:forEach var ="ln" items="${ lectureNoNameList }">
+                           				<c:if test="${ ln.lectureNo == lectureNo }">
+		                        			<option value="${ lectureNo }" selected>${ lectureNo } (${ ln.lectureName })</option>
+				                      	</c:if>
+                           				<c:if test="${ ln.lectureNo != lectureNo }">
+                              				<option value="${ ln.lectureNo }">${ ln.lectureNo } (${ ln.lectureName })</option>
+				                      	</c:if>
+                           			</c:forEach>
+                       		   </select>
                                학생 : <select name="memberId" id="memberId" class="form-control">
                                			<option value="-1">학생 선택</option>
                                			<c:forEach var ="s" items="${ studentList }">

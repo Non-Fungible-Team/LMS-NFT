@@ -52,20 +52,20 @@ public class SurveyController {
 		// 로그인 정보 가져오기
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		// 학생 강의 One 리스트 + 강의 이름과 번호 리스트
-		Map<String , Object> studentLectureOneMap  = lectureService.modifyStudentLectureForm(lectureNo, loginMember.getMemberId());
+		//Map<String , Object> studentLectureOneMap  = lectureService.modifyStudentLectureForm(lectureNo, loginMember.getMemberId());
 		
 		
 		// 질문 항목 가져오기
 		Map<String, Object> map = surveyService.selectSurveyQuestionList(currentPage, rowPerPage);
 		
 		
-		log.debug(A.D+"[SurveyController.insertSurvey] studentLectureOneMap : " + studentLectureOneMap + A.R);
+		//log.debug(A.D+"[SurveyController.insertSurvey] studentLectureOneMap : " + studentLectureOneMap + A.R);
 		log.debug(A.D+"[SurveyController.insertSurvey] loginMember : " + loginMember +A.R);
 		log.debug(A.D+"[SurveyController.insertSurvey] map : " + map + A.R); // 디버깅
 		
 		model.addAttribute("QuestionList",map.get("QuestionList"));
 		model.addAttribute("loginMember",loginMember);
-		model.addAttribute("lectureNoNameList", studentLectureOneMap.get("lectureNoNameList"));
+		//model.addAttribute("lectureNoNameList", studentLectureOneMap.get("lectureNoNameList"));
 		
 		return "survey/insertSurvey";
 	}

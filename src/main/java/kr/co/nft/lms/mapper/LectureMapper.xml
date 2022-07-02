@@ -267,13 +267,14 @@
 		UPDATE student_lecture
 		SET lecture_no = #{lectureNo}
 			, member_id = #{memberId}
-			, student_lecture_job =#{studentLectureJob}
-			, student_lecture_legistration_date =#{studentLectureLegistrationDate}
+			, student_lecture_job = #{studentLectureJob}
+			, student_lecture_legistration_date = #{studentLectureLegistrationDate}
 			<if test="studentLectureEndDate != 'null'">
 				, student_lecture_end_date = #{studentLectureEndDate}
 			</if>
 			, student_lecture_score = #{studentLectureScore}
 		WHERE member_id = #{memberId}
+		AND lecture_no = #{lectureNo}
 	</update>
 	<!-- 5-4.학생-강의 목록 삭제 -->
 	<delete id="deleteStudentLecture" 

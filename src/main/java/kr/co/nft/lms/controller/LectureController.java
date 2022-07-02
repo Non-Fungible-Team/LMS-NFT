@@ -203,6 +203,7 @@ public class LectureController {
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] returnMap : " + returnMap + A.R);
 		
+		model.addAttribute("lectureNo", lectureNo); 
 		model.addAttribute("studentLectureList", returnMap.get("studentLectureList")); 
 		model.addAttribute("currentPage", returnMap.get("currentPage")); 
 		model.addAttribute("rowPerPage", returnMap.get("rowPerPage")); 
@@ -215,9 +216,11 @@ public class LectureController {
 	// 5 & 6.학생 강의 전체 목록
 	@GetMapping("/manager/lecture/getStudentLectureAllByPage")
 	public String getStudentLectureAllByPage(Model model
+											, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
 											, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
 											, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		
+		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] currentPage : " + currentPage + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] rowPerPage : " + rowPerPage + A.R);
 		
@@ -236,15 +239,18 @@ public class LectureController {
 	
 	// 5-2. 학생-강의 삽입 폼
 	@GetMapping("/teacher/lecture/addStudentLecture")
-	public String addStudentLecture(Model model) {
+	public String addStudentLecture(Model model
+								  , @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
 		
-		log.debug(A.A + "[LectureController.addStudentLecture] 실행" + A.R);		
+		log.debug(A.A + "[LectureController.addStudentLecture] lectureNo : " + lectureNo + A.R);		
 		
-		List<Student> studentList = lectureService.addStudentLecture();
+		Map<String , Object> paramMap = lectureService.addStudentLecture();
 		
-		log.debug(A.A + "[LectureController.addStudentLecture] studentList : " + studentList + A.R);
+		log.debug(A.A + "[LectureController.addStudentLecture] paramMap : " + paramMap + A.R);
 		
-		model.addAttribute("studentList", studentList);
+		model.addAttribute("studentList", paramMap.get("studentList"));
+		model.addAttribute("lectureNoNameList", paramMap.get("lectureNoNameList"));
+		model.addAttribute("lectureNo", lectureNo);
 		
 		return "/lecture/addStudentLecture";
 	}
@@ -255,9 +261,6 @@ public class LectureController {
 									  		, @RequestParam(name = "memberId") String memberId
 								  			, @RequestParam(name = "studentLectureJob") String studentLectureJob
 								  			, @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate) {
-		
-		lectureNo = 1;
-		memberId = "student2";
 				
 		log.debug(A.A + "[LectureController.addStudentLectureAction] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.addStudentLectureAction] memberId : " + memberId + A.R);
@@ -280,7 +283,7 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 실패" + A.R);
 		}
 
-		return "redirect:/teacher/lecture/getStudentLectureByPage";
+		return "redirect:/manager/lecture/getStudentLectureAllByPage";
 	}
 	
 	// 5-3. 학생-강의 목록 수정 폼
@@ -292,19 +295,19 @@ public class LectureController {
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] memberId : " + memberId + A.R);
 		
-		// 학생 이름 리스트
-		List<Student> studentTotalList = lectureService.addStudentLecture();
+		// 전체 학생 이름 리스트 + 전체 강의 이름과 번호 리스트
+		Map<String, Object> map = lectureService.addStudentLecture();
 		
-		// 학생 강의 One 리스트 + 강의 이름과 번호 리스트
-		Map<String , Object> studentLectureOneMap  = lectureService.modifyStudentLectureForm(lectureNo, memberId);
+		// 학생 강의 One 리스트
+		StudentLecture studentLectureOne  = lectureService.modifyStudentLectureForm(lectureNo, memberId);
 		
-		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentTotalList : " + studentTotalList + A.R);
-		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNoNameList : " + studentLectureOneMap.get("lectureNoNameList") + A.R);
-		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentLectureOne : " + studentLectureOneMap.get("studentLectureOne") + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentTotalList : " + map.get("studentList") + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNoNameList : " + map.get("lectureNoNameList") + A.R);
+		log.debug(A.A + "[LectureController.modifyStudentLectureForm] studentLectureOne : " + studentLectureOne + A.R);
 		
-		model.addAttribute("studentTotalList", studentTotalList);
-		model.addAttribute("lectureNoNameList", studentLectureOneMap.get("lectureNoNameList"));
-		model.addAttribute("studentLectureOne", studentLectureOneMap.get("studentLectureOne"));
+		model.addAttribute("studentTotalList", map.get("studentList"));
+		model.addAttribute("lectureNoNameList", map.get("lectureNoNameList"));
+		model.addAttribute("studentLectureOne", studentLectureOne);
 		
 		return "/lecture/modifyStudentLecture";
 	}
