@@ -105,4 +105,28 @@
 	WHERE member_id =#{memberId}
 	</delete>
 	
+	<!-- 6.출석 삽입 폼 -->
+	<select id="insertAttendForm" 
+			resultType="kr.co.nft.lms.vo.StudentLecture"
+			parameterType="java.util.Map">
+			SELECT
+				s.member_id memberId
+				, s.student_name studentName
+				, sl.lecture_no lectureNo
+				,l.lecture_name lectureName
+	FROM student s
+	INNER JOIN student_lecture sl
+		ON sl.member_id = #{memberId}
+		AND sl.lecture_no = #{lectureNo}
+	INNER JOIN lecture l
+		ON sl.lecture_no = l.lecture_no
+	AND sl.lecture_no = #{lectureNo}
+	WHERE s.member_id NOT IN(
+		SELECT
+			a.member_id
+		FROM attend a
+		WHERE a.lecture_no = #{lectureNo}
+		AND a.attend_date =#{attendDate}
+		)
+	</select>
 </mapper>

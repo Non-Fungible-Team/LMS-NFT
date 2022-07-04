@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Attend;
+import kr.co.nft.lms.vo.Student;
+import kr.co.nft.lms.vo.StudentLecture;
 @Mapper
 public interface AttendMapper {
 	
@@ -25,4 +27,6 @@ public interface AttendMapper {
 	//5.학생 출석 삭제  
 	int deleteAttend(String memberId);
 	
+	//6.학생 출석 폼
+	List<StudentLecture> insertAttendForm(Map<String,Object> map);
 }

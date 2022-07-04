@@ -93,13 +93,16 @@ public class AttendService {
 		log.debug(A.W +"[AttendService.addAttendForm]  출석 삽입 폼" +A.R);
 		
 		//mapper 호출(학생,강의 목록 및 강의시간표)
+		List<StudentLecture> studentLectureList = attendMapper.insertAttendForm(map);
+		log.debug(A.W +"[AttendService.addAttendForm.studentLectureList] studentLectureList : " +studentLectureList +A.R);//디버깅코드
+		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleDateByLectureNo(map);
+		log.debug(A.W +"[AttendService.addAttendForm.lectureScheduleList] lectureScheduleList : "+lectureScheduleList +A.R);
 		List<Attend> attendList = attendMapper.selectAttendList(map);
-		//List<Attend> attendList = attendMapper.addAttendFormTest(map);
 		log.debug(A.W +"[AttendService.addAttendForm.attendList] attendList : " +attendList +A.R);//디버깅코드
-		
 		
 		//결과값 반환하는 객체 생성
 		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("studentLectureList", studentLectureList);
 		returnMap.put("attendList", attendList);
 		log.debug(A.W +"[AttendService.addAttendForm.returnMap] returnMap : " +returnMap +A.R);//디버깅코드
 		

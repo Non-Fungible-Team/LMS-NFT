@@ -47,9 +47,16 @@
 						<div class="card-body">
 							<h4 class="card-title">출석 체크</h4>
 							<div style="height: auto; width: auto;">
-							<form class="mt-4" method="post" id="addAttendForm" action="${pageContext.request.contextPath}/manager/lecture/addLecture">
-							<div class="form-group">
-								<table id="zero_config" class="table table-striped table-bordered no-wrap">
+							<form method="get" action="${pageContext.request.contextPath}/teacher/lecture/getAttendList">
+								<input type ="hidden" name="lectureNo" value="${lectureNo}">
+								<select name="attendDate" id="attendDate" onchange ="this.form.submit()">
+									<option value="">출석날짜</option>
+									<c:forEach var="ls" items="${lectureScheduleList}">
+										<option value="${ls.lectureScheduleDate}">${ls.lectureScheduleDate}</option>
+									</c:forEach>
+								</select>
+							</form>
+								<table class="table table-striped table-bordered">
 									<tr>
 										<th>출석 날짜</th>
 										<th>강의 번호</th>
@@ -60,13 +67,13 @@
 										<th>사유</th>
 									</tr>
 									<tr>
-									<c:forEach var="a" items="${attendList}">
+									<c:forEach var="l" items="${lectureList}">
 										<tr>
-											<td>${a.attendDate}</td>
-											<td>${a.lectureNo}</td>
-											<td>${a.lectureName}</td>
-											<td>${a.memberId}</td>
-											<td>${a.studentName}</td>
+											<td><input type="text" name="attendDate" value="${param.attendDate}">${param.attendDate}</td>
+											<td>${l.lectureNo}</td>
+											<td>${l.lectureName}</td>
+											<td>${l.memberId}</td>
+											<td>${l.studentName}</td>
 											<td>
 												<select name="attendStatus">
 													<option value="출석">출석</option>
@@ -82,7 +89,6 @@
 										</tr>
 									</c:forEach>
 								</table>
-							</div>
 							<!-- 작성자 -->
 							<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
 							<button type="button" id="addAttendBtn" class="btn btn-outline-success btn-rounded">

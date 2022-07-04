@@ -61,7 +61,9 @@
 												<th>출석 상태</th>
 												<th>사유</th>
 												<th>체크날짜</th>
-												<th><a href='${pageContext.request.contextPath}/manager/lecture/addAttend?lectureNo=${lectureNo}&attendDate=${param.attendDate}' class='btn btn-primary btn-rounded'><i class='fas fa-check'></i> 출석 체크</a></div>
+												<th>
+													<a href="${pageContext.request.contextPath}/manager/lecture/addAttend?lectureNo=${lectureNo}&attendDate=${param.attendDate}" class="btn btn-primary btn-rounded">
+													<i class='fas fa-check'>출석 체크</i></a>
 												</th>
 											</tr>
 										</thead>

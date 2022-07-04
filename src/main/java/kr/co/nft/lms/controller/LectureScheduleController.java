@@ -235,6 +235,9 @@ public class LectureScheduleController {
 		
 		//service 호출
 		Map<String,Object> returnMap = attendService.addAttendForm(map);
+		model.addAttribute("lectureList", returnMap.get("lectureList"));
+		model.addAttribute("studentLectureList", returnMap.get("studentLectureList"));
+		model.addAttribute("lectureScheduleList", returnMap.get("lectureScheduleList"));
 		model.addAttribute("attendDate", returnMap.get("attendDate"));
 		model.addAttribute("lectureNo", returnMap.get("lectureNo"));
 		model.addAttribute("attendList",returnMap.get("attendList"));

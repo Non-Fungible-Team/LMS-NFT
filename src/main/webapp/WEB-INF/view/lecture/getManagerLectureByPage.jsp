@@ -35,7 +35,7 @@
 					<div class="col-lg-12 col-md-6">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">수강목록</h4>
+								<h4 class="card-title">강사-강의목록</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
