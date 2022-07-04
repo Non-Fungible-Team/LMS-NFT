@@ -117,7 +117,8 @@ $('document').ready(function() {
 										</tr>
 										<tr>
 											<td>homeworkSubmitFeedback</td>
-											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
+											<td><textarea name="homeworkSubmitFeedback" rows="8" cols="70" class="form-control">${homeworkSubmitOne.homeworkSubmitFeedback}</textarea></td>
+<%-- 											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td> --%>
 										</tr>
 										<tr>
 											<td colspan="2" align="center"><button type ="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check"></i> 입력 완료</button></td>

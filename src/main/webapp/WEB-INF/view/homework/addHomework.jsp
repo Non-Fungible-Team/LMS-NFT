@@ -23,6 +23,32 @@
 <script>
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		// 유효성 검사
+		$('#uploadHomework').click(function(){
+			$('#homeworkTitleHelper').text('');
+			$('#homeworkContentHelper').text('');
+			$('#homeworkStartDateHelper').text('');
+			$('#homeworkEndDateHelper').text('');
+			
+			if($('#homeworkTitle').val()==''){
+				$('#homeworkTitleHelper').text('제목을 입력하세요');
+				$('#homeworkTitle').focus();
+			} else if($('#homeworkContent').val()=='') {
+				$('#homeworkContentHelper').text('내용을 입력하세요');
+				$('#homeworkTitle').focus();
+			} else if($('#homeworkStartDate').val()==''){
+				$('#homeworkStartDateHelper').text('시작 날짜를 입력하세요');
+				$('#homeworkStartDate').focus();				
+			} else if($('#homeworkEndDate').val() <= $('#homeworkStartDate').val() ) {
+				$('#homeworkEndDateHelper').text('마감 날짜는 시작날짜 이후여야 합니다');
+				$('#homeworkEndDate').focus();
+			} else {
+				$('#addHomeworkForm').submit();
+			}
+			
+		})
+		
 		});
 </script>
 <body>
@@ -39,28 +65,50 @@
 								<h4 class="card-title">과제 입력</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-								<form action="${pageContext.request.contextPath}/teacher/homework/addHomework"method="post">
+								<form action="${pageContext.request.contextPath}/teacher/homework/addHomework" method="post" id="addHomeworkForm">
 									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
-											<td>작성자</td><td><input type="text" class="form-control" name="memberId" value="${sessionLoginMember.memberId}"></td>
+											<td>작성자</td>
+											<td>
+												<input type="text" class="form-control" name="memberId" value="${sessionLoginMember.memberId}">
+											</td>
 										</tr>
 										<tr>
-											<td>강의 번호</td><td><input type="text" class="form-control" name="lectureNo" value="${sessionLectureNo}"></td>
+											<td>강의 번호</td>
+											<td>
+												<input type="text" class="form-control" name="lectureNo" value="${sessionLectureNo}">
+											</td>
 										</tr>
 										<tr>
-											<td>과제 제목</td><td><input type="text" class="form-control" name="homeworkTitle"></td>
+											<td>과제 제목</td>
+											<td>
+												<input type="text" id="homeworkTitle" class="form-control" name="homeworkTitle">
+												<span id="homeworkTitleHelper" class="helper"></span>
+											</td>
 										</tr>
 										<tr>
-											<td>과제 내용</td><td><textarea name="homeworkContent" class="form-control" rows="10" cols="70"></textarea></td>
+											<td>과제 내용</td>
+											<td>
+												<textarea name="homeworkContent" id="homeworkContent" class="form-control" rows="10" cols="70"></textarea>
+												<span id="homeworkContentHelper" class="helper"></span>
+											</td>
 										</tr>
 										<tr>
-											<td>시작 날짜</td><td><input type="datetime-local" size="20" class="form-control" name="homeworkStartDate"></td>
+											<td>시작 날짜</td>
+											<td>
+												<input type="datetime-local" id="homeworkStartDate" size="20" class="form-control" name="homeworkStartDate">
+												<span id="homeworkStartDateHelper" class="helper"></span>
+											</td>
 										</tr>
 										<tr>
-											<td>마감 날짜</td><td><input type="datetime-local" size="20" class="form-control" name="homeworkEndDate"></td>
+											<td>마감 날짜</td>
+											<td>
+												<input type="datetime-local" id="homeworkEndDate" size="20" class="form-control" name="homeworkEndDate">
+												<span id="homeworkEndDateHelper" class="helper"></span>
+											</td>
 										</tr>
 									</table>
-										<button type="submit"class="btn btn-outline-success btn-rounded">
+										<button type="button" id="uploadHomework" class="btn btn-outline-success btn-rounded">
 										<i class="fas fa-check"></i> 과제 등록</button>
 										<input type="reset" class="btn btn-outline-success btn-rounded" value="초기화">
 								</form>

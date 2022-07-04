@@ -149,6 +149,7 @@
 		LEFT JOIN homework_submit_file hsf
 		ON hs.homework_submit_no = hsf.homework_submit_no
 		WHERE hs.homework_no = #{homeworkNo}
+		GROUP BY hs.homework_submit_no
 		ORDER BY hs.homework_submit_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 		
