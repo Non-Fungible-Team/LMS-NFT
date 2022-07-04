@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class Comment {
 	private int commentNo;
-	private int boardNo;
-	private String commentTitle;
+	private int lectureBoardNo;
 	private String commentContent;
 	private String commentBlind;
 	private String memberId;
