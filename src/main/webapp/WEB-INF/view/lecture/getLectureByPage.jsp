@@ -61,7 +61,7 @@
 												<tr>
 													<td>${l.lectureNo}</td>
 													<td>${l.subjectName}</td>
-													<td><a href="${pageContext.request.contextPath}/teacher/lecture/lectureNameOne?lectureNo=${l.lectureNo}">${l.lectureName}</a></td>
+													<td><a href="${pageContext.request.contextPath}/all/lectureNoController?lectureNo=${l.lectureNo}&lectureOne=true">${l.lectureName}</a></td>
 													<td>${l.lectureStartDate}</td>
 													<td>${l.lectureEndDate}</td>
 													<td>${l.lectureRoomName}</td>

@@ -31,7 +31,7 @@ public class LectureScheduleController {
 	public String addLectureScheduleForm(Model model
 										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
 		
-		log.debug(A.A + "[LectureScheduleController.addLectureSchedule] lectureNo : " + lectureNo + A.R);
+		log.debug(A.A + "[LectureScheduleController.addLectureScheduleForm] lectureNo : " + lectureNo + A.R);
 		
 		model.addAttribute("lectureNo", lectureNo);
 						
@@ -70,13 +70,11 @@ public class LectureScheduleController {
 	// 2. 강의시간표 목록
 	@GetMapping("/all/lecture/getLectureScheduleListByLectureNo")
 	public String getLectureScheduleListByLectureNo(Model model
-													,HttpSession session
-													,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
+													,@RequestParam(name = "currentPage", defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
+													,@RequestParam(name = "lectureNo", defaultValue = "1") int lectureNo  // 디폴트값 설정, 자동형변환
 													,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		log.debug(A.W +"[LectureScheduleController.student.lecture.getLectureScheduleListByLectureNo.currentPage] currentPage : " +currentPage +A.R);
 		log.debug(A.W +"[LectureScheduleController.student.lecture.getLectureScheduleListByLectureNo.rowPerPage] rowPerPage : " +rowPerPage +A.R);
-		//session에 lectureNo 값 요청
-		int lectureNo = (int)session.getAttribute("sessionLectureNo");
 		log.debug(A.A + "[LectureScheduleController.student.lecture.getLectureScheduleListByLectureNo] 실행(lectureNo) :" +lectureNo + A.R);
 		
 		

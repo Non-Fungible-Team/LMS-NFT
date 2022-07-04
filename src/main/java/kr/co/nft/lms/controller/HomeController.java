@@ -57,7 +57,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/all/lectureNoController")
-	public String lecutreHome(Model model, HttpSession session, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo){
+	public String lecutreHome(Model model, HttpSession session, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo, @RequestParam(name = "lectureOne", defaultValue = "false") boolean lectureOne){
 		log.debug(A.E+"[HomeController.lectureNoController.param] lectureNo"+lectureNo+A.R);
 		// lectureNo가 0일경우 강의 선택 안한 상태로 초기화 후 home으로 리다이렉트
 		if(lectureNo==0) {
@@ -73,6 +73,10 @@ public class HomeController {
 		//강의 정보를 session에 저장
 		session.setAttribute("sessionLectureNo", lecture.getLectureNo());
 		session.setAttribute("sessionLecture", lecture);
+		}
+		//운영자가 강의 목록에서 요청시 lectureOne으로 리다이렉트
+		if(lectureOne) {
+			return "redirect:/teacher/lecture/lectureNameOne?lectureNo="+lectureNo;
 		}
 		//강의홈으로 리다이렉트
 		return "redirect:/all/lectureHome";
