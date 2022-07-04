@@ -218,27 +218,51 @@
 			)
 		</insert>
 		
-		<select id="getAllSurveyAnswer"
+		<select id="getMultipleSurveyAnswer"
+				resultType="map">
+			
+			SELECT
+			sq.survey_question_list_no surveyQuestionListNo
+			,sq.survey_no surveyNo
+			,sq.survey_question_no surveyQuestionNo
+			,ql.survey_question_list_name surveyQuestionListName
+			,sm.member_id memberId
+			,sm.survey_answer_type surveyAnswerType
+			,group_concat(sm.survey_multiple_answer_content separator ', ') surveyMultipleAnswerContent
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INner join survey_multiple_answer AS sm
+			ON sm.survey_question_no = sq.survey_question_no AND sq.survey_no = sm.survey_no
+			GROUP BY sq.survey_question_list_no;
+		</select>
+		
+		<select id="getShortSurveyAnswer"
 				resultType="map">
 			SELECT
-				sq.survey_question_list_no surveyQuestionListNo
-				,sq.survey_no surveyNo
-				,sq.survey_question_no surveyQuestionNo
-				,ql.survey_question_list_name surveyQuestionListName
-				,IFNULL(sm.member_id,ss.member_id) memberId
-				,IFNULL(sm.survey_answer_type,ss.survey_answer_type) surveyAnswerType
-				,sm.survey_multiple_answer_content surveyMultipleAnswerContent
-				,ss.survey_short_answer_content surveyShortAnswerContent
-			FROM survey_question sq
-			LEFT OUTER JOIN survey_question_list ql ON sq.survey_question_list_no = ql.survey_question_list_no
-			LEFT OUTER JOIN survey_multiple_answer sm ON sq.survey_question_no = sm.survey_question_no
-			LEFT OUTER JOIN survey_short_answer ss ON sq.survey_question_no = ss.survey_question_no
-			ORDER BY sq.survey_question_list_no
+			sq.survey_question_list_no surveyQuestionListNo
+			,ss.survey_no surveyNo
+			,ss.survey_question_no surveyQuestionNo
+			,ql.survey_question_list_name surveyQuestionListName
+			,ss.member_id memberId
+			,ss.survey_answer_type surveyAnswerType
+			,group_concat(ss.survey_short_answer_content separator ', ') AS surveyShortAnswerContent	
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON s.survey_no = sq.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INNER JOIN survey_short_answer AS ss 
+			ON sq.survey_question_no = ss.survey_question_no AND sq.survey_no = ss.survey_no
+			GROUP BY sq.survey_question_list_no
+			
 		</select>
 		
 		<select id="getAnswerAverage"
 				resultType="map"
-				parameterType="int">
+				parameterType="kr.co.nft.lms.vo.SurveyMultipleAnswer">
 			SELECT
 			AVG(sma.survey_multiple_answer_content) surveyMultipleAnswerContent 
 			FROM survey s
@@ -246,29 +270,29 @@
 			ON sq.survey_no = s.survey_no
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
-			INner join survey_multiple_answer AS sma
+			INNER join survey_multiple_answer AS sma
 			ON sma.survey_question_no = sq.survey_question_no
-			GROUP BY ql.survey_question_list_no;
+			GROUP BY ql.survey_question_list_no
 		</select>
 		
 		<select id="getAnswerCount"
 				resultType="map">
 			SELECT
-				sma.survey_no surveyNo
-				,ql.survey_question_list_no
-				,sma.survey_question_no
-				,COUNT(CASE WHEN survey_multiple_answer_content = 1 THEN 1 END)  surveyMultipleAnswerContent1
-				,COUNT(CASE WHEN survey_multiple_answer_content = 2 THEN 1 END)  surveyMultipleAnswerContent2
-				,COUNT(CASE WHEN survey_multiple_answer_content = 3 THEN 1 END)  surveyMultipleAnswerContent3
-				,COUNT(CASE WHEN survey_multiple_answer_content = 4 THEN 1 END)  surveyMultipleAnswerContent4
-				,COUNT(CASE WHEN survey_multiple_answer_content = 5 THEN 1 END)  surveyMultipleAnswerContent5
+			sma.survey_no surveyNo
+			,ql.survey_question_list_no
+			,sma.survey_question_no
+			,COUNT(CASE WHEN survey_multiple_answer_content = 1 THEN 1 END)  surveyMultipleAnswerContent1
+			,COUNT(CASE WHEN survey_multiple_answer_content = 2 THEN 1 END)  surveyMultipleAnswerContent2
+			,COUNT(CASE WHEN survey_multiple_answer_content = 3 THEN 1 END)  surveyMultipleAnswerContent3
+			,COUNT(CASE WHEN survey_multiple_answer_content = 4 THEN 1 END)  surveyMultipleAnswerContent4
+			,COUNT(CASE WHEN survey_multiple_answer_content = 5 THEN 1 END)  surveyMultipleAnswerContent5
 			FROM survey s
 			INNER JOIN survey_question AS sq
 			ON sq.survey_no = s.survey_no
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			INner join survey_multiple_answer AS sma
-			ON sma.survey_question_no = sq.survey_question_no
+			ON sma.survey_question_no = sq.survey_question_no AND sq.survey_no = sma.survey_no
 			GROUP BY ql.survey_question_list_no
 		</select>
 		

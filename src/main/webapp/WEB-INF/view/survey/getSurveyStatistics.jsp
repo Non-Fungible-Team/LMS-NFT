@@ -84,7 +84,7 @@ $(document).ready(function() {
 			<div class="container-fluid">
 				<h4>객관식 답변 통계</h4>
 				<c:set var="cnt" value="0"></c:set>
-				<c:forEach var="multi" items="${allAnswer}" varStatus="status">
+				<c:forEach var="multi" items="${multipleAnswer}" varStatus="status">
 					<c:if test="${multi.surveyAnswerType=='객관식'}">
 						<div class="col-lg-6">
 							<div class="card">
@@ -100,12 +100,12 @@ $(document).ready(function() {
 				<h4>주관식 답변 통계</h4>
 				<table id="zero_config"
 					class="table table-striped table-bordered no-wrap">
-					<c:forEach var="qs" items="${allAnswer}">
+					<c:forEach var="qs" items="${shortAnswer}">
 						<c:if test="${qs.surveyAnswerType=='주관식'}">
-								<td>${qs.surveyQuestionListName}</td>
+							<td>${qs.surveyQuestionListName}</td>
 						</c:if>
 						<c:if test="${qs.surveyAnswerType=='주관식'}">
-							<c:forEach var="answer" items="${allAnswer}">
+							<c:forEach var="answer" items="${shortAnswer}">
 								<c:if test="${qs.surveyQuestionListName==answer.surveyQuestionListName}">
 									<tr>
 										<td>질문 답변</td>

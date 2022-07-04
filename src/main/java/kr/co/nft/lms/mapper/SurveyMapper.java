@@ -53,13 +53,15 @@ public interface SurveyMapper {
 	int insertSurveyShortAnswer(SurveyAnswer surveyShortAnswer);
 	
 	// 전체 설문조사 답변 확인 (리스트형식으로 레프트 조인)
-	List<Map<String,Object>> getAllSurveyAnswer();
+	List<Map<String,Object>> getMultipleSurveyAnswer();
+	
+	List<Map<String,Object>> getShortSurveyAnswer();
 	
 	// 설문조사 질문별 점수평균 (double값 뱉음)
-	List<SurveyMultipleAnswer> getAnswerAverage(int surveyQuestioNo);
+	List<SurveyMultipleAnswer> getAnswerAverage();
 	
 	// 설문조사 질문별, 점수 카운트 (리스트 형식)
-	List<Map<String, Object>> getAnswerCount(int surveyQuestioNo);
+	List<Map<String, Object>> getAnswerCount();
 	
 	List<Map<String, Object>> questionListCount();
 }

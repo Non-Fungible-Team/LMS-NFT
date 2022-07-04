@@ -4,12 +4,13 @@ import lombok.Data;
 
 @Data
 public class SurveyShortAnswer {
+	private int surveyShortAnswerNo;
 	private int surveyQuestionNo;
 	private int surveyNo;
 	private String memberId;
-	private String SurveyAnswerType;
-	private String SurveyShortAnswerContent;
-	private String SurveyShortAnswerCreateDate;
-	private String SurveyShortAnswerUpdateDate;
+	private String surveyAnswerType;
+	private String surveyShortAnswerContent;
+	private String surveyShortAnswerCreateDate;
+	private String surveyShortAnswerUpdateDate;
 	
 }

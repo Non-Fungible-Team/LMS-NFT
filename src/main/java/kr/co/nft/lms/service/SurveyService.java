@@ -16,7 +16,6 @@ import kr.co.nft.lms.vo.SurveyAnswer;
 import kr.co.nft.lms.vo.SurveyMultipleAnswer;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import kr.co.nft.lms.vo.SurveyQuestionList;
-import kr.co.nft.lms.vo.SurveyShortAnswer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,29 +24,33 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
-	public Map<String,Object> getSurveyAnswerStatistics(int surveyQuestionNo ){
-		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] surveyQuestioNo : " + surveyQuestionNo + A.R);
+	public Map<String,Object> getSurveyAnswerStatistics(){
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] "+ A.R);
 		Map<String,Object> returnMap = new HashMap<>();
-		
-//		for (SurveyMultipleAnswer ma : SurveyMultipleAnswerList) {
-			List<SurveyMultipleAnswer> answerAverage = surveyMapper.getAnswerAverage(surveyQuestionNo);
+
+			List<SurveyMultipleAnswer> answerAverage = surveyMapper.getAnswerAverage();
 			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerAverage : " + answerAverage + A.R);
 			
-			List<Map<String,Object>> answerCount = surveyMapper.getAnswerCount(surveyQuestionNo);
+			List<Map<String,Object>> answerCount = surveyMapper.getAnswerCount();
 			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
 			
-			List<Map<String,Object>> allAnswer = surveyMapper.getAllSurveyAnswer();
-			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] allAnswer : " + allAnswer + A.R);
+			List<Map<String,Object>> multipleAnswer = surveyMapper.getMultipleSurveyAnswer();
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] multipleAnswer : " + multipleAnswer + A.R);
+			
+			List<Map<String,Object>> shortAnswer = surveyMapper.getShortSurveyAnswer();
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] shortAnswer : " + shortAnswer + A.R);
+			
 			
 			List<Map<String,Object>> questionListCount = surveyMapper.questionListCount();
 			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] questionListCount : " + questionListCount + A.R);
 			
+			
 			returnMap.put("questionListCount", questionListCount);
 			returnMap.put("answerAverage", answerAverage);
 			returnMap.put("answerCount", answerCount);
-			returnMap.put("allAnswer", allAnswer);
-			
-//		}
+			returnMap.put("multipleAnswer", multipleAnswer);
+			returnMap.put("shortAnswer", shortAnswer);
+
 		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] returnMap : " + returnMap + A.R);
 		
 		return returnMap;
@@ -57,11 +60,16 @@ public class SurveyService {
 	
 	public Map<String,Object> getAllSurveyAnswer() {
 		
-		List<Map<String,Object>> allAnswer = surveyMapper.getAllSurveyAnswer();
-		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] allAnswer : " + allAnswer + A.R);
+		List<Map<String,Object>> shortAnswer = surveyMapper.getShortSurveyAnswer();
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] shortAnswer : " + shortAnswer + A.R);
+		
+		List<Map<String,Object>> multipleAnswer = surveyMapper.getMultipleSurveyAnswer();
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] multipleAnswer : " + multipleAnswer + A.R);
+		
 		
 		Map<String, Object> returnMap = new HashMap<>();
-		returnMap.put("allAnswer", allAnswer);
+		returnMap.put("shortAnswer", shortAnswer);
+		returnMap.put("multipleAnswer", multipleAnswer);
 		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] returnMap : " + returnMap + A.R);
 		
 		return returnMap;
