@@ -2,6 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<!-- 운영자가 보는 목록 뽑기 -->
+	
+	<select id="selectTeacherTotalCount"
+			resultType="int">
+		SELECT 
+			count(*)		
+		FROM teacher
+	</select>
+	
+	<select id="selectTeacherByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Teacher">
+		SELECT 
+			teacher.member_id memberId 
+			, teacher.teacher_entry_date teacherEntryDate 
+			, teacher.teacher_name teacherName
+			, teacher.teacher_birth teacherBirth
+			, teacher.teacher_gender teacherGender 
+			, teacher.teacher_email teacherEmail 
+			, teacher.address_detail addressDetail <!-- addr_detail로 고쳐야 함 --> 
+		FROM teacher
+		INNER JOIN member
+		ON teacher.member_id = member.member_id 
+		ORDER BY member.member_create_date DESC 
+		LIMIT #{startRow}, #{rowPerPage} 
+	</select>
+	
+	<select id="selectStudentTotalCount"
+			resultType="int">
+		SELECT 
+			count(*)		
+		FROM student
+	</select>
+	
+	<select id="selectStudentByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Student">
+		SELECT 
+			student.member_id memberId
+			, student.student_education studentEducation 
+			, student.student_name studentName
+			, student.student_birth studentBirth
+			, student.student_gender studentGender
+			, student.student_email studentEmail
+			, student.addr_detail addrDetail
+		FROM student
+		INNER JOIN member
+		ON student.member_id = member.member_id 
+		ORDER BY member.member_create_date DESC 
+		LIMIT #{startRow}, #{rowPerPage} 
+	</select>
+	
+	<!-- 운영자가 보는 목록 뽑기 -->
+
 	<!-- 목록 뽑기 -->
 	
 	<select id="selectMemberList"

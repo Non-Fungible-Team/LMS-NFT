@@ -1,6 +1,7 @@
 package kr.co.nft.lms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +15,22 @@ import kr.co.nft.lms.vo.Teacher;
 @Mapper
 public interface MemberMapper {
 	
-	// -------------- 목록 뽑기 ------------------ //  
+	// -------------- 운영자가 보는 목록 뽑기 ------------------ //
+	
+	// 강사 테이블 전체 행 개수 출력 
+	int selectTeacherTotalCount();
+	
+	// 강사 테이블 필드 뽑기 
+	List<Teacher> selectTeacherByPage(Map<String, Object> map);
+	
+	// 학생 테이블 전체 행 개수 출력  
+	int selectStudentTotalCount();
+	
+	// 학생 테이블 필드 뽑기 
+	List<Student> selectStudentByPage(Map<String, Object> map);
+	
+	// -------------- 목록 뽑기 ------------------ //
+	// ~에서 사용함. 
 	
 	// 사용자 전체 리스트
 	List<Member> selectMemberList();

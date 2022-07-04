@@ -232,25 +232,27 @@
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><span class="hide-menu"> LectureRoom List </span></a></li>
 							</ul></li>
-	
-						<li class="list-divider"></li>
-						<li class="nav-small-cap"><span class="hide-menu">Member</span></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Manager </span></a>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Teacher </span></a>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher List </span></a></li>
-								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getManagerLectureByPage" class="sidebar-link"><span class="hide-menu"> 강의 강사 리스트</span></a></li>
-							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Student </span></a>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="f##########.jsp" class="sidebar-link"><span class="hide-menu"> Student List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-							</ul></li>
-							
+						
+						<c:if test="${sessionLoginMember.memberLevel >= 6 }">
+							<li class="list-divider"></li>
+							<li class="nav-small-cap"><span class="hide-menu">Member</span></li>
+							<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Manager </span></a>
+								<ul aria-expanded="false" class="collapse  first-level base-level-line">
+									<li class="sidebar-item"><a href="" class="sidebar-link"><span class="hide-menu"> Manager List </span></a></li>
+									<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
+								</ul></li>
+							<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Teacher </span></a>
+								<ul aria-expanded="false" class="collapse  first-level base-level-line">
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getTeacherByPage" class="sidebar-link"><span class="hide-menu"> Teacher List </span></a></li>
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getManagerLectureByPage" class="sidebar-link"><span class="hide-menu"> 강의 강사 리스트</span></a></li>
+								</ul></li>
+							<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Student </span></a>
+								<ul aria-expanded="false" class="collapse  first-level base-level-line">
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getStudentByPage" class="sidebar-link"><span class="hide-menu"> Student List </span></a></li>
+									<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
+								</ul></li>
+						</c:if>
+						
 						<li class="list-divider"></li>
 						<li class="nav-small-cap"><span class="hide-menu">Board</span></li>
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Board </span></a>

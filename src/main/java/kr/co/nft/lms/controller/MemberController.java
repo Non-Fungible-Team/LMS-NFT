@@ -1,6 +1,7 @@
 package kr.co.nft.lms.controller;
 
 import java.net.URL;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,14 +33,88 @@ public class MemberController {
 
 	// ------------------ 사용자 목록 뽑기 ( 운영자가 사용 ) ------------------ //
 	
-	@GetMapping("/manager/selectStudentListByManager")
-	public String selectStudentList(HttpSession session
-									, Model model) {
+	// 강사 목록 뽑기 
+	@GetMapping("/manager/getTeacherByPage")
+	public String getTeacherByPage(HttpSession session
+									, Model model
+									, @RequestParam(name="currentPage", defaultValue = "1") int currentPage
+									, @RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
+		// 매개 변수에 담긴 내용 확인 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.getTeacherByPage.param] loginMember : "+loginMember+A.R);
+		log.debug(A.Z+"[MemberController.getTeacherByPage.param] model : "+model+A.R);
+		log.debug(A.Z+"[MemberController.getTeacherByPage.param] currentPage : "+currentPage+A.R);
+		log.debug(A.Z+"[MemberController.getTeacherByPage.param] rowPerPage : "+rowPerPage+A.R);
+		
+		// 계정 정보 없으면 로그인 실패 
+		if(loginMember == null) {
+			log.debug(A.Z+"[MemberController.getTeacherByPage]  : "+"로그인 실패"+A.R);
+			// 로그인 페이지로 이동
+			return "/member/memberLogin";
+		} else if(loginMember.getMemberLevel() < 6) {
+			log.debug(A.Z+"[MemberController.getTeacherByPage]  : "+"관리자 아이디로 접근하세요"+A.R);
+			// 로그인 페이지로 이동
+			return "/member/memberLogin";
+		}
+		
+		Map<String, Object> map = memberService.getTeacherByPage(currentPage, rowPerPage);
+		log.debug(A.Z+"[MemberController.getTeacherByPage] map : "+map+A.R);
 		
 		// 뷰 페이지에 사용자 레벨 넘긴다. 운영자만 이용 가능 
 		
+		model.addAttribute("teacherList", map.get("teacherList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", map.get("currentPage"));
 		
-		return "/member/getStudentList";
+		// 세션으로 로그인한 유저의 아이디와 과목 번호 ( 사용이 되야 할 곳이 생길 수 있음. 계속 넘기기로 협의 ) 
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLectureNo", 0);
+		
+		// 학생 목록 확인하는 페이지로 이동 
+		return "/member/getTeacherByPage";
+	}
+	
+	// 학생 목록 뽑기 
+	@GetMapping("/manager/getStudentByPage")
+	public String getStudentByPage(HttpSession session
+									, Model model
+									
+									, @RequestParam(name="currentPage", defaultValue = "1") int currentPage
+									, @RequestParam(name="rowPerPage", defaultValue = "10" ) int rowPerPage) {
+		// 매개 변수에 담긴 내용 확인 
+		
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.getStudentByPage.param] loginMember : "+loginMember+A.R);
+		log.debug(A.Z+"[MemberController.getStudentByPage.param] model : "+model+A.R);
+		log.debug(A.Z+"[MemberController.getStudentByPage.param] currentPage : "+currentPage+A.R);
+		log.debug(A.Z+"[MemberController.getStudentByPage.param] rowPerPage : "+rowPerPage+A.R);
+		
+		// 계정 정보 없으면 로그인 실패 
+		if(loginMember == null) {
+			log.debug(A.Z+"[MemberController.getStudentByPage]  : "+"로그인 실패"+A.R);
+			// 로그인 페이지로 이동
+			return "/member/memberLogin";
+		} else if(loginMember.getMemberLevel() < 6) {
+			log.debug(A.Z+"[MemberController.getStudentByPage]  : "+"관리자 아이디로 접근하세요"+A.R);
+			// 로그인 페이지로 이동
+			return "/member/memberLogin";
+		}
+		
+		Map<String, Object> map = memberService.getStudentByPage(currentPage, rowPerPage);
+		log.debug(A.Z+"[MemberController.getStudentByPage] map : "+map+A.R);
+		
+		// 뷰 페이지에 사용자 레벨 넘긴다. 운영자만 이용 가능 
+		
+		model.addAttribute("studentList", map.get("studentList"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", map.get("currentPage"));
+		
+		// 세션으로 로그인한 유저의 아이디와 과목 번호 ( 사용이 되야 할 곳이 생길 수 있음. 계속 넘기기로 협의 ) 
+		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("sessionLectureNo", 0);
+		
+		// 학생 목록 확인하는 페이지로 이동 
+		return "/member/getStudentByPage";
 	}
 	
 	// ------------------ 개인 정보 휴면(삭제) 처리 ------------------ //

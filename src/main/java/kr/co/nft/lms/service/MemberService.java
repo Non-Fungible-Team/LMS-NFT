@@ -1,6 +1,9 @@
 package kr.co.nft.lms.service;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,68 @@ public class MemberService {
 	// Service ← 여기서 사진 파일 가공 
 
 	@Autowired MemberMapper memberMapper;
+	
+	// --------------------------------------- //
+	
+	// 강사 목록 뽑기 
+	public Map<String, Object> getTeacherByPage(int currentPage, int rowPerPage) {
+		// (1) Controller에서 넘어온 매개 변수값을 가공 후 매퍼 호출
+		
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberService.getTeacherByPage.param] currentPage : "+currentPage+A.R);
+		log.debug(A.Z+"[MemberService.getTeacherByPage.param] rowPerPage : "+rowPerPage+A.R);
+		
+		int startRow = (currentPage - 1) * rowPerPage;
+		log.debug(A.Z+"[MemberService.getTeacherByPage] startRow : "+startRow+A.R);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("rowPerPage", rowPerPage);
+		map.put("startRow", startRow);
+		List<Teacher> teacherList = memberMapper.selectTeacherByPage(map);
+		log.debug(A.Z+"[MemberService.getTeacherByPage] teacherList.size() : "+teacherList.size()+A.R);
+		
+		// (2) 매퍼에서 반환된 값을 가공. Controller에 반환 
+		int totalCount = memberMapper.selectTeacherTotalCount();
+		log.debug(A.Z+"[MemberService.getTeacherByPage] totalCount : "+totalCount+A.R);
+		
+		// ceil() 올림 함수를 사용해서 마지막 페이지를 구한다. 
+		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(A.Z+"[MemberService.getTeacherByPage] lastPage : "+lastPage+A.R);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("teacherList", teacherList);
+		returnMap.put("lastPage", lastPage);
+		return returnMap;
+	}
+	
+	// 학생 목록 뽑기 
+	public Map<String, Object> getStudentByPage(int currentPage, int rowPerPage) {
+		// (1) Controller에서 넘어온 매개 변수값을 가공 후 매퍼 호출
+		
+		// 매개 변수 내용 확인 
+		log.debug(A.Z+"[MemberService.getStudentByPage.param] currentPage : "+currentPage+A.R);
+		log.debug(A.Z+"[MemberService.getStudentByPage.param] rowPerPage : "+rowPerPage+A.R);
+		
+		int startRow = (currentPage - 1) * rowPerPage;
+		log.debug(A.Z+"[MemberService.getStudentByPage] startRow : "+startRow+A.R);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("rowPerPage", rowPerPage);
+		map.put("startRow", startRow);
+		List<Student> studentList = memberMapper.selectStudentByPage(map);
+		log.debug(A.Z+"[MemberService.getStudentByPage] studentList : "+studentList+A.R);
+		
+		// (2) 매퍼에서 반환된 값을 가공. Controller에 반환 
+		int totalCount = memberMapper.selectStudentTotalCount();
+		log.debug(A.Z+"[MemberService.getStudentByPage] totalCount : "+totalCount+A.R);
+		
+		// ceil() 올림 함수를 사용해서 마지막 페이지를 구한다. 
+		int lastPage = (int)(Math.ceil((double)totalCount / (double)rowPerPage));
+		log.debug(A.Z+"[MemberService.getStudentByPage] lastPage : "+lastPage+A.R);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("studentList", studentList);
+		returnMap.put("lastPage", lastPage);
+		return returnMap;
+	}
 	
 	// --------------------------------------- //
 	// 회원 정보 삭제(휴면) 
