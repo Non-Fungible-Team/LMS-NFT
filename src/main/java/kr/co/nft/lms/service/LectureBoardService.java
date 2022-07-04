@@ -107,32 +107,55 @@ public class LectureBoardService {
 	}
 	
 	//Lecture 상세보기(File추가) + 수정폼 + ■■■■■■■■■■■■■■comment List■■■■■■■■■■■■■■
-	public Map<String, Object> getLectureBoardOne(int lectureBoardNo /*, Map<String, Object> map*/){
+	public Map<String, Object> getLectureBoardOne(int lectureBoardNo, int commentCurrentPage, int commentRowPerPage){
 		log.debug(A.S + "[LectureBoardService.getLectureBoardOne.param] lectureBoardNo : " + lectureBoardNo + A.R);
+		log.debug(A.S + "[LectureBoardService.getLectureBoardOne.param] commentCurrentPage : " + commentCurrentPage + A.R);
+		log.debug(A.S + "[LectureBoardService.getLectureBoardOne.param] commentRowPerPage : " + commentRowPerPage + A.R);
+		//메퍼에 
 		LectureBoard lectureBoard = lectureBoardMapper.selectLectureBoardOne(lectureBoardNo);
+		
 		log.debug(A.S + "[LectureBoardService.getLectureBoardOne] lectureBoard : " + lectureBoard + A.R);
-/*
+
 		//comment List 페이징
 		//1)컨트롤러 입력값 가공
-		int commentCurrentPage = (int)map.get("commentCurrentPage");
-		int rowPerPage = (int)map.get("rowPerPage");
-		int beginRow = (commentCurrentPage - 1) * rowPerPage;
+		int commentBeginRow = (commentCurrentPage - 1) * commentRowPerPage;
 		//Map으로 묶어줌
 		Map<String, Object> commentParamMap = new HashMap<>();
-		commentParamMap.put("beginRow", beginRow);
-		commentParamMap.put("rowPerPage", rowPerPage);
+		commentParamMap.put("commentBeginRow", commentBeginRow);
+		commentParamMap.put("commentRowPerPage", commentRowPerPage);
+		commentParamMap.put("lectureBoardNo", lectureBoardNo);
+		
 		//2)매퍼의 반환값 가공
 		List<Comment> commentList = lectureBoardMapper.selectCommentListByPage(commentParamMap);
-		Map<String, Object> commentReturnMap = new HashMap<>();
+		
 		int commentTotalCount = lectureBoardMapper.selectCommentTotalCount(lectureBoardNo);
-		int commentLastPage = commentTotalCount /(int)(map.get("rowPerPage"));
-		if(commentTotalCount % (int)(map.get("rowPerPage")) != 0) {
+		int commentLastPage = commentTotalCount /commentRowPerPage;
+		if(commentTotalCount % commentRowPerPage != 0) {
 			commentLastPage = commentLastPage + 1;
 		}
-		commentReturnMap.put("lectureBoard", lectureBoard);
-		commentReturnMap.put("commentList", commentList);
-		commentReturnMap.put("commentTotalCount", commentTotalCount);
-*/		
+		
+		//File Part
+		List<LectureFile> lectureFileList = lectureBoardMapper.selectLectureFileOneList(lectureBoardNo);
+		log.debug(A.S + "[LectureBoardService.getLectureBoardOne] lectureFileList : " + lectureFileList + A.R);
+		
+		//Map으로 묶어줌
+		Map<String, Object> lectureBoardReturnMap = new HashMap<>();
+		lectureBoardReturnMap.put("lectureBoard", lectureBoard);
+		lectureBoardReturnMap.put("lectureFileList", lectureFileList);
+		lectureBoardReturnMap.put("commentList", commentList);
+		lectureBoardReturnMap.put("commentLastPage", commentLastPage);		
+		log.debug(A.S + "[LectureBoardService.getLectureBoardOne] lectureBoardReturnMap : " + lectureBoardReturnMap + A.R);
+		
+		return lectureBoardReturnMap;
+	}
+	// Lecture 수정폼 
+	public Map<String, Object> modifyLectureBoardOne(int lectureBoardNo){
+		log.debug(A.S + "[LectureBoardService.getLectureBoardOne.param] lectureBoardNo : " + lectureBoardNo + A.R);
+		//메퍼에 
+		LectureBoard lectureBoard = lectureBoardMapper.selectLectureBoardOne(lectureBoardNo);
+		
+		log.debug(A.S + "[LectureBoardService.getLectureBoardOne] lectureBoard : " + lectureBoard + A.R);
+		
 		
 		//File Part
 		List<LectureFile> lectureFileList = lectureBoardMapper.selectLectureFileOneList(lectureBoardNo);
@@ -217,6 +240,7 @@ public class LectureBoardService {
 		}
 		//2)DB 삭제 (파일삭제 -> 공지삭제)
 		lectureBoardMapper.deleteLectureFileList(lectureBoardNo);
+		lectureBoardMapper.deleteCommentList(lectureBoardNo);
 		row = lectureBoardMapper.deleteLectureBoard(lectureBoardNo);
 		return row;
 	}
@@ -256,6 +280,15 @@ public class LectureBoardService {
 		log.debug(A.S + "[LectureBoardService.addComment.param] comment : "+ comment + A.R); 
 		int row = lectureBoardMapper.insertComment(comment);
 		return row;
+	}
+	
+	//comment 1개 삭제액션
+	public int removeLectureCommentOne(int lectureBoardNo, int commentNo) {
+		log.debug(A.S + "[LectureBoardService.removeLectureCommentOne.param] lectureBoardNo : "+ lectureBoardNo + A.R); 
+		log.debug(A.S + "[LectureBoardService.removeLectureCommentOne.param] commentNo : "+ commentNo + A.R); 
+		int row = lectureBoardMapper.deleteCommentOne(commentNo);
+		
+		return row;		
 	}
 	
 	

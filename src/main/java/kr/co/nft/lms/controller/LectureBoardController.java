@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.nft.lms.service.LectureBoardService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Comment;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureBoard;
 import kr.co.nft.lms.vo.LectureFile;
@@ -81,18 +82,23 @@ public class LectureBoardController {
 	@GetMapping("/all/lectureBoard/getLectureBoardOne")
 	public String getLectureBoardOne(Model model
 									,HttpSession session
-									,@RequestParam(name="lectureBoardNo") int lectureBoardNo) {
+									,@RequestParam(name="lectureBoardNo") int lectureBoardNo
+									,@RequestParam(name="commentCurrentPage", defaultValue = "1") int commentCurrentPage
+									,@RequestParam(name="commentRowPerPage", defaultValue = "5") int commentRowPerPage) {
 		//요청값 디버깅
 		log.debug(A.S + "[LectureBoardController.getLectureBoardOne.param] lectureBoardNo : "+ lectureBoardNo + A.R);
 		//세션에 lecture 정보 요청
 		Lecture lecture = (Lecture)session.getAttribute("sessionLecture");
 		log.debug(A.S + "[LectureBoardController.getLectureBoardOne.session] lecture : "+ lecture + A.R);
 		
-		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.getLectureBoardOne(lectureBoardNo);
+		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.getLectureBoardOne(lectureBoardNo, commentCurrentPage, commentRowPerPage);
 		log.debug(A.S + "[LectureBoardController.getLectureBoardOne] lectureBoardOneReturnMap : "+ lectureBoardOneReturnMap + A.R);
 		
 		model.addAttribute("lectureBoard", lectureBoardOneReturnMap.get("lectureBoard"));
 		model.addAttribute("lectureFileList", lectureBoardOneReturnMap.get("lectureFileList"));
+		model.addAttribute("commentList", lectureBoardOneReturnMap.get("commentList"));
+		model.addAttribute("commentLastPage", lectureBoardOneReturnMap.get("commentLastPage"));
+		model.addAttribute("commentCurrentPage", commentCurrentPage);
 		log.debug(A.S + "[LectureBoardController.getLectureBoardOne] model : "+ model + A.R);
 		
 		return "/lectureBoard/getLectureBoardOne";
@@ -108,7 +114,7 @@ public class LectureBoardController {
 		Lecture lecture = (Lecture)session.getAttribute("sessionLecture");
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard.session] lecture : "+ lecture + A.R);
 		
-		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.getLectureBoardOne(lectureBoardNo);
+		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.modifyLectureBoardOne(lectureBoardNo);
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard] lectureBoardOneReturnMap : "+ lectureBoardOneReturnMap + A.R);
 		
 		model.addAttribute("lectureBoard", lectureBoardOneReturnMap.get("lectureBoard"));
@@ -146,7 +152,7 @@ public class LectureBoardController {
 	public String removeLectureBoard(Model model
 									,@RequestParam(name="lectureBoardNo") int lectureBoardNo) {
 		log.debug(A.S + "[LectureBoardController.removeLectureBoard.param] lectureBoardNo : "+ lectureBoardNo + A.R);
-		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.getLectureBoardOne(lectureBoardNo);
+		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.modifyLectureBoardOne(lectureBoardNo);
 		log.debug(A.S + "[LectureBoardController.removeLectureBoard.param] lectureBoardOneReturnMap : "+ lectureBoardOneReturnMap + A.R);
 		model.addAttribute("lectureBoard", lectureBoardOneReturnMap.get("lectureBoard"));
 		return "/lectureBoard/removeLectureBoard";
@@ -193,6 +199,45 @@ public class LectureBoardController {
 		//삭제성공 했을 경우
 		log.debug(A.S + "[LectureBoardController.removeLectureFile] lectureFile삭제 성공"+ A.R);
 		return "redirect:/teacher/lectureBoard/modifyLectureBoard?lectureBoardNo=" + lectureBoardNo;
+	}
+	
+	//Comment 삭제 액션
+	@GetMapping("/all/lectureBoard/removeLectureCommentOne")
+	public String removeLectureCommentOne(HttpServletRequest request
+										,@RequestParam(name="lectureBoardNo") int lectureBoardNo
+										,@RequestParam(name="commentNo") int commentNo) {
+		log.debug(A.S + "[LectureBoardController.removeLectureCommentOne.param] lectureBoardNo : "+ lectureBoardNo + A.R);
+		log.debug(A.S + "[LectureBoardController.removeLectureCommentOne.param] commentNo : "+ commentNo + A.R);
+		
+		int row = lectureBoardService.removeLectureCommentOne(lectureBoardNo, commentNo);
+		log.debug(A.S + "[LectureBoardController.removeLectureCommentOne] row : " + row + A.R);
+		
+		//row가 0 이면 삭제실패
+		if(row==0) {
+			log.debug(A.S + "[LectureBoardController.removeLectureCommentOne] lectureComment삭제 실패"+ A.R);
+			return "redirect:/all/lectureBoard/removeLectureCommentOne?msg=fail";
+		}
+		//삭제성공 했을 경우
+		log.debug(A.S + "[LectureBoardController.removeLectureCommentOne] lectureComment삭제 성공"+ A.R);
+		return "redirect:/all/lectureBoard/getLectureBoardOne?lectureBoardNo=" + lectureBoardNo;
 		
 	}
+	
+	//Comment 입력 액션
+	@PostMapping("/all/lectureBoard/addComment")
+	public String addComment(HttpServletRequest request, Comment comment) {
+		log.debug(A.S + "[LectureBoardController.addComment.param] comment : "+ comment + A.R);
+		int row = lectureBoardService.addComment(comment);
+		log.debug(A.S + "[LectureBoardController.addComment] row : "+ row + A.R);
+		
+		//row 가 0 이면 입력실패
+		if(row == 0) {
+			log.debug(A.S + "[LectureBoardController.addComment] 입력실패 " + A.R);
+			return "redirect:/all/lectureBoard/getLectureBoardOne?msg=fail";
+		}
+		//입력 성공시
+		log.debug(A.S + "[LectureBoardController.addComment] 입력성공 " + A.R);
+		return "redirect:/all/lectureBoard/getLectureBoardOne?lectureBoardNo=" + comment.getLectureBoardNo();
+	}
+	
 }

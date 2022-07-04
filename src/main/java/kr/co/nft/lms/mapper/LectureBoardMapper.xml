@@ -191,15 +191,13 @@
 			parameterType="kr.co.nft.lms.vo.Comment">
 		INSERT INTO comment(
 			board_no
-			,comment_title
 			,comment_content
 			,comment_blind
 			,member_id
 			,comment_create_date
 			,comment_update_date
 		) VALUES(
-			#{boardNo}
-			,#{commentTitle}
+			#{lectureBoardNo}
 			,#{commentContent}
 			,'N'
 			,#{memberId}
@@ -208,12 +206,36 @@
 		)		
 	</insert>
 	
+	<select id="selectCommentListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Comment">
+		SELECT
+			comment_no commentNo
+			,comment_content commentContent
+			,member_id memberId
+			,comment_create_date commentCreateDate
+			,comment_blind commentBlind
+		FROM comment
+		WHERE board_no = #{lectureBoardNo}
+		AND comment_blind = 'N'
+		ORDER BY comment_create_date DESC
+		LIMIT #{commentBeginRow}, #{commentRowPerPage}
+	</select>
+	
+	<select id="selectCommentTotalCount"
+			parameterType="int"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM comment
+		WHERE board_no = #{lectureBoardNo}
+	</select>
+	
 	<!-- LectureBoard 삭제시 댓글 전체 삭제(블라인드처리) -->
 	<update id="deleteCommentList"
 			parameterType="int">
 		UPDATE comment
 		SET comment_blind ='Y'
-		WHERE board_no = #{boardNo}
+		WHERE board_no = #{lectureBoardNo}
 	</update>
 	
 	<!-- 댓글 하나씩 삭제(블라인드처리) -->

@@ -58,10 +58,10 @@ public interface LectureBoardMapper {
 	
 	//댓글목록
 	List<Comment> selectCommentListByPage(Map<String, Object> map);
-	int selectCommentTotalCount(int boardNo);
+	int selectCommentTotalCount(int lectureBoardNo);
 	
 	//Comment delete
-	int deleteCommentList(int boardNo);
+	int deleteCommentList(int lectureBoardNo);
 	int deleteCommentOne(int commentNo);
 	
 }

@@ -120,9 +120,86 @@
 										<td>${lectureBoard.lectureBoardUpdateDate}</td>
 									</tr>
 				            	</table>
-
-							    
-				    			
+				            </div>
+				         </div>
+				         <div class="card-body">
+				        	<div>
+				           		<h4 class="card-title">건의게시판 댓글입력</h4>
+							</div>
+	
+				            <div class="mt-2" style="height:auto; width:auto;">
+				            	<form action = "${pageContext.request.contextPath}/all/lectureBoard/addComment?lectureBoardNo=${lectureBoard.lectureBoardNo}" method="post">
+					            	<table id="zero_config" class="table table-striped table-bordered">
+							    		<tr>
+								    		<th>강의게시판번호</th>
+											<th>댓글입력</th>
+											<th>작성자ID</th>
+										</tr>
+										<tr>	
+								    		<td><input type="text" name="lectureBoardNo" class="form-control" value="${lectureBoard.lectureBoardNo}" readonly="readonly"></td>
+											<td><input type="text" name="commentContent" class="form-control"></td>
+											<td><input type="text" name="memberId" id="memberId" class="form-control" value="${sessionLoginMember.memberId}" readonly="readonly"></td>
+										</tr>
+									    <div>
+					            			<button type="submit" class="btn btn-outline-success btn-rounded" style="float: right">댓글입력</button>
+						        		</div>
+								    </table>
+								</form>
+								<div class="mt-2" style="height:auto; width:auto;">
+				        			<table id="zero_config" class="table table-striped table-bordered">
+											<tr>
+												<th>댓글번호</th>
+												<th>댓글내용</th>
+												<th>작성자ID</th>
+												<th>댓글작성날짜</th>
+												<th>삭제</th>
+											</tr>
+							    		<c:forEach var ="c" items="${commentList}">
+											<tr>
+												<td>${c.commentNo}</td>
+												<td>${c.commentContent}</td>
+												<td>${c.memberId}</td>
+												<td>${c.commentCreateDate}</td>
+												<td>
+													<c:if test="${sessionLoginMember.memberLevel>=6 || sessionLoginMember.memberId == c.memberId}">
+														<a href="${pageContext.request.contextPath}/all/lectureBoard/removeLectureCommentOne?lectureBoardNo=${lectureBoard.lectureBoardNo}&commentNo=${c.commentNo}">
+												    		<input type="button" class="btn btn-outline-danger" value="댓글 삭제">
+												    	</a>
+													</c:if>
+													<c:if test="${sessionLoginMember.memberLevel < 6 && sessionLoginMember.memberId != c.memberId}">
+														<div>본인 글이 아닙니다.</div>
+													</c:if>
+											    </td>
+												
+											</tr>	
+							    		</c:forEach>
+									</table>
+									
+									<div style="text-align: center;">
+						            	<form method="get" action="${pageContext.request.contextPath}/all/lectureBoard/getLectureBoardOne">
+						            		<input type ="hidden" name="lectureBoardNo" value = "${lectureBoard.lectureBoardNo}">
+											<c:if test="${commentCurrentPage>1}">
+												<button type="submit" class="btn btn-outline-warning btn-rounded" name="commentCurrentPage" value="${commentCurrentPage-1}">이전</button>
+											</c:if>
+											<!-- 목록 사이 번호 표시 -->
+											<c:forEach begin="1" end="10" step="1" var="i" varStatus="status">
+												<c:if test="${ i< 5 && commentCurrentPage-(5-i)> 0 }">
+													<button type = "submit" value ="${commentCurrentPage-(5-i)}" name = "commentCurrentPage" class="btn btn-outline-info btn-rounded">${commentCurrentPage-(5-i)}</button>
+												</c:if>
+												<c:if test="${ i==5 }">
+													<button type = "submit" value ="${commentCurrentPage}" name = "commentCurrentPage" class="btn btn-outline-danger btn-rounded">${commentCurrentPage}</button>
+												</c:if>
+												<c:if test="${ i > 5 && commentCurrentPage+(i-5) <= commentLastPage }">
+													<button type = "submit" value ="${commentCurrentPage+(i-5)}" name = "commentCurrentPage" class="btn btn-outline-info btn-rounded">${commentCurrentPage+(i-5)}</button>
+												</c:if>
+											</c:forEach>
+											<c:if test="${commentCurrentPage<commentLastPage}">
+												<button type="submit" class="btn btn-outline-success btn-rounded" name="commentCurrentPage" value="${commentCurrentPage+1}">다음</button>
+											</c:if>
+										</form>
+									</div>
+									
+								</div>
 				             </div>   
 					      </div>
 					   </div>
