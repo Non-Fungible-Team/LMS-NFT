@@ -39,7 +39,7 @@
 								<h4 class="card-title">과제 입력</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-								<form action="${pageContext.request.contextPath}/homework/addHomework"method="post">
+								<form action="${pageContext.request.contextPath}/teacher/homework/addHomework"method="post">
 									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
 											<td>작성자</td><td><input type="text" class="form-control" name="memberId" value="${sessionLoginMember.memberId}"></td>

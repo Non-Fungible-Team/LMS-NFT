@@ -38,7 +38,7 @@
 								<h4 class="card-title">과제 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-									<form action="${pageContext.request.contextPath}/homework/modifyHomework" method="post">
+									<form action="${pageContext.request.contextPath}/teacher/homework/modifyHomework" method="post">
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
 												<td>제목</td><td><input type="text" name ="homeworkTitle" class="form-control" value="${homeworkOne.homeworkTitle}"></td>

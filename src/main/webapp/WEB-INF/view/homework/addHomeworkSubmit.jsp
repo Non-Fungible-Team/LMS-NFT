@@ -78,7 +78,7 @@
 							<div class="card-body">
 								<h4 class="card-title">과제 제출</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-									<form action="${pageContext.request.contextPath}/homework/addHomeworkSubmit"method="post" id="addHomeworkSubmitFileForm" enctype="multipart/form-data">
+									<form action="${pageContext.request.contextPath}/student/homework/addHomeworkSubmit" method="post" id="addHomeworkSubmitFileForm" enctype="multipart/form-data">
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
 												<td>작성자</td><td><input type="text" name="memberId" value="${sessionLoginMember.memberId}" readonly="readonly"></td>
@@ -100,7 +100,7 @@
 											<div id="fileSection"></div>
 											<!-- 파일업로드 input 추가될 영역 -->
 											<button type="submit" class="btn btn-outline-success btn-rounded" id="addHomeworkSubmit"><i class="fas fa-check"></i>과제 등록</button>
-											<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
+											<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
 											
 										</form>
 									</div>

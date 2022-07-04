@@ -21,6 +21,23 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+$('document').ready(function() {
+	$('#btnRemove').click(function(){
+				var result = confirm("삭제 하시겠습니까?");
+				
+				if (result) {
+					$.ajax({
+						url:'/homework/removeHomeworkSubmit'
+					    ,type :'POST'
+					    ,async : false
+					});
+				} else {
+					return false;
+				}
+			});
+}
+</script>
 </head>
 <script>
 	$('document').ready(function() {
@@ -40,6 +57,7 @@
 						<div class="card-body">
 							<h4 class="card-title">제출과제 상세보기</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
+								<form action="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne" method="post">
 								<table id="zero_config" class="table table-striped table-bordered">
 									<tr>
 										<td>homeworkSubmitNo</td>
@@ -101,7 +119,12 @@
 											<td>homeworkSubmitFeedback</td>
 											<td><input type="text" class="form-control" name="homeworkSubmitFeedback" value="${homeworkSubmitOne.homeworkSubmitFeedback}"></td>
 										</tr>
+										<tr>
+											<td colspan="2" align="center"><button type ="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check"></i> 입력 완료</button></td>
+										</tr>
 									</c:if>
+									</form>
+											
 								 
 								</table>
 								</div>
@@ -132,14 +155,14 @@
 								    	
 								    </table>
 								</div>
-								<form action = "${pageContext.request.contextPath}/homework/removeHomeworkSubmit" method="post">
+<%-- 								<form action = "${pageContext.request.contextPath}/teacher/homework/removeHomeworkSubmit" method="post"> --%>
 									<input type="hidden" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly">
 									<c:if test="${sessionLoginMember.memberLevel==4 && sessionLoginMember.memberId == homeworkSubmitOne.memberId }">
-										<button type="button" class="btn btn-outline-success btn-rounded float-left" onclick="location.href='${pageContext.request.contextPath}/homework/modifyHomeworkSubmit?homeworkSubmitNo='+${homeworkSubmitOne.homeworkSubmitNo}"><i class="fas fa-check">과제 수정</i></button>
-										<button type="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">과제 삭제</i></button>
+										<button type="button" class="btn btn-outline-success btn-rounded float-left" onclick="location.href='${pageContext.request.contextPath}/student/homework/modifyHomeworkSubmit?homeworkSubmitNo='+${homeworkSubmitOne.homeworkSubmitNo}"><i class="fas fa-check">과제 수정</i></button>
+										<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">과제 삭제</i></button>
 									</c:if>
-									<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check">과제 목록</i></button>
-								</form>
+									<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check">과제 목록</i></button>
+<!-- 								</form> -->
 								 
 							</div>
 						</div>

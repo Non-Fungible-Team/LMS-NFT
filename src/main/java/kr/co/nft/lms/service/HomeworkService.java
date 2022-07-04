@@ -185,9 +185,8 @@ public class HomeworkService {
 		log.debug(A.Q+"HomeworkService.modifyHomeworkSubmit homeworkSubmit : "+ homeworkSubmit +A.R);
 		
 		int row = homeworkMapper.updateHomeworkSubmit(homeworkSubmit);
-		
 		int fileRow = 0;
-		if(homeworkSubmit.getHomeworkSubmitFileList() != null && homeworkSubmit.getHomeworkSubmitFileList().get(0).getSize() > 0 && fileRow ==1) {
+		if(homeworkSubmit.getHomeworkSubmitFileList() != null && homeworkSubmit.getHomeworkSubmitFileList().get(0).getSize() > 0 ) {
 			log.debug(A.Q+"HomeworkService.addHomeworkSubmit :"+"첨부된 파일이 있습니다."+A.R);
 			
 			for(MultipartFile mf : homeworkSubmit.getHomeworkSubmitFileList()) {
@@ -209,7 +208,6 @@ public class HomeworkService {
 				homeworkSubmitFileModify.setHomeworkSubmitFileType(mf.getContentType());
 				homeworkSubmitFileModify.setHomeworkSubmitFileSize(mf.getSize());
 				
-				homeworkMapper.insertHomeworkSubmitFile(homeworkSubmitFileModify);
 				log.debug(A.Q+"HomeworkService.addHomeworkSubmit homeworkSubmitFile :"+ homeworkSubmitFileModify +A.R);
 				
 				fileRow = fileRow + homeworkMapper.insertHomeworkSubmitFile(homeworkSubmitFileModify);
@@ -222,7 +220,7 @@ public class HomeworkService {
 			}
 		}
 		
-		return homeworkMapper.updateHomeworkSubmit(homeworkSubmit);
+		return row;
 	}
 	
 	// 학생 과제 삭제
@@ -236,6 +234,13 @@ public class HomeworkService {
 		log.debug(A.Q+"HomeworkService.removeHomeworkSubmitFileOne.homeworkSubmitFileNo :" + homeworkSubmitFileNo+A.R);
 		
 		return homeworkMapper.deleteHomeworkSubmitFileOne(homeworkSubmitFileNo);
+	}
+	
+	// 과제 점수 입력
+	public int modifyHomeworkSubmitScore(HomeworkSubmit homeworkSubmit) {
+		log.debug(A.Q+"HomeworkService.modifyHomeworkSubmitScore.homeworkSubmit :"+ homeworkSubmit +A.R);
+		
+		return homeworkMapper.updateHomeworkSubmitScore(homeworkSubmit);
 	}
 	
 	

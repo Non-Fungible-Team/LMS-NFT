@@ -58,7 +58,7 @@
 					<td>${hs.homeworkSubmitNo }</td>
 					<td>${hs.lectureNo }</td>
 					<td>${hs.memberId }</td>
-					<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${hs.homeworkSubmitNo}">${hs.homeworkSubmitTitle }</a></td>
+					<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${hs.homeworkSubmitNo}">${hs.homeworkSubmitTitle }</a></td>
 					<td>${hs.homeworkSubmitCreateDate }</td>
 					<td>${hs.homeworkSubmitUpdateDate }</td>
 				</tr>
@@ -66,7 +66,7 @@
 		</tbody>
 	</table>
 	
-	<form method="get" action="${pageContext.request.contextPath}/homework/getHomeworkSubmitListByPage">
+	<form method="get" action="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitListByPage">
 		<c:if test="${currentPage>1}">
 			<button type="submit" class="btn btn-outline-warning btn-rounded" name="currentPage" value="${currentPage-1}">이전</button>
 		</c:if>

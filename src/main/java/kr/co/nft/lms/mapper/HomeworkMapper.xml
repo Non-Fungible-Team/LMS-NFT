@@ -66,6 +66,8 @@
 			,member_id memberId
 			,homework_content homeworkContent
 			,homework_create_date homeworkCreateDate
+			,homework_start_date homeworkStartDate
+			,homework_end_date homeworkEndDate
 		FROM homework
 		WHERE homework_no = #{homeworkNo}
 			
@@ -164,19 +166,13 @@
 			,hs.member_id memberId
 			,hs.homework_submit_title homeworkSubmitTitle
 			,hs.homework_submit_content homeworkSubmitContent
-			,hsf.homework_submit_file_name homeworkSubmitFileName
-			,hsf.homework_submit_file_type homeworkSubmitFileType
 			,hs.homework_submit_score homeworkSubmitScore
 			,hs.homework_submit_feedback homeworkSubmitFeedback
 			,hs.homework_submit_create_date homeworkSubmitCreateDate
 			,hs.homework_submit_update_date homeworkSubmitUpdateDate
 		FROM homework_submit hs
 		INNER JOIN homework h
-		ON hs.homework_no = h.homework_no
-		INNER JOIN student_lecture sl
-		ON hs.member_id = sl.member_id		
-		INNER JOIN homework_submit_file hsf
-		ON hs.homework_submit_no = hsf.homework_submit_no
+		ON hs.homework_no = h.homework_no	
 		WHERE hs.homework_submit_no = #{homeworkSubmitNo} 
 	</select>
 	

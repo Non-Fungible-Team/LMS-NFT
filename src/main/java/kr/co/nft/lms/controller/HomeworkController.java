@@ -29,7 +29,7 @@ public class HomeworkController {
 	@Autowired private HomeworkService homeworkService;
 	
 	// 과제 리스트
-	@GetMapping("/homework/getHomeworkListByPage")
+	@GetMapping("/all/homework/getHomeworkListByPage")
 	public String getHomeworkListByPage(Model model
 			,HttpSession session
 			,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
@@ -54,7 +54,7 @@ public class HomeworkController {
 	}
 	
 	// 과제 상세보기
-	@GetMapping("/homework/getHomeworkOne")
+	@GetMapping("/all/homework/getHomeworkOne")
 	public String getHomeworkOne(Model model
 								,@RequestParam(name="homeworkNo") int homeworkNo) {
 		log.debug(A.Q+"HomeworkController.getHomeworkOne.param.homeworkNo : "+ homeworkNo +A.R);
@@ -70,13 +70,13 @@ public class HomeworkController {
 		
 	}
 	// 과제 입력 폼
-	@GetMapping("/homework/addHomework")
+	@GetMapping("/teacher/homework/addHomework")
 	public String addHomework() {
 		return "/homework/addHomework";
 	}
 	
 	// 과제 입력 액션
-	@PostMapping("/homework/addHomework")
+	@PostMapping("/teacher/homework/addHomework")
 	public String addHomework(Homework homework) {
 		log.debug(A.Q+"HomeworkController.addHomework.param.homework :" + homework + A.R);
 	
@@ -89,12 +89,12 @@ public class HomeworkController {
 			log.debug(A.Q+"HomeworkController.addHomework 과제 입력 실패"+A.R);
 		}
 		
-		return "redirect:/homework/getHomeworkListByPage";
+		return "redirect:/all/homework/getHomeworkListByPage";
 		
 	}
 	
 	// 과제 수정 폼
-	@GetMapping("/homework/modifyHomework")
+	@GetMapping("/teacher/homework/modifyHomework")
 	public String modifyHomework(Model model
 								,@RequestParam(name="homeworkNo") int homeworkNo) {
 		log.debug(A.Q+"HomeworkController.modifyHomework.param.homeworkNo :"+ homeworkNo +A.R);
@@ -108,7 +108,7 @@ public class HomeworkController {
 	}
 	
 	// 과제 수정 액션
-	@PostMapping("/homework/modifyHomework")
+	@PostMapping("/teacher/homework/modifyHomework")
 	public String modifyHomework(Homework homework) {
 		log.debug(A.Q+"HomeworkController.modifyHomework.param.homework : " + homework +A.R);
 		
@@ -118,10 +118,10 @@ public class HomeworkController {
 		} else {
 			log.debug(A.Q+"과제 수정 실패"+A.R);
 		}
-		return "redirect:/homework/getHomeworkOne?homeworkNo=" + homework.getHomeworkNo();
+		return "redirect:/all/homework/getHomeworkOne?homeworkNo=" + homework.getHomeworkNo();
 	}
 	// 과제 삭제
-	@PostMapping("/homework/removeHomework")
+	@PostMapping("/teacher/homework/removeHomework")
 	public String removeHomework(@RequestParam(name="homeworkNo") int homeworkNo) {
 		log.debug(A.Q+"HomeworkController.removeHomework.param.homeworkNo : "+ homeworkNo +A.R);
 		int row = homeworkService.removeHomework(homeworkNo);
@@ -130,19 +130,19 @@ public class HomeworkController {
 		} else {
 			log.debug(A.Q+"과제 삭제 실패"+A.R);
 		}
-	return "redirect:/homework/getHomeworkListByPage";
+	return "redirect:/all/homework/getHomeworkListByPage";
 	}
 	
 	
 	// 학생 과제 제출 입력 폼
-	@GetMapping("/homework/addHomeworkSubmit")
+	@GetMapping("/student/homework/addHomeworkSubmit")
 	public String addHomeworkSubmit() {
 
 		return "/homework/addHomeworkSubmit";
 	}
 	
 	// 학생 과제 제출 입력 액션
-	@PostMapping("/homework/addHomeworkSubmit")
+	@PostMapping("/student/homework/addHomeworkSubmit")
 	public String addHomeworkSubmit(HttpServletRequest request
 									,HomeworkSubmit homeworkSubmit
 									,Homework homework) {
@@ -161,10 +161,10 @@ public class HomeworkController {
 		
 		homeworkService.addHomeworkSubmit(homeworkSubmit,homework, path);
 		
-		return"redirect:/homework/getHomeworkListByPage";
+		return"redirect:/all/homework/getHomeworkListByPage";
 	}
 	// 학생 제출과제 리스트
-	@GetMapping("/homework/getHomeworkSubmitListByPage")
+	@GetMapping("/all/homework/getHomeworkSubmitListByPage")
 	public String getHomeworkSubmitListByPage(Model model
 											,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
 											,@RequestParam(name="rowPerPage", defaultValue = "10")  int rowPerPage
@@ -187,7 +187,7 @@ public class HomeworkController {
 	}
 	
 	// 학생 과제 상세보기 
-	@GetMapping("/homework/getHomeworkSubmitOne")
+	@GetMapping("/all/homework/getHomeworkSubmitOne")
 	public String getHomeworkSubmitOne(Model model
 									,@RequestParam(name="homeworkSubmitNo", required=false) int homeworkSubmitNo) {
 		log.debug(A.Q+"HomeworkSubmitController.getHomeworkSubmitOne.param.homeworkSubmitNo : "+ homeworkSubmitNo +A.R);
@@ -203,8 +203,20 @@ public class HomeworkController {
 		return "/homework/getHomeworkSubmitOne";
 	}
 	
+	// 학생 점수 입력
+	@PostMapping("/all/homework/getHomeworkSubmitOne")
+	public String getHomeworkSubmitOne(HomeworkSubmit homeworkSubmit) {
+		int row = homeworkService.modifyHomeworkSubmitScore(homeworkSubmit);
+		if(row ==1) {
+			log.debug(A.Q+"점수 입력 성공"+A.R);
+		} else {
+			log.debug(A.Q+"점수 입력 실패"+A.R);
+		}
+		return "redirect:/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=" +homeworkSubmit.getHomeworkSubmitNo();
+	}
+	
 	// 학생 과제 수정 폼
-	@GetMapping("/homework/modifyHomeworkSubmit")
+	@GetMapping("/student/homework/modifyHomeworkSubmit")
 	public String modifyHomeworkSubmit(Model model
 									,@RequestParam(name="homeworkSubmitNo", required=false) int homeworkSubmitNo) {
 		log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit homeworkSubmitNo :"+ homeworkSubmitNo +A.R);
@@ -218,7 +230,7 @@ public class HomeworkController {
 	}
 	
 	// 학생 과제 수정 액션
-	@PostMapping("/homework/modifyHomeworkSubmit")
+	@PostMapping("/student/homework/modifyHomeworkSubmit")
 	public String modifyHomeworkSubmit(HttpServletRequest request
 									,HomeworkSubmit homeworkSubmit
 									,Homework homework) {
@@ -235,7 +247,7 @@ public class HomeworkController {
 				log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit filename :" + mf.getOriginalFilename() + A.R);
 			}
 		}
-		
+
 		int row = homeworkService.modifyHomeworkSubmit(homework, homeworkSubmit, path);
 		if(row == 1) {
 			log.debug(A.Q+"과제 수정 성공"+A.R);
@@ -243,11 +255,11 @@ public class HomeworkController {
 			log.debug(A.Q+"과제 수정 실패"+A.R);
 		}
 		
-		return "redirect:/homework/getHomeworkSubmitOne?homeworkSubmitNo=" + homeworkSubmit.getHomeworkSubmitNo();
+		return "redirect:/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=" + homeworkSubmit.getHomeworkSubmitNo();
 	}
 	
 	// 학생 과제 삭제 액션
-	@PostMapping("/homework/removeHomeworkSubmit")
+	@PostMapping("/student/homework/removeHomeworkSubmit")
 	public String removeHomeworkSubmit(@RequestParam(name="homeworkSubmitNo") int homeworkSubmitNo) {
 		log.debug(A.Q+"HomeworkController.removeHomeworkSubmit.param.homeworkSubmitNo :" + homeworkSubmitNo + A.R);
 		
@@ -261,7 +273,7 @@ public class HomeworkController {
 		return "redirect:/homework/getHomeworkListByPage";
 	}
 	// 학생 과제 파일 삭제 액션
-	@PostMapping("/homework/removeHomeworkSubmitFileOne")
+	@PostMapping("/student/homework/removeHomeworkSubmitFileOne")
 	public String removeHomeworkSubmitFileOne(HomeworkSubmit homeworkSubmit
 										,@RequestParam(name="homeworkSubmitFileNo") int homeworkSubmitFileNo) {
 		int row = homeworkService.removeHomeworkSubmitFileOne(homeworkSubmitFileNo);
@@ -273,6 +285,8 @@ public class HomeworkController {
 		
 		return "redirect:/homework/modifyHomeworkSubmit?homeworkSubmitNo=" + homeworkSubmit.getHomeworkSubmitNo();
 	}
+	
+	
 	
 	
 	

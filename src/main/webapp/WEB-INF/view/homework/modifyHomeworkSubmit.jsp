@@ -21,8 +21,9 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="http://ajax.googLeapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
-		$('#addFileUpload').click(function(){
+	$('document').ready(function() {
+		
+		$('#modifyFileUpload').click(function(){
 			
 			let flag = true;
 			
@@ -39,25 +40,20 @@
 			}
 		});
 		
-		
-		$('#addHomeworkSubmit').click(function(){
-			if($('#homeworkSubmitTitle').val() == ''){
-				alert('제목을 입력하세요');
-			} else if($('#homeworkSubmitContent').val() == '') {
-				alert('내용을 입력하세요');
-			} else {
-				$('.homeworkSubmitFileList').each(function(){
-					if($(this).val()=''){
-						flag = false;
-					}
+		$('#btnRemove').click(function(){
+			var result = confirm("삭제 하시겠습니까?");
+			
+			if (result) {
+				$.ajax({
+					url:'/student/homework/removeHomeworkSubmitFileOne'
+				    ,type : 'POST'
+				    ,async : false
 				});
-				if(flag){
-					$('#addHomeworkSubmitFileForm').submit();
-				} else {
-					alert('파일이 첨부되지 않은 list가 존재합니다');
-				}
+			} else {
+				return false;
 			}
 		});
+		
 	});
 </script>
 </head>
@@ -66,6 +62,7 @@
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		});
 </script>
+
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
@@ -77,9 +74,9 @@
 				<div class="col-lg-12 col-md-12">
 					<div class="card">
 						<div class="card-body">
+								<form action="${pageContext.request.contextPath }/student/homework/modifyHomeworkSubmit" method="post" enctype="multipart/form-data">
 							<h4 class="card-title">과제 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-								<form action="${pageContext.request.contextPath }/homework/modifyHomeworkSubmit" method="post" enctype="multipart/form-data">
 								<table id="zero_config" class="table table-striped table-bordered">
 									<tr>
 										<td>homeworkSubmitNo</td>
@@ -111,14 +108,14 @@
 									</tr>
 								 
 								</table>
-								<button type="button" class="btn btn-outline-success btn-rounded" id="addFileUpload">파일업로드</button>
+								<button type="button" class="btn btn-outline-success btn-rounded" id="modifyFileUpload">파일업로드</button>
 								<div id="fileSection"></div>
 								<!-- 파일업로드 input 추가될 영역 -->
 								<hr>
 								</div>
+								<div>
 									<h4>첨부된 파일 정보</h4>
-							    <div>
-							   	<form method="post" action="${pageContext.request.contextPath }/homework/removeHomeworkSubmitFileOne">
+							    </div>
 									<table id="zero_config" class="table table-striped table-bordered">
 								    	<thead>
 								    		<tr>
@@ -141,15 +138,12 @@
 													<td>${hf.homeworkSubmitFileSize}</td>
 													<td>
 														<input type="hidden" name="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo }">
-														<button type="submit" class="btn btn-outline-success btn-rounded">파일 삭제</button>
+														<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded">파일 삭제</button>
 													</td>
 												</tr>	
 								    		</c:forEach>
 								    	</tbody>
-								    	
 								    </table>
-							   	</form>
-<%-- 								    	<input type="hidden" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}"> --%>
 								    	<button type ="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">수정 완료</i></button>
 								    </form>
 								</div>
@@ -159,7 +153,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 								 
 	
 </body>

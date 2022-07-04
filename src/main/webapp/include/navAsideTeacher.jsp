@@ -182,7 +182,7 @@
 					<!-- 출석 -->
 					<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/emptyPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">강의 출석 </span></a></li>
 					<!-- 과제 -->
-					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/homework/getHomeworkListByPage" aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">과제 </span></a></li>
+					<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage" aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">과제 </span></a></li>
 					<!-- 시험 -->
 					<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">시험 </span></a>
 						<ul aria-expanded="false" class="collapse  first-level base-level-line">

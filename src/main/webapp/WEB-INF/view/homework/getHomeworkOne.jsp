@@ -64,21 +64,25 @@
 											<td><textarea name=homeworkContent class="form-control" rows ="8" cols="70"  readonly="readonly">${homeworkOne.homeworkContent}</textarea></td>
 										</tr>
 										<tr>
-											<td>날짜</td>
+											<td>생성 날짜</td>
 											<td><input type="text" class="form-control" name="homeworkCreateDate" size="16" value = "${homeworkOne.homeworkCreateDate}"readonly="readonly"></td>
 										</tr>
+										<tr>
+											<td>제출 기간</td>
+											<td>${homeworkOne.homeworkStartDate } ~ ${homeworkOne.homeworkEndDate }</td>
+										</tr>
 									</table>
-										<form action="${pageContext.request.contextPath}/homework/removeHomework" method="post">
+										<form action="${pageContext.request.contextPath}/teacher/homework/removeHomework" method="post">
 											<input type="hidden" name ="homeworkNo" value ="${homeworkOne.homeworkNo}" readonly="readonly">
 											<input type="hidden" name ="lectureNo" value ="${homeworkOne.lectureNo}" readonly="readonly">
 											<c:if test="${sessionLoginMember.memberLevel==5 && sessionLoginMember.memberId == homeworkOne.memberId }">
-												<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/modifyHomework?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check">과제 수정</i></button>
+												<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/teacher/homework/modifyHomework?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check">과제 수정</i></button>
 												<button type="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">과제 삭제</i></button>
 											</c:if>
 											<c:if test="${sessionLoginMember.memberLevel == 4 }">
-											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/addHomeworkSubmit?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check" style="color:black;">과제 제출</i></button>
+											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/student/homework/addHomeworkSubmit?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check">과제 제출</i></button>
 											</c:if>
-											<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
+											<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
 <%-- 											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check"></i>과제 제출 상세보기</button> --%>
 										</form>
 									</div>

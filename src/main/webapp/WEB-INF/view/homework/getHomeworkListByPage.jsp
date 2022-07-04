@@ -62,17 +62,17 @@
 													<tr>
 														<td>${h.homeworkNo}</td>
 														<td>${h.lectureNo}</td>
-														<td><a href="${pageContext.request.contextPath}/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
+														<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
 														<td>${h.teacherId }</td>
 														<td>${h.homeworkStartDate} ~ ${h.homeworkEndDate }</td>
 														<c:if test="${sessionLoginMember.memberLevel == 5 }">
-															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
+															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
 														</c:if>
 														<c:if test="${sessionLoginMember.memberLevel == 4 && empty h.homeworkSubmitNo }">
-															<td><a href="${pageContext.request.contextPath}/homework/addHomeworkSubmit?homeworkNo=${h.homeworkNo}">과제제출</a></td>														
+															<td><a href="${pageContext.request.contextPath}/student/homework/addHomeworkSubmit?homeworkNo=${h.homeworkNo}">과제제출</a></td>														
 														</c:if> 
 														<c:if test="${sessionLoginMember.memberLevel == 4 && not empty h.homeworkSubmitNo}">
-															<td><a href="${pageContext.request.contextPath}/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}"><u>과제보기</u></a></td>														
+															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}"><u>과제보기</u></a></td>														
 														</c:if> 
 													</tr>
 														
@@ -81,7 +81,7 @@
 												</c:forEach>
 											</tbody>
 										</table>
-										<form method="get" action="${pageContext.request.contextPath}/homework/getHomeworkListByPage">
+										<form method="get" action="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage">
 												<c:if test="${currentPage>1}">
 													<button type="submit" class="btn btn-outline-warning btn-rounded" name="currentPage" value="${currentPage-1}">이전</button>
 												</c:if>
@@ -102,9 +102,11 @@
 												</c:if>
 											</form>
 										<hr>
+										<c:if test="${sessionLoginMember.memberLevel == 5 }">
 										<div>
-											<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/homework/addHomework'"><i class="fas fa-check"></i>과제 입력</button>
+											<button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/teacher/homework/addHomework'"><i class="fas fa-check"></i>과제 입력</button>
 									    </div>
+									    </c:if>
 									</div>
 								</div>
 							</div>
