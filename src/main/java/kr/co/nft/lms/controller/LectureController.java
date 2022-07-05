@@ -458,4 +458,18 @@ public class LectureController {
 		
 		return "redirect:/teacher/lecture/getLectureRoomList";
 	}
+	
+	@GetMapping("/teacher/lecture/lectureNameOne")
+	public String lectureNameOne(Model model
+								, @RequestParam(name = "lectureNo") int lectureNo) {
+		log.debug(A.W +"[LectureController.teacher.lecture/lectureNameOne.param] lectureNo : " + lectureNo +A.R);
+		Map<String,Object> ParamMap = new HashMap<>();
+		
+		ParamMap.put("lectureNo", lectureNo); //번호 값 저장
+		log.debug(A.W +"[LectureController.teacher.lecture/lectureNameOne.ParamMap] ParamMap : " + ParamMap +A.R);
+		
+		model.addAttribute("lectureNo", lectureNo);
+		
+		return "lecture/lectureNameOne";
+	}
 }
