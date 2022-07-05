@@ -82,6 +82,7 @@
 			,s.suggest_status suggestStatus
 			,b.board_title suggestTitle
 			,b.board_content suggestContent
+			,s.suggest_secret suggestSecret
 			,b.member_id memberId
 			,b.board_create_date suggestCreateDate
 		FROM suggest s
