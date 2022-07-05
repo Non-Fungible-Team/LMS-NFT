@@ -24,7 +24,27 @@
 <script>
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		//유효성검사
+		$('#uploadSuggest').click(function(){
+			$('#suggestTitleHelper').text('');
+			$('#suggestContentHelper').text('');
+			$('#suggestSecretHelper').text('');
+			
+			if($('#suggestTitle').val() == ''){
+				$('#suggestTitleHelper').text('제목을 입력하세요');
+				$('#suggestTitle').focus();
+			} else if($('#suggestContent').val() ==''){
+				$('#suggestContentHelper').text('내용을 입력하세요');
+				$('#suggestContent').focus();
+			} else if($('#suggestSecret').val() == '-1'){
+				$('#suggestSecretHelper').text('비밀글여부를 선택하세요');
+				$('#suggestSecret').focus();
+			} else {
+				$('#addSuggestForm').submit();
+			}
 		});
+	});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -43,7 +63,7 @@
 										</a>
 									</div>
 								<div class="mt-2" style="height: auto; width: auto;">
-									<form id="" action="${pageContext.request.contextPath}/all/suggest/addSuggest" method="post">
+									<form id="addSuggestForm" action="${pageContext.request.contextPath}/all/suggest/addSuggest" method="post">
 										<table id="zero_config" class="table table-striped table-bordered no-wrap">
 											<c:if test="${root != null}">
 												<tr>
@@ -64,16 +84,14 @@
 												<tr>
 									    			<th>제목</th>
 									    			<td>
-									    				<input type="text" name="suggestTitle" id="suggestTitle" class="form-control" value="${suggestTitle}" readonly="readonly">
-									    				<span id="suggestTitleHelper" class="helper"></span>
+									    				<input type="text" name="suggestTitle" class="form-control" value="${suggestTitle}" readonly="readonly">
 									    			</td>
 									    		</tr>
 									    	</c:if>
 											<tr>
 												<th>작성자ID</th>
 												<td>
-													<input type="text" name="memberId" id="memberId" class="form-control" value="${sessionLoginMember.memberId}" readonly="readonly">
-													<span id="memberIdHelper" class="helper"></span>
+													<input type="text" name="memberId" class="form-control" value="${sessionLoginMember.memberId}" readonly="readonly">
 												</td>
 											</tr>
 											<tr>
@@ -106,7 +124,7 @@
 											</c:if>
 										</table>
 										<div>
-											<button type="submit" id = "uploadSuggest" class ="btn btn-outline-success btn-rounded">등록</button>
+											<button type="button" id = "uploadSuggest" class ="btn btn-outline-success btn-rounded">등록</button>
 										</div>
 									</form>
 								</div>

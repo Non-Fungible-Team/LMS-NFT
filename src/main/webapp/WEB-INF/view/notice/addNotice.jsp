@@ -52,9 +52,9 @@
 			
 			//유효성검사
 			$('#uploadNotice').click(function(){
-					$('#noticeTitleHelper').text('');
-					$('#noticeContentHelper').text('');
-					$('#noticePrivilegeHelper').text('');
+				$('#noticeTitleHelper').text('');
+				$('#noticeContentHelper').text('');
+				$('#noticePrivilegeHelper').text('');
 					
 				if($('#noticeTitle').val() == ''){
 					$('#noticeTitleHelper').text('제목을 입력하세요');

@@ -115,7 +115,7 @@ public class SuggestController {
 		model.addAttribute("suggest", suggest);
 		log.debug(A.S + "[SuggestController.modifySuggest] model : " + model + A.R);
 		//가져온 상세보기가 로그인한 회원의 권한 밖의 게시물이면 list로 redirect
-		if(suggest.getMemberId() != loginMember.getMemberId()){
+		if(suggest.getMemberId().equals(loginMember.getMemberId()) == false){
 			log.debug(A.S + "[SuggestController.modifySuggest] 권한밖의 suggest게시물 수정 요청" + A.R);
 			return "redirect:/all/suggest/getSuggestListByPage";
 		}
