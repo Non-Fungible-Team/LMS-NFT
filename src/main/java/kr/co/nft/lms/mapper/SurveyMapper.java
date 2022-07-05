@@ -23,7 +23,7 @@ public interface SurveyMapper {
 	int insertSurveyQuestion(SurveyQuestion surveyQuestion);
 	
 	// 설문조사 질문 리스트 목록 (제목과 내용만 페이징 없음)
-	List<Map<String, Integer>> selectSurveyQuestionList(Map<String, Integer> map);
+	List<Map<String, Integer>> selectSurveyQuestionList();
 	
 	// 설문조사 질문 리스트 페이지
 	List<Map<String, Integer>> selectSurveyQuestionListByPage(Map<String, Integer> map);
@@ -63,11 +63,15 @@ public interface SurveyMapper {
 	// 설문조사 질문별, 점수 카운트 (리스트 형식)
 	List<Map<String, Object>> getAnswerCount();
 	
-	// 설문 조사 차트 만들 때 객관식을 카운트
+	// 설문조사 차트 만들 때 객관식을 카운트
 	List<Map<String, Object>> questionListCount();
 	
-	// 설문 조사 질문 항목정보 가져오기
+	// 설문조사 질문 항목정보 가져오기
 	SurveyQuestionList getQuestionList(int surveyQuestionListNo);
 	
+	// 설문조사 질문 항목 업데이트
 	int updateSurveyQuestionList(SurveyQuestionList surveyQuestionList);
+
+	// 설문조사 질문 정보 가져오기
+	List<Map<String, Object>> selectSurveyQuestion(int surveyNo);
 }

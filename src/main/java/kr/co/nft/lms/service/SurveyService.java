@@ -1,5 +1,6 @@
 package kr.co.nft.lms.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,11 +48,7 @@ public class SurveyService {
 			List<Map<String,Object>> answerCount = surveyMapper.getAnswerCount();
 			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
 			
-			List<Map<String,Object>> multipleAnswer = surveyMapper.getMultipleSurveyAnswer();
-			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] multipleAnswer : " + multipleAnswer + A.R);
 			
-			List<Map<String,Object>> shortAnswer = surveyMapper.getShortSurveyAnswer();
-			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] shortAnswer : " + shortAnswer + A.R);
 			
 			
 			List<Map<String,Object>> questionListCount = surveyMapper.questionListCount();
@@ -61,8 +58,7 @@ public class SurveyService {
 			returnMap.put("questionListCount", questionListCount);
 			returnMap.put("answerAverage", answerAverage);
 			returnMap.put("answerCount", answerCount);
-			returnMap.put("multipleAnswer", multipleAnswer);
-			returnMap.put("shortAnswer", shortAnswer);
+			
 
 		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] returnMap : " + returnMap + A.R);
 		
@@ -90,24 +86,32 @@ public class SurveyService {
 		 
 	}
 	
-	public Map<String,Object> selectSurveyQuestionList(int currentPage, int rowPerPage) {
+	public Map<String,Object> selectSurveyQuestion(int surveyNo) {
+		List<Map<String, Object>> surveyQuestion =  surveyMapper.selectSurveyQuestion(surveyNo);
+		log.debug(A.D+"[SurveyService.selectSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);
 		
-		Map<String, Integer> map = new HashMap<>();
-		map.put("rowPerPage", rowPerPage);
-		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] map : " + map + A.R);
+		Map<String,Object> selectQuestion = new HashMap<>();
+		selectQuestion.put("surveyQuestion", surveyQuestion);
 		
-		List QuestionList = surveyMapper.selectSurveyQuestionList(map);
+		log.debug(A.D+"[SurveyService.selectSurveyQuestion] selectQuestion : " + selectQuestion + A.R);
+		
+		return selectQuestion;
+	}
+	
+	public Map<String,Object> selectSurveyQuestionList() {
+		
+		List<Map<String, Integer>> QuestionList = surveyMapper.selectSurveyQuestionList();
 		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] QuestionList : " + QuestionList + A.R);
 		
-		Map<String,Object> select = new HashMap<>();
-		select.put("QuestionList", QuestionList);
+		Map<String,Object> selectQuestionList = new HashMap<>();
+		selectQuestionList.put("QuestionList", QuestionList);
 		
 		
-		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] select : " + select + A.R);
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] select : " + selectQuestionList + A.R);
 		
 		
 		
-		return select;
+		return selectQuestionList;
 	}
 	
 	public int insertSurbey(Survey survey, List<SurveyQuestion> surveyQuestionList) {
@@ -185,13 +189,21 @@ public class SurveyService {
 		 log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion]" + A.R);
 		 
 	      Survey surveyOne = surveyMapper.getSurveyOne(surveyNo);
-	      List<Map<String, Object>> SurveyQuestionList = surveyMapper.getSurveyQuestionList(surveyNo);
+	      List<Map<String, Object>> QuestionList = surveyMapper.getSurveyQuestionList(surveyNo);
 	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] surveyOne :" + surveyOne +A.R);
-	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] SurveyQuestionList : " + SurveyQuestionList +A.R);
-	     
+	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] SurveyQuestionList : " + QuestionList +A.R);
+	      List<Map<String,Integer>> list = new ArrayList<>();
+	      
+	      int count = 0;
+	      for(Map<String, Object> s : QuestionList) {
+	    	  count = count + 1;
+	    	 
+	      }
+	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] count : " + count +A.R);
 	      Map<String, Object> returnMap = new HashMap<>();
 	      returnMap.put("surveyOne", surveyOne);
-	      returnMap.put("SurveyQuestionList", SurveyQuestionList);
+	      returnMap.put("QuestionList", QuestionList);
+	      returnMap.put("count",count);
 	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] returnMap :" + returnMap +A.R);
 	      
 	      return returnMap;

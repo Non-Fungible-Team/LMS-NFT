@@ -28,6 +28,33 @@ public class SurveyController {
 	@Autowired private SurveyService surveyService;
 	@Autowired private LectureService lectureService;
 	
+	@GetMapping("/manager/survey/updateSurveyForm")
+	public String updateSurveyForm(Survey survey, Model model, HttpSession session
+			,@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+			,@RequestParam(name = "surveyNo") int surveyNo) {
+		// 로그인 정보 가져오기
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		// 학생 강의 One 리스트 + 강의 이름과 번호 리스트
+		Map<String, Object> LectureMap  = lectureService.addStudentLecture();
+		// 질문 항목 가져오기
+		Map<String, Object> QuestionList = surveyService.selectSurveyQuestionList();
+		// 질문 가져오기
+		Map<String, Object> selectQuestion = surveyService.selectSurveyQuestion(surveyNo);
+		
+		
+		log.debug(A.D+"[SurveyController.insertSurvey] studentLectureOne : " + LectureMap + A.R);
+		log.debug(A.D+"[SurveyController.insertSurvey] loginMember : " + loginMember +A.R);
+		log.debug(A.D+"[SurveyController.insertSurvey] QuestionList : " + QuestionList + A.R); // 디버깅
+		log.debug(A.D+"[SurveyController.insertSurvey] selectQuestion : " + selectQuestion + A.R); // 디버깅
+		
+		model.addAttribute("QuestionList",QuestionList.get("QuestionList"));
+		model.addAttribute("selectQuestion",selectQuestion.get("selectQuestion"));
+		model.addAttribute("loginMember",loginMember);
+		model.addAttribute("lectureNoNameList", LectureMap.get("lectureNoNameList"));
+		
+		return "survey/updateSurveyForm";
+	}
+	
 	@GetMapping("/manager/survey/getSurveyStatistics")
 	public String getSurveyStatistics(Model model) {
 		// 전체 답변 가져오기 
@@ -45,8 +72,8 @@ public class SurveyController {
 	}
 	
 	@GetMapping("/manager/survey/updateSurveyQuestionList")
-	public String updateSurveyQuestionList(Model model, 
-				@RequestParam(name="surveyQuestionListNo") int surveyQuestionListNo) {
+	public String updateSurveyQuestionList(Model model 
+				,@RequestParam(name="surveyQuestionListNo") int surveyQuestionListNo) {
 		log.debug(A.D+"[SurveyController.updateSurveyQuestionList] "+ A.R); // 디버깅
 		SurveyQuestionList QuestionList = surveyService.getQuestionList(surveyQuestionListNo);
 		log.debug(A.D+"[SurveyController.updateSurveyQuestionList] QuestionList : "+ QuestionList + A.R); // 디버깅
@@ -59,8 +86,8 @@ public class SurveyController {
 	public String updateSurveyQuestionList(SurveyQuestionList surveyQuestionList) {
 		
 		int row = surveyService.updateQuestionList(surveyQuestionList);
-		
-		return "redirect:/manager/survey/getSurveyQuestionListByPage";
+		log.debug(A.D+"[SurveyController.updateSurveyQuestionList] row : "+ row + A.R); // 디버깅
+		return "redirect:survey/getSurveyQuestionListByPage";
 	}
 	
 	@GetMapping("/manager/survey/insertSurvey") // 설문조사 추가 (설문조사 질문도 같이)
@@ -75,7 +102,7 @@ public class SurveyController {
 		
 		
 		// 질문 항목 가져오기
-		Map<String, Object> map = surveyService.selectSurveyQuestionList(currentPage, rowPerPage);
+		Map<String, Object> map = surveyService.selectSurveyQuestionList();
 		
 		
 		log.debug(A.D+"[SurveyController.insertSurvey] studentLectureOne : " + LectureMap + A.R);
@@ -103,7 +130,7 @@ public class SurveyController {
 		
 		if(row == 0) {
 			log.debug(A.D+"[SurveyController.insertSurvey] 등록실패  " + A.R); // 디버깅
-			return "manager/survey/insertSurvey";
+			return "survey/insertSurvey";
 		}
 		
 		log.debug(A.D+"[SurveyController.insertSurvey] 등록성공  " + A.R); // 디버깅
@@ -121,7 +148,8 @@ public class SurveyController {
 		
 		//모델에 값들 저장
 		model.addAttribute("surveyOne",returnMap.get("surveyOne"));
-		model.addAttribute("surveyQuestionList", returnMap.get("SurveyQuestionList"));
+		model.addAttribute("QuestionList", returnMap.get("QuestionList"));
+		
 		log.debug(A.D+"[SurveyController.getSurveyOne] model : " + model + A.R); // 디버깅
 		
 		return"survey/getSurveyOneM";
@@ -141,7 +169,8 @@ public class SurveyController {
 		//모델에 값들 저장
 		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("surveyOne",returnMap.get("surveyOne"));
-		model.addAttribute("surveyQuestionList", returnMap.get("SurveyQuestionList"));
+		model.addAttribute("QuestionList", returnMap.get("QuestionList"));
+		model.addAttribute("count",returnMap.get("count"));
 		log.debug(A.D+"[SurveyController.getSurveyOne] model : " + model + A.R); // 디버깅
 		
 		return"survey/getSurveyOneS";

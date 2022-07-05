@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>설문조사 수정 페이지</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 반응형 웹 -->
@@ -59,7 +59,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#insertQuestionList').click(function(){
+	$('#updateQuestionList').click(function(){
 		if($('#surveyTitle').val() == '') {
 			$('#surveyTitleHelper').text('제목을 입력하세요');
 			$('lectureHelper').text('');
@@ -108,7 +108,7 @@ $(document).ready(function(){
 			$('#deadlineHelper').text('');
 			$('#qestionFormHelper').text('질문을 선택해주세요');
 		}else {
-			$('#insertSurvey').submit();
+			$('#updateSurvey').submit();
 		}
 		
 	});
@@ -136,7 +136,7 @@ $(document).ready(function(){
 							<div class="card">
 								<div class="card-body">
 
-									<h1 class="card-title">설문조사 생성</h1>
+									<h1 class="card-title">설문조사 업데이트</h1>
 
 									<div>설문조사 항목 타입 선택</div>
 									<button type="button" id="multipleSurvey" name="multipleSurvey">객관식
@@ -146,11 +146,42 @@ $(document).ready(function(){
 									<button type="button" id="deleteTypeButton"
 										name="deleteTypeButton">삭제</button>
 									<div>&nbsp;</div>
-
-
+									<div><c:forEach var="sq" items="${selectQuestion}">
+										<form method="post"
+											action="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestion"
+											id="updateSurveyQuestion${sq.surveyQuestionNo}">
+											<table>
+												<tr>
+													<td colspan='2'>질문 ${sq.surveyQuestionNo}번 <input
+														type='hidden'
+														name='surveyQuestionNo${sq.surveyQuestionNo}'
+														value='${sq.surveyQuestionNo}'>
+													</td>
+												</tr>
+												<tr>
+													<td>질문 항목</td>
+													<td><select
+														name='surveyQuestionListNo'>
+															<option>항목선택</option>
+															<c:forEach var='ql' items='${QuestionList}'>
+																<option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option>
+															</c:forEach>
+													</select> <input type='text'
+														name='surveyQuestionType'
+														value='${sq.surveyQuestionType}' readonly></td>
+												</tr>
+												<tr>
+													<td>${sq.surveyQuestionNo}번 질문 내용입력</td>
+													<td><input type='text'
+														name='surveyQuestionContent'>${sq.surveyQuestionContent}</td>
+												</tr>
+											</table>
+										</form>
+										</c:forEach>
+										</div>
 									<form method="post"
-										action="${pageContext.request.contextPath}/manager/survey/insertSurvey"
-										id="insertSurvey">
+										action="${pageContext.request.contextPath}/manager/survey/updateSurvey"
+										id="updateSurvey">
 										<table>
 											<tr>
 												<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
@@ -192,7 +223,7 @@ $(document).ready(function(){
 												<span id="qestionFormHelper" class="helper"></span></td>
 											</tr>
 										</table>
-										<button type="button" id="insertQuestionList" name="insertQuestionList">생성</button>
+										<button type="button" id="updateQuestionList" name="updateQuestionList">수정</button>
 									</form>
 								</div>
 							</div>
