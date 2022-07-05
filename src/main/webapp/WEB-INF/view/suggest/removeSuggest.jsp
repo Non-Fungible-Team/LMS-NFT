@@ -38,48 +38,48 @@
 
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-	<!-- header include(네비게이션바) -->
-	<div id="navAside"></div>
-	<div class="page-wrapper">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12 col-md-12">
-				    <div class="card">
-				        <div class="card-body">
-				        <div class="card-body">
-				            <h4 class="card-title">건의사항 삭제(블라인드)</h4>
-				            <div class="mt-2" style="height:auto; width:auto;">
-								<form id="removeSuggestForm" action="${pageContext.request.contextPath}/all/suggest/removeSuggest" method="post">
-									<table id="zero_config" class="table table-striped table-bordered no-wrap">
-										<tr>
-											<th>번호</th>
-											<td><input type="text" name="suggestNo" id="removeSuggestNo" class="form-control" value="${suggest.suggestNo}" readonly="readonly"></td>
-										</tr>
-										<tr>
-											<th>제목을 확인해 주세요</th>
-											<td>
-												<input type="text" name="suggestTitle" class="form-control" value="${suggest.suggestTitle}" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<th>삭제할 건의사항 번호 입력</th>
-											<td>
-												<input type="number" name="suggestNo" id="inputRemoveSuggestNo"class="form-control">
-												<span id="inputRemoveSuggestNoHelper" class="helper"></span>
-											</td>
-											
-										</tr>
-									</table>
-									<div>
-					            		<button type="button" id="uploadRemoveSuggest" class="btn btn-outline-danger btn-rounded">삭제(블라인드처리)</button>
-								        <a href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage">
-								        	<input type="button" class="btn btn-info" style="float: right" value="목록으로">
-								        </a>
-						        	</div>
-								</form>
-				             </div>   
-				        </div>
-				    </div>
+		<!-- header include(네비게이션바) -->
+		<div id="navAside"></div>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+					    <div class="card">
+					        <div class="card-body">
+					            <h4 class="card-title">건의사항 삭제(블라인드)</h4>
+					            <div class="mt-2" style="height:auto; width:auto;">
+									<form id="removeSuggestForm" action="${pageContext.request.contextPath}/all/suggest/removeSuggest" method="post">
+										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+											<tr>
+												<th>번호</th>
+												<td><input type="text" name="suggestNo" id="removeSuggestNo" class="form-control" value="${suggest.suggestNo}" readonly="readonly"></td>
+											</tr>
+											<tr>
+												<th>제목을 확인해 주세요</th>
+												<td>
+													<input type="text" name="suggestTitle" class="form-control" value="${suggest.suggestTitle}" readonly="readonly">
+												</td>
+											</tr>
+											<tr>
+												<th>삭제할 건의사항 번호 입력</th>
+												<td>
+													<input type="number" name="suggestNo" id="inputRemoveSuggestNo"class="form-control">
+													<span id="inputRemoveSuggestNoHelper" class="helper"></span>
+												</td>
+												
+											</tr>
+										</table>
+										<div>
+						            		<button type="button" id="uploadRemoveSuggest" class="btn btn-outline-danger btn-rounded">삭제(블라인드처리)</button>
+									        <a href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage">
+									        	<input type="button" class="btn btn-info" style="float: right" value="목록으로">
+									        </a>
+							        	</div>
+									</form>
+					             </div>   
+					        </div>
+					    </div>
+					</div>
 				</div>
 			</div>
 		</div>

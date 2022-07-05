@@ -23,7 +23,27 @@
 <script>
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		//유효성검사
+		$('#uploadModifySuggest').click(function(){
+			$('#modifySuggestTitleHelper').text();
+			$('#modifySuggestContentHelper').text();
+			$('#modifySuggestSecretHelper').text();
+			
+			if($('#modifySuggestTitle').val() == ''){
+				$('#modifySuggestTitleHelper').text('제목을 입력하세요');
+				$('#modifySuggestTitle').focus();
+			} else if ($('modifySuggestContent').val() == ''){
+				$('#modifySuggestContentHelper').text('내용을 입력하세요');
+				$('#modifySuggestContent').focus();
+			} else if ($('#modifySuggestSecret').val() == ''){
+				$('#modifySuggestSecretHelper').text('비밀글여부를 선택하세요');
+				$('#modifySuggestSecret').focus();
+			} else {
+				$('#modifySuggestForm').submit();
+			}
 		});
+	});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -43,7 +63,7 @@
 					            </div>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<form id="modifySuggestForm" action="${pageContext.request.contextPath}/all/suggest/modifySuggest?suggestNo=${suggest.suggestNo}" method="post">
-										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
 												<th>번호</th>
 												<td>${suggest.suggestNo}</td>
@@ -75,7 +95,7 @@
 											</tr>
 										</table>
 										<div>
-											<button type="submit" id = "uploadModifySuggest" class ="btn btn-outline-success btn-rounded" style="float: right">수정</button>
+											<button type="button" id = "uploadModifySuggest" class ="btn btn-outline-success btn-rounded" style="float: right">수정</button>
 										</div>
 										<div>
 											<a href="${pageContext.request.contextPath}/manager/suggest/removeSuggest?suggestNo=${suggest.suggestNo}">

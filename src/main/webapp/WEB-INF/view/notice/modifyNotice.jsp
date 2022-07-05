@@ -51,9 +51,9 @@
 			
 			//유효성검사
 			$('#uploadModifyNotice').click(function(){
-					$('#modifyNoticeTitleHelper').text('');
-					$('#modifyNoticeContentHelper').text('');
-					$('#modifyNoticePrivilegeHelper').text('');
+				$('#modifyNoticeTitleHelper').text('');
+				$('#modifyNoticeContentHelper').text('');
+				$('#modifyNoticePrivilegeHelper').text('');
 					
 				if($('#modifyNoticeTitle').val() == ''){
 					$('#modifyNoticeTitleHelper').text('제목을 입력하세요');
@@ -99,7 +99,7 @@
 					            </div>
 					            <div class="mt-2" style="height:auto; width:auto;">
 									<form id="modifyNoticeForm" action="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}" method="post" enctype="multipart/form-data" >
-										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
 												<th>번호</th>
 												<td>${notice.noticeNo}</td>
