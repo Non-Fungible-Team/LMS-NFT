@@ -144,6 +144,26 @@ public class MemberService {
 	// --------------------------------------- //
 	// 회원 정보 수정 
 	
+	// 회원 비밀번호 수정 
+	public int modifyMemberPassword(Member member) {
+		
+		log.debug(A.Z+"[MemberService.modifyMemberPassword.param] member : "+member+A.R);
+		
+		// 성공 여부 출력할 변수 초기화 
+		int row = -1;
+		
+		// Member 테이블에 입력 
+		row = memberMapper.updateMemberPw(member);
+		log.debug(A.Z+"[MemberService.modifyMemberPassword] row : "+row+A.R);
+		row = -1;
+		
+		// PW_HISTORY 테이블에 입력 
+		row = memberMapper.updatePwHistory(member);
+		log.debug(A.Z+"[MemberService.updatePwHistory] row : "+row+A.R);
+				
+		return row;
+	}
+	
 	// MemberPhoto 레코드 정보를 가져오기 위해 사용 
 	public MemberPhoto getMemberPhoto(Member member) {
 		return memberMapper.selectMemberPhoto(member);

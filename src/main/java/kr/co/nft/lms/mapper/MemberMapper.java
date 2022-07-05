@@ -77,6 +77,12 @@ public interface MemberMapper {
 	
 	// -------------- 개인 정보 수정 ------------------ // 
 	
+	// 비밀번호 변경시 비밀번호 이력 테이블 함께 변경 
+	int updatePwHistory(Member member);
+	
+	// 회원 비밀번호 변경 
+	int updateMemberPw(Member member);
+	
 	// MemberPhoto 튜플 정보 가져오기 
 	MemberPhoto selectMemberPhoto(Member member);
 	

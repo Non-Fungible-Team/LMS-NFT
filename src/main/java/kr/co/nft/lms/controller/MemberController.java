@@ -270,6 +270,42 @@ public class MemberController {
 	
 	// ------------------ 개인 정보 수정 ------------------ //
 	
+	// 휴면 계정 또는 사용자가 비밀번호를 변경하고자 하는 경우
+	@PostMapping("/all/modifyMemberPassword")
+	public String modifyMemberPassword(HttpSession session
+								, Member member) {
+		// 세션에서 아이디와 레벨은 계속 가져온다 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		// 매개변수 확인 
+		log.debug(A.Z+"[MemberController.modifyPassword.param] member : "+member+A.R);
+		
+		int row = memberService.modifyMemberPassword(member);
+		log.debug(A.Z+"[MemberController.modifyMemberPassword] row : "+row+A.R);
+		
+		// 최종 입력 실패 -> 수정 페이지 또는 휴면 계정 전용 페이지로 이동 
+		if(row == 0 && member.getMemberLevel() > 3) {
+			return "/member/login"; // 테스트 
+		} else if(row == 0 && member.getMemberLevel() < 0) {
+			return "/member/login"; // 테스트 
+		}
+		
+		return "/member/login";
+	}
+	
+	// 휴면 계정 또는 사용자가 비밀번호를 변경하고자 하는 경우 
+	@GetMapping("/all/modifyMemberPassword")
+	public String modifyMemberPassword(HttpSession session
+								, Model model
+								, Member member) {
+		// 세션에서 아이디와 레벨은 계속 가져온다 
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		// 매개 변수가 잘 들어왔는지 확인 
+		log.debug(A.Z+"[MemberController.modifyPassword.param] member : "+member+A.R);
+		
+		// 비밀번호 변경 페이지로 이동 
+		return "/member/modifyMemberPassword";
+	}
+	
 	// 운영자 정보 수정 
 	@PostMapping("/manager/modifyManager")
 	public String modifyManager(HttpSession session
