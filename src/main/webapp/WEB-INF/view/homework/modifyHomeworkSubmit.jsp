@@ -23,9 +23,10 @@
 <script>
 	$('document').ready(function() {
 		
+		let flag = true;
+		
 		$('#modifyFileUpload').click(function(){
 			
-			let flag = true;
 			
 			$('.homeworkSubmitFileList').each(function(){
 				if($(this).val() == ''){
@@ -39,6 +40,33 @@
 				alert('파일이 첨부되지 않은 list가 존재합니다')					
 			}
 		});
+		
+		$('#modifyHomeworkSubmit').click(function(){
+			$('#homeworkSubmitTitleHelper').text('');
+			$('#homeworkSubmitContentHelper').text('');
+			
+			if($('#homeworkSubmitTitle').val() == ''){
+				$('#homeworkSubmitTitleHelper').text('제목을 입력하세요')
+				$('#homeworkSubmitTitle').focus();
+			} else if($('#homeworkSubmitContent').val() == '') {
+				$('#homeworkSubmitContentHelper').text('내용을 입력하세요');
+				$('#homeworkSubmitContent').focus();
+			} else {
+				$('.homeworkSubmitFileList').each(function(){
+					if($(this).val() == ''){
+						flag = false;
+					}
+				});
+				if(flag){
+					$('#modifyHomeworkSubmitForm').submit();
+				} else {
+					$('#modifyFileUploadHelper').text('파일을 첨부해 주세요');
+					$('#modifyFileUpload').focus();
+				}
+			}
+		});
+		
+		
 		
 		$('#btnRemove').click(function(){
 			var result = confirm("삭제 하시겠습니까?");
@@ -74,7 +102,7 @@
 				<div class="col-lg-12 col-md-12">
 					<div class="card">
 						<div class="card-body">
-								<form action="${pageContext.request.contextPath }/student/homework/modifyHomeworkSubmit" method="post" enctype="multipart/form-data">
+								<form action="${pageContext.request.contextPath }/student/homework/modifyHomeworkSubmit" method="post" id="modifyHomeworkSubmitForm" enctype="multipart/form-data">
 							<h4 class="card-title">과제 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 								<table id="zero_config" class="table table-striped table-bordered">
@@ -92,11 +120,17 @@
 									</tr>
 									<tr>
 										<td>homeworkSubmitTitle</td>
-										<td><input type="text" class="form-control" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }"></td>
+										<td>
+											<input type="text" class="form-control" id="homeworkSubmitTitle" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }">
+											<span id="homeworkSubmitTitleHelper" class="helper"></span>
+										</td>
 									</tr>
 									<tr>
 										<td>homeworkSubmitContent</td>
-										<td><textarea name="homeworkSubmitContent" rows="8" cols="70" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea></td>
+										<td>
+											<textarea name="homeworkSubmitContent" rows="8" cols="70" id="homeworkSubmitContent" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea>
+											<span id="homeworkSubmitContentHelper" class="helper"></span>	
+										</td>
 									</tr>
 									<tr>
 										<td>homeworkSubmitCreateDate</td>
@@ -109,7 +143,9 @@
 								 
 								</table>
 								<button type="button" class="btn btn-outline-success btn-rounded" id="modifyFileUpload">파일업로드</button>
-								<div id="fileSection"></div>
+								<div id="fileSection">
+									<span id="modifyFileUploadHelper" class="helper"></span>
+								</div>
 								<!-- 파일업로드 input 추가될 영역 -->
 								<hr>
 								</div>
@@ -137,14 +173,15 @@
 													<td>${hf.homeworkSubmitFileType}</td>
 													<td>${hf.homeworkSubmitFileSize}</td>
 													<td>
-														<input type="hidden" name="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo }">
+														<input type="hidden" name="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo }">														
 														<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded">파일 삭제</button>
 													</td>
 												</tr>	
 								    		</c:forEach>
 								    	</tbody>
 								    </table>
-								    	<button type ="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">수정 완료</i></button>
+								    	<button type ="button" id="modifyHomeworkSubmit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">수정 완료</i></button>
+								    	<input type="reset" class="btn btn-outline-success btn-rounded" value="초기화">
 								    </form>
 								</div>
 							</div>

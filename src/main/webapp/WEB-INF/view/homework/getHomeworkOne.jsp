@@ -22,12 +22,12 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script>
 $('document').ready(function() {
+	
 	$('#btnRemove').click(function(){
 		var result = confirm("삭제 하시겠습니까?");
 				
 		if (result) {
-
-		});
+			return true;
 		} else {
 			return false;
 		}
@@ -91,7 +91,7 @@ $('document').ready(function() {
 											<input type="hidden" name ="lectureNo" value ="${homeworkOne.lectureNo}" readonly="readonly">
 											<c:if test="${sessionLoginMember.memberLevel==5 && sessionLoginMember.memberId == homeworkOne.memberId }">
 												<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/teacher/homework/modifyHomework?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check">과제 수정</i></button>
-												<button type="submit" id="btnRemove" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">과제 삭제</i></button>
+												<button type="submit" id="btnRemove" class="btn btn-outline-success btn-rounded" onclick="return confirm('Are you sure you want to delete this homework?');"><i class="fas fa-check">과제 삭제</i></button>
 											</c:if>
 											<c:if test="${sessionLoginMember.memberLevel == 4 }">
 											<button type="button" class="btn btn-outline-success btn-rounded" onclick="location.href='${pageContext.request.contextPath}/student/homework/addHomeworkSubmit?homeworkNo='+${homeworkOne.homeworkNo}"><i class="fas fa-check">과제 제출</i></button>

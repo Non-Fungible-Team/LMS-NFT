@@ -20,10 +20,12 @@
 <script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="http://ajax.googLeapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
+	$('document').ready(function(){
+		$('#navAside').load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		let flag = true;
 		$('#addFileUpload').click(function(){
 			
-			let flag = true;
 			
 			$('.homeworkSubmitFileList').each(function(){
 				if($(this).val() == ''){
@@ -40,20 +42,26 @@
 		
 		
 		$('#addHomeworkSubmit').click(function(){
+			$('#homeworkSubmitTitleHelper').text('');
+			$('#homeworkSubmitContentHelper').text('');
+			
 			if($('#homeworkSubmitTitle').val() == ''){
-				alert('제목을 입력하세요');
+				$('#homeworkSubmitTitleHelper').text('제목을 입력하세요')
+				$('#homeworkSubmitTitle').focus();
 			} else if($('#homeworkSubmitContent').val() == '') {
-				alert('내용을 입력하세요');
+				$('#homeworkSubmitContentHelper').text('내용을 입력하세요');
+				$('#homeworkSubmitContent').focus();
 			} else {
 				$('.homeworkSubmitFileList').each(function(){
-					if($(this).val()=''){
+					if($(this).val() == ''){
 						flag = false;
 					}
 				});
 				if(flag){
 					$('#addHomeworkSubmitFileForm').submit();
 				} else {
-					alert('파일이 첨부되지 않은 list가 존재합니다');
+					$('#addFileUploadHelper').text('파일을 첨부해 주세요');
+					$('#addFileUpload').focus();
 				}
 			}
 		});
@@ -61,9 +69,6 @@
 </script>
 </head>
 <script>
-	$('document').ready(function() {
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
-		});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -81,25 +86,42 @@
 									<form action="${pageContext.request.contextPath}/student/homework/addHomeworkSubmit" method="post" id="addHomeworkSubmitFileForm" enctype="multipart/form-data">
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
-												<td>작성자</td><td><input type="text" name="memberId" value="${sessionLoginMember.memberId}" readonly="readonly"></td>
+												<td>작성자</td>
+												<td>
+													<input type="text" name="memberId" value="${sessionLoginMember.memberId}" readonly="readonly">
+												</td>
 											</tr>										
 											<tr>
-												<td>과제번호</td><td><input type="text" name="homeworkNo" value="${param.homeworkNo}" readonly="readonly"></td>
+												<td>과제번호</td>
+												<td>
+													<input type="text" name="homeworkNo" value="${param.homeworkNo}" readonly="readonly">
+												</td>
 											</tr>										
 											<tr>
 												<td>강의번호</td><td><input type="text" name="lectureNo" value="${sessionLectureNo}" readonly="readonly"></td>
 											</tr>										
 											<tr>
-												<td>과제제목</td><td><input type="text" name="homeworkSubmitTitle" id="homeworkSubmitTitle"></td>
+												<td>과제제목</td>
+												<td>
+													<input type="text" name="homeworkSubmitTitle" id="homeworkSubmitTitle">
+													<span id="homeworkSubmitTitleHelper" class="helper"></span>	
+												</td>
 											</tr>										
 											<tr>
-												<td>과제내용</td><td><textarea name="homeworkSubmitContent" id="homeworkSubmitContent" rows="10" cols="70"></textarea></td>
+												<td>과제내용</td>
+												<td>
+													<textarea name="homeworkSubmitContent" id="homeworkSubmitContent" rows="10" cols="70"></textarea>
+													<span id ="homeworkSubmitContentHelper" class="helper"></span>
+												</td>
 											</tr>										
 										</table>
 											<button type="button" class="btn btn-outline-success btn-rounded" id="addFileUpload">파일업로드</button>
-											<div id="fileSection"></div>
+											<div id="fileSection">
+												<span id ="addFileUploadHelper" class="helper"></span>
+											</div>
 											<!-- 파일업로드 input 추가될 영역 -->
-											<button type="submit" class="btn btn-outline-success btn-rounded" id="addHomeworkSubmit"><i class="fas fa-check"></i>과제 등록</button>
+											
+											<button type="button" class="btn btn-outline-success btn-rounded" id="addHomeworkSubmit"><i class="fas fa-check"></i>과제 등록</button>
 											<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
 											
 										</form>

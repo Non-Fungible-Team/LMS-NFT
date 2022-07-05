@@ -156,14 +156,14 @@ $('document').ready(function() {
 								    	
 								    </table>
 								</div>
-<%-- 								<form action = "${pageContext.request.contextPath}/teacher/homework/removeHomeworkSubmit" method="post"> --%>
+								<form action = "${pageContext.request.contextPath}/teacher/homework/removeHomeworkSubmit" method="post">
 									<input type="hidden" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly">
 									<c:if test="${sessionLoginMember.memberLevel==4 && sessionLoginMember.memberId == homeworkSubmitOne.memberId }">
 										<button type="button" class="btn btn-outline-success btn-rounded float-left" onclick="location.href='${pageContext.request.contextPath}/student/homework/modifyHomeworkSubmit?homeworkSubmitNo='+${homeworkSubmitOne.homeworkSubmitNo}"><i class="fas fa-check">과제 수정</i></button>
-										<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded"><i class="fas fa-check">과제 삭제</i></button>
+										<button type="submit" id="btnRemove" class="btn btn-outline-success btn-rounded" onclick="return confirm('Are you sure you want to delete this homework?');"><i class="fas fa-check">과제 삭제</i></button>
 									</c:if>
 									<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check">과제 목록</i></button>
-<!-- 								</form> -->
+								</form>
 								 
 							</div>
 						</div>

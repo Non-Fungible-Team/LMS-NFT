@@ -22,7 +22,32 @@
 <script>
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		// 유효성 검사
+		$('#modifyHomework').click(function(){
+			$('#homeworkTitleHelper').text('');
+			$('#homeworkContentHelper').text('');
+			$('#homeworkStartDateHelper').text('');
+			$('#homeworkEndDateHelper').text('');
+			
+			if($('#homeworkTitle').val()==''){
+				$('#homeworkTitleHelper').text('제목을 입력하세요');
+				$('#homeworkTitle').focus();
+			} else if($('#homeworkContent').val()=='') {
+				$('#homeworkContentHelper').text('내용을 입력하세요');
+				$('#homeworkTitle').focus();
+			} else if($('#homeworkStartDate').val()==''){
+				$('#homeworkStartDateHelper').text('시작 날짜를 입력하세요');
+				$('#homeworkStartDate').focus();				
+			} else if($('#homeworkEndDate').val() <= $('#homeworkStartDate').val() ) {
+				$('#homeworkEndDateHelper').text('마감 날짜는 시작날짜 이후여야 합니다');
+				$('#homeworkEndDate').focus();
+			} else {
+				$('#modifyHomeworkForm').submit();
+			}
+			
 		});
+	});
 </script>
 <body>
 <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -38,24 +63,40 @@
 								<h4 class="card-title">과제 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-									<form action="${pageContext.request.contextPath}/teacher/homework/modifyHomework" method="post">
+									<form action="${pageContext.request.contextPath}/teacher/homework/modifyHomework" id="modifyHomeworkForm" method="post">
 										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
-												<td>제목</td><td><input type="text" name ="homeworkTitle" class="form-control" value="${homeworkOne.homeworkTitle}"></td>
+												<td>제목</td>
+												<td>
+													<input type="text" name ="homeworkTitle" id="homeworkTitle" class="form-control" value="${homeworkOne.homeworkTitle}">
+													<span id="homeworkTitleHelper" class="helper"></span>
+												</td>
 											</tr>
 											<tr>
-												<td>내용</td><td><textarea name=homeworkContent class="form-control" rows ="8" cols="70"  placeholder="${homeworkOne.homeworkContent}">${homeworkOne.homeworkContent}</textarea></td>
+												<td>내용</td>
+												<td>
+													<textarea name=homeworkContent id="homeworkContent"class="form-control" rows ="8" cols="70"  placeholder="${homeworkOne.homeworkContent}">${homeworkOne.homeworkContent}</textarea>
+													<span id="homeworkContentHelper" class="helper"></span>
+													</td>
 											</tr>
 											<tr>
-												<td>시작날짜</td><td><input type="datetime-local" class="form-control" name="homeworkStartDate"></td>
+												<td>시작날짜</td>
+												<td>
+													<input type="datetime-local" id="homeworkStartDate" class="form-control" name="homeworkStartDate">
+													<span id="homeworkStartDateHelper" class="helper"></span>	
+												</td>
 											</tr>
 											<tr>
-												<td>마감날짜</td><td><input type="datetime-local" class="form-control" name="homeworkEndDate"></td>
+												<td>마감날짜</td>
+												<td>
+													<input type="datetime-local" id="homeworkEndDate" class="form-control" name="homeworkEndDate">
+													<span id="homeworkEndDateHelper" class="helper"></span>
+												</td>
 											</tr>
 										
 										</table>
 										<input type="hidden" name="homeworkNo" value="${homeworkOne.homeworkNo}" readonly="readonly">
-										<button type ="submit" class="btn btn-outline-success btn-rounded"><i class="fas fa-check"></i> 수정 완료</button>
+										<button type ="button" id="modifyHomework" class="btn btn-outline-success btn-rounded"><i class="fas fa-check"></i> 수정 완료</button>
 										<input type="reset" class="btn btn-outline-success btn-rounded" value="초기화">
 									</form>
 									</div>
