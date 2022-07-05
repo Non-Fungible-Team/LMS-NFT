@@ -96,7 +96,7 @@
 							<tr>
 						</c:forEach>
 					</table>
-					<a href="${pageContext.request.contextPath}/manager/survey/updateSurvey">수정</a>
+					<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}">수정</a>
 				</div>
 			</div>
 		</div>

@@ -17,7 +17,7 @@ public class SurveyRestController {
 	
 	@GetMapping("/rest/manager/survey/getSurveyStatistics") 
 	public Map<String,Object> getSurveyStatistics(){
-//		log.debug(A.D+"[SurveyRestController.getSurveyStatistics] surveyQuestionNo : " + surveyQuestionNo + A.R); // 디버깅
+
 		Map<String,Object> returnMap = surveyService.getSurveyAnswerStatistics();
 		log.debug(A.D+"[SurveyRestController.getSurveyStatistics] returnMap : " + returnMap + A.R); // 디버깅
 		

@@ -24,12 +24,35 @@
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		
-		$('#surveySubmit').click(function(){
-			$('#surveyAnswerForm').submit();
-			
-		});
+		
+		 $('#surveySubmit').click(function(){
+				
+			 var sqa = ${count};
+			 var radioCheck = new Array();
+			 var r = 0;
+				for(var i=0; i<sqa; i++) {
+					$('.surveyMultipleAnswerContent'+[i]+':checked').each(function() {
+				        radioCheck[i].push(this.value);
+				        
+				    });
+					if(radioCheck[i].length == 0 ) {
+						$('#surveyMultipleAnswerContentHelper'+[i]).text('점수를 선택해주세요');
+					}
+				}
+					//$('#surveyAnswerForm').submit();
+				
+				
+				
+				
+			});
+		
 	});
 </script>
+<style>
+	    .helper {
+	    	color : #FF0000;
+	    }
+	</style>
 </head>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -72,7 +95,7 @@
 					<form method="post" action="${pageContext.request.contextPath}/student/survey/addSurveyAnswer" id="surveyAnswerForm">
 						<table id="zero_config" class="table table-striped table-bordered no-wrap">
 						
-							<c:forEach var="sqa" items="${surveyQuestionList}" varStatus="status">
+							<c:forEach var="sqa" items="${QuestionList}" varStatus="status">
 								<tr>
 									<td>${sqa.surveyQuestionListName}</td>
 									<td>
@@ -90,22 +113,28 @@
 										<c:if test="${sqa.surveyQuestionType=='객관식'}">
 											<input type='hidden' name='surveyAnswer[${status.index}].surveyAnswerType' value="객관식" readonly>
 											<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=1> 1  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=2> 2  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=3> 3  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=4> 4  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=5> 5  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=1> 1  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=2> 2  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=3> 3  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=4> 4  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=5> 5  &nbsp;&nbsp;
+											<span id="surveyMultipleAnswerContentHelper${status.index}" class="helper"></span> <!-- 0,2,3 -->
 										</c:if>
 										<c:if test="${sqa.surveyQuestionType=='주관식'}">
 											<input type='hidden' name='surveyAnswer[${status.index}].SurveyAnswerType' value="주관식" readonly>
 											<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
-											<input type='text' name='surveyAnswer[${status.index}].surveyShortAnswerContent'>
+											<input type='text' name='surveyAnswer[${status.index}].surveyShortAnswerContent'> <!-- 1 ,4 -->
 										</c:if>
 									</td>
 								<tr>
 							</c:forEach>
+							<tr>
+								<td>
+									
+								</td>
+							</tr>
 						</table>
-						<button type="button" id="surveySubmit">설문조사 제출</button>
+						<button type="button" id="surveySubmi">설문조사 제출</button>
 					</form>
 				</div>
 			</div>
