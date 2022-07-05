@@ -44,7 +44,7 @@
 	</select>
 <!-- 	문제보기 상세보기  -->
 	<select id="selectExamQuestionOne"
-			parameterType="java.util.Map"
+			parameterType="kr.co.nft.lms.vo.ExamQuestion"
 			resultType="kr.co.nft.lms.vo.ExamQuestion">
 			SELECT	 eq.exam_question_no 		examQuestionNo
 					,eq.exam_content 			examContent
@@ -129,8 +129,7 @@
 				WHERE exam_no=#{examNo}
 			</selectKey>
 			
-			INSERT ALL
-			INTO exam_example (	 exam_no		
+			INSERT INTO exam_example (	 exam_no		
 								,exam_question_no
 								,example_no
 								,example_content
@@ -143,59 +142,27 @@
 						,NOW()
 						,NOW()
 			)
-			INTO exam_example (	 exam_no		
-								,exam_question_no
-								,example_no
-								,example_content
-								,example_create_date
-								,example_update_date
-			) VALUES( 	#{examNo}
+			,( 	#{examNo}
 						,#{examQuestionNo}
 						,2
 						,#{exampleTwoContent}
 						,NOW()
 						,NOW()
 			)
-			INTO exam_example (	 exam_no		
-								,exam_question_no
-								,example_no
-								,example_content
-								,example_create_date
-								,example_update_date
-			) VALUES( 	#{examNo}
+			,( 	#{examNo}
 						,#{examQuestionNo}
 						,3
 						,#{exampleThreeContent}
 						,NOW()
 						,NOW()
 			)
-			INTO exam_example (	 exam_no		
-								,exam_question_no
-								,example_no
-								,example_content
-								,example_create_date
-								,example_update_date
-			) VALUES( 	#{examNo}
+			,( 	#{examNo}
 						,#{examQuestionNo}
 						,4
 						,#{exampleFourContent}
 						,NOW()
 						,NOW()
 			)
-			SELECT * FROM dual;
-<!-- 			INSERT INTO exam_example(	 exam_no		 -->
-<!-- 										,exam_question_no -->
-<!-- 										,example_no -->
-<!-- 										,example_content -->
-<!-- 										,example_create_date -->
-<!-- 										,example_update_date -->
-<!-- 			) VALUES( 					#{examNo} -->
-<!-- 										,#{examQuestionNo} -->
-<!-- 										,#{exampleNo} -->
-<!-- 										,#{exampleContent} -->
-<!-- 										,NOW() -->
-<!-- 										,NOW() -->
-<!-- 			);	 -->
 	</insert>
 	
 <!-- 시험 수정  -->
@@ -245,7 +212,7 @@
 <!-- 시험 응시 (학생) -->
 <!-- 		시험 답안 제출 -->
 	<insert id="insertExamAnswer"
-			parameterType="kr.co.nft.lms.vo.Exam">
+			parameterType="kr.co.nft.lms.vo.ExamAnswer">
 			INSERT INTO exam_answer(
 							exam_no	
 							,exam_question_No		
@@ -255,12 +222,16 @@
 							,exam_answer_end_date
 			) VALUES (		#{examNo}
 							,#{examQuestionNo}
-							,#{sessionLoginMember.memberId}
+							,#{memberId}
 							,#{examAnswer}
 							,NOW()
 							,NOW()		
 			);
-			<selectKey resultType="int" keyProperty="examScore" order="AFTER">
+		</insert>
+	
+<!-- 	채점 		 -->
+	<update id="updateExamScore"
+			parameterType="kr.co.nft.lms.vo.ExamAnswer">
 			UPDATE 		exam_answer ea
 			JOIN 		exam_question eq
 			ON 			ea.exam_no=eq.exam_no 
@@ -270,8 +241,7 @@
 			THEN 		eq.exam_point
 			ELSE 		0
 			END;
-			</selectKey>
-	</insert>
+	</update>
 	
 <!-- 시험확인 리스트  -->	
 	<select id="selectExamScoreListByPage"

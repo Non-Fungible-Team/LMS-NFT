@@ -59,6 +59,9 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title">시험응시</h4>
+								<form action="${pageContext.request.contextPath}/student/exam/submitExamAnswer" method="post" id="submitAnswer">
+										<input type="hidden" name="examNo" value="${param.examNo}" readonly="readonly">
+										<input type="hidden" class="form-control"	name="memberId" value="${sessionLoginMember.memberId}">
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 									<table id="zero_config"
@@ -104,7 +107,7 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td class="table-light"><input type="hidden" name="examQuestionNo">${examQuestionOneList.examQuestionNo}</td>
+													<td class="table-light"><input type="hidden" name="examQuestionNo" id="examQuestionNo" value="${examQuestionOneList.examQuestionNo}">${examQuestionOneList.examQuestionNo}</td>
 													<td class="table-light">${examQuestionOneList.examContent}</td>
 													<td class="table-light">${examQuestionOneList.examPoint}</td>
 													<td class="table-light">${examQuestionOneList.examType}</td>
@@ -134,15 +137,12 @@
 										</table>
 									</c:forEach>
 									<div style="float: right">
-										<form action="${pageContext.request.contextPath}/student/exam/submitExamAnswer"method="post">
-										<input type="hidden" name="examNo" value="${param.examNo}"
-											readonly="readonly">
 										<button type="submit" class="btn btn-outline-success btn-rounded">
 											<i class="fas fa-check"></i>제출
 										</button>
-										</form>
 									</div>
 								</div>
+										</form>
 							</div>
 						</div>
 					</div>

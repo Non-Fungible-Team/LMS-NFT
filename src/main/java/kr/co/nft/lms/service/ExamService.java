@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.nft.lms.mapper.ExamMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Exam;
+import kr.co.nft.lms.vo.ExamAnswer;
 import kr.co.nft.lms.vo.ExamExample;
 import kr.co.nft.lms.vo.ExamQuestion;
 import lombok.extern.slf4j.Slf4j;	
@@ -64,9 +65,10 @@ public class ExamService {
 	// 시험문제 상세보기
 	public Map<String, Object> getExamQuestionOne(int examNo) {
 		log.debug(A.C + "[ExamService.getExamQuestionOne.param] examNo: " + examNo + A.R);
+		Exam examOne = examMapper.selectExamOne(examNo);
 		// 문제 리스트
 		List<Exam> examQuestionOneList = examMapper.selectExamQuestionOne(examNo);
-		log.debug(A.C + "[ExamService.getExamQuestionOne.selectExamQuestionOne] examNo: " + examNo + A.R);
+		log.debug(A.C + "[ExamService.getExamQuestionOne.selectExamQuestionOne] examQuestionNo: " + examNo + A.R);
 		// 보기 리스트
 		List<Map<String, Object>> examExampleOneList = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
@@ -78,6 +80,7 @@ public class ExamService {
 
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		log.debug(A.C + "[ExamService.getExamQuestionOne.Mapper] returnMap : " + returnMap + A.R);
+		returnMap.put("examOne",examOne);
 		returnMap.put("examQuestionOneList",examQuestionOneList);
 		returnMap.put("examExampleOneList",examExampleOneList);
 		return returnMap;
@@ -165,9 +168,14 @@ public class ExamService {
 	
 	
 	// 답안 제출
-	public int submitExamAnswer(Exam exam) {
-			log.debug(A.C + "[ExamService.submitExamAnswer.param] exam :"+ exam + A.R);
-			return examMapper.insertExamAnswer(exam);
+	public int submitExamAnswer(ExamAnswer examAnswer) {
+			log.debug(A.C + "[ExamService.submitExamAnswer.param] examAnswer :"+ examAnswer + A.R);
+			return examMapper.insertExamAnswer(examAnswer);
+	}
+	// 채점
+	public int modifyExamScore(ExamAnswer examAnswer) {
+		log.debug(A.C + "[ExamService.modifyExamScore.param] examAnswer :"+ examAnswer + A.R);
+		return examMapper.updateExamScore(examAnswer);
 	}
 	
 	// 답안 상세보기

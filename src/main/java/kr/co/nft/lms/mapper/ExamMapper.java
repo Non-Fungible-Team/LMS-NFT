@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.nft.lms.vo.Exam;
 import kr.co.nft.lms.vo.ExamExample;
 import kr.co.nft.lms.vo.ExamQuestion;
+import kr.co.nft.lms.vo.ExamAnswer;
 
 @Mapper
 public interface ExamMapper {
@@ -54,7 +55,9 @@ public interface ExamMapper {
 	int countExamScore();
 		
 	// 시험 응시
-	int insertExamAnswer(Exam exam);
+	int insertExamAnswer(ExamAnswer examAnswer);
+	// 채점
+	int updateExamScore(ExamAnswer examAnswer);
 	
 	// 답안 상세보기
 	List<Exam> selectExamScoreOne(int examNo,int examQuestionNo);
