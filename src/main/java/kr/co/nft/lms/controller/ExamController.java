@@ -190,21 +190,21 @@ public class ExamController {
 			return "redirect:/exam/getExamScoreListByPage";
 			
 		}
-		// 채점
-		@PostMapping("/student/exam/submitExamAnswer")
-		public String modifyExamScore(ExamAnswer examAnswer) {
-			log.debug(A.C + "[ExamController.modifyExamScore.param] exam: " + examAnswer + A.R);
-			
-			int row = examService.modifyExamScore(examAnswer);
-			log.debug(A.C + "[ExamController.modifyExamScore.param] row: " + row + A.R);
-			if(row ==1) {
-				log.debug(A.C +"ExamController.modifyExamScore 답안 제출 성공"+A.R);
-			} else {
-				log.debug(A.C +"ExamController.modifyExamScore 답안 제출 실패"+A.R);
-			}
-			return "redirect:/exam/getExamScoreListByPage";
-			
-		}
+//		// 채점
+//		@PostMapping("/student/exam/submitExamAnswer")
+//		public String modifyExamScore(ExamAnswer examAnswer) {
+//			log.debug(A.C + "[ExamController.modifyExamScore.param] exam: " + examAnswer + A.R);
+//			
+//			int row = examService.modifyExamScore(examAnswer);
+//			log.debug(A.C + "[ExamController.modifyExamScore.param] row: " + row + A.R);
+//			if(row ==1) {
+//				log.debug(A.C +"ExamController.modifyExamScore 답안 제출 성공"+A.R);
+//			} else {
+//				log.debug(A.C +"ExamController.modifyExamScore 답안 제출 실패"+A.R);
+//			}
+//			return "redirect:/exam/getExamScoreListByPage";
+//			
+//		}
 		
 		// 제출 답안 상세보기
 		@GetMapping("/all/exam/getExamScoreOne")
