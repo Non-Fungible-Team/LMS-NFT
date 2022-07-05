@@ -44,6 +44,25 @@ public class SurveyController {
 		return "survey/getSurveyStatistics";
 	}
 	
+	@GetMapping("/manager/survey/updateSurveyQuestionList")
+	public String updateSurveyQuestionList(Model model, 
+				@RequestParam(name="surveyQuestionListNo") int surveyQuestionListNo) {
+		log.debug(A.D+"[SurveyController.updateSurveyQuestionList] "+ A.R); // 디버깅
+		SurveyQuestionList QuestionList = surveyService.getQuestionList(surveyQuestionListNo);
+		log.debug(A.D+"[SurveyController.updateSurveyQuestionList] QuestionList : "+ QuestionList + A.R); // 디버깅
+		model.addAttribute("QuestionList",QuestionList);
+		
+		return "survey/updateSurveyQuestionList";
+	}
+	
+	@PostMapping("/manager/survey/updateSurveyQuestionList")
+	public String updateSurveyQuestionList(SurveyQuestionList surveyQuestionList) {
+		
+		int row = surveyService.updateQuestionList(surveyQuestionList);
+		
+		return "redirect:/manager/survey/getSurveyQuestionListByPage";
+	}
+	
 	@GetMapping("/manager/survey/insertSurvey") // 설문조사 추가 (설문조사 질문도 같이)
 	public String insertSurvey(Survey survey, Model model, HttpSession session
 			,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage
@@ -69,13 +88,7 @@ public class SurveyController {
 		return "survey/insertSurvey";
 	}
 	
-	@GetMapping("/manager/survey/updateSurveyQuestionList")
-	public String updateSurveyQuestionList() {
-		
-		
-		
-		return "survey/updateSurveyQuestionList";
-	}
+	
 	
 	@PostMapping("/manager/survey/insertSurvey") // 설문조사 추가 (설문조사 질문도 같이)
 	public String insertSurveyl(Survey survey, SurveyQuestion surveyQuestion) {

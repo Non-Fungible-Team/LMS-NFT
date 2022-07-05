@@ -57,15 +57,15 @@ $(document).ready(function(){
 					<div class="mt-2" style="height:auto; width:auto;">
 									            
 					
-						<form method="post" action="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestionList" id="updateList" name="updateList">
+						<form method="post" action="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestionList?surveyQuestionListNo=${QuestionList.surveyQuestionListNo}" id="updateList" name="updateList">
 						<table id="zero_config" class="table table-striped table-bordered no-wrap">
 							<tr>
 								<td>질문 제목</td>
-								<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName">
+								<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName" value="${QuestionList.surveyQuestionListName}">
 									&nbsp;<span id="NameHelper" class="helper"></span></td>
 							<tr>
 								<td>질문 내용</td>
-								<td><input type="text" name="surveyQuestionListContent" id="surveyQuestionListContent">
+								<td><input type="text" name="surveyQuestionListContent" id="surveyQuestionListContent" value="${QuestionList.surveyQuestionListContent}">
 									&nbsp;<span id="ContentHelper" class="helper"></span></td>
 						</table>
 						<div>

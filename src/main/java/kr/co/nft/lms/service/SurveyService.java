@@ -24,6 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
+	public SurveyQuestionList getQuestionList(int surveyQuestionListNo) {
+		log.debug(A.D+"[SurveyService.getQuestionList] surveyQuestionListNo " + surveyQuestionListNo + A.R);
+		SurveyQuestionList QuestionList = surveyMapper.getQuestionList(surveyQuestionListNo);
+		log.debug(A.D+"[SurveyService.getQuestionList] QuestionList " + QuestionList + A.R);
+		
+		
+		return QuestionList;
+	}
+	
+	public int updateQuestionList(SurveyQuestionList surveyQuestionList) {
+		return surveyMapper.updateSurveyQuestionList(surveyQuestionList);
+	}
+	
 	public Map<String,Object> getSurveyAnswerStatistics(){
 		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] "+ A.R);
 		Map<String,Object> returnMap = new HashMap<>();

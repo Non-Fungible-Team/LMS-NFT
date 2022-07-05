@@ -270,9 +270,9 @@
 			ON sq.survey_no = s.survey_no
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
-			INNER join survey_multiple_answer AS sma
-			ON sma.survey_question_no = sq.survey_question_no
-			GROUP BY ql.survey_question_list_no
+			INner join survey_multiple_answer AS sma
+			ON sma.survey_question_no = sq.survey_question_no AND sq.survey_no = sma.survey_no
+			GROUP BY ql.survey_question_list_no;
 		</select>
 		
 		<select id="getAnswerCount"
@@ -307,4 +307,25 @@
 			ON ql.survey_question_list_no = sq.survey_question_list_no
 			WHERE sq.survey_question_type = '객관식'
 		</select>
+		
+		<select id="getQuestionList"
+				parameterType="int"
+				resultType="kr.co.nft.lms.vo.SurveyQuestionList">
+			SELECT 
+			survey_question_list_no surveyQuestionListNo
+			,survey_question_list_name surveyQuestionListName
+			,survey_question_list_content surveyQuestionListContent
+			FROM survey_question_list
+			WHERE survey_question_list_no = #{surveyQuestionListNo}
+		</select>
+		
+		<update id="updateSurveyQuestionList"
+				parameterType="kr.co.nft.lms.vo.SurveyQuestionList">
+			UPDATE survey_question_list SET 
+				survey_question_list_name = #{surveyQuestionListName}
+				,survey_question_list_content = #{surveyQuestionListContent} 
+				,survey_question_list_update_date = NOW()
+				WHERE survey_question_list_no = #{surveyQuestionListNo}
+		</update>
+		
 </mapper>
