@@ -235,10 +235,8 @@ public class LectureScheduleController {
 		
 		//service 호출
 		Map<String,Object> returnMap = attendService.addAttendForm(map);
-		model.addAttribute("lectureList", returnMap.get("lectureList"));
 		model.addAttribute("studentLectureList", returnMap.get("studentLectureList"));
-		model.addAttribute("lectureScheduleList", returnMap.get("lectureScheduleList"));
-		model.addAttribute("attendDate", returnMap.get("attendDate"));
+		model.addAttribute("attendDate", attendDate);
 		model.addAttribute("lectureNo", returnMap.get("lectureNo"));
 		model.addAttribute("attendList",returnMap.get("attendList"));
 		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.returnMap] returnMap : " + returnMap +A.R);
@@ -247,18 +245,19 @@ public class LectureScheduleController {
 	}
 	//액션
 	@PostMapping("/manager/lecture/addAttend")
-	public String addAttend(Attend attend) {
+	public String addAttend(Attend attend
+							,@RequestParam(name = "lectureNo") int lectureNo) {
 		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.attend] attend(출석 삽입실행) : " + attend +A.R);
 		
 		//서비스 호출
 		int row = attendService.addAttend(attend);
-		if(row ==1) { 
+		if(row == attend.getAttendList().size()) { 
 			log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.row] row(출석 삽입 완료) : " + row +A.R);
 		}else {
 			log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.row] 출석 삽입 실패 " +A.R);
 		}
 		
-		return "redirect:/teacher/lecture/getAttendList";
+		return "redirect:/teacher/lecture/getAttendList?lectureNo="+lectureNo;
 		
 	}
 	//4.학생 출석 수정

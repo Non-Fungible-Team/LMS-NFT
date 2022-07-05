@@ -112,10 +112,17 @@ public class AttendService {
 	//출석 삽입 액션
 	public int addAttend(Attend attend) {
 		log.debug(A.W +"[AttendService.addAttendForm.param] attend(실행) : " +attend +A.R);
+		List<Attend> attendList = attend.getAttendList();
+		log.debug(A.W +"[AttendService.addAttendForm.param] attendList(실행) : " +attendList +A.R);
 		
 		//삽입 메소드 호출
-		int row = attendMapper.insertAttend(attend);
-		if(row == 1) {
+		int row = 0;
+		for(Attend a : attendList) { //attendList에 저장된 리스트를 하나씩 읽어서 삽입
+			attendMapper.insertAttend(a);
+			row = row + 1;
+		}
+		//디버깅
+		if(row == attendList.size()) {
 			log.debug(A.W +"[AttendService.addAttend.row] row(삽입성공) : " +row +A.R);
 		}else {
 			log.debug(A.W +"[AttendService.addAttend.row] row(삽입실패) :" +A.R);

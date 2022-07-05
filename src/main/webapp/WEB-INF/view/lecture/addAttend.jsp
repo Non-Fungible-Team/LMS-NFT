@@ -24,14 +24,6 @@
 		'${pageContext.request.contextPath}/include/navAside.jsp');
 		});
 		
-		//form submit 유효성 검사
-		$('#addAttendBtn').click(function() {
-			if($('#attendStatus').val() == ' '){
-				alert('출석체크 해주세요'); 
-			}else{
-				$('#"addAttendForm"').submit();
-			}
-		});
 </script>
 </head>
 
@@ -39,62 +31,54 @@
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
-		<!-- main화면 body start -->
-		<div class="container p-5 my-5">
-			<div class="row">
-				<div class="col-lg-12 col-md-6">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">출석 체크</h4>
-							<div style="height: auto; width: auto;">
-							<form method="get" action="${pageContext.request.contextPath}/teacher/lecture/getAttendList">
-								<input type ="hidden" name="lectureNo" value="${lectureNo}">
-								<select name="attendDate" id="attendDate" onchange ="this.form.submit()">
-									<option value="">출석날짜</option>
-									<c:forEach var="ls" items="${lectureScheduleList}">
-										<option value="${ls.lectureScheduleDate}">${ls.lectureScheduleDate}</option>
-									</c:forEach>
-								</select>
-							</form>
-								<table class="table table-striped table-bordered">
-									<tr>
-										<th>출석 날짜</th>
-										<th>강의 번호</th>
-										<th>강의명</th>
-										<th>학생 아이디</th>
-										<th>학생 이름</th>
-										<th>출석 상태</th>
-										<th>사유</th>
-									</tr>
-									<tr>
-									<c:forEach var="l" items="${lectureList}">
-										<tr>
-											<td><input type="text" name="attendDate" value="${param.attendDate}">${param.attendDate}</td>
-											<td>${l.lectureNo}</td>
-											<td>${l.lectureName}</td>
-											<td>${l.memberId}</td>
-											<td>${l.studentName}</td>
-											<td>
-												<select name="attendStatus">
-													<option value="출석">출석</option>
-													<option value="지각">지각</option>
-													<option value="결석">결석</option>
-													<option value="병결">병결</option>
-													<option value="공결">공결</option>
-												</select>
-											</td>
-											<td>
-												<input type="text" name="attendReason" maxlength="50"> 
-											</td>
-										</tr>
-									</c:forEach>
-								</table>
-							<!-- 작성자 -->
-							<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
-							<button type="button" id="addAttendBtn" class="btn btn-outline-success btn-rounded">
-								<i class="fas fa-check"></i>출석 체크
-							</button>
-							</form>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">출석 체크</h4>
+								<div style="height: auto; width: auto;">
+									<div class="table-responsive">
+										<form action="${pageContext.request.contextPath}/manager/lecture/addAttend" method="post">
+										<input type ="hidden" name = "lectureNo" value ="${param.lectureNo}">
+											<table class="table table-striped table-bordered">
+												<tr>
+													<th>출석 날짜</th>
+													<th>강의명</th>
+													<th>학생 아이디</th>
+													<th>학생 이름</th>
+													<th>출석 상태</th>
+													<th>사유</th>
+												</tr>
+												<tr>
+													
+													<c:forEach var="l" items="${studentLectureList}" varStatus="status">
+														<tr>
+															<!-- 배열로 값을 묶어서 -> controller -->
+															<td><input type="text" name="attendList[${status.index}].lectureNo" value="${l.lectureNo}"></td>
+															<td><input type="text" name="attendList[${status.index}].attendDate" value="${attendDate}" readonly="readonly" style="border: none;"></td>
+															<td><input type="text" name="attendList[${status.index}].lectureName" value="${l.lectureName}" readonly="readonly" style="border: none;"></td>
+															<td><input type="text" name="attendList[${status.index}].memberId" value="${l.memberId}" readonly="readonly" style="border: none;"></td>
+															<td><input type="text" name="attendList[${status.index}].studentName" value="${l.studentName}" readonly="readonly" style="border: none;"></td>
+															<td><select name="attendList[${status.index}].attendStatus">
+																	<option value="출석">출석</option>
+																	<option value="지각">지각</option>
+																	<option value="결석">결석</option>
+																	<option value="병결">병결</option>
+																	<option value="공결">공결</option>
+															</select></td>
+															<td><input type="text" name="attendList[${status.index}].attendReason" maxlength="50" style="border: none;">
+															</td>
+														</tr>
+													</c:forEach>
+											</table>
+											<button type="submit" id="addAttendBtn" class="btn btn-outline-success btn-rounded">
+												<i class="fas fa-check"></i>출석 체크
+											</button>
+										</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

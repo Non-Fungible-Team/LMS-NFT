@@ -48,7 +48,7 @@
 	<!-- 3.학생 출석 삽입 -->
 	<insert id="insertAttend" 
 			parameterType="kr.co.nft.lms.vo.Attend">
-	INSERT INTO(
+	INSERT INTO attend(
 		 member_id
 		 ,lecture_no
 		 ,attend_date
@@ -116,7 +116,7 @@
 				,l.lecture_name lectureName
 	FROM student s
 	INNER JOIN student_lecture sl
-		ON sl.member_id = #{memberId}
+		ON sl.member_id = s.member_id
 		AND sl.lecture_no = #{lectureNo}
 	INNER JOIN lecture l
 		ON sl.lecture_no = l.lecture_no
