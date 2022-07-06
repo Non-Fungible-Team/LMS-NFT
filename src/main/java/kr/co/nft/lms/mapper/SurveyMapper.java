@@ -74,4 +74,7 @@ public interface SurveyMapper {
 
 	// 설문조사 질문 정보 가져오기
 	List<Map<String, Object>> selectSurveyQuestion(int surveyNo);
+	
+	// 설문조사 객관식 정보 가져오기
+	List<Map<String, Object>> selectMultipleSurveyQuestion(int surveyNo);
 }

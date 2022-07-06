@@ -24,28 +24,36 @@
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		
+
+		console.log(${surveyOne.surveyNo});
 		
-		 $('#surveySubmit').click(function(){
-				
-			 var sqa = ${count};
-			 var radioCheck = new Array();
-			 var r = 0;
-				for(var i=0; i<sqa; i++) {
-					$('.surveyMultipleAnswerContent'+[i]+':checked').each(function() {
-				        radioCheck[i].push(this.value);
-				        
-				    });
-					if(radioCheck[i].length == 0 ) {
-						$('#surveyMultipleAnswerContentHelper'+[i]).text('점수를 선택해주세요');
+		$('#surveySubmit').click(function(){
+			var url = '${pageContext.request.contextPath}/rest/student/survey/getSurveyOneS?surveyNo=${surveyOne.surveyNo}';
+			console.log(url);
+			$.ajax({
+				type:'get'
+				,url: url
+				,success: function(data){
+					console.log(data);
+					var QuestionList = [data.QuestionList];
+					console.log(QuestionList);
+					
+					for(var r=0;r<QuestionList[0].length;r++) {
+						console.log(r);
+						console.log(QuestionList[0].length);
+						console.log(data.QuestionList[r].surveyQuestionType);
+						console.log($(":radio[name='surveyAnswer["+r+"].surveyMultipleAnswerContent']:checked").length);
+						
+						if(data.QuestionList[r].surveyQuestionType=='객관식' && $(":radio[name='surveyAnswer["+r+"].surveyMultipleAnswerContent']:checked").length!=1){
+							$('#surveyMultipleAnswerContentHelper'+r).text("점수를 선택해주세요");
+							console.log($('#surveyMultipleAnswerContentHelper'+r).text());
+						} else if(data.QuestionList[r].surveyQuestionType=='객관식' && $(":radio[name='surveyAnswer["+r+"].surveyMultipleAnswerContent']:checked").length==1) {
+							$('#surveyAnswerForm').submit();
+						}
 					}
 				}
-					//$('#surveyAnswerForm').submit();
-				
-				
-				
-				
 			});
-		
+		});
 	});
 </script>
 <style>
@@ -113,11 +121,11 @@
 										<c:if test="${sqa.surveyQuestionType=='객관식'}">
 											<input type='hidden' name='surveyAnswer[${status.index}].surveyAnswerType' value="객관식" readonly>
 											<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=1> 1  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=2> 2  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=3> 3  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=4> 4  &nbsp;&nbsp;
-											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent${status.index}" value=5> 5  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=1> 1  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=2> 2  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=3> 3  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=4> 4  &nbsp;&nbsp;
+											<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=5> 5  &nbsp;&nbsp;
 											<span id="surveyMultipleAnswerContentHelper${status.index}" class="helper"></span> <!-- 0,2,3 -->
 										</c:if>
 										<c:if test="${sqa.surveyQuestionType=='주관식'}">
@@ -134,7 +142,7 @@
 								</td>
 							</tr>
 						</table>
-						<button type="button" id="surveySubmi">설문조사 제출</button>
+						<button type="button" id="surveySubmit">설문조사 제출</button>
 					</form>
 				</div>
 			</div>

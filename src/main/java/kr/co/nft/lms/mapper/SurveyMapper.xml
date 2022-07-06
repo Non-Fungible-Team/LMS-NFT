@@ -345,5 +345,24 @@
 				WHERE survey_question_list_no = #{surveyQuestionListNo}
 		</update>
 		
+		<select id="selectMultipleSurveyQuestion"
+				parameterType="int"
+				resultType="map">
+			SELECT
+			sq.survey_no surveyNo
+			,sq.survey_question_no surveyQuestionNo
+			,sq.survey_question_list_no surveyQuestionListNo
+			,sq.survey_question_content surveyQuestionContent
+			,sq.survey_question_type surveyQuestionType
+			,sq.survey_question_create_date surveyQuestionCreateDate
+			,sq.survey_question_update_date surveyQuestionUpdateDate
+			,ql.survey_question_list_name surveyQuestionListName
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			WHERE sq.survey_no = #{surveyNo}
+		</select>
 	
 </mapper>

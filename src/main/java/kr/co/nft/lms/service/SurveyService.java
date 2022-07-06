@@ -192,18 +192,11 @@ public class SurveyService {
 	      List<Map<String, Object>> QuestionList = surveyMapper.getSurveyQuestionList(surveyNo);
 	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] surveyOne :" + surveyOne +A.R);
 	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] SurveyQuestionList : " + QuestionList +A.R);
-	      List<Map<String,Integer>> list = new ArrayList<>();
 	      
-	      int count = 0;
-	      for(Map<String, Object> s : QuestionList) {
-	    	  count = count + 1;
-	    	 
-	      }
-	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] count : " + count +A.R);
 	      Map<String, Object> returnMap = new HashMap<>();
 	      returnMap.put("surveyOne", surveyOne);
 	      returnMap.put("QuestionList", QuestionList);
-	      returnMap.put("count",count);
+	      
 	      log.debug(A.D+"[SurveyService.getSurveyOneAndQuestion] returnMap :" + returnMap +A.R);
 	      
 	      return returnMap;
@@ -223,5 +216,17 @@ public class SurveyService {
 		}
 		return row;
 		
+	}
+	
+	public Map<String, Object> selectMultipleSurveyQuestion(int surveyNo){
+		log.debug(A.D+"[SurveyService.selectMultipleSurveyQuestion] surveyNo " + surveyNo + A.R);
+		
+		List<Map<String, Object>> QuestionList = surveyMapper.selectMultipleSurveyQuestion(surveyNo);
+		log.debug(A.D+"[SurveyService.selectMultipleSurveyQuestion] QuestionList " + QuestionList + A.R);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("QuestionList", QuestionList);
+		
+		return returnMap;
 	}
 }

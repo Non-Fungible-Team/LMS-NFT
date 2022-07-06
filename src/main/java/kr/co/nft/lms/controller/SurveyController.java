@@ -170,7 +170,7 @@ public class SurveyController {
 		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("surveyOne",returnMap.get("surveyOne"));
 		model.addAttribute("QuestionList", returnMap.get("QuestionList"));
-		model.addAttribute("count",returnMap.get("count"));
+		
 		log.debug(A.D+"[SurveyController.getSurveyOne] model : " + model + A.R); // 디버깅
 		
 		return"survey/getSurveyOneS";
