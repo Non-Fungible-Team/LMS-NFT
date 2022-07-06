@@ -31,49 +31,58 @@
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
-			<div class="page-wrapper">
-				<div class="container-fluid">
-					<h1>설문조사 질문 항목</h1>
-					<div class="mt-2" style="height:auto; width:auto;">
-				            <table id="zero_config" class="table table-striped table-bordered no-wrap">
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>내용</th>
-							<th>생성일</th>
-							<th>업데이트날짜</th>
-							<th>수정</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="svql" items="${SurveyQuestionList}">
-							<tr>
-								<td>${svql.surveyQuestionListNo}</td>
-								<td>${svql.surveyQuestionListName}</td>
-								<td>${svql.surveyQuestionListContent}</td>
-								<td>${svql.surveyQuestionListCreateDate}</td>
-								<td>${svql.surveyQuestionListUpdateDate}</td>
-								<td><a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestionList?surveyQuestionListNo=${svql.surveyQuestionListNo}">수정</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-					</table>
-					<ul>
-					<c:if test="${currentPage>1}">
-						<li><a
-							href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage?currentPage=${currentPage-1}">이전</a></li>
-					</c:if>
-					<c:if test="${currentPage<lastPage}">
-						<li><a
-							href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage?currentPage=${currentPage+1}">다음</a></li>
-					</c:if>
-					</ul>
-			
-					<div>
-						<a class="btn btn-info"
-							href="${pageContext.request.contextPath}/manager/survey/insertSurveyQuestionList">항목 입력</a>
-					</div>	
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="mt-2" style="height:auto; width:auto;">
+								<div class="card-body">
+									<h1>설문조사 질문 항목</h1>
+									
+								            <table id="zero_config" class="table table-striped table-bordered no-wrap">
+									<thead>
+										<tr>
+											<th>번호</th>
+											<th>제목</th>
+											<th>내용</th>
+											<th>생성일</th>
+											<th>업데이트날짜</th>
+											<th>수정</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="svql" items="${SurveyQuestionList}">
+											<tr>
+												<td>${svql.surveyQuestionListNo}</td>
+												<td>${svql.surveyQuestionListName}</td>
+												<td>${svql.surveyQuestionListContent}</td>
+												<td>${svql.surveyQuestionListCreateDate}</td>
+												<td>${svql.surveyQuestionListUpdateDate}</td>
+												<td><a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestionList?surveyQuestionListNo=${svql.surveyQuestionListNo}">수정</a></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+									</table>
+									<ul>
+									<c:if test="${currentPage>1}">
+										<li><a
+											href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage?currentPage=${currentPage-1}">이전</a></li>
+									</c:if>
+									<c:if test="${currentPage<lastPage}">
+										<li><a
+											href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage?currentPage=${currentPage+1}">다음</a></li>
+									</c:if>
+									</ul>
+							
+									<div>
+										<a class="btn btn-info"
+											href="${pageContext.request.contextPath}/manager/survey/insertSurveyQuestionList">항목 입력</a>
+									</div>	
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -34,70 +34,75 @@
 		<div id="navAside"></div>
 			<div class="page-wrapper">
 				<div class="container-fluid">
-					<h1>설문조사 상세보기</h1>
-					<div class="mt-2" style="height:auto; width:auto;">
-						<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn">이전으로</a>
-						<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" class="btn">수정</a>
-						<table id="zero_config" class="table table-striped table-bordered no-wrap">
-							<tr>
-								<td>공지 번호</td>
-								<td>${surveyOne.surveyNo}</td>
-							</tr>
-							<tr>
-								<td>제목</td>
-								<td>${surveyOne.surveyTitle}</td>
-							</tr>
-							<tr>
-								<td>내용</td>
-								<td>${surveyOne.surveyContent}</td>
-							</tr>
-							<tr>
-								<td>등록일</td>
-								<td>${surveyOne.surveyCreateDate}</td>
-							</tr>
-							<tr>
-								<td>설문 시작일</td>
-								<td>${surveyOne.surveyStartlineDate}</td>
-							</tr>
-							<tr>
-								<td>설문 마감일</td>
-								<td>${surveyOne.surveyDeadlineDate}</td>
-							</tr>
-						</table>
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="card">
+								<h1 class="card-title">설문조사 상세보기</h1>
+								<div class="mt-2" style="height:auto; width:auto;">
+									<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn">이전으로</a>
+									<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" class="btn">수정</a>
+									<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<tr>
+											<td>공지 번호</td>
+											<td>${surveyOne.surveyNo}</td>
+										</tr>
+										<tr>
+											<td>제목</td>
+											<td>${surveyOne.surveyTitle}</td>
+										</tr>
+										<tr>
+											<td>내용</td>
+											<td>${surveyOne.surveyContent}</td>
+										</tr>
+										<tr>
+											<td>등록일</td>
+											<td>${surveyOne.surveyCreateDate}</td>
+										</tr>
+										<tr>
+											<td>설문 시작일</td>
+											<td>${surveyOne.surveyStartlineDate}</td>
+										</tr>
+										<tr>
+											<td>설문 마감일</td>
+											<td>${surveyOne.surveyDeadlineDate}</td>
+										</tr>
+									</table>
+								</div>
+							<h2>질문</h2>
+							<div class="mt-2" style="height:auto; width:auto;">
+								<table id="zero_config" class="table table-striped table-bordered no-wrap">
+									<c:forEach var="sqa" items="${surveyQuestionList}" varStatus="status">
+										<tr>
+											<td>${sqa.surveyQuestionListName}</td>
+										</tr>
+										<tr>
+											<td id="questionType">${sqa.surveyQuestionType}</td>
+											<td>${sqa.surveyQuestionContent}</td>
+										</tr> 
+										<tr>
+											<td>답변</td>
+											<td>
+												<c:if test="${sqa.surveyQuestionType=='객관식'}">
+													<input type='hidden' name='surveyAnswer[${status.index}].SurveyShortAnswerType' value="객관식" readonly>
+													<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
+													<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=1> 1  &nbsp;&nbsp;
+													<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=2> 2  &nbsp;&nbsp;
+													<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=3> 3  &nbsp;&nbsp;
+													<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=4> 4  &nbsp;&nbsp;
+													<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=5> 5  &nbsp;&nbsp;
+												</c:if>
+												<c:if test="${sqa.surveyQuestionType=='주관식'}">
+													<input type='hidden' name='surveyAnswer[${status.index}].SurveyShortAnswerType' value="주관식" readonly>
+													<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
+													<input type='text' name='surveyAnswer[${status.index}].surveyShortAnswerContent'>
+												</c:if>
+											</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
 					</div>
-				<h2>질문</h2>
-				<div class="mt-2" style="height:auto; width:auto;">
-					<table id="zero_config" class="table table-striped table-bordered no-wrap">
-						<c:forEach var="sqa" items="${surveyQuestionList}" varStatus="status">
-							<tr>
-								<td>${sqa.surveyQuestionListName}</td>
-							</tr>
-							<tr>
-								<td id="questionType">${sqa.surveyQuestionType}</td>
-								<td>${sqa.surveyQuestionContent}</td>
-							</tr> 
-							<tr>
-								<td>답변</td>
-								<td>
-									<c:if test="${sqa.surveyQuestionType=='객관식'}">
-										<input type='hidden' name='surveyAnswer[${status.index}].SurveyShortAnswerType' value="객관식" readonly>
-										<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
-										<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=1> 1  &nbsp;&nbsp;
-										<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=2> 2  &nbsp;&nbsp;
-										<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=3> 3  &nbsp;&nbsp;
-										<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=4> 4  &nbsp;&nbsp;
-										<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' value=5> 5  &nbsp;&nbsp;
-									</c:if>
-									<c:if test="${sqa.surveyQuestionType=='주관식'}">
-										<input type='hidden' name='surveyAnswer[${status.index}].SurveyShortAnswerType' value="주관식" readonly>
-										<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
-										<input type='text' name='surveyAnswer[${status.index}].surveyShortAnswerContent'>
-									</c:if>
-								</td>
-							<tr>
-						</c:forEach>
-					</table>
-					
 				</div>
 			</div>
 		</div>

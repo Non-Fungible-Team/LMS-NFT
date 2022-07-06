@@ -51,28 +51,36 @@ $(document).ready(function(){
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
-			<div class="page-wrapper">
-				<div class="container-fluid">
-					<h1>설문조사 질문 항목 생성</h1>
-					<div class="mt-2" style="height:auto; width:auto;">
-									            
-					
-						<form method="post" action="${pageContext.request.contextPath}/manager/survey/insertSurveyQuestionList" id="insertList" name="insertList">
-						<table id="zero_config" class="table table-striped table-bordered no-wrap">
-							<tr>
-								<td>질문 제목</td>
-								<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName">
-									&nbsp;<span id="NameHelper" class="helper"></span></td>
-							<tr>
-								<td>질문 내용</td>
-								<td><input type="text" name="surveyQuestionListContent" id="surveyQuestionListContent">
-									&nbsp;<span id="ContentHelper" class="helper"></span></td>
-						</table>
-						<div>
-							<button type="button" id="insertQuestionList"
-								name="insertQuestionList">생성</button>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="mt-2" style="height:auto; width:auto;">
+								<div class="card-body">
+									<h1>설문조사 질문 항목 생성</h1>
+									
+									
+										<form method="post" action="${pageContext.request.contextPath}/manager/survey/insertSurveyQuestionList" id="insertList" name="insertList">
+										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+											<tr>
+												<td>질문 제목</td>
+												<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName">
+													&nbsp;<span id="NameHelper" class="helper"></span></td>
+											<tr>
+												<td>질문 내용</td>
+												<td><input type="text" name="surveyQuestionListContent" id="surveyQuestionListContent">
+													&nbsp;<span id="ContentHelper" class="helper"></span></td>
+										</table>
+										<div>
+											<button type="button" id="insertQuestionList"
+												name="insertQuestionList">생성</button>
+										</div>
+									</form>
+								</div>
+							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>

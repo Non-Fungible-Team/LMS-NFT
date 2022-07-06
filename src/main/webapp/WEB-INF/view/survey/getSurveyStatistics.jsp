@@ -79,43 +79,52 @@ $(document).ready(function() {
 		data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
-
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h4>객관식 답변 통계</h4>
-				<c:set var="cnt" value="0"></c:set>
-				<c:forEach var="multi" items="${multipleAnswer}" varStatus="status">
-					<c:if test="${multi.surveyAnswerType=='객관식'}">
-						<div class="col-lg-6">
-							<div class="card">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="mt-2" style="height:auto; width:auto;">
 								<div class="card-body">
-									<h4 class="card-title">${multi.surveyQuestionListName}</h4>
-									<canvas id="bar-chart-horizontal${cnt}" height="150"> </canvas>
+									<h4 class="card-title">객관식 답변 통계</h4>
+									<c:set var="cnt" value="0"></c:set>
+									<c:forEach var="multi" items="${multipleAnswer}" varStatus="status">
+										<c:if test="${multi.surveyAnswerType=='객관식'}">
+											<div class="col-lg-6">
+												<div class="card">
+													<div class="card-body">
+														<h4 class="card-title">${multi.surveyQuestionListName}</h4>
+														<canvas id="bar-chart-horizontal${cnt}" height="150"> </canvas>
+													</div>
+												</div>
+											</div>
+										<c:set var="cnt" value="${cnt+1}"></c:set>
+										</c:if>
+									</c:forEach>
+									<h4>주관식 답변 통계</h4>
+									<table id="zero_config"
+										class="table table-striped table-bordered no-wrap">
+										<c:forEach var="qs" items="${shortAnswer}">
+											<c:if test="${qs.surveyAnswerType=='주관식'}">
+												<td>${qs.surveyQuestionListName}</td>
+											</c:if>
+											<c:if test="${qs.surveyAnswerType=='주관식'}">
+												<c:forEach var="answer" items="${shortAnswer}">
+													<c:if test="${qs.surveyQuestionListName==answer.surveyQuestionListName}">
+														<tr>
+															<td>질문 답변</td>
+															<td>${answer.surveyShortAnswerContent}</td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</c:if>
+										</c:forEach>
+									</table>
 								</div>
 							</div>
 						</div>
-					<c:set var="cnt" value="${cnt+1}"></c:set>
-					</c:if>
-				</c:forEach>
-				<h4>주관식 답변 통계</h4>
-				<table id="zero_config"
-					class="table table-striped table-bordered no-wrap">
-					<c:forEach var="qs" items="${shortAnswer}">
-						<c:if test="${qs.surveyAnswerType=='주관식'}">
-							<td>${qs.surveyQuestionListName}</td>
-						</c:if>
-						<c:if test="${qs.surveyAnswerType=='주관식'}">
-							<c:forEach var="answer" items="${shortAnswer}">
-								<c:if test="${qs.surveyQuestionListName==answer.surveyQuestionListName}">
-									<tr>
-										<td>질문 답변</td>
-										<td>${answer.surveyShortAnswerContent}</td>
-									</tr>
-								</c:if>
-							</c:forEach>
-						</c:if>
-					</c:forEach>
-				</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

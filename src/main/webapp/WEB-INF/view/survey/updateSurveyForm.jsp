@@ -135,96 +135,97 @@ $(document).ready(function(){
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
 								<div class="card-body">
-
-									<h1 class="card-title">설문조사 업데이트</h1>
-
-									<div>설문조사 항목 타입 선택</div>
-									<button type="button" id="multipleSurvey" name="multipleSurvey">객관식
-										문제 추가</button>
-									<button type="button" id="shortSurvey" name="shortSurvey">주관식
-										문제 추가</button>
-									<button type="button" id="deleteTypeButton"
-										name="deleteTypeButton">삭제</button>
-									<div>&nbsp;</div>
-									<div><c:forEach var="sq" items="${selectQuestion}">
+									<div class="mt-2" style="height:auto; width:auto;">
+										<h1 class="card-title">설문조사 업데이트</h1>
+	
+										<div>설문조사 항목 타입 선택</div>
+										<button class="btn btn-info" id="multipleSurvey" name="multipleSurvey">객관식
+											문제 추가</button>
+										<button class="btn btn-info" id="shortSurvey" name="shortSurvey">주관식
+											문제 추가</button>
+										<button class="btn btn-info" id="deleteTypeButton"
+											name="deleteTypeButton">삭제</button>
+										<div>&nbsp;</div>
+										<div><c:forEach var="sq" items="${selectQuestion}">
+											<form method="post"
+												action="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestion"
+												id="updateSurveyQuestion${sq.surveyQuestionNo}">
+												<table>
+													<tr>
+														<td colspan='2'>질문 ${sq.surveyQuestionNo}번 <input
+															type='hidden'
+															name='surveyQuestionNo${sq.surveyQuestionNo}'
+															value='${sq.surveyQuestionNo}'>
+														</td>
+													</tr>
+													<tr>
+														<td>질문 항목</td>
+														<td><select
+															name='surveyQuestionListNo'>
+																<option>항목선택</option>
+																<c:forEach var='ql' items='${QuestionList}'>
+																	<option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option>
+																</c:forEach>
+														</select> <input type='text'
+															name='surveyQuestionType'
+															value='${sq.surveyQuestionType}' readonly></td>
+													</tr>
+													<tr>
+														<td>${sq.surveyQuestionNo}번 질문 내용입력</td>
+														<td><input type='text'
+															name='surveyQuestionContent'>${sq.surveyQuestionContent}</td>
+													</tr>
+												</table>
+											</form>
+											</c:forEach>
+											</div>
 										<form method="post"
-											action="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestion"
-											id="updateSurveyQuestion${sq.surveyQuestionNo}">
+											action="${pageContext.request.contextPath}/manager/survey/updateSurvey"
+											id="updateSurvey">
 											<table>
 												<tr>
-													<td colspan='2'>질문 ${sq.surveyQuestionNo}번 <input
-														type='hidden'
-														name='surveyQuestionNo${sq.surveyQuestionNo}'
-														value='${sq.surveyQuestionNo}'>
-													</td>
+													<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
 												</tr>
 												<tr>
-													<td>질문 항목</td>
-													<td><select
-														name='surveyQuestionListNo'>
-															<option>항목선택</option>
-															<c:forEach var='ql' items='${QuestionList}'>
-																<option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option>
-															</c:forEach>
-													</select> <input type='text'
-														name='surveyQuestionType'
-														value='${sq.surveyQuestionType}' readonly></td>
+													<td>설문조사 제목</td>
+													<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
+														<span id="surveyTitleHelper" class="helper"></span></td>
 												</tr>
 												<tr>
-													<td>${sq.surveyQuestionNo}번 질문 내용입력</td>
-													<td><input type='text'
-														name='surveyQuestionContent'>${sq.surveyQuestionContent}</td>
+													<td>강의명</td>
+													<td><select name="lectureNo">
+													<option>-----강의 선택-----</option>
+													<c:forEach var="lT" items="${lectureNoNameList}">
+														<option value="${lT.lectureNo}">${lT.lectureName}</option>
+													</c:forEach>
+													</select>
+													<span id="lectureHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>설문조사 내용</td>
+													<td><input type="text" name="surveyContent" id="surveyContent" class="form-control"> 
+													<span id="surveyContentHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>설문 시작일</td>
+													<td><input type="date" name="surveyStartlineDate" id="surveyStartlineDate" class="form-control"> 
+													<span id="startlineHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>설문 마감일</td>
+													<td><input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate" class="form-control">
+													<span id="deadlineHelper" class="helper"></span></td>
 												</tr>
 											</table>
+											<table>
+												<tr>
+													<td id="surveyQuestionForm">
+													<span id="qestionFormHelper" class="helper"></span></td>
+												</tr>
+											</table>
+											<button type="button" id="updateQuestionList" name="updateQuestionList">수정</button>
 										</form>
-										</c:forEach>
-										</div>
-									<form method="post"
-										action="${pageContext.request.contextPath}/manager/survey/updateSurvey"
-										id="updateSurvey">
-										<table>
-											<tr>
-												<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
-											</tr>
-											<tr>
-												<td>설문조사 제목</td>
-												<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
-													<span id="surveyTitleHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>강의명</td>
-												<td><select name="lectureNo">
-												<option>-----강의 선택-----</option>
-												<c:forEach var="lT" items="${lectureNoNameList}">
-													<option value="${lT.lectureNo}">${lT.lectureName}</option>
-												</c:forEach>
-												</select>
-												<span id="lectureHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>설문조사 내용</td>
-												<td><input type="text" name="surveyContent" id="surveyContent" class="form-control"> 
-												<span id="surveyContentHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>설문 시작일</td>
-												<td><input type="date" name="surveyStartlineDate" id="surveyStartlineDate" class="form-control"> 
-												<span id="startlineHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>설문 마감일</td>
-												<td><input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate" class="form-control">
-												<span id="deadlineHelper" class="helper"></span></td>
-											</tr>
-										</table>
-										<table>
-											<tr>
-												<td id="surveyQuestionForm">
-												<span id="qestionFormHelper" class="helper"></span></td>
-											</tr>
-										</table>
-										<button type="button" id="updateQuestionList" name="updateQuestionList">수정</button>
-									</form>
+									</div>
 								</div>
 							</div>
 						</div>

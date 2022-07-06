@@ -134,66 +134,68 @@ $(document).ready(function(){
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
-								<div class="card-body">
-
-									<h1 class="card-title">설문조사 생성</h1>
-
-									<div>설문조사 항목 타입 선택</div>
-									<button type="button" id="multipleSurvey" name="multipleSurvey">객관식
-										문제 추가</button>
-									<button type="button" id="shortSurvey" name="shortSurvey">주관식
-										문제 추가</button>
-									<button type="button" id="deleteTypeButton"
-										name="deleteTypeButton">삭제</button>
-									<div>&nbsp;</div>
-
-
-									<form method="post"
-										action="${pageContext.request.contextPath}/manager/survey/insertSurvey"
-										id="insertSurvey">
-										<table>
-											<tr>
-												<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
-											</tr>
-											<tr>
-												<td>설문조사 제목</td>
-												<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
-													<span id="surveyTitleHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>강의명</td>
-												<td><select name="lectureNo">
-												<option>-----강의 선택-----</option>
-												<c:forEach var="lT" items="${lectureNoNameList}">
-													<option value="${lT.lectureNo}">${lT.lectureName}</option>
-												</c:forEach>
-												</select>
-												<span id="lectureHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>설문조사 내용</td>
-												<td><input type="text" name="surveyContent" id="surveyContent" class="form-control"> 
-												<span id="surveyContentHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>설문 시작일</td>
-												<td><input type="date" name="surveyStartlineDate" id="surveyStartlineDate" class="form-control"> 
-												<span id="startlineHelper" class="helper"></span></td>
-											</tr>
-											<tr>
-												<td>설문 마감일</td>
-												<td><input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate" class="form-control">
-												<span id="deadlineHelper" class="helper"></span></td>
-											</tr>
-										</table>
-										<table>
-											<tr>
-												<td id="surveyQuestionForm">
-												<span id="qestionFormHelper" class="helper"></span></td>
-											</tr>
-										</table>
-										<button type="button" id="insertQuestionList" name="insertQuestionList">생성</button>
-									</form>
+								<div class="mt-2" style="height:auto; width:auto;">
+									<div class="card-body">
+	
+										<h1 class="card-title">설문조사 생성</h1>
+	
+										<div>설문조사 항목 타입 선택</div>
+										<button type="button" id="multipleSurvey" name="multipleSurvey">객관식
+											문제 추가</button>
+										<button type="button" id="shortSurvey" name="shortSurvey">주관식
+											문제 추가</button>
+										<button type="button" id="deleteTypeButton"
+											name="deleteTypeButton">삭제</button>
+										<div>&nbsp;</div>
+	
+	
+										<form method="post"
+											action="${pageContext.request.contextPath}/manager/survey/insertSurvey"
+											id="insertSurvey">
+											<table>
+												<tr>
+													<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
+												</tr>
+												<tr>
+													<td>설문조사 제목</td>
+													<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
+														<span id="surveyTitleHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>강의명</td>
+													<td><select name="lectureNo">
+													<option>-----강의 선택-----</option>
+													<c:forEach var="lT" items="${lectureNoNameList}">
+														<option value="${lT.lectureNo}">${lT.lectureName}</option>
+													</c:forEach>
+													</select>
+													<span id="lectureHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>설문조사 내용</td>
+													<td><input type="text" name="surveyContent" id="surveyContent" class="form-control"> 
+													<span id="surveyContentHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>설문 시작일</td>
+													<td><input type="date" name="surveyStartlineDate" id="surveyStartlineDate" class="form-control"> 
+													<span id="startlineHelper" class="helper"></span></td>
+												</tr>
+												<tr>
+													<td>설문 마감일</td>
+													<td><input type="date" name="surveyDeadlineDate" id="surveyDeadlineDate" class="form-control">
+													<span id="deadlineHelper" class="helper"></span></td>
+												</tr>
+											</table>
+											<table>
+												<tr>
+													<td id="surveyQuestionForm">
+													<span id="qestionFormHelper" class="helper"></span></td>
+												</tr>
+											</table>
+											<button type="button" id="insertQuestionList" name="insertQuestionList">생성</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
