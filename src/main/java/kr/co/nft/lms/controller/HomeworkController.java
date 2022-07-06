@@ -147,8 +147,11 @@ public class HomeworkController {
 									,HomeworkSubmit homeworkSubmit
 									,Homework homework) {
 		
-		URL pathUrl = this.getClass().getResource("/static/");
-		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
+//		URL pathUrl = this.getClass().getResource("/static/");
+//		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
+		
+		String path = request.getServletContext().getRealPath("/uploadFile/homeworkFile/");
+		
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit path :" + path +A.R);
 		log.debug(A.Q+"HomeworkController.addHomeworkSubmit homeworkSubmit" + homeworkSubmit +A.R);
 
@@ -236,8 +239,9 @@ public class HomeworkController {
 									,Homework homework) {
 		log.debug(A.Q+"HomeworkController.modifyHomeworkSubmit.param.homework : " + homeworkSubmit +A.R);
 		
-		URL pathUrl = this.getClass().getResource("/static/");
-		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
+//		URL pathUrl = this.getClass().getResource("/static/");
+//		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/File/");
 		
 		// homeworkService.addHomeworkSubmit(homeworkSubmit, homework, path);
 		
@@ -270,22 +274,10 @@ public class HomeworkController {
 			log.debug(A.Q+ "과제 삭제 실패" + A.R);
 		}
 		
-		return "redirect:/homework/getHomeworkListByPage";
+		return "redirect:/all/homework/getHomeworkListByPage";
 	}
 	
-	// 학생 과제 파일 삭제 액션
-	@PostMapping("/student/homework/removeHomeworkSubmitFileOne")
-	public String removeHomeworkSubmitFileOne(HomeworkSubmit homeworkSubmit
-										,@RequestParam(name="homeworkSubmitFileNo") int homeworkSubmitFileNo) {
-		int row = homeworkService.removeHomeworkSubmitFileOne(homeworkSubmitFileNo);
-		if(row ==1) {
-			log.debug(A.Q+"파일 삭제 성공"+A.R);
-		} else {
-			log.debug(A.Q+"파일 삭제 실패" + A.R);
-		}
-		
-		return "redirect:/homework/modifyHomeworkSubmit?homeworkSubmitNo=" + homeworkSubmit.getHomeworkSubmitNo();
-	}
+	
 	
 	
 	
