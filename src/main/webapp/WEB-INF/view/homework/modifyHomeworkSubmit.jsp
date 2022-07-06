@@ -177,7 +177,7 @@
 												<tr>
 													<td>
 														<c:if test="${hf.homeworkSubmitFileType=='image/gif'||hf.homeworkSubmitFileType=='image/png'||hf.homeworkSubmitFileType == 'image/jpeg'}">
-															<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
+															<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}">
 														</c:if>
 														<a href="${pageContext.request.contextPath}/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
 													</td>
