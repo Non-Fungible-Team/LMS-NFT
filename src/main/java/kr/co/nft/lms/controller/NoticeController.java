@@ -1,6 +1,5 @@
 package kr.co.nft.lms.controller;
 
-import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +33,7 @@ public class NoticeController {
 	@PostMapping("/manager/notice/addNotice")
 	public String addNotice(HttpServletRequest request,Notice notice,NoticeFile noticeFile) {
 		//파일 저장 경로 설정
-		URL pathUrl = this.getClass().getResource("/static/");
-	    String path = pathUrl.getPath()+"/uploadFile/noticeFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 	    log.debug(A.S + "[NoticeController.addNotice] path : "+ path + A.R);
 		log.debug(A.S + "[NoticeController.addNotice.param] notice : "+ notice + A.R);
 		log.debug(A.S + "[NoticeController.addNotice.param] noticeFile : "+ noticeFile + A.R);
@@ -134,8 +132,7 @@ public class NoticeController {
 	@PostMapping("/manager/notice/modifyNotice")
 	public String modifyNotice(HttpServletRequest request, Notice notice, NoticeFile noticeFile) {
 		//파일 저장 경로 설정
-		URL pathUrl = this.getClass().getResource("/static/");
-	    String path = pathUrl.getPath()+"/uploadFile/noticeFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 	    log.debug(A.S + "[NoticeController.modifyNotice.param] path : "+ path + A.R);
 
 		log.debug(A.S + "[NoticeController.modifyNotice.param] notice : " + notice + A.R);
@@ -166,8 +163,7 @@ public class NoticeController {
 	//Notice 삭제 액션
 	@PostMapping("/manager/notice/removeNotice")
 	public String removeNotice(HttpServletRequest request,int noticeNo) {
-		URL pathUrl = this.getClass().getResource("/static/");
-	    String path = pathUrl.getPath()+"/uploadFile/noticeFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 	    log.debug(A.S + "[NoticeController.removeNotice.param] path : "+ path + A.R);
 
 		log.debug(A.S + "[NoticeController.removeNotice.param] noticeNo : " + noticeNo + A.R);
@@ -186,8 +182,7 @@ public class NoticeController {
 	//NoticeFile 삭제 액션
 	@GetMapping("/manager/notice/removeNoticeFile")
 	public String removeNoticeFile(HttpServletRequest request, String noticeFileName,int noticeFileNo, int noticeNo) {
-		URL pathUrl = this.getClass().getResource("/static/");
-	    String path = pathUrl.getPath()+"/uploadFile/noticeFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 	    log.debug(A.S + "[NoticeController.removeNoticeFile.param] path : "+ path + A.R);
 	    
 		log.debug(A.S + "[NoticeController.removeNoticeFile.param] noticeFileName : " + noticeFileName + A.R);

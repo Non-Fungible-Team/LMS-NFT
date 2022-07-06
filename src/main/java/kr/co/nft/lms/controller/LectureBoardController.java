@@ -1,6 +1,5 @@
 package kr.co.nft.lms.controller;
 
-import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +35,7 @@ public class LectureBoardController {
 	@PostMapping("/teacher/lectureBoard/addLectureBoard")
 	public String addLectureBoard(HttpServletRequest request, LectureBoard lectureBoard, LectureFile lectureFile) {
 		//파일 저장 경로 설정
-		URL pathUrl = this.getClass().getResource("/static/");
-		String path = pathUrl.getPath() + "/uploadFile/lectureFile";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[LectureBoardController.addLectureBoard] path : "+ path + A.R);
 		log.debug(A.S + "[LectureBoardController.addLectureBoard.param] lectureBoard : "+ lectureBoard + A.R);
 		log.debug(A.S + "[LectureBoardController.addLectureBoard.param] lectureFile : "+ lectureFile + A.R);
@@ -128,8 +126,7 @@ public class LectureBoardController {
 	@PostMapping("/teacher/lectureBoard/modifyLectureBoard")
 	public String modifyLectureBoard(HttpServletRequest request, LectureBoard lectureBoard, LectureFile lectureFile) {
 		//파일 저장경로 설정
-		URL pathUrl = this.getClass().getResource("/static/");
-		String path = pathUrl.getPath()+"/uploadFile/lectureFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard] path : "+ path + A.R);
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard.param] lectureBoard : "+ lectureBoard + A.R);
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard.param] lectureFile : "+ lectureFile + A.R);
@@ -161,8 +158,7 @@ public class LectureBoardController {
 	//LectureBoard 삭제 액션
 	@PostMapping("/teacher/lectureBoard/removeLectureBoard")
 	public String removeLectureBoard(HttpServletRequest request, int lectureBoardNo) {
-		URL pathUrl = this.getClass().getResource("/static/");
-		String path = pathUrl.getPath()+"/uploadFile/lectureFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[LectureBoardController.removeLectureBoard] path : "+ path + A.R);
 		log.debug(A.S + "[LectureBoardController.removeLectureBoard.param] lectureBoardNo : "+ lectureBoardNo + A.R);
 		
@@ -182,8 +178,7 @@ public class LectureBoardController {
 	//LectureFile 삭제 액션
 	@GetMapping("/teacher/lectureBoard/removeLectureFile")
 	public String removeLectureFile(HttpServletRequest request, String lectureFileName, int lectureFileNo, int lectureBoardNo) {
-		URL pathUrl = this.getClass().getResource("/static/");
-		String path = pathUrl.getPath()+"/uploadFile/lectureFile/";
+		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[LectureBoardController.removeLectureFile] path : "+ path + A.R);
 		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureFileName : "+ lectureFileName + A.R);
 		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureFileNo : "+ lectureFileNo + A.R);
