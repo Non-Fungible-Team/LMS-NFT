@@ -10,15 +10,15 @@
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <title>설문조사 상세보기</title>
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	$('document').ready(function() {
@@ -37,6 +37,7 @@
 					<h1>설문조사 상세보기</h1>
 					<div class="mt-2" style="height:auto; width:auto;">
 						<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn">이전으로</a>
+						<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" class="btn">수정</a>
 						<table id="zero_config" class="table table-striped table-bordered no-wrap">
 							<tr>
 								<td>공지 번호</td>
@@ -96,10 +97,24 @@
 							<tr>
 						</c:forEach>
 					</table>
-					<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}">수정</a>
+					
 				</div>
 			</div>
 		</div>
 	</div>
+	 <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/pages/chartjs/chartjs.init.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/chart.js/dist/Chart.min.js"></script>
 </body>
 </html>

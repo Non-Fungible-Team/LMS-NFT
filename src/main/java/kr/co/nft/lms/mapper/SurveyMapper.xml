@@ -5,21 +5,22 @@
 		<select id="selectSurveyListByPage"
 				resultType="map">
 			SELECT
-				l.lecture_no lectureNo
-				,l.lecture_name lectureName
-				,s.survey_no surveyNo
-				,s.survey_title surveyTitle
-				,s.survey_content surveyContent
-				,s.survey_create_date surveyCreateDate
-				,s.survey_update_date surveyUpdateDate
-				,s.survey_startline_date surveyStartlineDate
-				,s.survey_deadline_date surveyDeadlineDate
-				,s.member_id memberId
-				,s.lecture_no
+			l.lecture_no lectureNo
+			,l.lecture_name lectureName
+			,s.survey_no surveyNo
+			,s.survey_title surveyTitle
+			,s.survey_content surveyContent
+			,s.survey_create_date surveyCreateDate
+			,s.survey_update_date surveyUpdateDate
+			,s.survey_startline_date surveyStartlineDate
+			,s.survey_deadline_date surveyDeadlineDate
+			,s.member_id memberId
+			,s.lecture_no
 			FROM lecture AS l
 			INNER JOIN survey AS s
-			WHERE l.lecture_no = #{lectureNo}
-			ORDER BY lecture_no
+			ON l.lecture_no = s.lecture_no
+			WHERE s.lecture_no = #{lectureNo}
+			ORDER BY s.lecture_no
 		</select>
 		
 		<select id="countSurvey" resultType="int">
