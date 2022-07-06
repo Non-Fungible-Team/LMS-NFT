@@ -9,12 +9,12 @@
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <!-- CSS 링크 -->
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
@@ -28,14 +28,14 @@
 					<!-- 로고 아이콘 -->
 					<a href=" "> <!-- 건들면 안됨.  -> http://lms-->
 					<b class="logo-icon"> 
-					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.PNG" alt="homepage" class="dark-logo" style="width: 15%" />
-					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/static/assets/images/computer.PNG" alt="homepage" class="light-logo" style="width: 15%" />
+					<!-- 다크모드 아이콘 --> <img src="${pageContext.request.contextPath}/assets/images/computer.PNG" alt="homepage" class="dark-logo" style="width: 15%" />
+					<!-- 라이트 모드 아이콘 --> <img src="${pageContext.request.contextPath}/assets/images/computer.PNG" alt="homepage" class="light-logo" style="width: 15%" />
 					</b> 
 					<span class="logo-text">
 						<!-- dark Logo text -->
-	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.PNG" alt="homepage" class="dark-logo" style="width: 88%"/>
+	                    <img src="${pageContext.request.contextPath}/assets/images/nfLMS2.PNG" alt="homepage" class="dark-logo" style="width: 88%"/>
 	                    <!-- Light Logo text -->
-	                    <img src="${pageContext.request.contextPath}/static/assets/images/nfLMS2.PNG" class="light-logo" alt="homepage" />
+	                    <img src="${pageContext.request.contextPath}/assets/images/nfLMS2.PNG" class="light-logo" alt="homepage" />
                     </span>
 					</a>
 				</div>
@@ -70,7 +70,7 @@
 					<!-- 프로필 -->
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-						<img src="${pageContext.request.contextPath}/static/assets/images/member.png" alt="user" class="rounded-circle" width="40"> 
+						<img src="${pageContext.request.contextPath}/assets/images/member.png" alt="user" class="rounded-circle" width="40"> 
 						<span class="ml-2 d-none d-lg-inline-block">
 							<span>환영합니다,</span> 
 							<span class="text-dark">${sessionLoginMember.memberId} 님</span> 
@@ -292,16 +292,16 @@
 	</aside>
 
 </body>
-    <script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
 </html>
