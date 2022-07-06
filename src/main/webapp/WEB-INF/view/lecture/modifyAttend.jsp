@@ -35,60 +35,52 @@
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">출석 현황</h4>
+								<h4 class="card-title">출석부 수정</h4>
 								<div style="height: auto;">
-									<div>
-										<form method="get" class="mt-4" action="${pageContext.request.contextPath}/teacher/lecture/getAttendList">
-											<input type ="hidden" name="lectureNo" value="${lectureNo}">
-											<select name="attendDate" id="attendDate" onchange ="this.form.submit()">
-												<option value="">출석 날짜 선택</option>
-												<c:forEach var="ls" items="${lectureScheduleList}">
-													<option value="${ls.lectureScheduleDate}">${ls.lectureScheduleDate}</option>
-												</c:forEach>
-											</select>
-										</form>
-									</div>
 								 </div>
 								 <br>
 									 <div class="table-responsive">
-										<table id="zero_config" class="table table-striped table-bordered no-wrap table-sm">
+									 <form action="${pageContext.request.contextPath}/manager/lecture/modifyAttend" method="post">
+										<input type ="hidden" name = "lectureNo" value ="${lectureNo}">
+										<input type ="hidden" name = "attendDate" value ="${attendDate}">
+										<table id="zero_config" class="table table-striped table-bordered no-wrap">
 											<thead>
 												<tr>
+													<th>강의번호</th>
 													<th>출석 날짜</th>
-													<th>강의명</th>
 													<th>학생 아이디</th>
 													<th>학생 이름</th>
 													<th>출석 상태</th>
 													<th>사유</th>
-													<th>체크날짜</th>
-													<th>수정날짜</th>
-													<th>
-														<a href="${pageContext.request.contextPath}/manager/lecture/addAttend?lectureNo=${lectureNo}&attendDate=${param.attendDate}" class="btn btn-primary btn-rounded">
-														<i class='fas fa-check'>출석 체크</i></a>
-													</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="a" items="${attendList}">
 													<tr>
+														<td>${a.lectureNo}</td>
 														<td>${a.attendDate}</td>
-														<td>${a.lectureName}</td>
-														<td>${a.memberId}</td>
+														<td><input type="text" name="memberId" value="${a.memberId}" readonly="readonly"></td>
 														<td>${a.studentName}</td>
-														<td>${a.attendStatus}</td>
-														<td>${a.attendReason}</td>
-														<td>${a.attendCreateDate}</td>
-														<td>${a.attendUpdateDate}</td>
 														<td>
-															<div class="btn-group" role="group" aria-label="Basic example">
-																<a href="${pageContext.request.contextPath}/manager/lecture/modifyAttend?attendDate=${a.attendDate}&lectureNo=${lectureNo}&memberId=${a.memberId}" class="btn btn-info">수정</a> 
-																<a href="${pageContext.request.contextPath}/manager/lecture/removeAttend?memberId=${a.memberId}&lectureNo=${lectureNo}&attendDate=${a.attendDate}" class="btn btn-danger">삭제</a>
-															</div>
+															<select name="attendStatus">
+																<option value="출석">출석</option>
+																<option value="지각">지각</option>
+																<option value="결석">결석</option>
+																<option value="병결">병결</option>
+																<option value="공결">공결</option>
+															</select>																	
+														</td>
+														<td>
+															<input type="text" name="attendReason" maxlength="50" style="border: none;" value="${a.attendReason }">
 														</td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
+											<button type="submit" id="modifyAttendBtn" class="btn btn-outline-success btn-rounded">
+													<i class="fas fa-check"></i>출석 수정
+											</button>
+										</form>
 									</div>	
 								</div>
 							</div>

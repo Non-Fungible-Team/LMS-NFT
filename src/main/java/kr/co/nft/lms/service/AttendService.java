@@ -136,29 +136,30 @@ public class AttendService {
 		log.debug(A.W +"[AttendService.modifyAttendForm.param] map(실행시작) : " +map +A.R);
 		
 		//컨트롤러에서 받아온 값 가공
+		int lectureNo = (int)map.get("lectureNo"); //int형으로 번호 값 가져오기
+		log.debug(A.W +"[AttendService.modifyAttendForm.lectureNo] lectureNo(강의번호) : " +lectureNo +A.R);
+		String attendDate = (String)map.get("attendDate"); //String 타입으로 날짜 값 가져오기
+		log.debug(A.W +"[AttendService.modifyAttendForm.attendDate] attendDate(출석날짜) : " +attendDate +A.R);
 		String memberId = (String)map.get("memberId"); //String 타입으로 학생 아이디 값 가져오기
 		log.debug(A.W +"[AttendService.modifyAttendForm.memberId] memberId(학생아이디) : " +memberId +A.R);
 		
 		//매개변수에서 가져온 값 저장할 객체 생성
 		Map<String,Object> paramMap = new HashMap<>();
+		paramMap.put("lectureNo", lectureNo); //강의번호
+		paramMap.put("attendDate", attendDate); //출석날짜
 		paramMap.put("memberId", memberId); //가져온 학생아이디 저장
 		log.debug(A.W +"[AttendService.modifyAttendForm.paramMap] paramMap: " +paramMap +A.R);
 		
-		//mapper 반환 값 가공 -> controller
-		Attend attend = attendMapper.updateAttendForm(memberId);
-		log.debug(A.W +"[AttendService.modifyAttendForm.attend] attend(mapper호출) : " +attend +A.R);
-		
-		//mapper값 가져오기(학생아이디, 강의정보,강의시간표) 
-		List<StudentLecture> studentLectureList = lectureMapper.selectStudentLectureAll(map); //학생-강의 목록
-		List<LectureSchedule> lectureScheduleList = lectureScheduleMapper.selectLectureScheduleListByLectureNo(map); //날짜
-		log.debug(A.W +"[AttendService.modifyAttendForm.studentLectureList] studentLectureList : " +studentLectureList +A.R);//디버깅코드
-		log.debug(A.W +"[AttendService.modifyAttendForm.lectureScheduleList] lectureScheduleList : " +lectureScheduleList +A.R);//디버깅코드
+		//mapper 호출
+		List<Attend> attendList = attendMapper.updateAttendForm(map);
+		log.debug(A.W +"[AttendService.modifyAttendForm.attendList] attendList(mapper호출) : " +attendList +A.R);
 		
 		//결과값 저장 객체 생성
 		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("lectureNo", lectureNo); //강의번호
+		returnMap.put("attendDate", attendDate);//날짜
 		returnMap.put("memberId", memberId); //학생아이디
-		returnMap.put("studentLectureList", studentLectureList); //학생-강의 정보
-		returnMap.put("lectureScheduleList", lectureScheduleList); //강의시간표
+		returnMap.put("attendList", attendList);// 출석목록
 		log.debug(A.W +"[AttendService.modifyAttendForm.returnMap] returnMap(수정폼 결과값) : " +returnMap +A.R);//디버깅코드
 		
 		return returnMap;
@@ -178,17 +179,18 @@ public class AttendService {
 	}
 	
 	//5.출석 삭제
-	public int removeAttend(String memberId) {
-		log.debug(A.W +"[AttendService.removeAttend.param] memberId(실행시작) : " +memberId +A.R);
+	public int removeAttend(Attend attend) {
+		log.debug(A.W +"[AttendService.removeAttend.param] attend(실행시작) : " +attend +A.R);
 		
 		//mapper 메소드 호출
-		int row = attendMapper.deleteAttend(memberId);
+		int row = attendMapper.deleteAttend(attend);
 		//디버깅
-		if(row ==1) {
+		if(row == 1) {
 			log.debug(A.W +"[AttendService.removeAttend.row] row(삭제성공) : " + row + A.R);
 		}else {
-			log.debug(A.W +"[AttendService.removeAttend.row] 수정실패 : " +A.R);
+			log.debug(A.W +"[AttendService.removeAttend.row] 삭제실패 : " +A.R);
 		}
 		return row;
 	}
+
 }

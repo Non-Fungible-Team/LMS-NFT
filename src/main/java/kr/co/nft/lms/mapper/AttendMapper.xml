@@ -68,7 +68,8 @@
 	</insert>
 	<!-- 4.학생 출석 수정 폼 -->
 	<select id="updateAttendForm" 
-			parameterType="String">
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Attend">
 	SELECT
 		l.lecture_no lectureNo
 		,l.lecture_name lectureName
@@ -84,25 +85,29 @@
 		ON a.member_id = s.member_id
 	INNER JOIN lecture l 
 		ON a.lecture_no = l.lecture_no
-	WHERE member_id = #{memberId}
+	WHERE a.member_id = #{memberId}
+	AND a.attend_date =#{attendDate}
+	AND a.lecture_no = #{lectureNo}
 	</select>
 	
 	<!-- 4.학생 출석 수정 액션 -->
 	<update id="updateAttend"
-			parameterType="kr.co.nft.lms.vo.Attend">
+			parameterType="String">
 	UPDATE attend
 	SET
 		attend_status = #{attendStatus}
 		,attend_reason =#{attendReason}
 		,attend_update_date = NOW()
 	WHERE member_id = #{memberId}
+	AND attend_date = #{attendDate}
 	</update>
 	
 	<!-- 5.학생 출석 삭제 -->
 	<delete id="deleteAttend"
-				parameterType="String">
+				parameterType="kr.co.nft.lms.vo.Attend">
 	DELETE FROM attend 
 	WHERE member_id =#{memberId}
+	AND attend_date = #{attendDate}
 	</delete>
 	
 	<!-- 6.출석 삽입 폼 -->

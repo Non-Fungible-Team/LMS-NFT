@@ -21,11 +21,11 @@ public interface AttendMapper {
 	int insertAttend(Attend attend); 
 	
 	//4.학생 출석 수정(폼,액션)
-	Attend updateAttendForm(String memberId);//FORM
+	List<Attend> updateAttendForm(Map<String,Object> map);//FORM
 	int updateAttend(Attend attend);//ACTION
 	
 	//5.학생 출석 삭제  
-	int deleteAttend(String memberId);
+	int deleteAttend(Attend attend);
 	
 	//6.학생 출석 폼
 	List<StudentLecture> insertAttendForm(Map<String,Object> map);

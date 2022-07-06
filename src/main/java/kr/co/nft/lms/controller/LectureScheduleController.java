@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -174,9 +175,6 @@ public class LectureScheduleController {
 							,Map<String,Object> map) {
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] model(전체학생출석목록실행) : " +model +A.R);
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] lectureNo(강의번호) : " +lectureNo +A.R);
-		if(attendDate == "") {
-			attendDate = "2022-07-01";
-		}
 		log.debug(A.W +"[LectureScheduleController.teacher.lecture.getAttendList.param] attendDate(출석날짜) : " +attendDate +A.R);
 		
 		//출석 서비스 호출
@@ -261,6 +259,73 @@ public class LectureScheduleController {
 		
 	}
 	//4.학생 출석 수정
+	@GetMapping("/manager/lecture/modifyAttend")
+	public String modifyAttendForm(Model model
+			,@RequestParam(name ="attendDate") String attendDate
+			,@RequestParam(name = "lectureNo") int lectureNo
+			,@RequestParam(name = "memberId") String memberId) {
+		
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.param] attendDate(controller실행) : " + attendDate +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.param] lectureNo(controller실행) : " + lectureNo +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.param] memberId(controller실행) : " + memberId +A.R);
+		
+		//값 가져와서 저장
+		Map<String,Object> map = new HashMap<>();
+		map.put("attendDate", attendDate);
+		map.put("lectureNo", lectureNo);
+		map.put("memberId", memberId);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.map] map : " + map +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.attendDate] attendDate : " + attendDate +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.lectureNo] lectureNo : " + lectureNo +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.memberId] memberId : " + memberId +A.R);
+		
+		//service 호출
+		Map<String,Object> returnMap = attendService.modifyAttendForm(map);
+		
+		model.addAttribute("attendList", returnMap.get("attendList"));
+		model.addAttribute("attendDate", attendDate);
+		model.addAttribute("lectureNo", lectureNo);
+		model.addAttribute("memberId", returnMap.get("memberId"));
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttendForm.returnMap] returnMap : " + returnMap +A.R);
+		
+		return "lecture/modifyAttend";
+	}
 	
+	@PostMapping("/manager/lecture/modifyAttend")
+	public String modifyAttend(Attend attend
+			,@RequestParam(name = "lectureNo") int lectureNo
+			,@RequestParam(name = "memberId") String memberId) {
+	log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttend.param] attend(출석 수정실행) : " + attend +A.R);
+	log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttend.param] lectureNo(출석 수정실행) : " + lectureNo +A.R);
+	log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttend.param] memberId(출석 수정실행) : " + memberId +A.R);
+	
+	//서비스 호출
+	int row = attendService.modifyAttend(attend);
+	if(row == 1) { 
+	log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttend.row] row(출석 수정 완료) : " + row +A.R);
+	}else {
+	log.debug(A.W +"[LectureScheduleController.manager.lecture.modifyAttend.row] 출석 수정 실패 " +A.R);
+	}
+	
+	return "redirect:/teacher/lecture/getAttendList?lectureNo="+lectureNo;
+	
+	}
 	//5.학생 출석 삭제
+	@GetMapping("/manager/lecture/removeAttend")
+	public String removeAttend(Attend attend
+								,@RequestParam(name = "memberId") String memberId
+								,@RequestParam(name = "lectureNo") int lectureNo) {
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.removeAttend.param] attend(출석 삭제실행) : " + attend +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.removeAttend.param] memberId(출석 삭제실행) : " + memberId +A.R);
+		log.debug(A.W +"[LectureScheduleController.manager.lecture.removeAttend.param] lectureNo(출석 삭제실행) : " + lectureNo +A.R);
+	
+		int row = attendService.removeAttend(attend);
+		if(row == 1) { 
+			log.debug(A.W +"[LectureScheduleController.manager.lecture.removeAttend.row] row(출석 삭제 완료) : " + row +A.R);
+			}else {
+			log.debug(A.W +"[LectureScheduleController.manager.lecture.removeAttend.row] 출석 삭제 실패 " +A.R);
+			}
+		
+		return "redirect:/teacher/lecture/getAttendList?lectureNo="+lectureNo;
+	}
 }
