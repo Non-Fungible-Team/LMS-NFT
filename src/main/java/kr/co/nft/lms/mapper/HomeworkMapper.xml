@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.HomeworkMapper">
 
+	<!-- 강사 과제 입력 mapper -->
 	<!-- 과제 리스트 -->
 	<select id="selectHomeworkListByPage"
 			parameterType="java.util.Map"
 			resultType="map">	
- 		(SELECT 
+			
+			SELECT     
 	 		h.homework_no homeworkNo 
 			,h.member_id teacherId 
 			,hs.member_id studentId 
@@ -20,39 +22,22 @@
 			,hs.homework_submit_no homeworkSubmitNo
 		FROM homework h
 		LEFT JOIN homework_submit hs
-		ON h.homework_no = hs.homework_no
-		GROUP BY h.homework_no
-		ORDER BY h.homework_no DESC)
-		UNION
-		(SELECT 
-			h.homework_no homeworkNo 
-			,h.member_id teacherId 
-			,hs.member_id studentId 
-			,h.lecture_no lectureNo 
-			,h.homework_title homeworkTitle 
-			,h.homework_content homeworkContent 
-			,h.homework_start_date homeworkStartDate 
-			,h.homework_end_date homeworkEndDate 
-			,h.homework_create_date homeworkCreateDate 
-			,h.homework_update_date homeworkUpdateDate 
-			,hs.homework_submit_no homeworkSubmitNo
-		FROM homework h
-		RIGHT JOIN homework_submit hs
-		ON h.homework_no = hs.homework_no
- 		<where>
-			<if test="lectureNo!=0">
-				AND h.lecture_no = #{lectureNo}
+		ON h.homework_no = hs.homework_no 
+		AND hs.member_id = #{studentId}
+		<where>
+			<if test="lectureNo != 0">
+				AND h.lecture_No = #{lectureNo}
 			</if>
-			<if test="sudentId !=null">
-				AND hs.member_id = #{stduentId}
+			<if test="sudentId != null">
+				AND hs.member_Id = #{stduentId}
 			</if>
 			<if test="teacherId != null">
-				AND h.member_id = #{teacherId}
+				AND h.member_Id = #{teacherId}
 			</if>
 		</where>
 		GROUP BY h.homework_no
-		ORDER BY h.homework_no DESC  
-		LIMIT #{beginRow}, #{rowPerPage})
+		ORDER BY h.homework_create_date DESC 
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 과제 상세보기 -->
@@ -121,6 +106,7 @@
 
 	<!-- 과제 총 갯수 -->
 	<select id="selectTotalCount"
+			parameterType="int"
 			resultType="int">
 		SELECT COUNT(*) 
 		FROM homework
@@ -128,7 +114,7 @@
 	
 	</select>
 	
-	<!-- 학생의 과제 제출 mapper.xml -->
+	<!-- 학생의 과제 제출 mapper -->
 	
 	<!-- 학생 과제 제출 리스트 -->
 	<select id="selectHomeworkSubmitListByPage"
@@ -184,6 +170,7 @@
 		WHERE homework_no = #{homeworkNo}
 	</select>
 	
+	<!-- 학생 과제 파일 -->
 	<select id="selectHomeworkSubmitFile"
 			parameterType="int"
 			resultType="kr.co.nft.lms.vo.HomeworkSubmitFile">
@@ -289,6 +276,7 @@
 	
 	</delete>
 	
+	<!-- 학생 과제 파일 하나 삭제를 위한 쿼리 -->
 	<delete id="deleteHomeworkSubmitFileOne"
 			parameterType="int">
 		DELETE FROM homework_submit_file

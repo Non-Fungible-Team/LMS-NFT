@@ -10,15 +10,15 @@
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>학생 과제 수정 페이지</title>
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+<title>Non-fungible LMS</title>
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="http://ajax.googLeapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	$('document').ready(function() {
@@ -68,7 +68,7 @@
 		
 		
 		
-		$('#btnRemove').click(function(){
+		/* $('#btnRemove').click(function(){
 			var result = confirm("삭제 하시겠습니까?");
 			
 			if (result) {
@@ -76,11 +76,21 @@
 					url:'/student/homework/removeHomeworkSubmitFileOne'
 				    ,type : 'POST'
 				    ,async : false
+				    
 				});
 			} else {
 				return false;
 			}
+		}); */
+		
+		$('#btnRemove').click(function(){
+			var con = confirm("정말로 삭제하시겠습니까?");
+			if(con){
+				formobj.attr("action", "/student/homework/removeHomeworkSubmitFileOne");
+				formObj.submit();
+			}
 		});
+		
 		
 	});
 </script>
@@ -102,46 +112,47 @@
 				<div class="col-lg-12 col-md-12">
 					<div class="card">
 						<div class="card-body">
-								<form action="${pageContext.request.contextPath }/student/homework/modifyHomeworkSubmit" method="post" id="modifyHomeworkSubmitForm" enctype="multipart/form-data">
+								<form role="form" autocomplete="off" action="${pageContext.request.contextPath }/student/homework/modifyHomeworkSubmit" method="post" id="modifyHomeworkSubmitForm" enctype="multipart/form-data">
 							<h4 class="card-title">과제 수정</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-								<table id="zero_config" class="table table-striped table-bordered">
-									<tr>
-										<td>homeworkSubmitNo</td>
-										<td><input type="number" class="form-control" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly"></td>
-									</tr>
-									<tr>
-										<td>homeworkNo</td>
-										<td><input type="text" class="form-control" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}" readonly="readonly"></td>
-									</tr>
-									<tr>
-										<td>memberId</td>
-										<td><input type="text" class="form-control" name="memberId" value="${homeworkSubmitOne.memberId }" readonly="readonly"></td>
-									</tr>
-									<tr>
-										<td>homeworkSubmitTitle</td>
-										<td>
-											<input type="text" class="form-control" id="homeworkSubmitTitle" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }">
-											<span id="homeworkSubmitTitleHelper" class="helper"></span>
-										</td>
-									</tr>
-									<tr>
-										<td>homeworkSubmitContent</td>
-										<td>
-											<textarea name="homeworkSubmitContent" rows="8" cols="70" id="homeworkSubmitContent" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea>
-											<span id="homeworkSubmitContentHelper" class="helper"></span>	
-										</td>
-									</tr>
-									<tr>
-										<td>homeworkSubmitCreateDate</td>
-										<td><input type="text" class="form-control" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }" readonly="readonly"></td>
-									</tr>
-									<tr>
-										<td>homeworkSubmitUpdateDate</td>
-										<td><input type="text" class="form-control" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }" readonly="readonly"></td>
-									</tr>
-								 
-								</table>
+								<div class="table-responsive">
+									<table id="zero_config" class="table table-striped table-bordered">
+										<tr>
+											<td>제출 번호</td>
+											<td><input type="number" class="form-control" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly"></td>
+										</tr>
+										<tr>
+											<td>과제 번호</td>
+											<td><input type="text" class="form-control" name="homeworkNo" value="${homeworkSubmitOne.homeworkNo}" readonly="readonly"></td>
+										</tr>
+										<tr>
+											<td>작성자</td>
+											<td><input type="text" class="form-control" name="memberId" value="${homeworkSubmitOne.memberId }" readonly="readonly"></td>
+										</tr>
+										<tr>
+											<td>제목</td>
+											<td>
+												<input type="text" class="form-control" id="homeworkSubmitTitle" name="homeworkSubmitTitle" value="${homeworkSubmitOne.homeworkSubmitTitle }">
+												<span id="homeworkSubmitTitleHelper" class="helper"></span>
+											</td>
+										</tr>
+										<tr>
+											<td>내용</td>
+											<td>
+												<textarea name="homeworkSubmitContent" rows="8" cols="70" id="homeworkSubmitContent" class="form-control">${homeworkSubmitOne.homeworkSubmitContent }</textarea>
+												<span id="homeworkSubmitContentHelper" class="helper"></span>	
+											</td>
+										</tr>
+										<tr>
+											<td>제출일</td>
+											<td><input type="text" class="form-control" name="homeworkSubmitCreateDate" value="${homeworkSubmitOne.homeworkSubmitCreateDate }" readonly="readonly"></td>
+										</tr>
+										<tr>
+											<td>수정일</td>
+											<td><input type="text" class="form-control" name="homeworkSubmitUpdateDate" value="${homeworkSubmitOne.homeworkSubmitUpdateDate }" readonly="readonly"></td>
+										</tr>
+									</table>
+								</div>
 								<button type="button" class="btn btn-outline-success btn-rounded" id="modifyFileUpload">파일업로드</button>
 								<div id="fileSection">
 									<span id="modifyFileUploadHelper" class="helper"></span>
@@ -166,15 +177,16 @@
 												<tr>
 													<td>
 														<c:if test="${hf.homeworkSubmitFileType=='image/gif'||hf.homeworkSubmitFileType=='image/png'||hf.homeworkSubmitFileType == 'image/jpeg'}">
-															<img height="100" width="100" src="${pageContext.request.contextPath}/static/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
+															<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/homeworkSubmitFile/${hf.homeworkSubmitFileName}">
 														</c:if>
-														<a href="${pageContext.request.contextPath}/static/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
+														<a href="${pageContext.request.contextPath}/uploadFile/homeworkFile/${hf.homeworkSubmitFileName}"  download>${hf.homeworkSubmitFileOriginal} 파일 다운로드</a>
 													</td>
 													<td>${hf.homeworkSubmitFileType}</td>
 													<td>${hf.homeworkSubmitFileSize}</td>
 													<td>
-														<input type="hidden" name="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo }">														
-														<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded">파일 삭제</button>
+														<input type="hidden" name="homeworkSubmitFileNo" id="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo}">														
+														<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded" >파일 삭제</button>
+															
 													</td>
 												</tr>	
 								    		</c:forEach>
@@ -193,16 +205,16 @@
 								 
 	
 </body>
-<script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
 </html>

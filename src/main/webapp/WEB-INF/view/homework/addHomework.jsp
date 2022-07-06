@@ -10,15 +10,15 @@
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>Insert title here</title>
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+<title>Non-fungible LMS</title>
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <script>
 	$('document').ready(function() {
@@ -65,53 +65,55 @@
 								<h4 class="card-title">과제 입력</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
-								<form action="${pageContext.request.contextPath}/teacher/homework/addHomework" method="post" id="addHomeworkForm">
-									<table id="zero_config" class="table table-striped table-bordered">
-										<tr>
-											<td>작성자</td>
-											<td>
-												<input type="text" class="form-control" name="memberId" value="${sessionLoginMember.memberId}">
-											</td>
-										</tr>
-										<tr>
-											<td>강의 번호</td>
-											<td>
-												<input type="text" class="form-control" name="lectureNo" value="${sessionLectureNo}">
-											</td>
-										</tr>
-										<tr>
-											<td>과제 제목</td>
-											<td>
-												<input type="text" id="homeworkTitle" class="form-control" name="homeworkTitle">
-												<span id="homeworkTitleHelper" class="helper"></span>
-											</td>
-										</tr>
-										<tr>
-											<td>과제 내용</td>
-											<td>
-												<textarea name="homeworkContent" id="homeworkContent" class="form-control" rows="10" cols="70"></textarea>
-												<span id="homeworkContentHelper" class="helper"></span>
-											</td>
-										</tr>
-										<tr>
-											<td>시작 날짜</td>
-											<td>
-												<input type="datetime-local" id="homeworkStartDate" size="20" class="form-control" name="homeworkStartDate">
-												<span id="homeworkStartDateHelper" class="helper"></span>
-											</td>
-										</tr>
-										<tr>
-											<td>마감 날짜</td>
-											<td>
-												<input type="datetime-local" id="homeworkEndDate" size="20" class="form-control" name="homeworkEndDate">
-												<span id="homeworkEndDateHelper" class="helper"></span>
-											</td>
-										</tr>
-									</table>
-										<button type="button" id="uploadHomework" class="btn btn-outline-success btn-rounded">
-										<i class="fas fa-check"></i> 과제 등록</button>
-										<input type="reset" class="btn btn-outline-success btn-rounded" value="초기화">
-								</form>
+									<form action="${pageContext.request.contextPath}/teacher/homework/addHomework" method="post" id="addHomeworkForm">
+										 <div class="table-responsive">
+											<table id="zero_config" class="table table-striped table-bordered">
+												<tr>
+													<td>작성자</td>
+													<td>
+														<input type="text" class="form-control" name="memberId" value="${sessionLoginMember.memberId}">
+													</td>
+												</tr>
+												<tr>
+													<td>강의 번호</td>
+													<td>
+														<input type="text" class="form-control" name="lectureNo" value="${sessionLectureNo}">
+													</td>
+												</tr>
+												<tr>
+													<td>과제 제목</td>
+													<td>
+														<input type="text" id="homeworkTitle" class="form-control" name="homeworkTitle">
+														<span id="homeworkTitleHelper" class="helper"></span>
+													</td>
+												</tr>
+												<tr>
+													<td>과제 내용</td>
+													<td>
+														<textarea name="homeworkContent" id="homeworkContent" class="form-control" rows="10" cols="70"></textarea>
+														<span id="homeworkContentHelper" class="helper"></span>
+													</td>
+												</tr>
+												<tr>
+													<td>시작 날짜</td>
+													<td>
+														<input type="datetime-local" id="homeworkStartDate" size="20" name="homeworkStartDate">
+														<span id="homeworkStartDateHelper" class="helper"></span>
+													</td>
+												</tr>
+												<tr>
+													<td>마감 날짜</td>
+													<td>
+														<input type="datetime-local" id="homeworkEndDate" size="20" name="homeworkEndDate">
+														<span id="homeworkEndDateHelper" class="helper"></span>
+													</td>
+												</tr>
+											</table>
+										</div>
+											<button type="button" id="uploadHomework" class="btn btn-outline-success btn-rounded">
+											<i class="fas fa-check"></i> 과제 등록</button>
+											<input type="reset" class="btn btn-outline-success btn-rounded" value="초기화">
+									</form>
 								</div>
 							</div>
 						</div>
@@ -124,16 +126,16 @@
 
 			
 </body>
-<script src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-<script src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
 </html>

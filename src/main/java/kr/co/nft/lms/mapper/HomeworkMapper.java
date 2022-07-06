@@ -29,7 +29,7 @@ public interface HomeworkMapper {
 	int deleteHomework(int homeworkNo);
 	
 	// 과제 총 갯수
-	int selectTotalCount();
+	int selectTotalCount(int lectureNo);
 	
 // 학생 과제 제출
 	// 학생 과제 입력

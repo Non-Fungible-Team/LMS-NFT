@@ -46,7 +46,7 @@ public class HomeworkService {
 		List<Map<String,Object>> homeworkList = homeworkMapper.selectHomeworkListByPage(map);
 		log.debug(A.Q + "HomeworkService.getHomeworkListByPage.homeworkList :" + homeworkList + A.R);
 		
-		int totalCount = homeworkMapper.selectTotalCount();
+		int totalCount = homeworkMapper.selectTotalCount(lectureNo);
 		int lastPage = (int)Math.ceil((double)totalCount / (double)rowPerPage);
 		
 		Map<String, Object> returnMap = new HashMap<>();
