@@ -9,16 +9,16 @@
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="static/assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <title>Login</title>
 <!-- CSS 링크 -->
-<link href="static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="static/dist/css/style.min.css" rel="stylesheet">
-<script src="static/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script>
 
 </script>
@@ -124,10 +124,10 @@
 		</div>
 	</div>
 	<!-- script-->
-	<script src="static/assets/libs/jquery/dist/jquery.min.js "></script>
+	<script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js "></script>
 	<!-- Bootstrap tether Core JavaScript -->
-	<script src="static/assets/libs/popper.js/dist/umd/popper.min.js "></script>
-	<script src="static/assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
+	<script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js "></script>
+	<script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
 	<!-- ============================================================== -->
 	<!-- This page plugin js -->
 	<!-- ============================================================== -->
