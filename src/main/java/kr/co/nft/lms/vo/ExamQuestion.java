@@ -9,10 +9,6 @@ public class ExamQuestion {
 	private int examQuestionNo;
 	private int examNo;
 	private String examContent;
-	private String exampleOneContent;
-	private String exampleTwoContent;
-	private String exampleThreeContent;
-	private String exampleFourContent;
 	private String examCorrectAnswer;
 	private int examPoint;
 	private String examType;
@@ -30,6 +26,10 @@ public class ExamQuestion {
 	private List<ExamQuestion> examQuestionList;
 	private int exampleNo;
 	private String exampleContent;
+	private String exampleOneContent;
+	private String exampleTwoContent;
+	private String exampleThreeContent;
+	private String exampleFourContent;
 	private String exampleCreateDate;
 	private String exampleUpdateDate;
 }

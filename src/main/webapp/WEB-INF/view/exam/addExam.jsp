@@ -11,27 +11,15 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16"	href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <title>Insert title here</title>
-<link
-	href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css"
-	rel="stylesheet" />
-<link
-	href="${pageContext.request.contextPath}/static/dist/css/style.min.css"
-	rel="stylesheet">
-<script
-	src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
+<script	src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>문제등록</title>
 <script
@@ -42,12 +30,17 @@
 		
 		var appendCount = 1;
 		var appendCountList = 0;
+		var appendCountExample1List = 0;
+		var appendCountExample21List = appendCountExample1List+1;
+		var appendCountExample31List = appendCountExample1List+2;
+		var appendCountExample41List = appendCountExample1List+3;
 // 		객관식 문제 추가
 		$('#addExamMultiQuestion').click(function() {
 			if (appendCount >= 20)	return;
 			appendCountList = appendCount-1;
 			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='1'>보기 1번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleOneContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='2'>보기 2번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleTwoContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='3'>보기 3번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleThreeContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='4'>보기 4번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleFourContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='객관식'>객관식</td></tr></table><br>");
 				appendCount++;
+				appendCountExample1List = appendCountExample1List +4;
 			});
 // 		주관식 문제 추가
 		$('#addExamShortQuestion').click(function() {
@@ -211,28 +204,16 @@
 	</div>
 
 </body>
-<script
-	src="${pageContext.request.contextPath}/static/dist/js/app-style-switcher.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/dist/js/feather.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/dist/js/sidebarmenu.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/dist/js/custom.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/d3.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-<script
-	src="${pageContext.request.contextPath}/static/dist/js/pages/dashboards/dashboard1.min.js"></script>
+<script	src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
+<script	src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script	src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
+<script	src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+<script	src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+<script	src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
 </html>

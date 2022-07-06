@@ -122,13 +122,6 @@
 <!-- 보기 등록  -->
 	<insert id="insertExamExample"
 			parameterType="kr.co.nft.lms.vo.ExamQuestion">
-			<selectKey resultType="map" keyProperty="examNo,examQuestionNo" order="BEFORE">
-				SELECT 	MAX(exam_no) AS examNo
-						,MAX(exam_question_no) AS examQuestionNo 
-				FROM exam_question
-				WHERE exam_no=#{examNo}
-			</selectKey>
-			
 			INSERT INTO exam_example (	 exam_no		
 								,exam_question_no
 								,example_no
