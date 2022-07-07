@@ -6,12 +6,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 반응형 웹 -->
-<!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
-<title>학생 회원가입</title>
+<title>Non-Fungible LMS</title>
 <style>
 table, tr, td {
 	border: 1px solid #000000;
@@ -39,16 +37,21 @@ table {
 <script>
 	//페이지 전부 로딩후 실행
 	$('document').ready(function(){
+		//사이드 및 헤더 include
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
 		//주소 검색 버튼 부분
 		$('#addrBtn').click(function(){
 			//주소 api 요청값 부분
 			var currentPage = 1;
-			var countPerPage = 20;
+			//api가 제공하는 최대값
+			var countPerPage = 100;
 			var keyword = $('#keyword').val();
 				console.log('[addStudent.jsp.keyword] keyword : ' + keyword)
 			var confmKey = "U01TX0FVVEgyMDIyMDYxNjE2MzExNTExMjY5ODQ=";
 			var resultType = "json";
 			var url ="https://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+keyword+"&confmKey="+confmKey+"&resultType="+resultType;
+			//출력한 행의 수
 			//주소 api 요청
 			$.ajax({
 					type:'get'
@@ -61,15 +64,54 @@ table {
 						// json문자열을 javascript 값으로 변경
 						var a3 = JSON.parse(a2);
 		                console.log("▶▶▶typeof(a3) : "+typeof(a3));
-		               	// 값을 배열로 가공
+						//erroMessage가 이미 써있다면 초기화
+						$('#addrErroMessage').text('');
+		                var errorMessage = a3.results.common.errorMessage;
+		                //에러 메세지가 있다면 출력
+		                if(errorMessage != '정상'){
+						  $('#addrErroMessage').append(errorMessage);
+						  return;
+		                }
+		                //받아온 결과값이 0 또는 결과값이 api 최대치인 100개 보다 많을 경우 erromessage 입력
+		                if(a3.results.common.totalCount ==  0 || a3.results.common.totalCount > 100 ){
+						  $('#addrErroMessage').append("주소를 더 자세히 입력해주세요");
+						  return;
+		                }
+		               	//성공시 값을 배열로 가공
 		                let arr = a3.results.juso;
 		                console.log("▶▶▶arr : "+arr);
+		                //리스트 요청전 이미 검색된 리스트 초기화
+						$('#addrList').text("");
+						$('#keyword2').text("");
 		                //검색된 주소 리스트 요청
 						for(var i=0; i<arr.length; i++){
 							  $('#addrList').append("<option id='addrDetail' value='"+arr[i].roadAddr+"'>"+arr[i].roadAddr+"</option>");
 						}
+		                //keyward2에 검색결과 저장
+						  $('#keyword3').append("<input type='hidden' id='keyword2' name='keyword2' value ='"+keyword+"'>");
 					}
 			});
+		});
+		
+		//아이디 중복 체크 기능
+		$('#idBtn').click(function(){
+			if($('#idck').val().length > 3) {
+				$.ajax({
+					type:'post'
+					, url:'/lms/idCheck'
+					, data:{memberId:$('#idck').val()}
+					, success : function(ck) {
+						console.log('ck:',ck);
+						if(ck=="false") {
+							alert('이미 사용중인 아이디입니다');
+						} else {
+							$('#memberId').val(ck);
+						}
+					}
+				});
+			} else {
+				alert('id는 4자 이상');
+			}
 		});
 		
 		// submit 버튼 클릭시 유효성 검사 
@@ -84,6 +126,7 @@ table {
 			$('#studentEducationHelper').text('');
 			$('#memberPhoneNoHelper').text('');
 			$('#addressHelper').text('');
+			$('#plusAddress').text('');
 			
 			//아이디검사
 			if($('#memberId').val()=='') {
@@ -123,10 +166,11 @@ table {
 				//유효성 검사 완료, 주소에서 선택한 값으로 추가 검색하는 기능
 				//선택한 버튼 값 변수에 저장
 				var addrSelected = $('#addrList option:selected').val();
+					console.log('[addStudent.html.] addrList option:selected : ' + addrSelected)
 				//주소 api 요청
 				var currentPage = 1;
-				var countPerPage = 20;
-				var keyword = $('#keyword').val();
+				var countPerPage = 100;
+				var keyword = $('#keyword2').val();
 					console.log('[addStudent.html.keyword] keyword : ' + keyword)
 				var confmKey = "U01TX0FVVEgyMDIyMDYxNjE2MzExNTExMjY5ODQ=";
 				var resultType = "json";
@@ -151,17 +195,20 @@ table {
 							//selected 된 검색값과 같은 정보 추가 입력
 							if(addrSelected==arr[i].roadAddr){
 								//우편번호 입력
-								 $('#abc').append("<input type='text' name='zipCode' value='"+arr[i].zipNo+"'>");	
+								 $('#plusAddress').append("<input type='text' name='zipCode' value='"+arr[i].zipNo+"'>");	
 								//시 입력
-								 $('#abc').append("<input type='text' name='province' value='"+arr[i].siNm+"'>");
+								 $('#plusAddress').append("<input type='text' name='province' value='"+arr[i].siNm+"'>");
 								 //일반시, 군, 도 입력
-								 $('#abc').append("<input type='text' name='city' value='"+arr[i].sggNm+"'>");
+								 $('#plusAddress').append("<input type='text' name='city' value='"+arr[i].sggNm+"'>");
 								 //읍면동 입력
-								 $('#abc').append("<input type='text' name='town' value='"+arr[i].emdNm+"'>");	
+								 $('#plusAddress').append("<input type='text' name='town' value='"+arr[i].emdNm+"'>");	
 							}
 						}
 			        // 입력한 email 값으로 email 재입력     
-			        // $('#abc').append("<input type='text' name='studentEmail' value='"+$('#studentEmailId').val()+$('#middleEmail').val()+$('#emailUrl option:selected').val()+"'>");
+			        const email = $("#studentEmailId").val();
+					const middle = $("#middleEmail").text();
+					const address = $("#emailUrl").val();
+					$("#studentEmail").val(email+middle+address);
 			        
 		            // 유효성 검사 및 추가 주소 정보 입력 완료 후 submit
 					$('#signUpStudent').submit();
@@ -170,36 +217,15 @@ table {
 			}
 		});
 		
-		$('#idBtn').click(function(){
-			if($('#idck').val().length > 3) {
-				$.ajax({
-					type:'post'
-					, url:'/lms/idCheck'
-					, data:{memberId:$('#idck').val()}
-					, success : function(ck) {
-						console.log('ck:',ck);
-						if(ck=="false") {
-							alert('이미 사용중인 아이디입니다');
-						} else {
-							$('#memberId').val(ck);
-						}
-					}
-				});
-			} else {
-				alert('id는 4자 이상');
-			}
-		});
-		
 	});
 </script>
 </head>
 <script>
 	$('document').ready(function() {
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+
 		});
 </script>
 <body>
-
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
@@ -219,20 +245,16 @@ table {
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/addStudent">
 											<table id="zero_config" class="table table-striped table-bordered">
-												
-												 
-													<tr>
-														<td>아이디 중복 검사</td>
-														<td>
-															<input type="text" id="idck" name="idck">
-															<button type="button" id="idBtn">중복 검사</button>
-														</td>
-													</tr>
-												
-												
+												<tr>
+													<td>아이디 중복 검사</td>
+													<td>
+														<input type="text" id="idck" name="idck">
+														<button type="button" id="idBtn">중복 검사</button>
+													</td>
+												</tr>
 												<tr>
 													<td>학생 아이디</td>
-													<td><input type="text" id="memberId" name="memberId" > <span
+													<td><input type="text" id="memberId" name="memberId" readonly="readonly" > <span
 														id="memberIdHelper" class="helper"></span></td>
 												</tr>
 												<tr>
@@ -281,6 +303,7 @@ table {
 													<td>주소</td>
 													<td><input type="text" id="keyword" name="keyword">
 													<span id="addressHelper" class="helper"></span>
+													<span id="addrErroMessage" class="helper"></span>
 													<button type="button" id="addrBtn" class="btn btn-rounded btn-outline-secondary">주소검색</button></td>
 												</tr>
 												<tr>
@@ -305,9 +328,11 @@ table {
 														<span id="memberPhoneNoHelper" class="helper"></span></td>
 												</tr>
 												<div>
-													<input type=hidden id="memberLevel" name="memberLevel" value="4" readonly="readonly">
+													<input type=hidden id="memberLevel" name="memberLevel" value="1" readonly="readonly">
 												</div>
-												<div id ="abc"></div>
+												<!-- 검색한 주소 keyword, 등록 선택시 추가되는 상세 주소 들어올 위치 -->
+												<div id ="keyword3"></div>
+												<div id ="plusAddress"></div>
 												<tr>
 													<td colspan="2">
 														<!-- 폼 text, radio, checkbox 공백이 있는지 체크 -->
@@ -325,29 +350,8 @@ table {
 				</div>
 			</div>
 		</div>
-</div>
+	</div>
 </body>
-
-<script>
-	//이메일주소 가져오기
-	// 이 부분 밑에 있어야 함 
-	$("#studentEmailId").blur(function(){
-		email();	
-	});
-	
-	$("#emailUrl").change(function(){
-		email();	
-	});
-	
-	function email() {
-		const email = $("#studentEmailId").val();
-		const middle = $("#middleEmail").text();
-		const address = $("#emailUrl").val();
-		if(email != "" && address != "") {
-			$("#studentEmail").val(email+middle+address);
-		}
-	};
-</script>
 <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>

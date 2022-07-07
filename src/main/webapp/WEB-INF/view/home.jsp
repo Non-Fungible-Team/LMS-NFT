@@ -112,25 +112,6 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		</div>
 		<!-- 첫번쨰 끝 -->
 		<!-- 2번째 문단 -->
-		<div class="col-lg-12 col-md-6">
-		    <div class="card">
-		        <div class="card-body">
-		            <h4 class="card-title">타이틀</h4>
-		            <div style="height:294px;">
-		            	<!-- 내용입력 칸 ex) 테이블 및 폼 -->
-		            	<form class="mt-4" method="" action="#">
-                            <div class="form-group">
-                               입력 : <input type="text" class="form-control">
-                               비번 : <input type="password" class="form-control" id="passtext" placeholder="Password">
-                            </div>
-                            <button type="button" class="btn btn-outline-success btn-rounded">
-                          		<i class="fas fa-check"></i> 입력
-                          	</button>
-                        </form>
-		            </div>     
-		        </div>
-		    </div>
-		</div>
 		<!-- 2번째 문단 끝 -->
 	</div>
 </div>

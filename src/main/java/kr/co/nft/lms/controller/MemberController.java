@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.nft.lms.dto.AddManager;
 import kr.co.nft.lms.dto.AddStudent;
+import kr.co.nft.lms.dto.AddTeacher;
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Manager;
@@ -650,23 +652,6 @@ public class MemberController {
 	}
 	
 	
-	// 학생 상세보기 
-	@GetMapping("/all/getStudentOne")
-	public String getStudentOne(HttpSession session
-								, Model model) {
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		log.debug(A.Z+"[MemberController.getStudentOne.param] loginMember : "+loginMember+A.R);
-			
-		// 학생 한명의 정보를 가져오기 위해 하나의 서비스 호출 
-		Map<String, Object> returnMap = memberService.getStudentOne(loginMember);
-		
-		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
-		model.addAttribute("studentOne",returnMap);
-				
-		return "/member/getStudentOne";
-	}
-	
-	/*
 	// 학생 상세보기
 	// 세션 받는다 
 	@GetMapping("/all/getStudentOne")
@@ -704,26 +689,24 @@ public class MemberController {
 		
 		return "/member/getStudentOne";
 	}
-	*/
 	
 	// ------------------ 회원가입 ------------------ //
 	
 	// 운영자 회원가입 POST 
 	@PostMapping("/addManager")
-	public String addManager(Member member
-							,Manager manager) {
+	public String addManager(AddManager addManager) {
 		// 매개 변수 내용 확인 
-		log.debug(A.Z+"[MemberController.addManager.param] member : "+member+A.R);
-		log.debug(A.Z+"[MemberController.addManager.param] teacher : "+manager+A.R);
+		log.debug(A.Z+"[MemberController.addManager.param] addManager : "+addManager+A.R);
 		
-		// 운영자 한명의 정보를 저장하기 위해서 두개의 테이블 Member, Manager가 필요 
-		int rowOfMember = memberService.addManager(member);
-		log.debug(A.Z+"[MemberController.addManager] rowOfMember : "+rowOfMember+A.R);
-		int rowOfManager = memberService.addManager(manager);
-		log.debug(A.Z+"[MemberController.addManager] rowOfManager : "+rowOfManager+A.R);
-		
+		// 운영자 회원가입 정보 insert 요청 
+		int row = memberService.addManager(addManager);
+		log.debug(A.Z+"[MemberController.addManager] row : "+row+A.R);
+		//실패시에 입력폼으로 리다이렉트
+		if(row == 0) {
+			return "redirect:/addManager";
+		}
 		// 해당하는 뷰 페이지로 이동 
-		return "/member/memberLogin";
+		return "redirect:/login";
 	}
 	
 	// 운영자 회원가입 GET 
@@ -748,19 +731,19 @@ public class MemberController {
 	
 	// 강사 회원가입 POST 
 	@PostMapping("/addTeacher")
-	public String addTeacher(Member member,Teacher teacher) {
+	public String addTeacher(AddTeacher addteacher) {
 		// 매개 변수 내용 확인 
-		log.debug(A.Z+"[MemberController.addTeacher.param] member : "+member+A.R);
-		log.debug(A.Z+"[MemberController.addTeacher.param] teacher : "+teacher+A.R);
+		log.debug(A.Z+"[MemberController.addteacher.param] addteacher : "+addteacher+A.R);
 		
-		// 한 강사의 정보를 저장하기 위해서 두개의 테이블 Member, Teacher가 필요 
-		int rowOfMember = memberService.addTeacher(member);
-		log.debug(A.Z+"[MemberController.addTeacher] rowOfMember : "+rowOfMember+A.R);
-		int rowOfTeacher = memberService.addTeacher(teacher);
-		log.debug(A.Z+"[MemberController.addTeacher] rowOfTeacher : "+rowOfTeacher+A.R);
-		
+		// 운영자 회원가입 정보 insert 요청 
+		int row = memberService.addTeacher(addteacher);
+		log.debug(A.Z+"[MemberController.addTeacher] row : "+row+A.R);
+		//실패시에 입력폼으로 리다이렉트
+		if(row == 0) {
+			return "redirect:/addteacher";
+		}
 		// 해당하는 뷰 페이지로 이동 
-		return "/member/memberLogin";
+		return "redirect:/login";
 	}
 	
 	// 강사 회원가입 GET 
@@ -785,18 +768,19 @@ public class MemberController {
 
 	// 학생 회원가입 POST 
 	@PostMapping("/addStudent")
-	public String addStudent(AddStudent student) {
+	public String addStudent(AddStudent addstudent) {
 		// 매개 변수 내용 확인 
-		log.debug(A.Z+"[MemberController.addStudent.param] student : "+student+A.R);
+		log.debug(A.Z+"[MemberController.addstudent.param] addstudent : "+addstudent+A.R);
 		
-		// memberService에 DB에 회원가입 정보 기입 요청 
-		int rowOfStudent = memberService.addStudent(student);
-		log.debug(A.Z+"[MemberController.addStudent] rowOfStudent : "+rowOfStudent+A.R);
-		if(rowOfStudent==0) {//최종 입력실패 -> 가입페이지로 리턴
-			return "redirect:/member/addStudent";
+		// 운영자 회원가입 정보 insert 요청 
+		int row = memberService.addStudent(addstudent);
+		log.debug(A.Z+"[MemberController.addstudent] row : "+row+A.R);
+		//실패시에 입력폼으로 리다이렉트
+		if(row == 0) {
+			return "redirect:/addStudent";
 		}
-		// 성공! 로그인 페이지로 이동 
-		return "/member/memberLogin";
+		// 해당하는 뷰 페이지로 이동 
+		return "redirect:/login";
 	}
 	
 	// 학생 회원가입 GET 
