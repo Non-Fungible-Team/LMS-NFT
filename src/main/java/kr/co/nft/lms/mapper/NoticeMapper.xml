@@ -39,8 +39,8 @@
 	
 	<!-- 목록보기 -->
 	<select id="selectNoticeListByPage"
-			resultType="kr.co.nft.lms.vo.Notice"
-			parameterType="java.util.Map">
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Notice">
 		SELECT 
 			n.board_no noticeNo
 			, b.board_title noticeTitle
@@ -51,7 +51,6 @@
 			, b.board_blind boardBlind
 			, b.board_create_date noticeCreateDate
 			, b.board_update_date noticeUpdateDate
-			
 		FROM notice n
 		INNER JOIN board b
 		ON n.board_no = b.board_no
@@ -74,8 +73,8 @@
 	
 	<!-- 상세보기 -->
 	<select id="selectNoticeOne"
-			resultType="kr.co.nft.lms.vo.Notice"
-			parameterType="int">
+			parameterType="int"
+			resultType="kr.co.nft.lms.vo.Notice">
 		SELECT 
 			n.board_no noticeNo
 			, b.board_title noticeTitle

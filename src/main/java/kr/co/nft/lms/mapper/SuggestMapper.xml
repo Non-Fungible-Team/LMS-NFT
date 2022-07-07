@@ -20,7 +20,7 @@
 			,#{suggestContent}
 			,'건의'
 			,#{memberId}
-			,4
+			,#{suggestPrivilege}
 			,'N'
 			,NOW()
 			,NOW()
@@ -47,15 +47,15 @@
 			,'답변'
 			</if>
 			<if test="root == 0">
-			,'처리전'
+			,'답변전'
 			</if>
 		)
 	</insert>
 	
 	<!-- 목록보기 -->
 	<select id="selectSuggestListByPage"
-			resultType="kr.co.nft.lms.vo.Suggest"
-			parameterType="java.util.Map">
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Suggest">
 		SELECT
 			s.board_no suggestNo
 			,s.suggest_status suggestStatus
@@ -67,16 +67,15 @@
 		FROM suggest s
 		INNER JOIN board b
 		ON s.board_no = b.board_no
-		WHERE b.board_privilege = '4'
-		AND b.board_blind = 'N'
+		WHERE b.board_blind = 'N'
 		ORDER BY IF(ISNULL(s.root),s.board_no,s.root) DESC, s.board_no ASC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<!-- status 처리전 목록 -->
+	<!-- status 답변전 목록 -->
 	<select id="selectRootNullSuggestListByPage"
-			resultType="kr.co.nft.lms.vo.Suggest"
-			parameterType="java.util.Map">
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Suggest">
 		SELECT
 			s.board_no suggestNo
 			,s.suggest_status suggestStatus
@@ -88,7 +87,7 @@
 		FROM suggest s
 		INNER JOIN board b
 		ON s.board_no = b.board_no
-		WHERE s.suggest_status ='처리전'
+		WHERE s.suggest_status ='답변전'
 		ORDER BY b.board_create_date ASC
 		LIMIT #{rootNullBeginRow}, #{rootNullRowPerPage}
 	</select>
@@ -103,14 +102,14 @@
 		WHERE b.board_blind = 'N'
 	</select>
 	
-	<!-- 처리전 행 카운트 -->
+	<!-- 답변전 행 카운트 -->
 	<select id="selectRootNullSuggestListTotalCount"
 			resultType="int">
 		SELECT COUNT(*)
 		FROM suggest s
 		INNER JOIN board b
 		ON s.board_no = b.board_no
-		WHERE s.suggest_status = '처리전'
+		WHERE s.suggest_status = '답변전'
 		AND b.board_blind = 'N'
 	</select>
 	
@@ -152,7 +151,7 @@
 		WHERE board_no = #{suggestNo}	
 	</update>
 	
-	<!-- suggest 수정 -->
+	<!-- suggest status (답변하면 답변전->답변완료변경) -->
 	<update id="updateSuggestStatus"
 			parameterType="kr.co.nft.lms.vo.Suggest">
 		UPDATE suggest
