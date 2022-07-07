@@ -334,6 +334,37 @@
 
 	<!-- 상세보기 -->
 	
+	<select id="selectStudentOne"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="java.util.Map">
+		SELECT 
+			member.member_id memberId 
+			, member.member_pw_update_date memberPwUpdateDate 
+			, member.member_phone_no memberPhoneNo
+			, member.member_level memberLevel 
+			, member.member_last_login_date memberLastLoginDate 
+			, member.member_create_date memberCreateDate 
+			, member.member_update_date memberUpdateDate 
+			, student.student_education studentEducation 
+			, student.student_name studentName
+			, student.student_birth studentBirth 
+			, student.student_gender studentGender 
+			, student.student_email studentEmail 
+			, student.addr_detail addrDetail 
+			, member_photo.photo_name photoName 
+			, member_photo.photo_origin_name photoOriginName 
+			, member_photo.photo_type photoType
+			, member_photo.photo_size photoSize 
+			, member_photo.photo_create_date photoCreateDate 
+			, member_photo.photo_update_date photoUpdateDate 
+		FROM member 
+		INNER JOIN student 
+		ON member.member_id = student.member_id
+		INNER JOIN member_photo 
+		ON member.member_id = member_photo.member_id
+		WHERE member.member_id = #{memberId}
+	</select>
+	
 	<select id="selectManagerOneByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="kr.co.nft.lms.vo.Member">
@@ -391,7 +422,9 @@
 			member_id memberId
 			, member_phone_no memberPhoneNo
 			, member_last_login_date memberLastLoginDate
-			, member_pw memberPw  
+			<!--  
+				, member_pw memberPw
+			-->  
 		FROM member 
 		WHERE member_id = #{memberId} 
 	</select>

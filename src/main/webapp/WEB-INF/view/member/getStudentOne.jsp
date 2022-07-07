@@ -49,11 +49,11 @@
 												<td>학생 사진</td>
 												<td>
 												<!-- 경로  ${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName} 이와같이 작성하면 파일 못찾음 -->
-													<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
-														<img src="${pageContext.request.contextPath}/uploadFile/memberPhoto/${getMemberPhoto.photoName}">
+													<c:if test="${studentOne.photoType=='image/jpg' || studentOne.photoType== 'image/png' || studentOne.photoType == 'image/jpeg' }">
+														<img src="${pageContext.request.contextPath}/uploadFile/memberPhoto/studentPhoto/${studentOne.photoName}" width="200" height="200">
 													</c:if>
-													<a href="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
-														${getMemberPhoto.photoOriginName}
+													<a href="${pageContext.request.contextPath}/uploadFile/memberPhoto/studentPhoto/${studentOne.photoName}" download="${studentOne.photoOriginName}">
+														${studentOne.photoOriginName}
 													</a>
 												</td>
 											</tr>
@@ -63,36 +63,42 @@
 											</tr>
 											<tr>
 												<td>학생 이름</td>
-												<td>${getStudentOneByStudentVo.studentName}</td>
+												<td>${studentOne.studentName}</td>
 											</tr>
 											<tr>
 												<td>생일</td>
-												<td>${getStudentOneByStudentVo.studentBirth}</td>
+												<td>${studentOne.studentBirth}</td>
 											</tr>
 											<tr>
 												<td>성별</td>
-												<td>${getStudentOneByStudentVo.studentGender}</td>
+												<td>${studentOne.studentGender}</td>
 											</tr>
 											<tr>
 												<td>이메일</td>
-												<td>${getStudentOneByStudentVo.studentEmail}</td>
+												<td>${studentOne.studentEmail}</td>
 											</tr>
 											<tr>
 												<td>최종 학력</td>
-												<td>${getStudentOneByStudentVo.studentEducation}</td>
+												<td>${studentOne.studentEducation}</td>
 											</tr>
 											<tr>
 												<td>주소</td>
-												<td>${getStudentOneByStudentVo.addrDetail}</td>
+												<td>${studentOne.addrDetail}</td>
 											</tr>
 											<tr>
 												<td>휴대전화</td>
-												<td>${getStudentOneByMemberVo.memberPhoneNo}</td>
+												<td>${studentOne.memberPhoneNo}</td>
 											</tr>
 											<tr>
 												<td>마지막 로그인 날짜</td>
-												<td>${getStudentOneByMemberVo.memberLastLoginDate}</td>
+												<td>${studentOne.memberLastLoginDate}</td>
 											</tr>
+											<!-- 
+												<tr>
+													<td>마지막 로그인 날짜</td>
+													<td>${getStudentOneByMemberVo.memberLastLoginDate}</td>
+												</tr>
+											 -->
 										</table>
 									</div>
 									<div>

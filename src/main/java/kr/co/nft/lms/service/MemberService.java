@@ -259,6 +259,19 @@ public class MemberService {
 	// --------------------------------------- // 
 	// 상세보기 
 	
+	// MEMBER, STUDENT 테이블에서 학생 정보 상세 조회 
+	public Map<String, Object> getStudentOne(Member member) {
+		
+		log.debug(A.Z+"[MemberService.getStudentOne.param] member : "+member+A.R);
+		// 학생 상세보기 리턴값 받을 변수 선언 
+		Map<String, Object> map = new HashMap<>();
+		
+		map = memberMapper.selectStudentOne(member);
+		log.debug(A.Z+"[MemberService.getStudentOne] map : "+map+A.R);
+		
+		return map;
+	}
+	
 	// Member 테이블 활용하여 운영자 상세 조회 
 	public Member getManagerOneReturnMemberVo(Member member) {
 		return memberMapper.selectManagerOneByMemberVo(member);

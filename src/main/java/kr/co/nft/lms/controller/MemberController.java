@@ -650,6 +650,23 @@ public class MemberController {
 	}
 	
 	
+	// 학생 상세보기 
+	@GetMapping("/all/getStudentOne")
+	public String getStudentOne(HttpSession session
+								, Model model) {
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.getStudentOne.param] loginMember : "+loginMember+A.R);
+			
+		// 학생 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+		Map<String, Object> returnMap = memberService.getStudentOne(loginMember);
+		
+		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
+		model.addAttribute("studentOne",returnMap);
+				
+		return "/member/getStudentOne";
+	}
+	
+	/*
 	// 학생 상세보기
 	// 세션 받는다 
 	@GetMapping("/all/getStudentOne")
@@ -687,6 +704,7 @@ public class MemberController {
 		
 		return "/member/getStudentOne";
 	}
+	*/
 	
 	// ------------------ 회원가입 ------------------ //
 	

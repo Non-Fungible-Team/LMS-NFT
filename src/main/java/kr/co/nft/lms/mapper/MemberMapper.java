@@ -109,6 +109,9 @@ public interface MemberMapper {
 	
 	// -------------- 상세 보기 ------------------ //  
 	
+	// Member, Student 테이블 활용하여 학생 상세보기 
+	Map<String, Object> selectStudentOne(Member member);
+	
 	// Member 테이블 활용하여 운영자 상세보기 
 	Member selectManagerOneByMemberVo(Member member);
 	
