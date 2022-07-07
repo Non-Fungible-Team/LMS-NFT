@@ -372,7 +372,7 @@ public class LectureController {
 	}
 		
 	//6.강사_강의 목록
-	@GetMapping("/manager/lecture/getManagerLectureByPage")
+	@GetMapping("/manager/lecture/getTeacherrLectureByPage")
 	public String getManagerLectureByPage(Model model
 					,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
 					,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
@@ -381,7 +381,7 @@ public class LectureController {
 		log.debug(A.W +"[LectureController.teacher.lecture.getLectureByPage.currentPage] currentPage : " +currentPage +A.R);
 		log.debug(A.W +"[LectureController.teacher.lecture.getLectureByPage.rowPerPage] rowPerPage : " +rowPerPage +A.R);
 			
-		Map<String,Object> map = lectureService.getManagerLectureByPage(currentPage, rowPerPage); //강사_강의목록 서비스 호출해서 map객체에 저장
+		Map<String,Object> map = lectureService.getTeacherLectureByPage(currentPage, rowPerPage); //강사_강의목록 서비스 호출해서 map객체에 저장
 		 //서비스에 저장된 값 가져와서 모델객체에 저장 
 		model.addAttribute("teacherLectureList", map.get("teacherLectureList")); //강사_강의목록
 		model.addAttribute("currentPage", map.get("currentPage")); //현재페이지

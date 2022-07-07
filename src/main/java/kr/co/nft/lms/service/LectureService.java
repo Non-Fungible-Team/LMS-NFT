@@ -353,7 +353,7 @@ public class LectureService {
 	}
 	
 	//6. 운영자- 강의 목록
-	public Map<String,Object> getManagerLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
+	public Map<String,Object> getTeacherLectureByPage(int currentPage, int rowPerPage){ //controller 넘겨온 값
 		//디버깅코드
 		log.debug(A.W +"[LectureService.getManagerLectureByPage.currentPage] currentPage  : " + currentPage +A.R);
 		log.debug(A.W +"[LectureService.getManagerLectureByPage.rowPerPage ] rowPerPage : " + rowPerPage +A.R);
