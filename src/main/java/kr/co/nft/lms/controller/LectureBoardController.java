@@ -18,6 +18,7 @@ import kr.co.nft.lms.vo.Comment;
 import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.LectureBoard;
 import kr.co.nft.lms.vo.LectureFile;
+import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -111,13 +112,22 @@ public class LectureBoardController {
 		//세션에 Lecture 정보요청
 		Lecture lecture = (Lecture)session.getAttribute("sessionLecture");
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard.session] lecture : "+ lecture + A.R);
-		
+		//세션에 로그인 정보 요청
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+				
 		Map<String, Object> lectureBoardOneReturnMap = lectureBoardService.modifyLectureBoardOne(lectureBoardNo);
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard] lectureBoardOneReturnMap : "+ lectureBoardOneReturnMap + A.R);
 		
 		model.addAttribute("lectureBoard", lectureBoardOneReturnMap.get("lectureBoard"));
 		model.addAttribute("lectureFileList", lectureBoardOneReturnMap.get("lectureFileList"));
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard] model : "+ model + A.R);
+		LectureBoard lectureBoard = (LectureBoard)lectureBoardOneReturnMap.get("lectureBoard");
+
+		//가져온 상세보기가 로그인한 회원의 권한 밖의 게시물이면 list로 redirect
+		if(lectureBoard.getMemberId().equals(loginMember.getMemberId()) == false){
+			log.debug(A.S + "[LectureBoardController.modifyLectureBoard] 권한밖의 lectureBoard게시물 수정 요청" + A.R);
+			return "redirect:/all/home";
+		}
 		
 		return"/lectureBoard/modifyLectureBoard";		
 	}
