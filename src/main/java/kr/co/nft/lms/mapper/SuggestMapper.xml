@@ -143,8 +143,13 @@
 		UPDATE board
 		SET board_title = #{suggestTitle}
 			,board_content = #{suggestContent}
-			,board_privilege = #{suggestPrivilege}
 		WHERE board_no = #{suggestNo}
+	</update>
+	<update id="updateSuggest"
+			parameterType="kr.co.nft.lms.vo.Suggest">
+		UPDATE suggest
+		SET suggest_secret = #{suggestSecret}
+		WHERE board_no = #{suggestNo}	
 	</update>
 	
 	<!-- suggest 수정 -->

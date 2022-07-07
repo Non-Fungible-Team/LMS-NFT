@@ -26,8 +26,8 @@
 		
 		//유효성검사
 		$('#uploadModifySuggest').click(function(){
-			$('#modifySuggestTitleHelper').text();
-			$('#modifySuggestContentHelper').text();
+			$('#modifySuggestTitleHelper').text('');
+			$('#modifySuggestContentHelper').text('');
 			$('#modifySuggestSecretHelper').text();
 			
 			if($('#modifySuggestTitle').val() == ''){
@@ -36,7 +36,7 @@
 			} else if ($('modifySuggestContent').val() == ''){
 				$('#modifySuggestContentHelper').text('내용을 입력하세요');
 				$('#modifySuggestContent').focus();
-			} else if ($('#modifySuggestSecret').val() == ''){
+			} else if ($('#modifySuggestSecret').val() == '-1'){
 				$('#modifySuggestSecretHelper').text('비밀글여부를 선택하세요');
 				$('#modifySuggestSecret').focus();
 			} else {

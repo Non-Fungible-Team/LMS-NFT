@@ -93,7 +93,9 @@ public class SuggestService {
 		log.debug(A.S + "[SuggestService.modifySuggest.param] suggest : "+ suggest + A.R);
 		int row = suggestMapper.updateSuggestInBoard(suggest);
 		log.debug(A.S + "[SuggestService.modifySuggest] row : "+ row + A.R);
-		return row;		
+		int row1 = suggestMapper.updateSuggest(suggest);
+		log.debug(A.S + "[SuggestService.modifySuggest] row1 : "+ row1 + A.R);
+		return row+row1;		
 	}
 	
 	//Suggest 삭제(블라인드처리)

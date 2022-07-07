@@ -30,6 +30,8 @@ public interface SuggestMapper {
 	
 	//update
 	int updateSuggestInBoard(Suggest suggest);
+	int updateSuggest(Suggest suggest);
+	
 	//updateSuggestStatus
 	int updateSuggestStatus(Suggest suggest);
 	

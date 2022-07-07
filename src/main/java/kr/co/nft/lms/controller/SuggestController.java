@@ -128,12 +128,11 @@ public class SuggestController {
 		log.debug(A.S + "[SuggestController.modifySuggest.param] suggest : " + suggest + A.R);
 		int row = suggestService.modifySuggest(suggest);
 		log.debug(A.S + "[SuggestController.modifySuggest] row : " + row + A.R);
-		//row가 0 이면 입력 실패
+		//row가 0 이면 수정 실패
 		if(row==0) {
-			log.debug(A.S + "[SuggestController.modifySuggest.row] 수정실패"+ A.R);
-			return "redirect:/all/suggest/modifySuggest?msg=fail";
+			log.debug(A.S + "[SuggestController.modifySuggest.row] 수정된게 없습니다"+ A.R);
 		}
-		//입력성공 했을 경우
+		//수정 성공 했을 경우
 		log.debug(A.S + "[SuggestController.modifySuggest.row] 수정성공"+ A.R);
 		return "redirect:/all/suggest/getSuggestOne?suggestNo=" + suggest.getSuggestNo();
 	}
