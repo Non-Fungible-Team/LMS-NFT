@@ -333,6 +333,23 @@
 	<!-- 개인 정보 수정 -->
 
 	<!-- 상세보기 -->
+	<!-- Memberid만으로 member테이블 select 하기 -->
+	<select id="selectMemberByMemberId"
+			parameterType="String"
+			resultType="kr.co.nft.lms.vo.Member">
+		SELECT 
+			member_id memberId
+			<!--보안상 괜찮은지 고민 , member_pw memberPw--> 
+			,member_pw_update_date memberPwUpdateDate
+			,member_phone_no memberPhoneNo
+			,member_level memberLevel
+			,member_last_login_date memberLastLoginDate
+			,member_create_date memberCreateDate
+			,member_update_date memberUpdateDate
+		FROM member 
+		WHERE member_id = #{memberId} 
+	</select>
+	<!-- 위에 내용 표시 -->	
 	
 	<select id="selectStudentOne"
 			parameterType="kr.co.nft.lms.vo.Member"
@@ -385,7 +402,8 @@
 			, manager_birth managerBirth
 			, manager_gender managerGender
 			, manager_email managerEmail 
-			, manager_entry_date managerEntryDate 
+			, manager_entry_date managerEntryDate
+			, addr_detail addrDetail  
 		FROM manager 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -411,6 +429,7 @@
 			, teacher_gender teacherGender
 			, teacher_email teacherEmail 
 			, teacher_entry_date teacherEntryDate
+			, addr_detail addrDetail 
 		FROM teacher 
 		WHERE member_id = #{memberId} 
 	</select>
@@ -447,9 +466,8 @@
 	
 	<!-- 회원 가입 -->	
 	
-	<insert id="insertManagerByManagerVo"
-			parameterType="kr.co.nft.lms.vo.Manager">
-			
+	<insert id="insertManagerByAddManagerDTO"
+			parameterType="kr.co.nft.lms.dto.AddManager">
 		INSERT INTO manager (
 			member_id
 			, manager_entry_date
@@ -465,13 +483,12 @@
 			, #{managerBirth}
 			, #{managerGender}
 			, #{managerEmail}
-			, #{addressDetail}
+			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
 		)
-				
 	</insert>
 	
-	<insert id="insertTeacherByTeacherVo"
-			parameterType="kr.co.nft.lms.vo.Teacher">
+	<insert id="insertTeacherByAddTeacherDTO"
+			parameterType="kr.co.nft.lms.dto.AddTeacher">
 		INSERT INTO teacher (
 			member_id
 			, teacher_entry_date
@@ -487,62 +504,11 @@
 			, #{teacherBirth}
 			, #{teacherGender}
 			, #{teacherEmail}
-			, #{addressDetail}
+			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
 		)
-				
 	</insert>
 	
-	<insert id="insertManagerByMemberVo"
-			parameterType="kr.co.nft.lms.vo.Member">
-			
-		INSERT INTO member(
-			member_id
-			, member_pw
-			, member_pw_update_date 
-			, member_phone_no
-			, member_level
-			, member_last_login_date
-			, member_create_date
-			, member_update_date 
-		) VALUES (
-			#{memberId}
-			, password(#{memberPw})
-			,NOW()
-			,#{memberPhoneNo}
-			,#{memberLevel}
-			,NOW()
-			,NOW()
-			,NOW()
-		)
-		
-	</insert>
-
-	<insert id="insertTeacherByMemberVo"
-			parameterType="kr.co.nft.lms.vo.Member">
-			
-		INSERT INTO member(
-			member_id
-			, member_pw
-			, member_pw_update_date 
-			, member_phone_no
-			, member_level
-			, member_last_login_date
-			, member_create_date
-			, member_update_date 
-		) VALUES (
-			#{memberId}
-			, password(#{memberPw})
-			,NOW()
-			,#{memberPhoneNo}
-			,#{memberLevel}
-			,NOW()
-			,NOW()
-			,NOW()
-		)
-		
-	</insert>
-	
-	<insert id="insertStudentByAddstudentDto"
+		<insert id="insertStudentByAddStudentDTO"
 			parameterType="kr.co.nft.lms.dto.AddStudent">
 		INSERT INTO student (
 			member_id
@@ -562,11 +528,11 @@
 			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
 			<!-- , #{addressDetail} -->
 		)
-				
 	</insert>
-
-	<insert id="insertMemberByAddstudentDto"
-			parameterType="kr.co.nft.lms.dto.AddStudent">
+	
+	
+	<insert id="insertMemberByMemberVo"
+			parameterType="kr.co.nft.lms.vo.Member">
 			
 		INSERT INTO member(
 			member_id
@@ -589,9 +555,13 @@
 		)
 		
 	</insert>
+
+				
+
+
 	
-	<insert id="insertAddressByAddstudentDto"
-			parameterType="kr.co.nft.lms.dto.AddStudent">
+	<insert id="insertAddressByAddressVo"
+			parameterType="kr.co.nft.lms.vo.Address">
 			
 		INSERT INTO address(
 			member_id
@@ -613,8 +583,41 @@
 		
 	</insert>
 
-	<!-- 회원 가입  -->	
-
+	<!-- 회원 가입  끝-->
+	<!-- 비밀번호 변경 이력 테이블 -->	
+	<insert id="insertPwHistory"
+			parameterType="kr.co.nft.lms.vo.PwHistory">
+		INSERT INTO pw_history(
+			member_id
+			, pw_history_date
+			, pw_history_new_pw
+		) VALUES (
+			#{memberId}
+			, #{pwHistoryDate}
+			, #{pwHistoryNewPw}
+		)
+	</insert>
+	<!-- 회원 레벨 변경 이력 테이블 -->	
+	<insert id="insertLevelHistory"
+			parameterType="kr.co.nft.lms.vo.LevelHistory">
+		INSERT INTO level_history(
+			member_id
+			,level_history_update_date
+			,level_history_new_level
+		<if test="levelHistoryReason != null">
+			,level_history_reason
+		</if>
+			,editor
+		) VALUES (
+			#{memberId}
+			, #{levelHistoryUpdateDate}
+			, #{levelHistoryNewLevel}
+		<if test="levelHistoryReason != null">
+			,#{levelHistoryReason}
+		</if>
+		,#{editor}
+		)
+	</insert>
 	<!-- 로그인  -->	
 	
 	<select id="selectMemberOne"
@@ -627,7 +630,7 @@
 		WHERE member_id = #{memberId} and member_pw = password(#{memberPw})
 	</select>	
 	
-	<!-- 로그인  -->	
+	<!-- 로그인 끝  -->	
 	
 	<!-- 아이디 중복 체크  -->	
 	

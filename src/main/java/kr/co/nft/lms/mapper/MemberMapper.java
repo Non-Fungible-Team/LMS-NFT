@@ -5,10 +5,15 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.nft.lms.dto.AddManager;
 import kr.co.nft.lms.dto.AddStudent;
+import kr.co.nft.lms.dto.AddTeacher;
+import kr.co.nft.lms.vo.Address;
+import kr.co.nft.lms.vo.LevelHistory;
 import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
+import kr.co.nft.lms.vo.PwHistory;
 import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.Teacher;
 
@@ -130,34 +135,30 @@ public interface MemberMapper {
 	// Student 테이블 활용하여 학생 상세보기 
 	Student selectStudentOneByStudentVo(Member member);
 	
+	// MemberId로 Member 정보 가져오기 
+	Member selectMemberByMemberId(String memberId);
+	
 	// -------------- 회원 가입 ------------------ //  
 	
-	// Manager VO 필드 활용하여 운영자 회원가입
-	int insertManagerByManagerVo(Manager manager);
+	// AddManager DTO 필드 활용하여 운영자 회원가입
+	int insertManagerByAddManagerDTO(AddManager addManager);
 	
-	// Teacher VO 필드 활용하여 강사 회원가입 
-	int insertTeacherByTeacherVo(Teacher teacher);
+	// AddTeacher DTO 필드 활용하여 강사 회원가입 
+	int insertTeacherByAddTeacherDTO(AddTeacher addteacher);
 	
-	// Student VO 필드 활용하여 학생 회원가입 
-	int insertStudentByStudentVo(Student student);
+	// AddStudent DTO 필드 활용하여 학생 회원가입 
+	int insertStudentByAddStudentDTO(AddStudent addstudent);
 	
-	// Member VO 필드 활용하여 운영자 회원가입 
-	int insertManagerByMemberVo(Member member);
+	// Member VO 필드 활용하여 모든 회원 회원가입 
+	int insertMemberByMemberVo(Member member);
 	
-	// Member VO 필드 활용하여 강사 회원가입
-	int insertTeacherByMemberVo(Member member);
+	// address Vo 필드 활용하여 address 테이블 기입 
+	int insertAddressByAddressVo(Address address);
 	
-	// addStudent DTO 필드 활용하여 MEMBER 테이블 기입 
-	int insertMemberByAddstudentDto(AddStudent member);
-
-	// addStudent DTO 필드 활용하여 STUDENT 테이블 기입 
-	int insertStudentByAddstudentDto(AddStudent student);
-	
-	// addStudent DTO 필드 활용하여 ADDRESS 테이블 기입
-	int insertAddressByAddstudentDto(AddStudent student);
-	
-	// --------------------------------------------- //  
-	
+	// -----------------비밀번호 변경 이력 테이블---------------------- //  
+	int insertPwHistory(PwHistory pwHistory);
+	// -----------------회원 레벨 변경 이력 테이블---------------------- //  
+	int insertLevelHistory(LevelHistory levelHistory);
 	// 로그인
 	
 	Member selectMemberOne(Member member);

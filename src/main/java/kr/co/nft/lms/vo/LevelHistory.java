@@ -7,7 +7,7 @@ public class LevelHistory {
 	private String memberId;
 	private int levelHistoryNewLevel;
 	private String levelHistoryReason;
-	private String memberId2;
+	private String editor;
 	private String levelHistoryUpdateDate;
 	
 }

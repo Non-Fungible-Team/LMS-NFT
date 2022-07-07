@@ -6,17 +6,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.nft.lms.dto.AddManager;
 import kr.co.nft.lms.dto.AddStudent;
+import kr.co.nft.lms.dto.AddTeacher;
 import kr.co.nft.lms.mapper.MemberMapper;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Address;
+import kr.co.nft.lms.vo.LevelHistory;
 import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
 import kr.co.nft.lms.vo.MemberUploadPhoto;
+import kr.co.nft.lms.vo.PwHistory;
 import kr.co.nft.lms.vo.Student;
 import kr.co.nft.lms.vo.Teacher;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +35,9 @@ public class MemberService {
 	// Service ← 여기서 사진 파일 가공 
 
 	@Autowired MemberMapper memberMapper;
+	
+
+	private ModelMapper modelMapper;
 	
 	// --------------------------------------- //
 	
@@ -305,45 +314,187 @@ public class MemberService {
 	// --------------------------------------- // 
 	// 회원가입 
 	
-	// Manager 테이블에 들어가는 운영자 회원 가입 
-	public int addManager(Manager manager) {
-		return memberMapper.insertManagerByManagerVo(manager);
-	}
-	
-	// Member 테이블에 들어가는 운영자 회원 가입 
-		public int addManager(Member member) {
-			return memberMapper.insertManagerByMemberVo(member);
-		}
-	
-	// Teacher 테이블에 들어가는 강사 회원 가입 
-	public int addTeacher(Teacher teacher) {
-		return memberMapper.insertTeacherByTeacherVo(teacher);
-	}
-	
-	// Member 테이블에 들어가는 강사 회원 가입 
-		public int addTeacher(Member member) {
-			return memberMapper.insertTeacherByMemberVo(member);
-		}
-	
-	// Student 테이블에 들어가는 학생 회원 가입 
-	public int addStudent(AddStudent addstudent) {
-		log.debug(A.E+"[MemberService.addStudent.param] student : "+addstudent+A.R);
-		int row = -1; // 성공 여부 출력할 변수 초기화
-		// Member 테이블에 입력
-		row = memberMapper.insertMemberByAddstudentDto(addstudent);
-		log.debug(A.E+"[MemberService.addStudent.insertMemberByAddstudentDto] row : "+row+A.R);
-		row = -1;
+	//운영자 회원 가입 
+	public int addManager(AddManager addManager) {
+		log.debug(A.Z+"[MemberService.addManager.param] addManager : "+addManager+A.R);
+		//mapper 요청 결과 저장할 변수 초기화
+		int row = -1;
 		
-		// student 테이블에 입력
-		row = memberMapper.insertStudentByAddstudentDto(addstudent);
-		log.debug(A.E+"[MemberService.addStudent.insertStudentByAddstudentDto] row : "+row+A.R);
-		row = -1;
-		// address 테이블에 입력
-		row = memberMapper.insertAddressByAddstudentDto(addstudent);
-		log.debug(A.E+"[MemberService.addStudent.insertAddressByAddstudentDto] row : "+row+A.R);
-		// 마지막까지 성공해야 성공 -> @Transactional 때문 -> 마지막 성공 행 수만 return
+		//member 테이블에 insert 요청
+		//요청 전 MemberVo로 변환
+		modelMapper = new ModelMapper();
+		Member member = modelMapper.map(addManager, Member.class);
+		row = memberMapper.insertMemberByMemberVo(member);
+		log.debug(A.Z+"[MemberService.addManager.member] member : "+member+A.R);
+		
+		//Manager 테이블에 insert 요청
+		row = memberMapper.insertManagerByAddManagerDTO(addManager);
+		log.debug(A.Z+"[MemberService.addManager.insertManagerTable] row : "+row+A.R);
+
+		//addrress 테이블에 insert 요청
+		//요청 전 addressVo로 변환
+		Address address = modelMapper.map(addManager, Address.class);
+		log.debug(A.Z+"[MemberService.addManager.member] member : "+address+A.R);
+		row = memberMapper.insertAddressByAddressVo(address);
+		log.debug(A.Z+"[MemberService.addManager.insertAddressTable] row : "+row+A.R);
+
+		//변경 테이블 요청전 insert 된 정보 select
+		Member manager = memberMapper.selectMemberByMemberId(addManager.getMemberId());
+		
+		//회원정보 레벨 변경 이력테이블에 insert 요청
+		LevelHistory levelHistory = new LevelHistory();
+		levelHistory.setMemberId(addManager.getMemberId());
+		levelHistory.setLevelHistoryUpdateDate(manager.getMemberUpdateDate());
+		levelHistory.setLevelHistoryNewLevel(manager.getMemberLevel());
+		levelHistory.setLevelHistoryReason("가입신청");
+		levelHistory.setEditor(addManager.getMemberId());
+		log.debug(A.Z+"[MemberService.addManager] levelHistory : "+levelHistory+A.R);
+		row = memberMapper.insertLevelHistory(levelHistory);
+		log.debug(A.Z+"[MemberService.addManager.insertLevelHistory] row : "+row+A.R);
+		
+		
+		//비밀번호 변경 이력테이블에 insert 요청
+		//요청전 createDate를 알기 위해 insert 된 정보 select
+		log.debug(A.Z+"[MemberService.addManager.selectMemberByMemberId] manager : "+manager+A.R);
+		PwHistory pwHistory = new PwHistory();
+		pwHistory.setMemberId(addManager.getMemberId());
+		pwHistory.setPwHistoryDate(manager.getMemberPwUpdateDate());
+		pwHistory.setPwHistoryNewPw(addManager.getMemberPw());;
+		row = memberMapper.insertPwHistory(pwHistory);
+		log.debug(A.Z+"[MemberService.addManager.insertpwHistoryTable] row : "+row+A.R);
+		//최종적으로 pwHistory insert 결과 리턴
 		return row;
 	}
+	//강사 회원 가입 
+	public int addTeacher(AddTeacher addTeacher) {
+		log.debug(A.Z+"[MemberService.addTeacher.param] addTeacher : "+addTeacher+A.R);
+		//mapper 요청 결과 저장할 변수 초기화
+		int row = -1;
+		
+		//member 테이블에 insert 요청
+		//요청 전 MemberVo로 변환
+		modelMapper = new ModelMapper();
+		Member member = modelMapper.map(addTeacher, Member.class);
+		row = memberMapper.insertMemberByMemberVo(member);
+		log.debug(A.Z+"[MemberService.addTeacher.member] member : "+member+A.R);
+
+		//Teacher 테이블에 insert 요청
+		row = memberMapper.insertTeacherByAddTeacherDTO(addTeacher);
+		log.debug(A.Z+"[MemberService.addTeacher.insertTeacherTable] row : "+row+A.R);
+
+		
+		//addrress 테이블에 insert 요청
+		//요청 전 addressVo로 변환
+		Address address = modelMapper.map(addTeacher, Address.class);
+		log.debug(A.Z+"[MemberService.addTeacher.member] member : "+address+A.R);
+		row = memberMapper.insertAddressByAddressVo(address);
+		log.debug(A.Z+"[MemberService.addTeacher.insertAddressTable] row : "+row+A.R);
+		
+		//이력테이블 insert 요청전 입력 시간을 알기 위해 insert 된 정보 select
+		Member teacher = memberMapper.selectMemberByMemberId(addTeacher.getMemberId());
+		log.debug(A.Z+"[MemberService.addTeacher.selectMemberByMemberId] teacher : "+teacher+A.R);
+		
+		//회원정보 레벨 변경 이력테이블에 insert 요청
+		LevelHistory levelHistory = new LevelHistory();
+		levelHistory.setMemberId(addTeacher.getMemberId());
+		levelHistory.setLevelHistoryUpdateDate(teacher.getMemberUpdateDate());
+		levelHistory.setLevelHistoryNewLevel(teacher.getMemberLevel());
+		levelHistory.setLevelHistoryReason("가입신청");
+		levelHistory.setEditor(addTeacher.getMemberId());
+		log.debug(A.Z+"[MemberService.addTeacher] levelHistory : "+levelHistory+A.R);
+		row = memberMapper.insertLevelHistory(levelHistory);
+		log.debug(A.Z+"[MemberService.addTeacher.insertLevelHistory] row : "+row+A.R);
+		
+		//비밀번호 변경 이력테이블에 insert 요청
+		PwHistory pwHistory = new PwHistory();
+		pwHistory.setMemberId(addTeacher.getMemberId());
+		pwHistory.setPwHistoryDate(teacher.getMemberPwUpdateDate());
+		pwHistory.setPwHistoryNewPw(addTeacher.getMemberPw());;
+		row = memberMapper.insertPwHistory(pwHistory);
+		log.debug(A.Z+"[MemberService.addTeacher.insertpwHistoryTable] row : "+row+A.R);
+		//이전 실패시에는 이미 리턴 되었으므로 최종적으로 pwHistory insert 결과 리턴
+		return row;
+	}
+	//학생 회원 가입
+	public int addStudent(AddStudent addStudent) {
+		log.debug(A.Z+"[MemberService.addStudent.param] addStudent : "+addStudent+A.R);
+		//mapper 요청 결과 저장할 변수 초기화
+		int row = -1;
+		
+		//member 테이블에 insert 요청
+		//요청 전 MemberVo로 변환
+		modelMapper = new ModelMapper();
+		Member member = modelMapper.map(addStudent, Member.class);
+		row = memberMapper.insertMemberByMemberVo(member);
+		log.debug(A.Z+"[MemberService.addStudent.member] member : "+member+A.R);
+		
+		//Student 테이블에 insert 요청
+		row = memberMapper.insertStudentByAddStudentDTO(addStudent);
+		log.debug(A.Z+"[MemberService.addStudent.insertStudentTable] row : "+row+A.R);
+		
+		//addrress 테이블에 insert 요청
+		//요청 전 addressVo로 변환
+		Address address = modelMapper.map(addStudent, Address.class);
+		log.debug(A.Z+"[MemberService.addStudent.member] member : "+address+A.R);
+		row = memberMapper.insertAddressByAddressVo(address);
+		log.debug(A.Z+"[MemberService.addStudent.insertAddressTable] row : "+row+A.R);
+
+		//요청전 입력시간을 알기 위해 insert 된 정보 select
+		Member student = memberMapper.selectMemberByMemberId(addStudent.getMemberId());
+		log.debug(A.Z+"[MemberService.addStudent.selectMemberByMemberId] student : "+student+A.R);
+		
+		//회원정보 레벨 변경 이력테이블에 insert 요청
+		LevelHistory levelHistory = new LevelHistory();
+		levelHistory.setMemberId(addStudent.getMemberId());
+		levelHistory.setLevelHistoryUpdateDate(student.getMemberUpdateDate());
+		levelHistory.setLevelHistoryNewLevel(student.getMemberLevel());
+		levelHistory.setLevelHistoryReason("가입신청");
+		levelHistory.setEditor(addStudent.getMemberId());
+		log.debug(A.Z+"[MemberService.addStudent] levelHistory : "+levelHistory+A.R);
+		row = memberMapper.insertLevelHistory(levelHistory);
+		log.debug(A.Z+"[MemberService.addStudent.insertLevelHistory] row : "+row+A.R);
+		
+		//비밀번호 변경 이력테이블에 insert 요청
+		PwHistory pwHistory = new PwHistory();
+		pwHistory.setMemberId(addStudent.getMemberId());
+		pwHistory.setPwHistoryDate(student.getMemberPwUpdateDate());
+		pwHistory.setPwHistoryNewPw(addStudent.getMemberPw());;
+		row = memberMapper.insertPwHistory(pwHistory);
+		log.debug(A.Z+"[MemberService.addStudent.insertpwHistoryTable] row : "+row+A.R);
+		//최종적으로 pwHistory insert 결과 리턴
+		return row;
+	}
+	
+//	
+//	// Teacher 테이블에 들어가는 강사 회원 가입 
+//	public int addTeacher(Teacher teacher) {
+//		return memberMapper.insertTeacherByTeacherVo(teacher);
+//	}
+//	
+//	// Member 테이블에 들어가는 강사 회원 가입 
+//		public int addTeacher(Member member) {
+//			return memberMapper.insertTeacherByMemberVo(member);
+//		}
+//	
+//	// Student 테이블에 들어가는 학생 회원 가입 
+//	public int addStudent(AddStudent addstudent) {
+//		log.debug(A.E+"[MemberService.addStudent.param] student : "+addstudent+A.R);
+//		int row = -1; // 성공 여부 출력할 변수 초기화
+//		// Member 테이블에 입력
+//		row = memberMapper.insertMemberByAddstudentDto(addstudent);
+//		log.debug(A.E+"[MemberService.addStudent.insertMemberByAddstudentDto] row : "+row+A.R);
+//		row = -1;
+//		
+//		// student 테이블에 입력
+//		row = memberMapper.insertStudentByAddstudentDto(addstudent);
+//		log.debug(A.E+"[MemberService.addStudent.insertStudentByAddstudentDto] row : "+row+A.R);
+//		row = -1;
+//		// address 테이블에 입력
+//		row = memberMapper.insertAddressByAddstudentDto(addstudent);
+//		log.debug(A.E+"[MemberService.addStudent.insertAddressByAddstudentDto] row : "+row+A.R);
+//		// 마지막까지 성공해야 성공 -> @Transactional 때문 -> 마지막 성공 행 수만 return
+//		return row;
+//	}
 
 	
 	// --------------------------------------- // 

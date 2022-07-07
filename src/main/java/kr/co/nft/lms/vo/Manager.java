@@ -10,5 +10,5 @@ public class Manager {
 	private String managerBirth;
 	private String managerGender;
 	private String managerEmail;
-	private String addressDetail;
+	private String addrDetail;
 }
