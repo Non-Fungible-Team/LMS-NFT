@@ -97,11 +97,6 @@
 										<div>
 											<button type="button" id = "uploadModifySuggest" class ="btn btn-outline-success btn-rounded" style="float: right">수정</button>
 										</div>
-										<div>
-											<a href="${pageContext.request.contextPath}/manager/suggest/removeSuggest?suggestNo=${suggest.suggestNo}">
-									    		<input type="button" class="btn btn-outline-danger" value="건의사항 삭제">
-									    	</a>
-									    </div>
 									</form>
 								</div>
 							</div>

@@ -40,9 +40,9 @@
 									<a href="${pageContext.request.contextPath}/all/suggest/getSuggestListByPage">
 										<input type="button" class="btn btn-info" style="float: right" value="목록으로">
 									</a>
-									<c:if test="${sessionLoginMember.memberId == suggest.memberId}">
+									<c:if test="${sessionLoginMember.memberId == suggest.memberId && suggest.suggestStatus == '답변전'}">
 										<a href="${pageContext.request.contextPath}/all/suggest/modifySuggest?suggestNo=${suggest.suggestNo}">
-					            			<input type="button" class="btn btn-outline-success" style="float: right" value="건의사항 수정">
+					            			<input type="button" class="btn btn-outline-success" style="float: right" value="건의사항 수정"  onclick="return confirm('답변이 완료된 글은 수정이 불가합니다.');">
 					            		</a>
 				            		</c:if>
 				            		<c:if test="${sessionLoginMember.memberLevel >=6 }">
@@ -68,7 +68,7 @@
 											<td>${suggest.suggestSecret}</td>
 										</tr>
 										<tr>
-											<th>처리상태</th>
+											<th>답변상태</th>
 											<td>${suggest.suggestStatus}</td>
 										</tr>
 										<tr>

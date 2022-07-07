@@ -29,7 +29,7 @@ public class SuggestService {
 		if(suggest.getRoot()!=0) {
 			Suggest suggest1 = new Suggest();
 			suggest1.setSuggestNo(suggest.getRoot());
-			suggest1.setSuggestStatus("처리완료");
+			suggest1.setSuggestStatus("답변완료");
 			suggestMapper.updateSuggestStatus(suggest1);
 			
 		}

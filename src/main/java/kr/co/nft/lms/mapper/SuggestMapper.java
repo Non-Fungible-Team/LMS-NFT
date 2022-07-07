@@ -20,9 +20,9 @@ public interface SuggestMapper {
 	//전체 row
 	int selectSuggestListTotalCount(int memberLevel);
 
-	//처리전 상태 select
+	//답변전 상태 select
 	List<Suggest> selectRootNullSuggestListByPage(Map<String, Object> map);
-	//처리전 상태 row
+	//답변전 상태 row
 	int selectRootNullSuggestListTotalCount(int memberLevel);
 	
 	//상세보기
