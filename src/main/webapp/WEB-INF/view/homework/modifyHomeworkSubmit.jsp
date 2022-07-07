@@ -76,7 +76,7 @@
 					url:'/student/homework/removeHomeworkSubmitFileOne'
 				    ,type : 'POST'
 				    ,async : false
-				    
+				    ,data : {homeworkSubmitfileNo : }
 				});
 			} else {
 				return false;
@@ -84,7 +84,7 @@
 		}); */
 		
 		$('#btnRemove').click(function(){
-			var con = confirm("정말로 삭제하시겠습니까?");
+			var con = prompt("정말로 삭제하시겠습니까? \n \n 비밀번호를 입력하세요");
 			if(con){
 				formobj.attr("action", "/student/homework/removeHomeworkSubmitFileOne");
 				formObj.submit();

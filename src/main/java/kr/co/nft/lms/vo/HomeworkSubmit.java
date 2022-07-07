@@ -17,6 +17,8 @@ public class HomeworkSubmit {
 	private String homeworkSubmitFeedback;
 	private String homeworkSubmitCreateDate;
 	private String homeworkSubmitUpdateDate;
+	
+	// 테이블에 없는 Vo
 	private List<MultipartFile> homeworkSubmitFileList;
 
 }
