@@ -108,6 +108,7 @@
 	DELETE FROM attend 
 	WHERE member_id =#{memberId}
 	AND attend_date = #{attendDate}
+	AND lecture_no = #{lectureNo}
 	</delete>
 	
 	<!-- 6.출석 삽입 폼 -->

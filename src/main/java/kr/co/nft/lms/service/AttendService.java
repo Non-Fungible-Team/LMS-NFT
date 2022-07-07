@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.nft.lms.mapper.AttendMapper;
-import kr.co.nft.lms.mapper.LectureMapper;
 import kr.co.nft.lms.mapper.LectureScheduleMapper;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Attend;
@@ -22,8 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class AttendService {
 	//메퍼 변수 생성
-	@Autowired private AttendMapper attendMapper;
-	@Autowired private LectureMapper lectureMapper;
+	@Autowired private AttendMapper attendMapper;;
 	@Autowired private LectureScheduleMapper lectureScheduleMapper;
 	
 	//1.강의별 전체 학생의 출석 목록(운영자,강사)  + 전체 행수
