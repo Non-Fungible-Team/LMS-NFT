@@ -115,7 +115,7 @@
 	<select id="insertAttendForm" 
 			resultType="kr.co.nft.lms.vo.StudentLecture"
 			parameterType="java.util.Map">
-			SELECT
+	SELECT
 				s.member_id memberId
 				, s.student_name studentName
 				, sl.lecture_no lectureNo
@@ -134,5 +134,23 @@
 		WHERE a.lecture_no = #{lectureNo}
 		AND a.attend_date =#{attendDate}
 		)
+	</select>
+	
+	<!-- 7. 강의별 학생 출석률 -->
+	<select id="selectAttendStatusChart"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 
+				a.member_id memberId
+				, s.student_name studentName
+				, a.lecture_no lectureNo
+				, COUNT(a.attend_status) attendStatusTotalCnt
+				, COUNT(CASE WHEN a.attend_status = '출석' THEN 1 END) attendStatusCnt
+				, round(COUNT(CASE WHEN a.attend_status = '출석' THEN 1 END) / COUNT(a.attend_status), 2) * 100 attendStatusAverage
+		FROM attend a
+		INNER JOIN student AS s
+		ON a.member_id = s.member_id
+		WHERE a.lecture_no = #{ lectureNo }
+		GROUP BY a.member_id
 	</select>
 </mapper>

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class AttendService {
 	//메퍼 변수 생성
-	@Autowired private AttendMapper attendMapper;;
+	@Autowired private AttendMapper attendMapper;
 	@Autowired private LectureScheduleMapper lectureScheduleMapper;
 	
 	//1.강의별 전체 학생의 출석 목록(운영자,강사)  + 전체 행수
@@ -189,6 +189,17 @@ public class AttendService {
 			log.debug(A.W +"[AttendService.removeAttend.row] 삭제실패 : " +A.R);
 		}
 		return row;
+	}
+	
+	// 7. 강의별 학생 출석률
+	public List<Map<String, Object>> getAttendStatusChart(int lectureNo) {
+		
+		log.debug(A.A +"[AttendService.getAttendStatusChart] lectureNo : " + lectureNo + A.R);
+		
+		List<Map<String, Object>> returnList = attendMapper.selectAttendStatusChart(lectureNo);
+		log.debug(A.A +"[AttendService.getAttendStatusChart] returnList : " + returnList + A.R);
+		
+		return returnList;
 	}
 
 }

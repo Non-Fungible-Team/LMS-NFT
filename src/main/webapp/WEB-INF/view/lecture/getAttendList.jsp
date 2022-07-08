@@ -18,11 +18,49 @@
 <script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/pages/chartjs/chartjs.init.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chart.js/dist/Chart.min.js"></script>
 </head>
 <script>
 	$('document').ready(function() {
-		$("#navAside").load(
-			'${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
+		getGraph();
+		
+		function getGraph(){
+			var url = '${pageContext.request.contextPath}/rest/manager/lecture/getAttendStatusChart?lectureNo=' + ${lectureNo}; 
+			console.log(url);
+			
+			$.ajax({
+				type:'get'
+				, url: url
+				, success: function(data){ // 백엔드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
+					console.log(data);
+					var attendStatusCnt = data[1].attendStatusCnt;
+					var attendStatusAverage = data[1].attendStatusAverage;
+					var memberId = data[1].memberId;
+					console.log(attendStatusCnt);
+					console.log(attendStatusAverage);
+					console.log(memberId);
+					
+					new Chart("bar-chart-horizontal", {
+							type:"horizontalBar"
+							, data:{
+								labels:[memberId]
+								, datasets:[{
+								label:"출석"
+								, backgroundColor:["#22ca80","#e83e8c","#5f76e8","#fdc16a","#343a40",]
+								, data: [attendStatusAverage]}]
+								},
+								options:{legend:{display:0}
+								, title:{display:1,text:" 총 진행된 출석 날짜 " + attendStatusCnt +"일"}}
+					});		
+				}
+			});
+		}
 	});
 </script>
 <body>
@@ -35,6 +73,7 @@
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
 							<div class="card-body">
+								<canvas id="bar-chart-horizontal" height="150"> </canvas>
 								<h4 class="card-title">출석 현황</h4>
 								<div style="height: auto;">
 									<div>

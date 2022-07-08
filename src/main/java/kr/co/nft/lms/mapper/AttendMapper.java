@@ -29,4 +29,7 @@ public interface AttendMapper {
 	
 	//6.학생 출석 폼
 	List<StudentLecture> insertAttendForm(Map<String,Object> map);
+	
+	// 7. 강의별 학생 출석률
+	List<Map<String, Object>> selectAttendStatusChart(int lectureNo);
 }
