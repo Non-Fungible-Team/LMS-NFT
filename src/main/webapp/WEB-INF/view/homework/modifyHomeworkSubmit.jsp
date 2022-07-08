@@ -174,7 +174,7 @@
 													<td>${hf.homeworkSubmitFileSize}</td>
 													<td>
 														<a href="${pageContext.request.contextPath}/student/homework/removeHomeworkSubmitFileOne?homeworkSubmitFileName=${hf.homeworkSubmitFileName}&homeworkSubmitFileNo=${hf.homeworkSubmitFileNo}&homeworkSubmitNo=${hf.homeworkSubmitNo}">
-												    		<input type="button" class="btn btn-outline-danger" value="삭제">
+												    		<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded">삭제</button>
 												    	</a>
 													</td>
 												</tr>	
