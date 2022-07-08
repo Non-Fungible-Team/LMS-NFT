@@ -70,7 +70,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 					                   <td>${r.lectureRoomName}</td>
 					                   <td>${r.lectureRoomLocation}</td>
 					                   <td>${r.lectureRoomPeople}</td>
-					                   <td><a href="${pageContext.request.contextPath}/teacher/lecture/removeLectureRoom?lectureRoomName=${r.lectureRoomName}">삭제</a></td>
+					                   <td><a href="${pageContext.request.contextPath}/teacher/lecture/removeLectureRoom?lectureRoomName=${r.lectureRoomName}" class="btn btn-danger disabled">삭제</a></td>
 					                </tr>
 					            </c:forEach>
 					        </tbody>

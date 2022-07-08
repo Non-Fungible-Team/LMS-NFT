@@ -64,7 +64,7 @@
 													<c:if test="${sessionLoginMember.memberLevel > 5 }">
 														<td>
 															<a href="${pageContext.request.contextPath}/manager/lecture/modifyLectureScheduleForm?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-info btn-sm ">수정</a>
-															<a href="${pageContext.request.contextPath}/manager/lecture/removeLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-danger btn-sm">삭제</a>
+															<a href="${pageContext.request.contextPath}/manager/lecture/removeLectureSchedule?lectureScheduleDate=${l.lectureScheduleDate}&lectureNo=${l.lectureNo}" class="btn btn-danger btn-sm disabled">삭제</a>
 														</td>
 													</c:if>
 													</div>

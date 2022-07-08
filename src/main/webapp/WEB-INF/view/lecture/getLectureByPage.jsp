@@ -70,7 +70,7 @@
 													<td>
 														<div class="btn-group" role="group" aria-label="Basic example">
 															<a href="${pageContext.request.contextPath}/manager/lecture/modifyLecture?lectureNo=${l.lectureNo}" class="btn btn-info">수정</a> 
-															<a href="${pageContext.request.contextPath}/manager/lecture/removeLecture?lectureNo=${l.lectureNo}" class="btn btn-danger">삭제</a>
+															<a href="${pageContext.request.contextPath}/manager/lecture/removeLecture?lectureNo=${l.lectureNo}" class="btn btn-danger disabled">삭제</a>
 														</div>
 													</td>
 												</tr>

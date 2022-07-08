@@ -72,7 +72,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 					                   <td>${sl.studentLectureScore}</td>
 					                   <td>
 						                   <a href="${pageContext.request.contextPath}/teacher/lecture/modifyStudentLecture?lectureNo=${sl.lectureNo}&memberId=${sl.memberId}" class="btn btn-info">수정</a>
-						                   <a href="${pageContext.request.contextPath}/teacher/lecture/removeStudentLectureAction?lectureNo=${sl.lectureNo}&memberId=${sl.memberId}" class="btn btn-info">삭제</a>
+						                   <a href="${pageContext.request.contextPath}/teacher/lecture/removeStudentLectureAction?lectureNo=${sl.lectureNo}&memberId=${sl.memberId}" class="btn btn-info disabled">삭제</a>
 						               </td>
 					                </tr>
 					            </c:forEach>

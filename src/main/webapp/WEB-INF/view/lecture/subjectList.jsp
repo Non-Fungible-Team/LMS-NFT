@@ -74,7 +74,7 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 					                   <td>${s.subjectContent}</td>
 					                   <td>${s.subjectCreateDate}</td>
 					                   <td>${s.subjectUpdateDate}</td>
-					                   <td><a href="${pageContext.request.contextPath}/teacher/removeSubjectOne?subjectNo=${s.subjectNo}">삭제</a></td>
+					                   <td><a href="${pageContext.request.contextPath}/teacher/removeSubjectOne?subjectNo=${s.subjectNo}" class="btn btn-danger disabled">삭제</a></td>
 					                </tr>
 					            </c:forEach>
                             </tbody>
