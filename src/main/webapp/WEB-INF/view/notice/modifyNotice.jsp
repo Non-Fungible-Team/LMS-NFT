@@ -49,12 +49,31 @@
 				
 			});
 			
+			//파일 하나 삭제
+			$('.removeNoticeFileOne').click(function(){
+				var url = $(this).data('value');
+				var index = $(this).data('index');
+				console.log(index);
+				
+				$.ajax({
+					type:'get'
+					,url: url
+					,success: function(data){
+						//ajax값 가공
+						console.log(data);
+						console.log('#noticeFile' + index + '');
+						$('#noticeFile' + index + '').text('');
+					}
+				});
+			});
+			
 			//유효성검사
 			$('#uploadModifyNotice').click(function(){
 				$('#modifyNoticeTitleHelper').text('');
 				$('#modifyNoticeContentHelper').text('');
 				$('#modifyNoticePrivilegeHelper').text('');
-					
+				let flag = true;
+				
 				if($('#modifyNoticeTitle').val() == ''){
 					$('#modifyNoticeTitleHelper').text('제목을 입력하세요');
 					$('#modifyNoticeTitle').focus();
@@ -149,8 +168,8 @@
 													<th>파일사이즈</th>
 													<th>첨부파일 삭제</th>
 						            			</tr>
-						            			<c:forEach var ="f" items="${noticeFileList}">
-													<tr>
+						            			<c:forEach var ="f" items="${noticeFileList}" varStatus="status">
+													<tr id="noticeFile${status.index}">
 														<td>
 															<c:if test="${f.noticeFileType=='image/gif'||f.noticeFileType=='image/png'||f.noticeFileType == 'image/jpeg'}">
 																<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/noticeFile/${f.noticeFileName}">
@@ -160,9 +179,12 @@
 														<td>${f.noticeFileType}</td>
 														<td>${f.noticeFileSize}</td>
 														<td>
+														<button type="button" data-index="${status.index}" data-value="${pageContext.request.contextPath}/rest/teacher/notice/removeNoticeFile?noticeFileName=${f.noticeFileName}&noticeFileNo=${f.noticeFileNo}&noticeNo=${notice.noticeNo}" class="removeNoticeFileOne btn btn-outline-danger">file삭제</button>
+														<%-- 
 															<a href="${pageContext.request.contextPath}/manager/notice/removeNoticeFile?noticeFileName=${f.noticeFileName}&noticeFileNo=${f.noticeFileNo}&noticeNo=${notice.noticeNo}">
 												    			<input type="button" class="btn btn-outline-danger" value="file삭제">
 												    		</a>
+														 --%>
 														</td>
 													</tr>	
 										    	</c:forEach>

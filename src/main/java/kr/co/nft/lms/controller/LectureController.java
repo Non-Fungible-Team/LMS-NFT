@@ -3,6 +3,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -191,22 +193,22 @@ public class LectureController {
 	// 5 & 6.학생 강의 목록
 	@GetMapping("/teacher/lecture/getStudentLectureByPage")
 	public String getStudentLectureByPage(Model model
-										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
-										, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
-										, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+										,HttpSession session
+										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] lectureNo : " + lectureNo + A.R);
-		log.debug(A.A + "[LectureController.getStudentLectureByPage] currentPage : " + currentPage + A.R);
-		log.debug(A.A + "[LectureController.getStudentLectureByPage] rowPerPage : " + rowPerPage + A.R);
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		
-		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(lectureNo, currentPage, rowPerPage);
+		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(lectureNo);
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] returnMap : " + returnMap + A.R);
 		
 		model.addAttribute("lectureNo", lectureNo); 
 		model.addAttribute("studentLectureList", returnMap.get("studentLectureList")); 
-		model.addAttribute("currentPage", returnMap.get("currentPage")); 
-		model.addAttribute("rowPerPage", returnMap.get("rowPerPage")); 
+
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] model : " + model + A.R);
 		
@@ -218,7 +220,12 @@ public class LectureController {
 	public String getStudentLectureAllByPage(Model model
 											, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
 											, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
-											, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+											, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage
+											,HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		
 		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.getStudentLectureAllByPage] currentPage : " + currentPage + A.R);
@@ -240,7 +247,12 @@ public class LectureController {
 	// 5-2. 학생-강의 삽입 폼
 	@GetMapping("/teacher/lecture/addStudentLecture")
 	public String addStudentLecture(Model model
-								  , @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
+								  , @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+								  , HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		
 		log.debug(A.A + "[LectureController.addStudentLecture] lectureNo : " + lectureNo + A.R);		
 		
@@ -260,7 +272,12 @@ public class LectureController {
 		public String addStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
 									  		, @RequestParam(name = "memberId") String memberId
 								  			, @RequestParam(name = "studentLectureJob") String studentLectureJob
-								  			, @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate) {
+								  			, @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate
+								  			,HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 				
 		log.debug(A.A + "[LectureController.addStudentLectureAction] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.addStudentLectureAction] memberId : " + memberId + A.R);
@@ -283,14 +300,19 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 실패" + A.R);
 		}
 
-		return "redirect:/manager/lecture/getStudentLectureAllByPage";
+		return "redirect:/teacher/lecture/getStudentLectureByPage?lectureNo="+lectureNo;
 	}
 	
 	// 5-3. 학생-강의 목록 수정 폼
 	@GetMapping("/teacher/lecture/modifyStudentLecture")
 	public String modifyStudentLectureForm(Model model
 										 , @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
-	  									 , @RequestParam(name = "memberId") String memberId) {
+	  									 , @RequestParam(name = "memberId") String memberId
+	  									 , HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.modifyStudentLectureForm] memberId : " + memberId + A.R);
@@ -320,8 +342,12 @@ public class LectureController {
 											, @RequestParam(name = "studentLectureJob") String studentLectureJob
 											, @RequestParam(name = "studentLectureLegistrationDate") String studentLectureLegistrationDate
 											, @RequestParam(name = "studentLectureEndDate", defaultValue = "null") String studentLectureEndDate
-											, @RequestParam(name = "studentLectureScore", defaultValue = "0") int studentLectureScore) {
-		
+											, @RequestParam(name = "studentLectureScore", defaultValue = "0") int studentLectureScore
+											,HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		log.debug(A.A + "[LectureController.modifyStudentLectureAction] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.modifyStudentLectureAction] memberId : " + memberId + A.R);
 		log.debug(A.A + "[LectureController.modifyStudentLectureAction] studentLectureJob : " + studentLectureJob + A.R);
@@ -355,7 +381,12 @@ public class LectureController {
 	// 5-4. 학생 강의 삭제
 	@GetMapping("/teacher/lecture/removeStudentLectureAction")
 	public String removeStudentLectureAction(@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
-											, @RequestParam(name = "memberId") String memberId) {
+											, @RequestParam(name = "memberId") String memberId
+											,HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		
 		log.debug(A.A + "[LectureController.removeStudentLectureAction] lectureNo : " + lectureNo + A.R);
 		log.debug(A.A + "[LectureController.removeStudentLectureAction] memberId : " + memberId + A.R);
@@ -461,7 +492,12 @@ public class LectureController {
 	
 	@GetMapping("/teacher/lecture/lectureNameOne")
 	public String lectureNameOne(Model model
-								, @RequestParam(name = "lectureNo") int lectureNo) {
+								, @RequestParam(name = "lectureNo",defaultValue = "0") int lectureNo
+								,HttpSession session) {
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		if(lectureNo==0) {
+			lectureNo = (int)session.getAttribute("sessionLectureNo");
+		}
 		log.debug(A.W +"[LectureController.teacher.lecture/lectureNameOne.param] lectureNo : " + lectureNo +A.R);
 		Map<String,Object> ParamMap = new HashMap<>();
 		

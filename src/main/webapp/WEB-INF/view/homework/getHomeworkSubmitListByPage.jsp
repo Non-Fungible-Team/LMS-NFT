@@ -38,6 +38,9 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title">제출된 과제 목록</h4>
+									<a href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?lectureNo=${sessionLectureNo}">
+										<input type="button" class="btn btn-outline-success btn-rounded" style="float: right" value="목록">
+									</a>
 									<div class="mt-2" style="height: auto; width: auto;">
 									<div class="table-responsive">
 										<table id="zero_config" class="table table-striped table-bordered">

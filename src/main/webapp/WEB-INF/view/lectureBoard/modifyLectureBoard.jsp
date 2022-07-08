@@ -59,20 +59,20 @@
 					type:'get'
 					,url: url
 					,success: function(data){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
-					//ajax값 가공
-					console.log(data);
-					console.log('#lectureBoardFile'+index+'');
-					$('#lectureBoardFile'+index+'').text('');
+						//ajax값 가공
+						console.log(data);
+						console.log('#lectureBoardFile'+index+'');
+						$('#lectureBoardFile'+index+'').text('');
 					}
 				});
 			});
 			
 			//유효성검사
 			$('#uploadModifyLectureBoard').click(function(){
-					$('#modifyLectureBoardTitleHelper').text('');
-					$('#modifyLectureBoardContentHelper').text('');
-					$('#modifyLectureBoardPrivilegeHelper').text('');
-					let flag = true;
+				$('#modifyLectureBoardTitleHelper').text('');
+				$('#modifyLectureBoardContentHelper').text('');
+				$('#modifyLectureBoardPrivilegeHelper').text('');
+				let flag = true;
 					
 				if($('#modifyLectureBoardTitle').val() == ''){
 					$('#modifyLectureBoardTitleHelper').text('제목을 입력하세요');
@@ -169,10 +169,7 @@
 															<td>${f.lectureFileType}</td>
 															<td>${f.lectureFileSize}</td>
 															<td>
-															
-															
-															
-															<button type="button" data-index="${status.index}" data-value="${pageContext.request.contextPath}/rest/teacher/lectureBoard/removeLectureFile?lectureFileName=${f.lectureFileName}&lectureFileNo=${f.lectureFileNo}&lectureBoardNo=${lectureBoard.lectureBoardNo}" class="removeFileOne btn btn-outline-danger">file삭제</button>
+															<button type="button" data-index="${status.index}" data-value="${pageContext.request.contextPath}/rest/teacher/lectureBoard/removeLectureFile?lectureFileName=${f.lectureFileName}&lectureFileNo=${f.lectureFileNo}&lectureBoardNo=${lectureBoard.lectureBoardNo}" class="removeLectureBoardFileOne btn btn-outline-danger">file삭제</button>
 															<!-- 
 																<a href="${pageContext.request.contextPath}/teacher/lectureBoard/removeLectureFile?lectureFileName=${f.lectureFileName}&lectureFileNo=${f.lectureFileNo}&lectureBoardNo=${lectureBoard.lectureBoardNo}">
 													    			<input type="button" class="btn btn-outline-danger" value="file삭제">

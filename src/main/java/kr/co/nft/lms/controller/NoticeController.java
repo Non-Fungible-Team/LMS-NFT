@@ -178,7 +178,7 @@ public class NoticeController {
 		log.debug(A.S + "[NoticeController.removeNotice.param] 삭제(블라인드처리)성공"+ A.R);
 		return "redirect:/all/notice/getNoticeListByPage";
 	}
-
+/*
 	//NoticeFile 삭제 액션
 	@GetMapping("/manager/notice/removeNoticeFile")
 	public String removeNoticeFile(HttpServletRequest request, String noticeFileName,int noticeFileNo, int noticeNo) {
@@ -198,7 +198,6 @@ public class NoticeController {
 		//삭제성공 했을 경우
 		log.debug(A.S + "[NoticeController.removeNoticeFile.row] noticeFile삭제 성공"+ A.R);
 		return "redirect:/manager/notice/modifyNotice?noticeNo=" + noticeNo;
-		
-		
 	}
+*/	
 }
