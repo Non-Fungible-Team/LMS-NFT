@@ -59,6 +59,7 @@ public class SuggestService {
 		List<Suggest> suggestList = suggestMapper.selectSuggestListByPage(suggestRowMap);
 		List<Suggest> rootNullSuggestList = suggestMapper.selectRootNullSuggestListByPage(suggestRowMap);
 		log.debug(A.S + "[SuggestService.getSuggestListByPage] suggestList : "+ suggestList + A.R); 
+		log.debug(A.S + "[SuggestService.getSuggestListByPage] rootNullSuggestList : "+ rootNullSuggestList + A.R); 
 		
 		//2) 매퍼에서 반환된 값을 가공, controller에 반환
 		int totalCount = suggestMapper.selectSuggestListTotalCount(memberLevel);
@@ -102,7 +103,12 @@ public class SuggestService {
 	public int removeSuggest(int suggestNo) {
 		log.debug(A.S + "[SuggestService.removeSuggest.param] suggestNo : "+ suggestNo + A.R);
 		int row = suggestMapper.deleteSuggest(suggestNo);
-		log.debug(A.S + "[SuggestService.removeSuggest] row : "+ row + A.R);
+		List<Map<String,Object>> selectSuggestRootList = suggestMapper.selectSuggestByRoot(suggestNo);
+		log.debug(A.S + "[SuggestService.removeSuggest] selectSuggestRootList : "+ selectSuggestRootList + A.R);
+		int row1 = 0;
+		for(Map<String, Object> map :selectSuggestRootList) {
+			row1 = row1 + suggestMapper.deleteSuggest((int)map.get("boardNo"));
+		}
 		return row;
 	}
 }

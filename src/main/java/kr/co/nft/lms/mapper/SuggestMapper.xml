@@ -20,7 +20,7 @@
 			,#{suggestContent}
 			,'건의'
 			,#{memberId}
-			,#{suggestPrivilege}
+			,'4'
 			,'N'
 			,NOW()
 			,NOW()
@@ -88,6 +88,7 @@
 		INNER JOIN board b
 		ON s.board_no = b.board_no
 		WHERE s.suggest_status ='답변전'
+		AND b.board_blind = 'N'
 		ORDER BY b.board_create_date ASC
 		LIMIT #{rootNullBeginRow}, #{rootNullRowPerPage}
 	</select>
@@ -167,5 +168,12 @@
 		WHERE board_no = #{suggestNo}
 	</update>
 	
-	
+	<!-- 건의글이 삭제(블라인드)되면 답글도 함께 삭제할 root번호 select -->	
+	<select id="selectSuggestByRoot"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT board_no boardNo
+		FROM suggest 
+		WHERE root = #{root}
+	</select>
 </mapper>

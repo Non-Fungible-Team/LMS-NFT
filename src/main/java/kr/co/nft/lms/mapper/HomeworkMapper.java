@@ -29,7 +29,7 @@ public interface HomeworkMapper {
 	int deleteHomework(int homeworkNo);
 	
 	// 과제 총 갯수
-	int selectTotalCount(int lectureNo);
+	int selectTotalCount(int lectureNo, String searchWord);
 	
 // 학생 과제 제출
 	// 학생 과제 입력
@@ -61,5 +61,6 @@ public interface HomeworkMapper {
 	// File 삭제
 	int deleteHomeworkSubmitFileOne(int homeworkSubmitFileNo);
 	int deleteHomeworkSubmitFileList(int homeworkSubmitFileNo);
+
 	
 }
