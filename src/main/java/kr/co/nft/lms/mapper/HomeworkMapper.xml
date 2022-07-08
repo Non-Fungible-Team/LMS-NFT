@@ -139,6 +139,8 @@
 <!-- 			,hsf.homework_submit_file_name homeworkSubmitFileName -->
 			,hs.homework_submit_create_date homeworkSubmitCreateDate
 			,hs.homework_submit_update_date homeworkSubmitUpdateDate
+			,hs.homework_submit_score homeworkSubmitScore
+			,hs.homework_submit_feedback homeworkSubmitFeedback
 		FROM homework_submit hs
 		RIGHT JOIN homework h
 		ON hs.homework_no = h.homework_no		

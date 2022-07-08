@@ -169,10 +169,10 @@ $('document').ready(function() {
 								<form action = "${pageContext.request.contextPath}/student/homework/removeHomeworkSubmit" method="post">
 									<input type="hidden" name="homeworkSubmitNo" value="${homeworkSubmitOne.homeworkSubmitNo}" readonly="readonly">
 									<c:if test="${sessionLoginMember.memberLevel==4 && sessionLoginMember.memberId == homeworkSubmitOne.memberId }">
-										<button type="button" class="btn btn-outline-success btn-rounded float-left" onclick="location.href='${pageContext.request.contextPath}/student/homework/modifyHomeworkSubmit?homeworkSubmitNo='+${homeworkSubmitOne.homeworkSubmitNo}"><i class="fas fa-check">과제 수정</i></button>
-										<button type="submit" id="btnRemove" class="btn btn-outline-success btn-rounded" onclick="return confirm('삭제하면 복구할 수 없습니다. \n정말 삭제 하시겠습니까?');"><i class="fas fa-check">과제 삭제</i></button>
+										<button type="button" class="btn btn-outline-success btn-rounded float-left" onclick="location.href='${pageContext.request.contextPath}/student/homework/modifyHomeworkSubmit?homeworkSubmitNo='+${homeworkSubmitOne.homeworkSubmitNo}">과제 수정</button>
+										<button type="submit" id="btnRemove" class="btn btn-outline-success btn-rounded" onclick="return confirm('삭제하면 복구할 수 없습니다. \n정말 삭제 하시겠습니까?');">삭제</button>
 									</c:if>
-									<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check">과제 목록</i></button>
+									<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?lectureNo='+${sessionLectureNo}">목록</button>
 								</form>
 								 
 							</div>

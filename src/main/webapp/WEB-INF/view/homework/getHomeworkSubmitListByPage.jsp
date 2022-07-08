@@ -43,13 +43,14 @@
 										<table id="zero_config" class="table table-striped table-bordered">
 											<thead>
 												<tr>
-													<th>과제번호</th>
-													<th>제출번호</th>
-													<th>강의번호</th>
-													<th>학생ID</th>
-													<th>과제제목</th>
-													<th>생성일</th>
-													<th>수정일</th>
+													<th style="text-align:center">과제번호</th>
+													<th style="text-align:center">제출번호</th>
+													<th style="text-align:center">강의번호</th>
+													<th style="text-align:center">학생ID</th>
+													<th style="text-align:center">과제제목</th>
+													<th style="text-align:center">생성일</th>
+													<th style="text-align:center">수정일</th>
+													<th style="text-align:center">확인</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -62,6 +63,12 @@
 														<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${hs.homeworkSubmitNo}">${hs.homeworkSubmitTitle }</a></td>
 														<td>${hs.homeworkSubmitCreateDate }</td>
 														<td>${hs.homeworkSubmitUpdateDate }</td>
+														<c:if test="${not empty hs.homeworkSubmitScore && not empty hs.homeworkSubmitFeedback }">
+															<td><i class="fas fa-check">완료</i></td>
+														</c:if>
+														<c:if test="${empty hs.homeworkSubmitScore && empty hs.homeworkSubmitFeedback }">
+															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${hs.homeworkSubmitNo}">채점</a></td>
+														</c:if>
 													</tr>
 												</c:forEach>
 											</tbody>

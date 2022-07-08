@@ -122,9 +122,9 @@
 											<span id ="addFileUploadHelper" class="helper"></span>
 										</div>
 										<!-- 파일업로드 input 추가될 영역 -->
-										
-										<button type="button" class="btn btn-outline-success btn-rounded" id="addHomeworkSubmit"><i class="fas fa-check"></i>과제 등록</button>
-										<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'"><i class="fas fa-check"></i>과제 목록</button>
+										<hr>
+										<button type="button" class="btn btn-outline-success btn-rounded" id="addHomeworkSubmit"><i class="fas fa-check"></i>제출</button>
+										<button type="button" class="btn btn-outline-success btn-rounded float-right" onclick="location.href='${pageContext.request.contextPath}/all/homework/getHomeworkListByPage'">목록</button>
 									</form>
 									</div>
 								</div>

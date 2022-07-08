@@ -48,15 +48,15 @@
 												<thead>
 													<tr>
 	<!-- 													<th>순번</th> -->
-														<th>강의번호</th>
-														<th>과제</th>
-														<th>작성자</th>
-														<th>제출 기간</th>
+														<th style="text-align:center">강의번호</th>
+														<th style="text-align:center">과제</th>
+														<th style="text-align:center">작성자</th>
+														<th style="text-align:center">제출 기간</th>
 														<c:if test="${sessionLoginMember.memberLevel == 5}">
-														<th>제출과제 목록보기</th>
+														<th style="text-align:center">제출과제 목록</th>
 														</c:if>
 														<c:if test="${sessionLoginMember.memberLevel == 4}">
-														<th>과제 제출</th>
+														<th style="text-align:center">과제 제출</th>
 														</c:if>
 													
 													</tr>
@@ -67,11 +67,11 @@
 														<tr>
 	<%-- 														<td>${h.homeworkNo}</td> --%>
 															<td>${h.lectureNo}</td>
-															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
+															<td style="text-overflow: ellipsis; white-space: nowrap; max-width:600px;"><a href="${pageContext.request.contextPath}/all/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
 															<td>${h.teacherId }</td>
 															<td>${h.homeworkStartDate} ~ ${h.homeworkEndDate }</td>
 															<c:if test="${sessionLoginMember.memberLevel == 5}">
-																<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
+																<td style="text-align:center"><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
 															</c:if>
 															<c:if test="${sessionLoginMember.memberLevel == 4 && empty h.homeworkSubmitNo}">
 	<%-- 														<c:if test="${sessionLoginMember.memberLevel == 4 && empty h.homeworkSubmitNo && empty h.studentId}"> --%>
@@ -79,7 +79,7 @@
 															</c:if> 
 															<c:if test="${sessionLoginMember.memberLevel == 4 && sessionLoginMember.memberId == h.studentId && not empty h.homeworkSubmitNo }">
 	<%-- 														<c:if test="${sessionLoginMember.memberLevel == 4 && sessionLoginMember.memberId == h.studentId && not empty h.homeworkSubmitNo }"> --%>
-																<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}"><u>과제보기</u></a></td>														
+																<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${h.homeworkSubmitNo}"><span style="font-weight: bold; font-color:#000080;"><i class="fas fa-check">제출완료</i></span></a></td>														
 															</c:if> 
 														</tr>
 															
@@ -93,7 +93,7 @@
 						
 										<form method="get" action="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage">
 											<div style="border:0 padding-top:2; text-align:center;" >
-									            	<input type="text" name="searchWord" style="width:300px; height:32px; font-size:15px; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgp(233,233,233);  text-align:center;" placeholder="Search"/>
+									            	<input type="text" maxlength="10" name="searchWord" style="width:300px; height:32px; font-size:15px; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgp(233,233,233);  text-align:center;" placeholder="Search"/>
 									            	<button type="submit" class="btn btn-outline-warning btn-rounded">검색</button>
 									        </div>
 												<c:if test="${currentPage>1}">

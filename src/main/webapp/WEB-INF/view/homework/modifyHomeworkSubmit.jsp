@@ -66,13 +66,11 @@
 			}
 		});
 		
-		
-		
 		$('#btnRemove').click(function(){
 			var result = confirm("삭제 하시겠습니까?");
 			
 			if (result) {
-			
+				return true;
 			} else {
 				return false;
 			}
