@@ -107,7 +107,7 @@
 			, teacher_birth teacherBirth
 			, teacher_gender teacherGender
 			, teacher_email teacherEmail
-			, address_detail addressDetail
+			, addr_detail addrDetail
 		FROM teacher	
 	</select>
 	
