@@ -37,5 +37,6 @@ public interface SuggestMapper {
 	
 	//delete (블라인드 처리)
 	int deleteSuggest(int suggestNo);
+	List<Map<String,Object>> selectSuggestByRoot(int suggestNo);
 	
 }
