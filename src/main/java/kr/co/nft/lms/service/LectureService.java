@@ -391,4 +391,19 @@ public class LectureService {
 		returnMap.put("lectureRoomList", lectureRoomList);
 		return returnMap;
 	}
+	
+	//차트 - 강사별 강의시간 통계
+	public Map<String,Object> getTeacherLectureChart(){
+		log.debug(A.W +"[LectureService.getTeacherLectureChart] 차트 통계 " +A.R);//디버깅코드
+
+		List<Map<String, Object>> teacherLectureChart = lectureMapper.selectTeacherLectureChart();
+		log.debug(A.W +"[LectureService.getTeacherLectureChart.teacherLectureChart]teacherLectureChart "+teacherLectureChart +A.R);//디버깅코드
+		
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("teacherLectureChart", teacherLectureChart);
+		log.debug(A.W +"[LectureService.getTeacherLectureChart.returnMap] returnMap "+returnMap +A.R);//디버깅코드
+		
+		return returnMap;
+		
+	}
 }

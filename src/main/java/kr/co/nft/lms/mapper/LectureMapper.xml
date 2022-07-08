@@ -375,4 +375,24 @@
 		FROM lecture;
 	</select>
 	
+	<!-- 차트-강사별 수업시간 통계 -->
+	<select id="selectTeacherLectureChart" 
+			resultType="java.util.Map">
+	SELECT 
+		memberId
+		, SUM(totaltime) totalTime
+		, COUNT(t.totaltime) cnt
+	FROM 
+		(SELECT 
+			tl.lecture_no lectureNo
+			, tl.member_id memberId
+			,ls.lecture_schedule_start_date
+			, ls.lecture_schedule_end_date
+			,TIMESTAMPDIFF(HOUR,ls.lecture_schedule_start_date,ls.lecture_schedule_end_date) totaltime
+		FROM teacher_lecture tl
+		INNER JOIN lecture_schedule ls 
+		ON tl.lecture_no = ls.lecture_no
+		) t
+	GROUP BY memberId
+	</select>
 </mapper>

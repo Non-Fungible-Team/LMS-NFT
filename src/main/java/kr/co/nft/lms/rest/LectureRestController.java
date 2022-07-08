@@ -27,5 +27,15 @@ public class LectureRestController {
 	return returnMap;
 	}
 	
+	//강사별 수업시간 통계차트
+	@GetMapping("/rest/manager/getTeacherLectureChart")
+	public Map<String,Object> getTeacherLectureChart(){
+		log.debug(A.W +"[LectureRestController.getTeacherLectureChart] 차트실행  " +A.R);
+		
+		Map<String,Object> returnMap = lectureService.getTeacherLectureChart();
+		log.debug(A.W +"[LectureRestController.getTeacherLectureChart.returnMap] returnMap "+returnMap +A.R);
+		
+		return returnMap;	
+	}
 
 }

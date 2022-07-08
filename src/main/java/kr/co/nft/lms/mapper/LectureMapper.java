@@ -92,4 +92,7 @@ public interface LectureMapper {
 	
 	// 강의 이름과 강의 번호만 select
 	List<Lecture> selectLectureNoNameList();
+	
+	//차트 - 강사별 수업시간 통계
+	List<Map<String,Object>> selectTeacherLectureChart();
 }
