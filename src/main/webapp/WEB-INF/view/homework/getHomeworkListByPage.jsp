@@ -38,6 +38,9 @@
 						<div class="card">
 							<div class="card-body">
 								<h4 class="card-title">과제 목록</h4>
+								<a href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?lectureNo=${sessionLectureNo}">
+									<input type="button" class="btn btn-outline-success btn-rounded" style="float: right" value="목록">
+								</a>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 									<div class="table-responsive">
@@ -87,6 +90,22 @@
 												</tbody>
 											</table>
 										</div>
+										<!-- 검색 -->
+									    <div>
+									        <form action="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage" method="get">
+									            <div style="border:0 padding-top:2; text-align:center;" >
+									            	<input type="text" name="searchWord" style="width:300px; height:32px; font-size:15px; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgp(233,233,233);  text-align:center;" placeholder="Search"/>
+									            	<button type="submit" class="btn btn-outline-warning btn-rounded">검색</button></div>
+											    <div>
+											        <c:if test="${currentPage>1}">
+											            <a href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a>
+											        </c:if>
+											        <c:if test="${currentPage<lastPage}">
+											            <a href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a>
+											        </c:if>
+											    </div>
+									        </form>
+									    </div>
 										<form method="get" action="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage">
 												<c:if test="${currentPage>1}">
 													<button type="submit" class="btn btn-outline-warning btn-rounded" name="currentPage" value="${currentPage-1}">이전</button>

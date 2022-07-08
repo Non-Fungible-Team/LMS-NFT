@@ -34,6 +34,9 @@
 			<if test="teacherId != null">
 				AND h.member_Id = #{teacherId}
 			</if>
+			<if test="searchWord != null">
+				AND h.homework_title like concat('%', #{searchWord}, '%')
+			</if>		
 		</where>
 		GROUP BY h.homework_no
 		ORDER BY h.homework_create_date DESC 
@@ -110,7 +113,14 @@
 			resultType="int">
 		SELECT COUNT(*) 
 		FROM homework
-		WHERE lecture_no = #{lectureNo}
+		<where>
+			<if test="lectureNo != 0">
+				AND lecture_No = #{lectureNo}
+			</if>
+			<if test="searchWord != null">
+				AND homework_title like concat('%', #{searchWord}, '%')
+			</if>
+		</where>
 	
 	</select>
 	
@@ -300,4 +310,5 @@
 		WHERE 
 			homework_submit_no = #{homeworkSubmitNo}
 	</update>
+
 </mapper>

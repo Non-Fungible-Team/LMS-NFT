@@ -26,7 +26,8 @@ public class HomeworkService {
 	@Autowired private HomeworkMapper homeworkMapper;
 	
 	// 과제 리스트
-	public Map<String, Object> getHomeworkListByPage(int currentPage, int rowPerPage,int lectureNo, Member loginMember){
+	public Map<String, Object> getHomeworkListByPage(int currentPage, int rowPerPage,int lectureNo
+												, Member loginMember, String searchWord){
 		log.debug(A.Q +"HomeworkService.getHomeworkListByPage.param.currentPage" + currentPage +A.R);
 		log.debug(A.Q +"HomeworkService.getHomeworkListByPage.param.rowPerPage" + rowPerPage +A.R);
 		
@@ -35,6 +36,7 @@ public class HomeworkService {
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("lectureNo", lectureNo);
+		map.put("searchWord", searchWord);
 		
 		if(loginMember.getMemberLevel()==4) { // level 4인 학생의 경우
 			map.put("studentId", loginMember.getMemberId());
@@ -46,9 +48,8 @@ public class HomeworkService {
 		List<Map<String,Object>> homeworkList = homeworkMapper.selectHomeworkListByPage(map);
 		log.debug(A.Q + "HomeworkService.getHomeworkListByPage.homeworkList :" + homeworkList + A.R);
 		
-		int totalCount = homeworkMapper.selectTotalCount(lectureNo);
+		int totalCount = homeworkMapper.selectTotalCount(lectureNo, (String)map.get("searchWord"));
 		int lastPage = (int)Math.ceil((double)totalCount / (double)rowPerPage);
-		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("homeworkList", homeworkList);
 		returnMap.put("lastPage", lastPage);

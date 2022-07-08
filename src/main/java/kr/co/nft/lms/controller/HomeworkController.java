@@ -37,7 +37,8 @@ public class HomeworkController {
 	public String getHomeworkListByPage(Model model
 			,HttpSession session
 			,@RequestParam(name="currentPage", defaultValue = "1") int currentPage
-			,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage) {
+			,@RequestParam(name="rowPerPage", defaultValue = "10") int rowPerPage
+			,@RequestParam(value="searchWord", required = false) String searchWord) {
 		
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.currentPage :  " + currentPage + A.R);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage.param.rowPerPage :  " + rowPerPage + A.R);
@@ -45,13 +46,14 @@ public class HomeworkController {
 		//세션에 정보 요청
 		int lectureNo = (int)session.getAttribute("sessionLectureNo");
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		Map<String, Object> map = homeworkService.getHomeworkListByPage(currentPage, rowPerPage, lectureNo, loginMember);
+		Map<String, Object> map = homeworkService.getHomeworkListByPage(currentPage, rowPerPage, lectureNo, loginMember, searchWord);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage map:  "+ map + A.R);
 		
 		
 		model.addAttribute("homeworkList", map.get("homeworkList"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("searchWord", searchWord);
 		log.debug(A.Q + "HomeworkController.getHomeworkListByPage model :" + model + A.R);
 		
 		return "/homework/getHomeworkListByPage";
