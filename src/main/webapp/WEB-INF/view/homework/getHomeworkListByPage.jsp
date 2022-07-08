@@ -90,23 +90,12 @@
 												</tbody>
 											</table>
 										</div>
-										<!-- 검색 -->
-									    <div>
-									        <form action="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage" method="get">
-									            <div style="border:0 padding-top:2; text-align:center;" >
-									            	<input type="text" name="searchWord" style="width:300px; height:32px; font-size:15px; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgp(233,233,233);  text-align:center;" placeholder="Search"/>
-									            	<button type="submit" class="btn btn-outline-warning btn-rounded">검색</button></div>
-											    <div>
-											        <c:if test="${currentPage>1}">
-											            <a href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a>
-											        </c:if>
-											        <c:if test="${currentPage<lastPage}">
-											            <a href="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a>
-											        </c:if>
-											    </div>
-									        </form>
-									    </div>
+						
 										<form method="get" action="${pageContext.request.contextPath}/all/homework/getHomeworkListByPage">
+											<div style="border:0 padding-top:2; text-align:center;" >
+									            	<input type="text" name="searchWord" style="width:300px; height:32px; font-size:15px; border-radius: 15px; outline: none; padding-left: 10px; background-color: rgp(233,233,233);  text-align:center;" placeholder="Search"/>
+									            	<button type="submit" class="btn btn-outline-warning btn-rounded">검색</button>
+									        </div>
 												<c:if test="${currentPage>1}">
 													<button type="submit" class="btn btn-outline-warning btn-rounded" name="currentPage" value="${currentPage-1}">이전</button>
 												</c:if>
@@ -125,7 +114,7 @@
 												<c:if test="${currentPage<lastPage}">
 													<button type="submit" class="btn btn-outline-success btn-rounded" name="currentPage" value="${currentPage+1}">다음</button>
 												</c:if>
-											</form>
+										</form>
 										<hr>
 										<c:if test="${sessionLoginMember.memberLevel == 5 }">
 										<div>
