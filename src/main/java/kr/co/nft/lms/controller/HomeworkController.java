@@ -1,6 +1,5 @@
 package kr.co.nft.lms.controller;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,17 +8,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.service.HomeworkService;
 import kr.co.nft.lms.util.A;
 import kr.co.nft.lms.vo.Homework;
 import kr.co.nft.lms.vo.HomeworkSubmit;
+import kr.co.nft.lms.vo.HomeworkSubmitFile;
 import kr.co.nft.lms.vo.Member;
 import lombok.extern.slf4j.Slf4j;
 
@@ -241,7 +245,7 @@ public class HomeworkController {
 		
 //		URL pathUrl = this.getClass().getResource("/static/");
 //		String path = pathUrl.getPath()+"/uploadFile/homeworkFile/";
-		String path = request.getServletContext().getRealPath("/uploadFile/File/");
+		String path = request.getServletContext().getRealPath("/uploadFile/homeworkFile/");
 		
 		// homeworkService.addHomeworkSubmit(homeworkSubmit, homework, path);
 		
@@ -277,6 +281,21 @@ public class HomeworkController {
 		return "redirect:/all/homework/getHomeworkListByPage";
 	}
 	
+	// 학생 과제 파일 삭제 액션
+	@GetMapping("/student/homework/removeHomeworkSubmitFileOne")
+	public String removeHomeworkSubmitFileOne(HttpServletRequest request, String homeworkSubmitFileName,int homeworkSubmitFileNo, int homeworkSubmitNo) {
+		String path = request.getServletContext().getRealPath("/uploadFile/homeworkFile/");
+		int row = homeworkService.removeHomeworkSubmitFileOne(homeworkSubmitNo, homeworkSubmitFileName, homeworkSubmitFileNo, path);
+		if(row ==1) {
+			log.debug(A.Q+"파일 삭제 성공"+A.R);
+		} else {
+			log.debug(A.Q+"파일 삭제 실패" + A.R);
+		}
+		
+		return "redirect:/student/homework/modifyHomeworkSubmit?homeworkSubmitNo=" + homeworkSubmitNo;
+	}
+	
+
 	
 	
 	

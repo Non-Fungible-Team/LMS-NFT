@@ -229,12 +229,29 @@ public class HomeworkService {
 		
 		return homeworkMapper.deleteHomeworkSubmit(homeworkSubmitNo);
 	}
-	
-	public int removeHomeworkSubmitFileOne(int homeworkSubmitFileNo) {
+	// file 삭제
+	public int removeHomeworkSubmitFileOne(int homeworkSubmitNo, String homeworkSubmitFileName ,int homeworkSubmitFileNo, String path) {
 		log.debug(A.Q+"HomeworkService.removeHomeworkSubmitFileOne.homeworkSubmitFileNo :" + homeworkSubmitFileNo+A.R);
 		
-		return homeworkMapper.deleteHomeworkSubmitFileOne(homeworkSubmitFileNo);
+		int row = -1;
+		try {
+			File file = new File(path + homeworkSubmitFileName);
+			// 만약 파일이 존재한다면
+			if(file.exists()) {
+				//삭제한다
+				file.delete();
+			}
+			//경로+이름으로 파일 저장
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 새로운 예외 발생시켜야지만 @Transactional 작동을 위해
+			throw new RuntimeException(); // RuntimeException은 예외처리를 하지 않아도 컴파일된다
+		}
+		//2) DB 삭제 (파일삭제)
+		row = homeworkMapper.deleteHomeworkSubmitFileOne(homeworkSubmitFileNo);		
+		return row;
 	}
+	
 	
 	// 과제 점수 입력
 	public int modifyHomeworkSubmitScore(HomeworkSubmit homeworkSubmit) {

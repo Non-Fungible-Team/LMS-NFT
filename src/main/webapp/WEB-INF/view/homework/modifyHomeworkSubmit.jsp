@@ -68,28 +68,17 @@
 		
 		
 		
-		/* $('#btnRemove').click(function(){
+		$('#btnRemove').click(function(){
 			var result = confirm("삭제 하시겠습니까?");
 			
 			if (result) {
-				$.ajax({
-					url:'/student/homework/removeHomeworkSubmitFileOne'
-				    ,type : 'POST'
-				    ,async : false
-				    ,data : {homeworkSubmitfileNo : }
-				});
+			
 			} else {
 				return false;
 			}
-		}); */
+		}); 
 		
-		$('#btnRemove').click(function(){
-			var con = prompt("정말로 삭제하시겠습니까? \n \n 비밀번호를 입력하세요");
-			if(con){
-				formobj.attr("action", "/student/homework/removeHomeworkSubmitFileOne");
-				formObj.submit();
-			}
-		});
+		
 		
 		
 	});
@@ -184,9 +173,9 @@
 													<td>${hf.homeworkSubmitFileType}</td>
 													<td>${hf.homeworkSubmitFileSize}</td>
 													<td>
-														<input type="hidden" name="homeworkSubmitFileNo" id="homeworkSubmitFileNo" value="${hf.homeworkSubmitFileNo}">														
-														<button type="button" id="btnRemove" class="btn btn-outline-success btn-rounded" >파일 삭제</button>
-															
+														<a href="${pageContext.request.contextPath}/student/homework/removeHomeworkSubmitFileOne?homeworkSubmitFileName=${hf.homeworkSubmitFileName}&homeworkSubmitFileNo=${hf.homeworkSubmitFileNo}&homeworkSubmitNo=${hf.homeworkSubmitNo}">
+												    		<input type="button" class="btn btn-outline-danger" value="삭제">
+												    	</a>
 													</td>
 												</tr>	
 								    		</c:forEach>
