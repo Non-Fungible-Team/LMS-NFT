@@ -51,7 +51,7 @@
 				<ul class="navbar-nav float-left mr-auto ml-3 pl-1"><!-- nav 왼쪽 여백용 -->
 	            <!-- 강의를 선택 안했을 시 표시 -->
 		            <c:if test="${empty sessionLecture}">
-		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">수강목록에서 강의를 선택하세요!</h3>
+		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">기능확인을 원하시면 수강목록에서 java 기초부터 웹개발 마스터(1)를 선택해주세요.</h3>
 		            </c:if>
 		            <c:if test="${not empty sessionLecture }">
 		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">${sessionLecture.lectureName}</h3>
@@ -65,7 +65,6 @@
 		                </div>
 		            </c:if>
 				</ul>
-				
 				<ul class="navbar-nav float-right">
 					<!-- 프로필 -->
 					<li class="nav-item dropdown">
@@ -77,98 +76,39 @@
 							<i data-feather="chevron-down" class="svg-icon"></i>
 						</span>
 						</a>
-						
 						<div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
 							<c:if test="${sessionLoginMember.memberLevel==4}">
+								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/getStudentOne?memberId=${sessionLoginMember.memberId}">
-							
-								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> 
-							
-								<a class="dropdown-item" href="javascript:void(0)">
-								<i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> 
-								
-								<a class="dropdown-item" href="javascript:void(0)">
-								<i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
-								
-							
+								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> 개인 정보 확인</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그 아웃</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
-								<div class="dropdown-divider"></div>
-								<div class="pl-4 p-3">
-									<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
-								</div>
 							</c:if>	
 							
 							<c:if test="${sessionLoginMember.memberLevel==5}">
 								<a class="dropdown-item" href="${pageContext.request.contextPath}/teacher/getTeacherOne?memberId=${sessionLoginMember.memberId}">
-							
-								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> 
-							
-								<a class="dropdown-item" href="javascript:void(0)">
-								<i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> 
-								
-								<a class="dropdown-item" href="javascript:void(0)">
-								<i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
-							
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
+								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> 개인 정보 확인</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그 아웃</a>
 								<div class="dropdown-divider"></div>
-								<div class="pl-4 p-3">
-									<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
-								</div>
 							</c:if>
 							
 							<c:if test="${sessionLoginMember.memberLevel==6}">
+								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="${pageContext.request.contextPath}/manager/getManagerOne?memberId=${sessionLoginMember.memberId}">
-							
-								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> 
-							
-								<a class="dropdown-item" href="javascript:void(0)">
-								<i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> 
-								
-								<a class="dropdown-item" href="javascript:void(0)">
-								<i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
-							
+								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> 개인 정보 확인</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그 아웃</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
-								<div class="dropdown-divider"></div>
-								<div class="pl-4 p-3">
-									<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
 								</div>
 							</c:if>
-					<!--  
-						<div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/all/getStudentOne?memberId=${sessionLoginMember.memberId}"><i data-feather="user" class="svg-icon mr-2 ml-1"></i> My Page</a> <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card" class="svg-icon mr-2 ml-1"></i> My Balance</a> <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail" class="svg-icon mr-2 ml-1"></i> Inbox</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings" class="svg-icon mr-2 ml-1"></i> Account Setting</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> Logout</a>
-							<div class="dropdown-divider"></div>
-							<div class="pl-4 p-3">
-								<a href="javascript:void(0)" class="btn btn-sm btn-info">View Profile</a>
-							</div>
-						</div>
-					-->
 					</li>
-					<!-- ============================================================== -->
-					<!-- User profile and search -->
-					<!-- ============================================================== -->
 				</ul>
 			</div>
 		</nav>
 	</header>
-	<!-- ============================================================== -->
-	<!-- End Topbar header -->
-	<!-- ============================================================== -->
-	<!-- ============================================================== -->
-	<!-- Left Sidebar - style you can find in sidebar.scss  -->
-	<!-- ============================================================== -->
 	<aside class="left-sidebar" data-sidebarbg="skin6">
 		<!-- Sidebar scroll-->
 		<div class="scroll-sidebar" data-sidebarbg="skin6">
@@ -214,73 +154,33 @@
 					<!-- 강의에 대한 세부 메뉴 끝 -->
 					
 					<!-- 운영자만의 관리자 메뉴 추가 -->
-					<c:if test="${sessionLoginMember.memberLevel > 5 }">
+					<c:if test="${sessionLoginMember.memberLevel >= 6 }">
 						<li class="list-divider"></li>
-						<li class="nav-small-cap"><span class="hide-menu">====관리자 기능====</span></li>
 						<li class="list-divider"></li>
-						<li class="nav-small-cap"><span class="hide-menu">Lecture</span></li>
-	
-						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/getLectureByPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Lecture List </span></a></li>
-						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/subjectList" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">Subject List </span></a></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Member Lecture </span></a>
+						<li class="nav-small-cap"><span class="hide-menu">운영자 기능</span></li>
+						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">강의 관리</span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getStudentLectureAllByPage" class="sidebar-link"><span class="hide-menu"> Student Lecture </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Teacher Lecture </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Manager Lecture </span></a></li>
+								<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/getLectureByPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">전체 강의 관리</span></a></li>
+								<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/subjectList" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">과목 관리</span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu"> 강의실 목록 관리 </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getStudentLectureAllByPage" class="sidebar-link"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu"> 전체 강의 별 학생 목록 </span></a></li>
 							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Etc </span></a>
+						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">회원 관리</span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><span class="hide-menu"> LectureRoom List </span></a></li>
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu"> 운영자 목록</span></a></li>
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getTeacherByPage" class="sidebar-link"><span class="hide-menu"> 강사 목록</span></a></li>
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getStudentByPage" class="sidebar-link"><span class="hide-menu"> 학생 목록</span></a></li>
 							</ul></li>
-						
-						<c:if test="${sessionLoginMember.memberLevel >= 6 }">
-							<li class="list-divider"></li>
-							<li class="nav-small-cap"><span class="hide-menu">Member</span></li>
-							<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Manager </span></a>
-								<ul aria-expanded="false" class="collapse  first-level base-level-line">
-									<li class="sidebar-item"><a href="" class="sidebar-link"><span class="hide-menu"> Manager List </span></a></li>
-									<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-								</ul></li>
-							<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Teacher </span></a>
-								<ul aria-expanded="false" class="collapse  first-level base-level-line">
-									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getTeacherByPage" class="sidebar-link"><span class="hide-menu"> Teacher List </span></a></li>
-									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getManagerLectureByPage" class="sidebar-link"><span class="hide-menu"> 강의 강사 리스트</span></a></li>
-								</ul></li>
-							<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Student </span></a>
-								<ul aria-expanded="false" class="collapse  first-level base-level-line">
-									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getStudentByPage" class="sidebar-link"><span class="hide-menu"> Student List </span></a></li>
-									<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-								</ul></li>
-						</c:if>
-						
-						<li class="list-divider"></li>
-						<li class="nav-small-cap"><span class="hide-menu">Board</span></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Board </span></a>
+						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">설문 조사 관리</span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Board List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Report Board </span></a>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Report List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Comment </span></a>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Comment List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
-							</ul></li>
-						<li class="list-divider"></li>
-						<li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Survey </span></a>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Survey List </span></a></li>
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class="sidebar-link"><span class="hide-menu"> 질문 관리 리스트 </span></a></li>
 							</ul></li>
-						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Exam </span></a>
+						<li class="list-divider"></li>
+						<li class="nav-small-cap"><span class="hide-menu">사이트 관리자 기능</span></li>
+						<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/blind/blindList" class="sidebar-link"><span class="hide-menu"> 삭제된 게시판 관리 </span></a></li>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> Exam List </span></a></li>
-								<li class="sidebar-item"><a href="##########.jsp" class="sidebar-link"><span class="hide-menu"> ##### </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class="sidebar-link"><span class="hide-menu"> 블라인드된 게시판 관리 </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu"> 신고된 게시판 관리 </span></a></li>
 							</ul></li>
 					</c:if>
 					<!-- 관리자 메뉴 끝 -->
