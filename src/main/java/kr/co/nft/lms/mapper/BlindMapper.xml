@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.nft.lms.mapper.BlindMapper">
+	
+	<!-- 1. 공지사항 noticeBlindList -->
+	<!-- 목록보기 -->
+	<select id="selectNoticeBlindListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Notice">
+		SELECT 
+			n.board_no noticeNo
+			, b.board_title noticeTitle
+			, b.board_content noticeContent
+			, b.board_category noticeCategory
+			, b.member_id memberId
+			, b.board_privilege noticePrivilege
+			, b.board_blind boardBlind
+			, b.board_create_date noticeCreateDate
+			, b.board_update_date noticeUpdateDate
+		FROM notice n
+		INNER JOIN board b
+		ON n.board_no = b.board_no
+		WHERE b.board_blind = 'Y'
+		ORDER BY n.board_no DESC
+		LIMIT #{noticeBlindBeginRow}, #{noticeBlindRowPerPage}	
+	</select>
+	<!-- 행 카운트 -->
+	<select id="selectNoticeBlindListTotalCount"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM notice n
+		INNER JOIN board b
+		ON n.board_no = b.board_no
+		WHERE board_blind = 'Y'
+	</select>
+
+	<!-- 2. 건의사항 suggestBlindList -->
+	<!-- 목록보기 -->
+	<select id="selectSuggestBlindListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Suggest">
+		SELECT
+			s.board_no suggestNo
+			,s.suggest_status suggestStatus
+			,b.board_title suggestTitle
+			,b.board_category category
+			,b.member_id memberId
+			,s.suggest_secret suggestSecret
+			,b.board_create_date suggestCreateDate
+			,s.root root
+		FROM suggest s
+		INNER JOIN board b
+		ON s.board_no = b.board_no
+		WHERE b.board_blind = 'Y'
+		ORDER BY IF(ISNULL(s.root),s.board_no,s.root) DESC, s.board_no ASC
+		LIMIT #{suggestBlindBeginRow}, #{suggestBlindRowPerPage}
+	</select>
+	<!-- 행 카운트 -->
+	<select id="selectSuggestBlindListTotalCount"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM suggest s
+		INNER JOIN board b
+		ON s.board_no = b.board_no
+		WHERE board_blind = 'Y'
+	</select>
+	
+	<!-- 3. 강의게시판 lectureBoardBlindList -->
+	<!-- 목록보기 -->
+	<select id="selectLectureBoardBlindListByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.LectureBoard">
+		SELECT 
+			l.lecture_no lectureNo
+			,l.lecture_name lectureName
+			,lb.board_no lectureBoardNo
+			, b.board_title lectureBoardTitle
+			, b.board_content lectureBoardContent
+			, b.board_category lectureBoardCategory
+			, b.member_id memberId
+			, b.board_privilege lectureBoardPrivilege
+			, b.board_blind lectureBoardBlind
+			, b.board_create_date lectureBoardCreateDate
+			, b.board_update_date lectureBoardUpdateDate
+		FROM lecture_board lb
+		INNER JOIN board b
+		ON lb.board_no = b.board_no
+		INNER JOIN lecture l
+		ON l.lecture_no = lb.lecture_no
+		WHERE  b.board_blind = 'Y'
+		ORDER BY lb.board_no DESC
+		LIMIT #{lectureBoardBlindBeginRow}, #{lectureBoardBlindRowPerPage}
+	</select>
+	<!-- 행 카운트 -->
+	<select id="selectLectureBoardBlindListTotalCount"
+			resultType="int">
+		SELECT COUNT(*)
+		FROM lecture_board lb
+		INNER JOIN board b
+		ON lb.board_no = b.board_no
+		WHERE b.board_blind = 'Y'
+	</select>
+
+</mapper>

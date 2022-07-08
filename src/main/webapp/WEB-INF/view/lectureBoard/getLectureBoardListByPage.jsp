@@ -46,7 +46,7 @@
 							        </c:if>
 						   		</div>
 				          		<div class="mt-2" style="height:auto; width:auto;">
-				            		<table id="zero_config" class="table table-striped table-bordered no-wrap">
+				            		<table id="zero_config" class="table table-striped table-bordered">
 				            			<thead>
 				                            <tr>
 				                                <th>강의번호</th>

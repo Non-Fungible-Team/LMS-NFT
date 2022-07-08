@@ -65,14 +65,14 @@
 						 </div>
 				         <div class="card-body">
 				        	<div>
-				           		<h4 class="card-title">건의게시판 상세보기</h4>
+				           		<h4 class="card-title">강의게시판 상세보기</h4>
 				           	
 				            	<a href="${pageContext.request.contextPath}/all/lectureBoard/getLectureBoardListByPage">
 									<input type="button" class="btn btn-info" style="float: right" value="목록으로">
 								</a>
-								<c:if test="${sessionLoginMember.memberLevel >= 5 }">
+								<c:if test="${sessionLoginMember.memberLevel >= 5 && sessionLoginMember.memberId == lectureBoard.memberId}">
 				            		<a href="${pageContext.request.contextPath}/teacher/lectureBoard/modifyLectureBoard?lectureBoardNo=${lectureBoard.lectureBoardNo}">
-				            			<input type="button" class="btn btn-outline-success" style="float: right" value="건의게시글 내용 수정">
+				            			<input type="button" class="btn btn-outline-success" style="float: right" value="강의게시글 내용 수정">
 				            		</a>
 						 	    </c:if>
 							</div>
@@ -124,7 +124,7 @@
 				         </div>
 				         <div class="card-body">
 				        	<div>
-				           		<h4 class="card-title">건의게시판 댓글입력</h4>
+				           		<h4 class="card-title">강의게시판 댓글입력</h4>
 							</div>
 	
 				            <div class="mt-2" style="height:auto; width:auto;">

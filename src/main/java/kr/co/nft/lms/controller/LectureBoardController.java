@@ -36,7 +36,7 @@ public class LectureBoardController {
 	@PostMapping("/teacher/lectureBoard/addLectureBoard")
 	public String addLectureBoard(HttpServletRequest request, LectureBoard lectureBoard, LectureFile lectureFile) {
 		//파일 저장 경로 설정
-		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
+		String path = request.getServletContext().getRealPath("/uploadFile/lectureFile/");
 		log.debug(A.S + "[LectureBoardController.addLectureBoard] path : "+ path + A.R);
 		log.debug(A.S + "[LectureBoardController.addLectureBoard.param] lectureBoard : "+ lectureBoard + A.R);
 		log.debug(A.S + "[LectureBoardController.addLectureBoard.param] lectureFile : "+ lectureFile + A.R);
@@ -136,7 +136,7 @@ public class LectureBoardController {
 	@PostMapping("/teacher/lectureBoard/modifyLectureBoard")
 	public String modifyLectureBoard(HttpServletRequest request, LectureBoard lectureBoard, LectureFile lectureFile) {
 		//파일 저장경로 설정
-		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
+		String path = request.getServletContext().getRealPath("/uploadFile/lectureFile/");
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard] path : "+ path + A.R);
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard.param] lectureBoard : "+ lectureBoard + A.R);
 		log.debug(A.S + "[LectureBoardController.modifyLectureBoard.param] lectureFile : "+ lectureFile + A.R);
@@ -186,25 +186,25 @@ public class LectureBoardController {
 	}
 	
 	//LectureFile 삭제 액션
-	@GetMapping("/teacher/lectureBoard/removeLectureFile")
-	public String removeLectureFile(HttpServletRequest request, String lectureFileName, int lectureFileNo, int lectureBoardNo) {
-		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
-		log.debug(A.S + "[LectureBoardController.removeLectureFile] path : "+ path + A.R);
-		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureFileName : "+ lectureFileName + A.R);
-		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureFileNo : "+ lectureFileNo + A.R);
-		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureBoardNo : "+ lectureBoardNo + A.R);
-		
-		int row = lectureBoardService.removeLectureFile(lectureBoardNo, lectureFileName, lectureFileNo, path);
-		log.debug(A.S + "[LectureBoardController.removeLectureFile] row : " + row + A.R);
-		//row가 0 이면 삭제실패
-		if(row==0) {
-			log.debug(A.S + "[LectureBoardController.removeLectureFile] lectureFile삭제 실패"+ A.R);
-			return "redirect:/teacher/lectureBoard/removeLectureFile?msg=fail";
-		}
-		//삭제성공 했을 경우
-		log.debug(A.S + "[LectureBoardController.removeLectureFile] lectureFile삭제 성공"+ A.R);
-		return "redirect:/teacher/lectureBoard/modifyLectureBoard?lectureBoardNo=" + lectureBoardNo;
-	}
+//	@GetMapping("/teacher/lectureBoard/removeLectureFile")
+//	public String removeLectureFile(HttpServletRequest request, String lectureFileName, int lectureFileNo, int lectureBoardNo) {
+//		String path = request.getServletContext().getRealPath("/uploadFile/lectureFile/");
+//		log.debug(A.S + "[LectureBoardController.removeLectureFile] path : "+ path + A.R);
+//		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureFileName : "+ lectureFileName + A.R);
+//		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureFileNo : "+ lectureFileNo + A.R);
+//		log.debug(A.S + "[LectureBoardController.removeLectureFile.param] lectureBoardNo : "+ lectureBoardNo + A.R);
+//		
+//		int row = lectureBoardService.removeLectureFile(lectureBoardNo, lectureFileName, lectureFileNo, path);
+//		log.debug(A.S + "[LectureBoardController.removeLectureFile] row : " + row + A.R);
+//		//row가 0 이면 삭제실패
+//		if(row==0) {
+//			log.debug(A.S + "[LectureBoardController.removeLectureFile] lectureFile삭제 실패"+ A.R);
+//			return "redirect:/teacher/lectureBoard/removeLectureFile?msg=fail";
+//		}
+//		//삭제성공 했을 경우
+//		log.debug(A.S + "[LectureBoardController.removeLectureFile] lectureFile삭제 성공"+ A.R);
+//		return "redirect:/teacher/lectureBoard/modifyLectureBoard?lectureBoardNo=" + lectureBoardNo;
+//	}
 	
 	//Comment 삭제 액션
 	@GetMapping("/all/lectureBoard/removeLectureCommentOne")
