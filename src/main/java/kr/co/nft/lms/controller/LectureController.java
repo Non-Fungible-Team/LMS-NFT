@@ -191,22 +191,18 @@ public class LectureController {
 	// 5 & 6.학생 강의 목록
 	@GetMapping("/teacher/lecture/getStudentLectureByPage")
 	public String getStudentLectureByPage(Model model
-										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
-										, @RequestParam(name = "currentPage", defaultValue = "1") int currentPage
-										, @RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
+										, @RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo) {
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] lectureNo : " + lectureNo + A.R);
-		log.debug(A.A + "[LectureController.getStudentLectureByPage] currentPage : " + currentPage + A.R);
-		log.debug(A.A + "[LectureController.getStudentLectureByPage] rowPerPage : " + rowPerPage + A.R);
+
 		
-		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(lectureNo, currentPage, rowPerPage);
+		Map<String,Object> returnMap = lectureService.getStudentLectureByPage(lectureNo);
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] returnMap : " + returnMap + A.R);
 		
 		model.addAttribute("lectureNo", lectureNo); 
 		model.addAttribute("studentLectureList", returnMap.get("studentLectureList")); 
-		model.addAttribute("currentPage", returnMap.get("currentPage")); 
-		model.addAttribute("rowPerPage", returnMap.get("rowPerPage")); 
+
 		
 		log.debug(A.A + "[LectureController.getStudentLectureByPage] model : " + model + A.R);
 		
@@ -283,7 +279,7 @@ public class LectureController {
 			log.debug(A.A + "[LectureController.addStudentLectureAction] student_lecture 입력 실패" + A.R);
 		}
 
-		return "redirect:/manager/lecture/getStudentLectureAllByPage";
+		return "redirect:/teacher/lecture/getStudentLectureByPage?lectureNo="+lectureNo;
 	}
 	
 	// 5-3. 학생-강의 목록 수정 폼

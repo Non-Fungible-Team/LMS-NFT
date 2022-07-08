@@ -198,7 +198,6 @@
 		WHERE sl.lecture_no = #{lectureNo}
 		ORDER BY
 		sl.lecture_No ASC, studentLectureLegistrationDate DESC
-		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<select id="selectStudentLectureAll" parameterType="java.util.Map"
