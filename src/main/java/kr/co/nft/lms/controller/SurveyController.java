@@ -36,21 +36,20 @@ public class SurveyController {
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		// 학생 강의 One 리스트 + 강의 이름과 번호 리스트
 		Map<String, Object> LectureMap  = lectureService.addStudentLecture();
-		// 질문 항목 가져오기
-		Map<String, Object> QuestionList = surveyService.selectSurveyQuestionList();
 		// 질문 가져오기
 		Map<String, Object> selectQuestion = surveyService.selectSurveyQuestion(surveyNo);
 		
 		
 		log.debug(A.D+"[SurveyController.insertSurvey] studentLectureOne : " + LectureMap + A.R);
 		log.debug(A.D+"[SurveyController.insertSurvey] loginMember : " + loginMember +A.R);
-		log.debug(A.D+"[SurveyController.insertSurvey] QuestionList : " + QuestionList + A.R); // 디버깅
 		log.debug(A.D+"[SurveyController.insertSurvey] selectQuestion : " + selectQuestion + A.R); // 디버깅
 		
-		model.addAttribute("QuestionList",QuestionList.get("QuestionList"));
-		model.addAttribute("selectQuestion",selectQuestion.get("selectQuestion"));
+		model.addAttribute("QuestionList",selectQuestion.get("QuestionList"));
+		model.addAttribute("surveyQuestion",selectQuestion.get("surveyQuestion"));
+		model.addAttribute("survey",selectQuestion.get("survey"));
 		model.addAttribute("loginMember",loginMember);
 		model.addAttribute("lectureNoNameList", LectureMap.get("lectureNoNameList"));
+		model.addAttribute("surveyNo",surveyNo);
 		
 		return "survey/updateSurveyForm";
 	}
@@ -180,6 +179,7 @@ public class SurveyController {
 	public String addSurveyAnswer(SurveyAnswer surveyAnswer) {
 		log.debug(A.D+"[SurveyController.addSurveyAnswer] surveyAnswer : " + surveyAnswer + A.R);
 		int row = surveyService.addSurveyQuestionAnswer(surveyAnswer.getSurveyAnswer());
+		log.debug(A.D+"[SurveyController.addSurveyAnswer] row : " + row + A.R);
 		return "redirect:/all/survey/getSurveyListByPage";
 		
 	}

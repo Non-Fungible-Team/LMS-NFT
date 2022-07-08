@@ -4,22 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 반응형 웹 -->
 <!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/static/assets/images/favicon.png">
-<title>Lecture List</title>
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/static/dist/css/style.min.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/static/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
+<title>Non-Fungible LMS</title>
+<link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -35,7 +34,7 @@ $(document).ready(function(){
 			//jquery api 사용
 			
 			appendCountList = appendCount-1;
-			$('#surveyQuestionForm').append("<tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr>");
+			$('#surveyQuestionForm').append("<table><tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr></table>");
 			appendCount++;
 	});
 	
@@ -43,7 +42,7 @@ $(document).ready(function(){
 		if (appendCount >= 11) return;
 			//jquery api 사용
 			appendCountList = appendCount-1;
-			$('#surveyQuestionForm').append("<tr><td>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr>");
+			$('#surveyQuestionForm').append("<table><tr><td>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr></table>");
 			appendCount++;
 	});
 	
@@ -129,23 +128,23 @@ $(document).ready(function(){
 		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
 		<div class="page-wrapper">
-			<div class="container-fluid">
-				<div class="container p-5 my-5 border">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
 								<div class="mt-2" style="height:auto; width:auto;">
 									<div class="card-body">
-	
 										<h1 class="card-title">설문조사 생성</h1>
-	
-										<div>설문조사 항목 타입 선택</div>
-										<button type="button" id="multipleSurvey" name="multipleSurvey">객관식
-											문제 추가</button>
-										<button type="button" id="shortSurvey" name="shortSurvey">주관식
-											문제 추가</button>
-										<button type="button" id="deleteTypeButton"
-											name="deleteTypeButton">삭제</button>
+										<table id="zero_config" class="table table-striped table-bordered">
+											<tr><td>설문조사 항목 타입 선택</td></tr>
+											<tr>
+												<td>
+													<button type="button" id="multipleSurvey" name="multipleSurvey" class="btn btn-info">객관식 문제 추가</button>
+													<button type="button" id="shortSurvey" name="shortSurvey" class="btn btn-info">주관식 문제 추가</button>
+													<button type="button" id="deleteTypeButton" name="deleteTypeButton" class="btn btn-info">삭제</button>
+												</td>
+											</tr>
+										</table>
 										<div>&nbsp;</div>
 	
 	
@@ -187,13 +186,12 @@ $(document).ready(function(){
 													<span id="deadlineHelper" class="helper"></span></td>
 												</tr>
 											</table>
-											<table>
-												<tr>
-													<td id="surveyQuestionForm">
-													<span id="qestionFormHelper" class="helper"></span></td>
-												</tr>
-											</table>
-											<button type="button" id="insertQuestionList" name="insertQuestionList">생성</button>
+											<div id="surveyQuestionForm">
+											
+											<span id="qestionFormHelper" class="helper"></span>
+													
+											</div>
+											<button type="button" id="insertQuestionList" name="insertQuestionList" class="btn btn-info">생성</button>
 										</form>
 									</div>
 								</div>
@@ -203,7 +201,6 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-	</div>
 	 <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
     <script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>

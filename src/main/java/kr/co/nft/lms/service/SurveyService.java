@@ -1,6 +1,5 @@
 package kr.co.nft.lms.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
+	
+	public int deleteSurveyQuestion(int surveyNo, int surveyQuestionNo) {
+		log.debug(A.D+"[SurveyService.getQuestionList] surveyNo " + surveyNo + A.R);
+		log.debug(A.D+"[SurveyService.getQuestionList] surveyQuestionNo " + surveyQuestionNo + A.R);
+		
+		return surveyMapper.deleteSurveyQuestion(surveyNo, surveyQuestionNo);
+	}
 	
 	public SurveyQuestionList getQuestionList(int surveyQuestionListNo) {
 		log.debug(A.D+"[SurveyService.getQuestionList] surveyQuestionListNo " + surveyQuestionListNo + A.R);
@@ -90,8 +96,16 @@ public class SurveyService {
 		List<Map<String, Object>> surveyQuestion =  surveyMapper.selectSurveyQuestion(surveyNo);
 		log.debug(A.D+"[SurveyService.selectSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);
 		
+		List<Map<String, Integer>> QuestionList = surveyMapper.selectSurveyQuestionList();
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] QuestionList : " + QuestionList + A.R);
+		
+		Map<String, Object> survey = surveyMapper.selectSurvey(surveyNo);
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] survey : " + survey + A.R);
+		
 		Map<String,Object> selectQuestion = new HashMap<>();
 		selectQuestion.put("surveyQuestion", surveyQuestion);
+		selectQuestion.put("QuestionList", QuestionList);
+		selectQuestion.put("survey", survey);
 		
 		log.debug(A.D+"[SurveyService.selectSurveyQuestion] selectQuestion : " + selectQuestion + A.R);
 		
@@ -133,6 +147,28 @@ public class SurveyService {
 		return row2;
 	}
 	
+	public Map<String,Object> selectAddSurveyQuestion(int surveyNo, int surveyQuestionNo){
+		Map<String,Object> map = new HashMap<>();
+		map.put("surveyNo", surveyNo);
+		map.put("surveyQuestionNo", surveyQuestionNo);
+		log.debug(A.D+"[SurveyService.selectAddSurveyQuestion] map : " + map + A.R);
+		
+		List<Map<String,Object>> surveyQuestion = surveyMapper.selectAddSurveyQuestion(surveyNo, surveyQuestionNo);
+		log.debug(A.D+"[SurveyService.selectAddSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);
+		
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("surveyQuestion", surveyQuestion);
+		
+		return returnMap;
+	}
+	
+	public int addQuestion(SurveyQuestion surveyQuestion) {
+		log.debug(A.D+"[SurveyService.addQuestion] surveyQuestion : " + surveyQuestion + A.R);
+		int row = surveyMapper.insertSurveyQuestion(surveyQuestion);
+		
+		return row;
+	}
+	
 	
 	public int insertSurveyList(SurveyQuestionList surveyQuestionList) {
 		log.debug(A.D+"[SurveyService.insertSurveyList] surveyQuestionList : " + surveyQuestionList + A.R);
@@ -171,7 +207,7 @@ public class SurveyService {
 		map.put("beginRow", beginRow);	
 		log.debug(A.D+"[SurveyService.getSurveyQuestionListByPage] map : " + map + A.R);
 		
-		List SurveyQuestionList = surveyMapper.selectSurveyQuestionListByPage(map);
+		List<Map<String, Integer>> SurveyQuestionList = surveyMapper.selectSurveyQuestionListByPage(map);
 		log.debug(A.D+"[SurveyService.getSurveyQuestionListByPage] SurveyQuestionList : " + SurveyQuestionList + A.R);
 		
 		int totalCount = surveyMapper.countSurveyList();

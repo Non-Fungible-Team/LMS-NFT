@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
-<title>설문조사 상세보기</title>
+<title>Non-Fungible LMS</title>
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -68,10 +68,10 @@
 										</tr>
 									</table>
 								</div>
-							<h2>질문</h2>
+							<h1 class="card-title">질문</h1>
 							<div class="mt-2" style="height:auto; width:auto;">
 								<table id="zero_config" class="table table-striped table-bordered no-wrap">
-									<c:forEach var="sqa" items="${surveyQuestionList}" varStatus="status">
+									<c:forEach var="sqa" items="${QuestionList}" varStatus="status">
 										<tr>
 											<td>${sqa.surveyQuestionListName}</td>
 										</tr>
