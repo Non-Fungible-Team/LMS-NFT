@@ -49,11 +49,30 @@
 				
 			});
 			
+			//파일 하나 삭제
+			$('.removeFileOne').click(function(){
+				var url = $(this).data('value');
+				var index = $(this).data('index');
+				console.log(index);
+				
+				$.ajax({
+					type:'get'
+					,url: url
+					,success: function(data){ // 백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
+					//ajax값 가공
+					console.log(data);
+					console.log('#lectureBoardFile'+index+'');
+					$('#lectureBoardFile'+index+'').text('');
+					}
+				});
+			});
+			
 			//유효성검사
 			$('#uploadModifyLectureBoard').click(function(){
 					$('#modifyLectureBoardTitleHelper').text('');
 					$('#modifyLectureBoardContentHelper').text('');
 					$('#modifyLectureBoardPrivilegeHelper').text('');
+					let flag = true;
 					
 				if($('#modifyLectureBoardTitle').val() == ''){
 					$('#modifyLectureBoardTitleHelper').text('제목을 입력하세요');
@@ -139,22 +158,28 @@
 													<th>파일사이즈</th>
 													<th>첨부파일 삭제</th>
 						            			</tr>
-						            			<c:forEach var ="f" items="${lectureFileList}">
-													<tr>
-														<td>
-															<c:if test="${f.lectureFileType=='image/gif'||f.lectureFileType=='image/png'||f.lectureFileType == 'image/jpeg'}">
-																<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/lectureFile/${f.lectureFileName}">
-															</c:if>
-															<a href="${pageContext.request.contextPath}/uploadFile/lectureFile/${f.lectureFileName}" download>▶${f.lectureFileOriginName}◀ 파일 다운로드</a>
-														</td>
-														<td>${f.lectureFileType}</td>
-														<td>${f.lectureFileSize}</td>
-														<td>
-															<a href="${pageContext.request.contextPath}/teacher/lectureBoard/removeLectureFile?lectureFileName=${f.lectureFileName}&lectureFileNo=${f.lectureFileNo}&lectureBoardNo=${lectureBoard.lectureBoardNo}">
-												    			<input type="button" class="btn btn-outline-danger" value="file삭제">
-												    		</a>
-														</td>
-													</tr>	
+						            			<c:forEach var ="f" items="${lectureFileList}" varStatus ="status">
+														<tr id ="lectureBoardFile${status.index}">
+															<td>
+																<c:if test="${f.lectureFileType=='image/gif'||f.lectureFileType=='image/png'||f.lectureFileType == 'image/jpeg'}">
+																	<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/lectureFile/${f.lectureFileName}">
+																</c:if>
+																<a href="${pageContext.request.contextPath}/uploadFile/lectureFile/${f.lectureFileName}" download>▶${f.lectureFileOriginName}◀ 파일 다운로드</a>
+															</td>
+															<td>${f.lectureFileType}</td>
+															<td>${f.lectureFileSize}</td>
+															<td>
+															
+															
+															
+															<button type="button" data-index="${status.index}" data-value="${pageContext.request.contextPath}/rest/teacher/lectureBoard/removeLectureFile?lectureFileName=${f.lectureFileName}&lectureFileNo=${f.lectureFileNo}&lectureBoardNo=${lectureBoard.lectureBoardNo}" class="removeFileOne btn btn-outline-danger">file삭제</button>
+															<!-- 
+																<a href="${pageContext.request.contextPath}/teacher/lectureBoard/removeLectureFile?lectureFileName=${f.lectureFileName}&lectureFileNo=${f.lectureFileNo}&lectureBoardNo=${lectureBoard.lectureBoardNo}">
+													    			<input type="button" class="btn btn-outline-danger" value="file삭제">
+													    		</a>
+															 -->
+															</td>
+														</tr>	
 										    	</c:forEach>
 						            		</table>
 						            	</div>
