@@ -17,7 +17,7 @@
 			<tr>
 				<td>ID : </td>
 				<td>
-					<input type="text" name="memberId" id="memberId" value="${logimMember.memberId}" readonly="readonly">
+					<input type="text" name="memberId" id="memberId" value="${sessionLoginMember.memberId}" readonly="readonly">
 				</td>
 			</tr>
 			<tr>

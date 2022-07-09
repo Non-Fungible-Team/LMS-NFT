@@ -487,6 +487,27 @@ public class MemberController {
 	}
 	
 	// 학생 정보 수정 POST 
+	// 학생 수정 POST에 AddStudent DTO 재활용, 받는 내용 겹치니까 
+	@PostMapping("/all/modifyStudent")
+	public String modifyStudent(HttpSession session
+								, AddStudent modifyStudent
+								, MemberPhoto memberPhoto) {
+		// 매개변수 내용 확인  
+		log.debug(A.Z+"[MemberController.modifyStudent.param] modifyStudent : "+modifyStudent+A.R);
+		
+		// 학생 수정 정보 update 요청 
+		int row = memberService.modifyStudent(modifyStudent);
+		log.debug(A.Z+"[MemberController.modifyStudent] row : "+row+A.R);
+		
+		if(row == 0) {
+			return "redirect:/all/modifyStudent";
+		}
+		
+		return "redirect:/all/getStudentOne";
+	}
+	
+	/*
+	// 학생 정보 수정 POST 
 	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
 								, HttpServletRequest request
@@ -535,40 +556,25 @@ public class MemberController {
 	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아간다  
 	    return "redirect:/all/getStudentOne";
 	}
+	*/
 	
 	// 학생 정보 수정 GET 
 	@GetMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
-								, @RequestParam(value="memberId") String memberId
 								, Model model) {
-		// 매개 변수 확인 
-		log.debug(A.Z+"[MemberController.modifyStudent.param] memberId : "+memberId+A.R);
+		
 		// 세션 매개 변수 확인 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		log.debug(A.Z+"[MemberController.modifyStudent] loginMember : "+loginMember+A.R);
-		
-		// 계정 정보 없으면 로그인 실패 
-		if(memberId == null) {
-			log.debug(A.Z+"MemberController.getStudentOne : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
-		}
 
 		// 학생의 상세 정보를 가져온다 
-		// VO 두개를 합쳐야 한 학생의 정보가 나온다 
-		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
-		log.debug(A.Z+"[MemberController.modifyStudent] getStudentOneByStudentVo : "+getStudentOneByStudentVo+A.R);
-		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
-		log.debug(A.Z+"[MemberController.modifyStudent] getStudentOneByMemberVo : "+getStudentOneByMemberVo+A.R);
+		// 서비스는 한개만 사용 
+		// 학생 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+		Map<String, Object> returnMap = memberService.getStudentOne(loginMember);
 		
-		// 이동하려는 뷰 페이지에 해당하는 데이터들을 보낸다 
-		model.addAttribute("getStudentOneByStudentVo", getStudentOneByStudentVo);
-		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
-		
-		// 세션에 로그인 사용자 정보와 과목 번호를 보낸다 
-		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
+		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
+		model.addAttribute("studentOne",returnMap);
+				
 		// 해당하는 뷰 페이지로 이동 
 		return "/member/modifyStudent";
 	}
@@ -652,41 +658,19 @@ public class MemberController {
 	}
 	
 	
-	// 학생 상세보기
-	// 세션 받는다 
+	// 학생 상세보기 GET 
 	@GetMapping("/all/getStudentOne")
 	public String getStudentOne(HttpSession session
 								, Model model) {
-		// 세션에서 받아온 참조 변수 Member의 ID, LEVEL 필드를 받는다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		log.debug(A.Z+"[MemberController.getStudentOne.param] loginMember : "+loginMember+A.R);
-
-		// 계정 정보 없으면 로그인 실패 
-		if(loginMember == null) {
-			log.debug(A.Z+"MemberController.getStudentOne : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
-		}
-		
-		// 학생 개인의 정보를 띄우기 위해 Member, Student, MemberPhoto 테이블에서 거의 모든 필드들을 가져온다 
-		Student getStudentOneByStudentVo = memberService.getStudentOneReturnStudentVo(loginMember);
-		log.debug(A.Z+"[MemberController.getStudentOne] getStudentOneByStudentVo : "+getStudentOneByStudentVo+A.R);
-		
-		Member getStudentOneByMemberVo = memberService.getStudentOneReturnMemberVo(loginMember);
-		log.debug(A.Z+"[MemberController.getStudentOne] getStudentOneByMemberVo : "+getStudentOneByMemberVo+A.R);
-		
-		MemberPhoto getMemberPhoto = memberService.getMemberPhoto(loginMember);
-		log.debug(A.Z+"[MemberController.getStudentOne] getMemberPhoto : "+getMemberPhoto+A.R);
+			
+		// 학생 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+		Map<String, Object> returnMap = memberService.getStudentOne(loginMember);
 		
 		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
-		model.addAttribute("getStudentOneByStudentVo", getStudentOneByStudentVo);
-		model.addAttribute("getStudentOneByMemberVo", getStudentOneByMemberVo);
-		model.addAttribute("getMemberPhoto", getMemberPhoto);
-		
-		// 세션으로 로그인한 유저의 정보와 과목 번호를 넘긴다 
-		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
+		model.addAttribute("studentOne",returnMap);
+				
 		return "/member/getStudentOne";
 	}
 	

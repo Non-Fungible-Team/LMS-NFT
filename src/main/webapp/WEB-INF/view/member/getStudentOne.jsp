@@ -59,7 +59,7 @@
 											</tr>
 											<tr>
 												<td>아이디</td>
-												<td>${loginMember.memberId}</td>
+												<td>${sessionLoginMember.memberId}</td>
 											</tr>
 											<tr>
 												<td>학생 이름</td>

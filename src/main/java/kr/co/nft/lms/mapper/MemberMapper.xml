@@ -310,11 +310,13 @@
 		WHERE member_id = #{memberId} 		
 	</update>
 
+	
+
 	<update id="updateStudentByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_pw = password(#{memberPw})
-			, member_phone_no = #{memberPhoneNo} 
+			<!--  member_pw = password(#{memberPw}) -->
+			member_phone_no = #{memberPhoneNo} 
 		WHERE member_id = #{memberId} 		
 	</update>
 

@@ -51,49 +51,55 @@
 												<tr>
 													<td>학생 아이디</td>
 													<td>
-														<input type="text" name="memberId" id="memberId" value="${loginMember.memberId}" readonly="readonly">
+														<input type="text" name="memberId" id="memberId" value="${sessionLoginMember.memberId}" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
 													<td>학생 이름</td>
 													<td>
-														<input type="text" name="studentName" id="studentName" value="${getStudentOneByStudentVo.studentName}">
+														<input type="text" name="studentName" id="studentName" value="${studentOne.studentName}">
 													</td>
 												</tr>
-												<tr>
-													<td>비밀번호</td>
-													<td>
-														<input type="text" name="memberPw" id="memberPw" >
-													</td>
-												</tr>
+												
 												<tr>
 													<td>생일</td>
 													<td>
-														<input type="date" name="studentBirth" id="studentBirth" value="${getStudentOneByStudentVo.studentBirth}">
+														<input type="date" name="studentBirth" id="studentBirth" value="${studentOne.studentBirth}">
 													</td>
 												</tr>
 												<tr>
 													<td>성별</td>
-													<td>
-														<input type="radio" value="M" name="studentGender" class="gender">남 
-														<input type="radio" value="F" name="studentGender" class="gender">여 
-													</td>
+													<c:if test="${studentOne.studentGender=='M'}">
+														<td>
+															<input type="radio" value="M" name="studentGender" class="gender" checked>남 
+															<input type="radio" value="F" name="studentGender" class="gender">여 
+														</td>
+													</c:if>
+													<c:if test="${studentOne.studentGender=='F'}">
+														<td>
+															<input type="radio" value="M" name="studentGender" class="gender" >남 
+															<input type="radio" value="F" name="studentGender" class="gender" checked>여 
+														</td>
+													</c:if>
 												</tr>
 												<tr>
 													<td>이메일</td>
 													<td>
-														<input type="text" name="studentEmail" id="studentEmail" value="${getStudentOneByStudentVo.studentEmail}">
+														<input type="text" name="studentEmail" id="studentEmail" value="${studentOne.studentEmail}">
 													</td>
 												</tr>
 												<tr>
 													<td>최종 학력</td>
 													<td>
-														<input type="text" name="studentEducation" id="studentEducation" value="${getStudentOneByStudentVo.studentEducation}">
+														<input type="text" name="studentEducation" id="studentEducation" value="${studentOne.studentEducation}">
 													</td>
 												</tr>
 												<tr>
 													<td>학생 사진</td>
 													<td>
+														<c:if test="${studentOne.photoType=='image/jpg' || studentOne.photoType== 'image/png' || studentOne.photoType == 'image/jpeg' }">
+															<img src="${pageContext.request.contextPath}/uploadFile/memberPhoto/studentPhoto/${studentOne.photoName}" width="200" height="200" name="studentPhoto">
+														</c:if>
 														<input type="file" id="memberPhotoOne" name="memberPhotoOne">
 														<span id="studentPhotoSection"></span>
 													</td>
@@ -101,7 +107,7 @@
 												<tr>
 													<td>휴대전화</td>
 													<td>
-														<input type="text" name="memberPhoneNo" id="memberPhoneNo" value="${getStudentOneByMemberVo.memberPhoneNo}">
+														<input type="text" name="memberPhoneNo" id="memberPhoneNo" value="${studentOne.memberPhoneNo}">
 													</td>
 												</tr>
 												<tr>
@@ -112,6 +118,7 @@
 											</table>
 										<div>
 											<a href="${pageContext.request.contextPath}/login" class="btn btn-rounded btn-outline-primary">로그인 페이지</a>
+											<a href="${pageContext.request.contextPath}/all/modifyMemberPassword" class="btn btn-rounded btn-outline-primary">비밀번호 변경</a>
 										</div>
 									</form>
 										</div>

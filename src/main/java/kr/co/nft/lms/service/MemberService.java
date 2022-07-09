@@ -255,8 +255,31 @@ public class MemberService {
 		return memberMapper.updateTeacherByTeacherVo(teacher);
 	}
 	
+	// Member, Student, Member_Photo 테이블 활용하여 학생 정보 수정 
+	public int modifyStudent(AddStudent modifyStudent) {
+		// 매개 변수 확인 
+		log.debug(A.Z+"[MemberService.getStudentOne.param] modifyStudent : "+modifyStudent+A.R);
+		// mapper 요청 결과 저장할 변수 초기화 
+		int row = -1;
+		
+		// Member 테이블에 UPDATE 요청 
+		modelMapper = new ModelMapper();
+		// Member 테이블에 들어갈 수 있는 값을 modifyStudent에서 꺼내 넣는다. 
+		Member member = modelMapper.map(modifyStudent, Member.class);
+		row = memberMapper.updateStudentByMemberVo(member);
+		log.debug(A.Z+"[MemberService.modifyStudent.memberMapper.updateStudentByMemberVo] row : "+row+A.R);
+		row = -1;
+		
+		Student student = modelMapper.map(modifyStudent, Student.class);
+		row = memberMapper.updateStudentByStudentVo(student);
+		
+		return row;
+		
+	}
+	
+	/*
 	// Member 테이블 활용하여 학생 수정 액션
-	public int modifyStudent(Member member) {
+	public int modifyStudent() {
 		return memberMapper.updateStudentByMemberVo(member);
 	}
 	
@@ -264,6 +287,7 @@ public class MemberService {
 	public int modifyStudent(Student student) {
 		return memberMapper.updateStudentByStudentVo(student);
 	}
+	*/
 	
 	// --------------------------------------- // 
 	// 상세보기 

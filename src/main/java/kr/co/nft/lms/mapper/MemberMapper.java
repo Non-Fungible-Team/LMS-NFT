@@ -106,7 +106,7 @@ public interface MemberMapper {
 	// Teacher 테이블 활용하여 강사 정보 수정 
 	int updateTeacherByTeacherVo(Teacher teacher);
 	
-	// Member 테이블 활용하여 학생 정보 수정 
+	// Member 테이블 활용하여 학생 정보 수정 updateStudentByMemberVo 
 	int updateStudentByMemberVo(Member member);
 	
 	// Student 테이블 활용하여 학생 정보 수정 
