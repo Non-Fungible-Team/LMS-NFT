@@ -61,8 +61,8 @@
 					,success: function(data){
 						//ajax값 가공
 						console.log(data);
-						console.log('#noticeFile' + index + '');
-						$('#noticeFile' + index + '').text('');
+						console.log('#noticeFile'+index+'');
+						$('#noticeFile'+index+'').text('');
 					}
 				});
 			});

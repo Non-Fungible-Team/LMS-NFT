@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.nft.lms.service.NoticeService;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeRestController {
 	@Autowired NoticeService noticeService;
 	
+	@GetMapping("/rest/teacher/notice/removeNoticeFile")
 	public Map<String, Object> removeNoticeFile(HttpServletRequest request, String noticeFileName, int noticeFileNo, int noticeNo){
 		String path = request.getServletContext().getRealPath("/uploadFile/noticeFile/");
 		log.debug(A.S + "[NoticeRestController.removeNoticeFile] path : "+ path + A.R);
