@@ -111,4 +111,11 @@ public class SuggestService {
 		}
 		return row;
 	}
+	
+	//chart
+	public List<Map<String, Object>> selectSuggestCnt(){
+		List<Map<String,Object>> suggestChartList = suggestMapper.selectSuggestCnt();
+		log.debug(A.S + "[SuggestService.selectSuggestCnt] suggestChartList : "+ suggestChartList + A.R);
+		return suggestChartList;
+	}
 }

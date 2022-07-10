@@ -39,4 +39,7 @@ public interface SuggestMapper {
 	int deleteSuggest(int suggestNo);
 	List<Map<String,Object>> selectSuggestByRoot(int suggestNo);
 	
+	//chart
+	List<Map<String,Object>> selectSuggestCnt();
+	
 }

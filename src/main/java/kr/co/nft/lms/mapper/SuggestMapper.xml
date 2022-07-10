@@ -176,4 +176,18 @@
 		FROM suggest 
 		WHERE root = #{root}
 	</select>
+	
+	<!-- chart 학생, 강사 올린 갯수 / 답변완료 갯수 -->
+	<select id="selectSuggestCnt"
+			resultType="java.util.Map">
+		SELECT m.member_level memberLevel
+			,COUNT(*) cnt
+			,COUNT(CASE WHEN s.suggest_status ='답변완료' THEN 1 END) answerCnt
+		FROM suggest s
+		INNER JOIN board b
+		ON s.board_no = b.board_no
+		INNER JOIN member m
+		ON m.member_id = b.member_id
+		GROUP BY m.member_level
+	</select>
 </mapper>
