@@ -39,8 +39,8 @@
 							<div class="card">
 								<h1 class="card-title">설문조사 상세보기</h1>
 								<div class="mt-2" style="height:auto; width:auto;">
-									<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn">이전으로</a>
-									<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" class="btn">수정</a>
+									<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn btn-outline-success">이전으로</a>
+									<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" class="btn btn-outline-info btn-rounded">수정</a>
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
 										<tr>
 											<td>공지 번호</td>
