@@ -61,6 +61,10 @@ public interface HomeworkMapper {
 	// File 삭제
 	int deleteHomeworkSubmitFileOne(int homeworkSubmitFileNo);
 	int deleteHomeworkSubmitFileList(int homeworkSubmitFileNo);
+	
+	List<Map<String, Object>> selectHomeworkChart();
+	
+	List<Map<String, Object>> selectHomeworkCntChart();
 
 	
 }

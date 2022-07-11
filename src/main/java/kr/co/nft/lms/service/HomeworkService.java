@@ -261,6 +261,18 @@ public class HomeworkService {
 		return homeworkMapper.updateHomeworkSubmitScore(homeworkSubmit);
 	}
 	
+	public List<Map<String, Object>> getHomeworkChart(){
+		List<Map<String, Object>> homeworkChartList = homeworkMapper.selectHomeworkChart();
+		
+		return homeworkChartList;
+		
+	}
+	public List<Map<String, Object>> getHomeworkCntChart(){
+		List<Map<String, Object>> homeworkCntChartList = homeworkMapper.selectHomeworkCntChart();
+		
+		return homeworkCntChartList;
+	}
+	
 	
 	
 	
