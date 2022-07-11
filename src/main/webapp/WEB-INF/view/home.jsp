@@ -70,16 +70,6 @@
 					type: 'bar',
 					data: data,
 					options: {
-						scales:{
-							y:[
-								{
-									ticks:{
-										stepSize: 2
-										min:0
-									}
-								}
-							]
-						},
 						responsive: true,
 						plugins: {
 							legend: {
