@@ -24,25 +24,39 @@
 	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		});
 		
-		new Chart(document.getElementById("doughnut-chart"), {
-		    type: 'doughnut',
-		    data: {
-		      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-		      datasets: [
-		        {
-		          label: "Population (millions)",
-		          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-		          data: [2478,5267,734,784,433]
-		        }
-		      ]
-		    },
-		    options: {
-		      title: {
-		        display: true,
-		        text: 'Predicted world population (millions) in 2050'
-		      }
-		    }
-		});
+		//chart
+		
+		getGraph();
+		
+		function getGraph() {
+			var url :'${pageContext.request.contextPath}/restrest/manager/getTeacherLectureChart'; //차트 메소드 맵핑주소
+			console.log(url);
+			$.ajax(){
+				type:'get' 
+				,url : url
+				,success: function(data) { //백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
+					console.log(data);
+				var teacherLectureTime = [data.teacherLectureTime]
+				}
+			}
+		}
+		
+		  Morris.Donut({
+		        element: 'morris-donut-chart',
+		        data: [{
+		            label: "Download Sales",
+		            value: 12,
+
+		        }, {
+		            label: "In-Store Sales",
+		            value: 30
+		        }, {
+		            label: "Mail-Order Sales",
+		            value: 20
+		        }],
+		        resize: true,
+		        colors:['#5f76e8', '#01caf1', '#8fa0f3']
+		    });
 		
   	</script>
 <body>
