@@ -216,6 +216,12 @@
 	
 	<!-- 개인 정보 수정 -->
 	
+	<delete id="deleteMemberPhoto"
+			parameterType="kr.co.nft.lms.vo.Member">
+		DELETE FROM member_photo
+		WHERE member_id = #{memberId}
+	</delete>
+	
 	<update id="updatePwHistory"
 			parameterType="kr.co.nft.lms.vo.Member"	>
 		UPDATE pw_history SET 
@@ -375,11 +381,11 @@
 			, member_photo.photo_type photoType
 			, member_photo.photo_size photoSize 
 			, member_photo.photo_create_date photoCreateDate 
-			, member_photo.photo_update_date photoUpdateDate 
+			, member_photo.photo_update_date photoUpdateDate
 		FROM member 
 		INNER JOIN student 
 		ON member.member_id = student.member_id
-		INNER JOIN member_photo 
+		LEFT JOIN member_photo 
 		ON member.member_id = member_photo.member_id
 		WHERE member.member_id = #{memberId}
 	</select>

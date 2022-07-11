@@ -60,22 +60,21 @@ $(document).ready(function(){
 								<div class="card-body">
 									<div class="mt-2" style="height:auto; width:auto;">
 										<h1>설문조사 질문 항목 수정</h1>
-											            
-										
+											<a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class='btn btn-outline-success' style='float: right'>이전으로</a>
 											<form method="post" action="${pageContext.request.contextPath}/manager/survey/updateSurveyQuestionList?surveyQuestionListNo=${QuestionList.surveyQuestionListNo}" id="updateList" name="updateList">
 											<table id="zero_config" class="table table-striped table-bordered no-wrap">
 												<tr>
 													<td>질문 제목</td>
-													<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName" value="${QuestionList.surveyQuestionListName}">
+													<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName" class="form-control" value="${QuestionList.surveyQuestionListName}">
 														&nbsp;<span id="NameHelper" class="helper"></span></td>
 												<tr>
 													<td>질문 내용</td>
-													<td><input type="text" name="surveyQuestionListContent" id="surveyQuestionListContent" value="${QuestionList.surveyQuestionListContent}">
+													<td><textarea rows="10" cols="10" name="surveyQuestionListContent" id="surveyQuestionListContent" class="form-control">${QuestionList.surveyQuestionListContent}</textarea>
 														&nbsp;<span id="ContentHelper" class="helper"></span></td>
 											</table>
 											<div>
 												<button type="button" id="updateQuestionList"
-													name="updateQuestionList">수정</button>
+													name="updateQuestionList" class="btn btn-info" style='float: right'>수정</button>
 											</div>
 										</form>
 									</div>

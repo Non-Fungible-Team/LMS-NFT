@@ -24,6 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyService {
 	@Autowired SurveyMapper surveyMapper;
 	
+	public int updateSurvey(Survey survey) {
+		return surveyMapper.updateSurvey(survey);
+	}
+	
 	public int deleteSurveyQuestion(int surveyNo, int surveyQuestionNo) {
 		log.debug(A.D+"[SurveyService.getQuestionList] surveyNo " + surveyNo + A.R);
 		log.debug(A.D+"[SurveyService.getQuestionList] surveyQuestionNo " + surveyQuestionNo + A.R);
@@ -96,15 +100,15 @@ public class SurveyService {
 		List<Map<String, Object>> surveyQuestion =  surveyMapper.selectSurveyQuestion(surveyNo);
 		log.debug(A.D+"[SurveyService.selectSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);
 		
-		List<Map<String, Integer>> QuestionList = surveyMapper.selectSurveyQuestionList();
-		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] QuestionList : " + QuestionList + A.R);
+		List<Map<String, Integer>> questionList = surveyMapper.selectSurveyQuestionList();
+		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] QuestionList : " + questionList + A.R);
 		
 		Map<String, Object> survey = surveyMapper.selectSurvey(surveyNo);
 		log.debug(A.D+"[SurveyService.selectSurveyQuestionList] survey : " + survey + A.R);
 		
 		Map<String,Object> selectQuestion = new HashMap<>();
 		selectQuestion.put("surveyQuestion", surveyQuestion);
-		selectQuestion.put("QuestionList", QuestionList);
+		selectQuestion.put("questionList", questionList);
 		selectQuestion.put("survey", survey);
 		
 		log.debug(A.D+"[SurveyService.selectSurveyQuestion] selectQuestion : " + selectQuestion + A.R);
@@ -148,10 +152,6 @@ public class SurveyService {
 	}
 	
 	public Map<String,Object> selectAddSurveyQuestion(int surveyNo, int surveyQuestionNo){
-		Map<String,Object> map = new HashMap<>();
-		map.put("surveyNo", surveyNo);
-		map.put("surveyQuestionNo", surveyQuestionNo);
-		log.debug(A.D+"[SurveyService.selectAddSurveyQuestion] map : " + map + A.R);
 		
 		List<Map<String,Object>> surveyQuestion = surveyMapper.selectAddSurveyQuestion(surveyNo, surveyQuestionNo);
 		log.debug(A.D+"[SurveyService.selectAddSurveyQuestion] surveyQuestion : " + surveyQuestion + A.R);

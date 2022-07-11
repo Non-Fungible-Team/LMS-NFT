@@ -59,22 +59,22 @@ $(document).ready(function(){
 							<div class="mt-2" style="height:auto; width:auto;">
 								<div class="card-body">
 									<h1>설문조사 질문 항목 생성</h1>
-									
+									<a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class='btn btn-outline-success' style='float: right'>이전으로</a>
 									
 										<form method="post" action="${pageContext.request.contextPath}/manager/survey/insertSurveyQuestionList" id="insertList" name="insertList">
 										<table id="zero_config" class="table table-striped table-bordered no-wrap">
 											<tr>
 												<td>질문 제목</td>
-												<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName">
+												<td><input type="text" id="surveyQuestionListName" name="surveyQuestionListName" class="form-control">
 													&nbsp;<span id="NameHelper" class="helper"></span></td>
 											<tr>
 												<td>질문 내용</td>
-												<td><input type="text" name="surveyQuestionListContent" id="surveyQuestionListContent">
+												<td><textarea rows="10" cols="10" name="surveyQuestionListContent" id="surveyQuestionListContent" class="form-control"></textarea>
 													&nbsp;<span id="ContentHelper" class="helper"></span></td>
 										</table>
 										<div>
 											<button type="button" id="insertQuestionList"
-												name="insertQuestionList">생성</button>
+												name="insertQuestionList" class="btn btn-info" style='float: right'>생성</button>
 										</div>
 									</form>
 								</div>

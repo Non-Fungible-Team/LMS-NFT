@@ -86,4 +86,8 @@ public interface SurveyMapper {
 	
 	// 설문조사 업데이트로 추가된 질문 찾기
 	List<Map<String,Object>> selectAddSurveyQuestion(int surveyNo, int surveyQuestionNo);
+	
+	
+	// 설문조사 업데이트
+	int updateSurvey(Survey survey);
 }

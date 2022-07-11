@@ -26,10 +26,16 @@
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		
 		$('#addSubject').click(function(){
+			
+			$('#subjectNameHelper').text('');
+			$('#subjectContentHelper').text('');
+			
 			if($('#subjectName').val() == '') {
-				alert('과목 이름을 입력하세요');
+				$('#subjectNameHelper').text('과목 이름을 작성해주세요.');
+				$('#subjectNameHelper').focus();
 			} else if($('#subjectContent').val() == '') {
-				alert('내용을 입력하세요');
+				$('#subjectContentHelper').text('과목 내용을 작성해주세요.');
+				$('#subjectContentHelper').focus();
 			} else {
 				$('#addForm').submit();
 			}
@@ -93,7 +99,10 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            	<form method="post" id="addForm" class="mt-4" action="${pageContext.request.contextPath}/teacher/addSubjectOne">
                             <div class="form-group">
                                과목 이름 : <input type="text" name="subjectName" id="subjectName" class="form-control">
+                               <span id="subjectNameHelper" class="helper" style="color: red;"></span>
+                               <br>
                                내용 : <input type="text" name="subjectContent" id="subjectContent" class="form-control">
+                               <span id="subjectContentHelper" class="helper" style="color: red;"></span>
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="addSubject">
                           		<i class="fas fa-check"></i> 입력

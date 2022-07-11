@@ -27,11 +27,14 @@
 		
 		$('#modifySchedule').click(function(){
 			if($('#scheduleTitle').val() == '') {
-				alert('제목를 입력하세요');
+				$('#scheduleTitleHelper').text('제목를 입력하세요');
+				$('#scheduleTitleHelper').focus('');
 			} else if($('#scheduleContent').val() == '') {
-				alert('내용을 입력하세요');
+				$('#scheduleContentHelper').text('내용을 입력하세요');
+				$('#scheduleContentHelper').focus('');
 			} else if($('#scheduleDate').val() == '') {
-				alert('날짜를 입력하세요');
+				$('#scheduleDateHelper').text('날짜를 입력하세요');
+				$('#scheduleDateHelper').focus('');
 			} else {
 				$('#modifyForm').submit();
 			}
@@ -60,9 +63,15 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
                             <div class="form-group">
                             		<input type="hidden" name="scheduleNo" id="scheduleNo" class="form-control" value="${ scheduleOne.scheduleNo }">
                                제목 : <input type="text" name="scheduleTitle" id="scheduleTitle" class="form-control" value="${ scheduleOne.scheduleTitle }">
+                               <span id="scheduleTitleHelper" class="helper" style="color: red;"></span>
+                               <br>
                                작성자 : <input type="text" name="scheduleMemberId" id="scheduleMemberId" class="form-control" value="${ sessionLoginMember.memberId }" readonly="readonly">
                                내용 : <textarea name="scheduleContent" id="scheduleContent" rows="5" cols="33" class="form-control" placeholder="${ scheduleOne.scheduleContent }">${ scheduleOne.scheduleContent }</textarea>
+                               <span id="scheduleContentHelper" class="helper" style="color: red;"></span>
+                               <br>
                                날짜 : <input type="date" name="scheduleDate" id="scheduleDate" class="form-control" value="${ scheduleOne.scheduleDate }">
+                               <span id="scheduleDateHelper" class="helper" style="color: red;"></span>
+                               <br>
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="modifySchedule">
                           		<i class="fas fa-check"></i> 수정

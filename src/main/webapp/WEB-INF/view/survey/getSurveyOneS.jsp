@@ -74,7 +74,7 @@
 								<div class="mt-2" style="height:auto; width:auto;">
 									<h1>설문조사 상세보기</h1>
 									<div class="card-body">
-										<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn">이전으로</a>
+										<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class='btn btn-outline-success' style='float: right'>이전으로</a>
 										<table id="zero_config" class="table table-striped table-bordered no-wrap">
 											<tr>
 												<td>설문조사 번호</td>
@@ -124,7 +124,7 @@
 													<td>
 														<c:if test="${sqa.surveyQuestionType=='객관식'}">
 															<input type='hidden' name='surveyAnswer[${status.index}].surveyAnswerType' value="객관식" readonly>
-															<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.QuestionList}" readonly>
+															<input type='hidden' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}">
 															<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=1> 1  &nbsp;&nbsp;
 															<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=2> 2  &nbsp;&nbsp;
 															<input type='radio' name='surveyAnswer[${status.index}].surveyMultipleAnswerContent' class="surveyMultipleAnswerContent[${status.index}]" value=3> 3  &nbsp;&nbsp;
@@ -134,14 +134,14 @@
 														</c:if>
 														<c:if test="${sqa.surveyQuestionType=='주관식'}">
 															<input type='hidden' name='surveyAnswer[${status.index}].SurveyAnswerType' value="주관식" readonly>
-															<input type='number' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}" readonly>
-															<input type='text' name='surveyAnswer[${status.index}].surveyShortAnswerContent'> <!-- 1 ,4 -->
+															<input type='hidden' name='surveyAnswer[${status.index}].surveyQuestionNo' value="${sqa.surveyQuestionNo}">
+															<textarea rows="10" cols="10" name='surveyAnswer[${status.index}].surveyShortAnswerContent' class="form-control"></textarea> <!-- 1 ,4 -->
 														</c:if>
 													</td>
 												<tr>
 											</c:forEach>
 										</table>
-										<button type="button" id="surveySubmit">설문조사 제출</button>
+										<button type="button" id="surveySubmit" class="btn btn-outline-info btn-rounded" style='float: right'>설문조사 제출</button>
 									</form>
 								</div>
 							</div>
