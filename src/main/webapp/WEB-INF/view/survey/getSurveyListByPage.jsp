@@ -90,6 +90,9 @@
 										<a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/insertSurvey">설문조사 등록</a>
 										<a class="btn btn-info" href="${pageContext.request.contextPath}/manager/survey/getSurveyStatistics">설문조사 통계</a>
 										</c:if>
+										<c:if test="${sessionLoginMember.memberLevel==5}">
+										<a class="btn btn-info" href="${pageContext.request.contextPath}/teacher/survey/getSurveyLectureStatistics?lectureNo=${lectureNo}">과목 설문조사 통계</a>
+										</c:if>
 									</div>
 								</div>
 							</div>

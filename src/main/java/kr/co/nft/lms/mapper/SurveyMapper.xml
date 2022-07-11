@@ -20,11 +20,11 @@
 			INNER JOIN survey AS s
 			ON l.lecture_no = s.lecture_no
 			WHERE s.lecture_no = #{lectureNo}
-			ORDER BY s.lecture_no
+			ORDER BY s.lecture_no;
 		</select>
 		
 		<select id="countSurvey" resultType="int">
-			SELECT count(*) from survey
+			SELECT count(*) from survey;
 		</select>
 		
 		<select id="selectSurveyQuestionListByPage"
@@ -38,12 +38,12 @@
 				,survey_question_list_update_date surveyQuestionListUpdateDate
 				FROM survey_question_list
 				ORDER BY survey_question_list_no
-				LIMIT #{beginRow}, #{rowPerPage}
+				LIMIT #{beginRow}, #{rowPerPage};
 		
 		</select>
 		
 		<select id="countSurveyList" resultType="int">
-			select count(*) from survey_question_list
+			select count(*) from survey_question_list;
 		</select>
 		
 		
@@ -55,7 +55,7 @@
 				,survey_question_list_name surveyQuestionListName
 				,survey_question_list_content surveyQuestionListContent
 				FROM survey_question_list
-				ORDER BY survey_question_list_no
+				ORDER BY survey_question_list_no;
 		</select>
 		
 		
@@ -135,7 +135,7 @@
 				,lecture_no lectureNo
 				,member_id memberId
 				FROM survey
-				ORDER BY survey_no
+				ORDER BY survey_no;
 		</select>
 		
 		<select id="getSurveyOne"
@@ -152,7 +152,7 @@
 				,lecture_no lectureNo
 				,member_id memberId
 				FROM survey
-				WHERE survey_no = #{surveyNo}
+				WHERE survey_no = #{surveyNo};
 		</select>
 		
 		<select id="getSurveyQuestionList"
@@ -173,7 +173,7 @@
 				INNER JOIN survey_question_list AS b
 				ON a.survey_question_list_no = b.survey_question_list_no
 				WHERE a.survey_no = #{surveyNo}
-				ORDER BY survey_question_no
+				ORDER BY survey_question_no;
 		</select>
 		
 		<insert id="insertSurveyMultipleAnswer"
@@ -257,7 +257,7 @@
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			INNER JOIN survey_short_answer AS ss 
 			ON sq.survey_question_no = ss.survey_question_no AND sq.survey_no = ss.survey_no
-			GROUP BY sq.survey_question_list_no
+			GROUP BY sq.survey_question_list_no;
 			
 		</select>
 		
@@ -294,7 +294,7 @@
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			INner join survey_multiple_answer AS sma
 			ON sma.survey_question_no = sq.survey_question_no AND sq.survey_no = sma.survey_no
-			GROUP BY ql.survey_question_list_no
+			GROUP BY ql.survey_question_list_no;
 		</select>
 		
 		<select id="selectSurveyQuestion"
@@ -314,7 +314,7 @@
 			ON sq.survey_no = s.survey_no
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
-			WHERE sq.survey_no = #{surveyNo}
+			WHERE sq.survey_no = #{surveyNo};
 	
 		</select>
 		
@@ -328,7 +328,7 @@
 			,s.survey_deadline_date surveyDeadlineDate
 			,s.lecture_no lectureNo
 			FROM survey s
-			WHERE s.survey_no = #{surveyNo}
+			WHERE s.survey_no = #{surveyNo};
 			
 		</select>
 		
@@ -339,7 +339,7 @@
 			FROM survey_question_list AS ql
 			INNER JOIN survey_question AS sq
 			ON ql.survey_question_list_no = sq.survey_question_list_no
-			WHERE sq.survey_question_type = '객관식'
+			WHERE sq.survey_question_type = '객관식';
 		</select>
 		
 		<select id="getQuestionList"
@@ -350,7 +350,7 @@
 			,survey_question_list_name surveyQuestionListName
 			,survey_question_list_content surveyQuestionListContent
 			FROM survey_question_list
-			WHERE survey_question_list_no = #{surveyQuestionListNo}
+			WHERE survey_question_list_no = #{surveyQuestionListNo};
 		</select>
 		
 		<update id="updateSurveyQuestionList"
@@ -359,7 +359,7 @@
 				survey_question_list_name = #{surveyQuestionListName}
 				,survey_question_list_content = #{surveyQuestionListContent} 
 				,survey_question_list_update_date = NOW()
-				WHERE survey_question_list_no = #{surveyQuestionListNo}
+				WHERE survey_question_list_no = #{surveyQuestionListNo};
 		</update>
 		
 		<select id="selectMultipleSurveyQuestion"
@@ -379,7 +379,7 @@
 			ON sq.survey_no = s.survey_no
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
-			WHERE sq.survey_no = #{surveyNo}
+			WHERE sq.survey_no = #{surveyNo};
 		</select>
 		
 		<delete id="deleteSurveyQuestion"
@@ -387,7 +387,7 @@
 			DELETE
 			FROM survey_question 
 			WHERE survey_no = #{surveyNo}
-			AND survey_question_no = #{surveyQuestionNo}
+			AND survey_question_no = #{surveyQuestionNo};
 		</delete>
 		
 		<select id="selectAddSurveyQuestion"
@@ -408,7 +408,7 @@
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			WHERE sq.survey_no = #{surveyNo}
-			AND sq.survey_question_no = #{surveyQuestionNo}
+			AND sq.survey_question_no = #{surveyQuestionNo};
 		</select>
 		
 		<update id="updateSurvey"
@@ -420,4 +420,98 @@
 							,survey_deadline_date = #{surveyDeadlineDate}
 			WHERE survey_no = #{surveyNo};
 		</update>
+		
+		<select id="lectureQuestionListCount"
+				resultType="map">
+			SELECT
+			ql.survey_question_list_no surveyQuestionListNo
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			WHERE sq.survey_question_type = '객관식' and s.lecture_no = #{lectureNo);
+		</select>
+		
+		<select id="getLectureAnswerCount"
+				resultType="map">
+			SELECT
+			sma.survey_no surveyNo
+			,ql.survey_question_list_no
+			,sma.survey_question_no
+			,COUNT(CASE WHEN survey_multiple_answer_content = 1 THEN 1 END)  surveyMultipleAnswerContent1
+			,COUNT(CASE WHEN survey_multiple_answer_content = 2 THEN 1 END)  surveyMultipleAnswerContent2
+			,COUNT(CASE WHEN survey_multiple_answer_content = 3 THEN 1 END)  surveyMultipleAnswerContent3
+			,COUNT(CASE WHEN survey_multiple_answer_content = 4 THEN 1 END)  surveyMultipleAnswerContent4
+			,COUNT(CASE WHEN survey_multiple_answer_content = 5 THEN 1 END)  surveyMultipleAnswerContent5
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INNER join survey_multiple_answer AS sma
+			ON sma.survey_question_no = sq.survey_question_no AND sq.survey_no = sma.survey_no
+			WHERE s.lecture_no = #{lectureNo}
+			GROUP BY ql.survey_question_list_no;
+		</select>
+		
+		<select id="getLectureAnswerAverage"
+				resultType="map"
+				parameterType="kr.co.nft.lms.vo.SurveyMultipleAnswer">
+			SELECT
+			AVG(sma.survey_multiple_answer_content) surveyMultipleAnswerContent 
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INner join survey_multiple_answer AS sma
+			ON sma.survey_question_no = sq.survey_question_no AND sq.survey_no = sma.survey_no
+			WHERE s.lecture_no = #{lectureNo}
+			GROUP BY ql.survey_question_list_no;
+		</select>
+		
+		<select id="getLectureMultipleSurveyAnswer"
+				resultType="map">
+			
+			SELECT
+			sq.survey_question_list_no surveyQuestionListNo
+			,sq.survey_no surveyNo
+			,sq.survey_question_no surveyQuestionNo
+			,ql.survey_question_list_name surveyQuestionListName
+			,sm.member_id memberId
+			,sm.survey_answer_type surveyAnswerType
+			,group_concat(sm.survey_multiple_answer_content separator ', ') surveyMultipleAnswerContent
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON sq.survey_no = s.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INNER join survey_multiple_answer AS sm
+			ON sm.survey_question_no = sq.survey_question_no AND sq.survey_no = sm.survey_no
+			WHERE s.lecture_no = #{lectureNo}
+			GROUP BY sq.survey_question_list_no;
+		</select>
+		
+		<select id="getLectureShortSurveyAnswer"
+				resultType="map">
+			SELECT
+			sq.survey_question_list_no surveyQuestionListNo
+			,ss.survey_no surveyNo
+			,ss.survey_question_no surveyQuestionNo
+			,ql.survey_question_list_name surveyQuestionListName
+			,ss.member_id memberId
+			,ss.survey_answer_type surveyAnswerType
+			,group_concat(ss.survey_short_answer_content separator ', ') AS surveyShortAnswerContent	
+			FROM survey s
+			INNER JOIN survey_question AS sq
+			ON s.survey_no = sq.survey_no
+			INNER JOIN survey_question_list AS ql
+			ON sq.survey_question_list_no = ql.survey_question_list_no
+			INNER JOIN survey_short_answer AS ss 
+			ON sq.survey_question_no = ss.survey_question_no AND sq.survey_no = ss.survey_no
+			WHERE s.lecture_no = #{lectureNo}
+			GROUP BY sq.survey_question_list_no;
+			
+		</select>
 </mapper>

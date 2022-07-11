@@ -73,4 +73,14 @@ public class SurveyRestController {
 		
 		return returnMap;
 	}
+	
+	
+	@GetMapping("/rest/teacher/survey/getSurveyLectureStatstics")
+	public Map<String,Object> getSurveyLectureStatstics(@RequestParam(name="lectureNo") int lectureNo){
+		
+		Map<String,Object> returnMap = surveyService.getSurveyLectureAnswerStatistics(lectureNo);
+		
+		return returnMap;
+		
+	}
 }

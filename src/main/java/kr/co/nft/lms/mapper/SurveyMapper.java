@@ -53,9 +53,8 @@ public interface SurveyMapper {
 	int insertSurveyShortAnswer(SurveyAnswer surveyShortAnswer);
 	
 	// 전체 설문조사 답변 확인 (리스트형식으로 레프트 조인)
-	List<Map<String,Object>> getMultipleSurveyAnswer();
-	
-	List<Map<String,Object>> getShortSurveyAnswer();
+	List<Map<String,Object>> getMultipleSurveyAnswer(); //객관식
+	List<Map<String,Object>> getShortSurveyAnswer(); //주관식
 	
 	// 설문조사 질문별 점수평균 (double값 뱉음)
 	List<SurveyMultipleAnswer> getAnswerAverage();
@@ -65,6 +64,19 @@ public interface SurveyMapper {
 	
 	// 설문조사 차트 만들 때 객관식을 카운트
 	List<Map<String, Object>> questionListCount();
+	
+	// 설문조사 과목,질문별 점수평균 (double값 뱉음)
+	List<SurveyMultipleAnswer> getLectureAnswerAverage(int lectureNo);
+	
+	// 설문조사 과목,질문별, 점수 카운트 (리스트 형식)
+	List<Map<String, Object>> getLectureAnswerCount(int lectureNo);
+	
+	// 설문조사 과목별 차트 만들 때 객관식을 카운트
+	List<Map<String, Object>> lectureQuestionListCount(int lectureNo);
+	
+	// 과목별 설문조사 답변 확인 (리스트형식으로 레프트 조인)
+	List<Map<String,Object>> getLectureMultipleSurveyAnswer(int lectureNo); //객관식
+	List<Map<String,Object>> getLectureShortSurveyAnswer(int lectureNo); //주관식
 	
 	// 설문조사 질문 항목정보 가져오기
 	SurveyQuestionList getQuestionList(int surveyQuestionListNo);
@@ -86,8 +98,7 @@ public interface SurveyMapper {
 	
 	// 설문조사 업데이트로 추가된 질문 찾기
 	List<Map<String,Object>> selectAddSurveyQuestion(int surveyNo, int surveyQuestionNo);
-	
-	
+
 	// 설문조사 업데이트
 	int updateSurvey(Survey survey);
 }

@@ -77,12 +77,60 @@ public class SurveyService {
 		
 	}
 	
+	public Map<String,Object> getSurveyLectureAnswerStatistics(int lectureNo){
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] "+ A.R);
+		Map<String,Object> returnMap = new HashMap<>();
+
+			List<SurveyMultipleAnswer> answerAverage = surveyMapper.getLectureAnswerAverage(lectureNo);
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerAverage : " + answerAverage + A.R);
+			
+			List<Map<String,Object>> answerCount = surveyMapper.getLectureAnswerCount(lectureNo);
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] answerCount : " + answerCount + A.R);
+			
+			
+			
+			
+			List<Map<String,Object>> questionListCount = surveyMapper.lectureQuestionListCount(lectureNo);
+			log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] questionListCount : " + questionListCount + A.R);
+			
+			
+			returnMap.put("questionListCount", questionListCount);
+			returnMap.put("answerAverage", answerAverage);
+			returnMap.put("answerCount", answerCount);
+			
+
+		log.debug(A.D+"[SurveyService.getSurveyAnswerStatistics] returnMap : " + returnMap + A.R);
+		
+		return returnMap;
+		
+		
+	}
+	
 	public Map<String,Object> getAllSurveyAnswer() {
 		
 		List<Map<String,Object>> shortAnswer = surveyMapper.getShortSurveyAnswer();
 		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] shortAnswer : " + shortAnswer + A.R);
 		
 		List<Map<String,Object>> multipleAnswer = surveyMapper.getMultipleSurveyAnswer();
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] multipleAnswer : " + multipleAnswer + A.R);
+		
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("shortAnswer", shortAnswer);
+		returnMap.put("multipleAnswer", multipleAnswer);
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] returnMap : " + returnMap + A.R);
+		
+		return returnMap;
+		
+		 
+	}
+	
+		public Map<String,Object> getLectureSurveyAnswer(int lectureNo) {
+		
+		List<Map<String,Object>> shortAnswer = surveyMapper.getLectureShortSurveyAnswer(lectureNo);
+		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] shortAnswer : " + shortAnswer + A.R);
+		
+		List<Map<String,Object>> multipleAnswer = surveyMapper.getLectureMultipleSurveyAnswer(lectureNo);
 		log.debug(A.D+"[SurveyService.getAllSurveyAnswer] multipleAnswer : " + multipleAnswer + A.R);
 		
 		

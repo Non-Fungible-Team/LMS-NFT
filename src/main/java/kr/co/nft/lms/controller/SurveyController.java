@@ -79,6 +79,23 @@ public class SurveyController {
 		return "survey/getSurveyStatistics";
 	}
 	
+	@GetMapping("/teacher/survey/getSurveyLectureStatistics")
+	public String getSurveyLectureStatistics(Model model, HttpSession session) {
+		Lecture lecture = (Lecture)session.getAttribute("sessionLecture");
+		// 과목별 답변 가져오기 
+		Map<String, Object> returnMap = surveyService.getLectureSurveyAnswer(lecture.getLectureNo());
+		
+		log.debug(A.D+"[SurveyController.getSurveyStatistics] returnMap : " + returnMap + A.R); // 디버깅
+		
+		model.addAttribute("multipleAnswer",returnMap.get("multipleAnswer"));
+		model.addAttribute("shortAnswer",returnMap.get("shortAnswer"));
+		model.addAttribute("questionListCount",returnMap.get("questionListCount"));
+		
+		
+		
+		return "survey/getSurveyLectureStatistics";
+	}
+	
 	@GetMapping("/manager/survey/updateSurveyQuestionList")
 	public String updateSurveyQuestionList(Model model 
 				,@RequestParam(name="surveyQuestionListNo") int surveyQuestionListNo) {
@@ -228,6 +245,7 @@ public class SurveyController {
 		model.addAttribute("surveyList", returnMap.get("surveyList")); // value를 object로 넘겨줌
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("lectureNo",lecture.getLectureNo());
 		
 		return "survey/getSurveyListByPage";
 	}
