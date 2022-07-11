@@ -23,13 +23,22 @@
 <script>
 	$(document).ready(function(){
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		
 		$('#addLectureRoom').click(function() {
+			
+			$('#lectureRoomNameHelper').text('');
+			$('#lectureRoomLocationHelper').text('');
+			$('#lectureRoomPeopleHelper').text('');		
+			
 			if($('#lectureRoomName').val() == '') {
-				alert('강의실 이름을 입력하세요');
+				$('#lectureRoomNameHelper').text('강의실 이름을 입력하세요');
+				$('#lectureRoomNameHelper').focus();
 			} else if($('#lectureRoomLocation').val() == '') {
-				alert('강의실 위치를 입력하세요');
+				$('#lectureRoomLocationHelper').text('강의실 위치를 입력하세요');
+				$('#lectureRoomLocationHelper').focus();
 			} else if($('#lectureRoomPeople').val() == '') {
-				alert('강의실 인원을 입력하세요');
+				$('#lectureRoomPeopleHelper').text('강의실 인원을 입력하세요');	
+				$('#lectureRoomPeopleHelper').focus();
 			} else {
 				$('#addForm').submit();
 			}
@@ -90,8 +99,13 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            	<form method="post" id="addForm" action="${pageContext.request.contextPath}/teacher/lecture/addLectureRoom">
                             <div class="form-group">
                                lectureRoom name : <input type="text" name="lectureRoomName" class="form-control" id="lectureRoomName">
+                               <span id="lectureRoomNameHelper" class="helper" style="color: red;"></span>
+                               <br>
                                lectureRoom location : <input type="text" name="lectureRoomLocation" class="form-control" id="lectureRoomLocation">
+                               <span id="lectureRoomLocationHelper" class="helper" style="color: red;"></span>
+                               <br>
                                lectureRoom people : <input type="number" name="lectureRoomPeople" class="form-control" id="lectureRoomPeople">
+                               <span id="lectureRoomPeopleHelper" class="helper" style="color: red;"></span>
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="addLectureRoom"><i class="fas fa-check"></i>입력</button>
                         </form>

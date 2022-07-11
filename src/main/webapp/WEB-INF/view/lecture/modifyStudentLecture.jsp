@@ -24,12 +24,24 @@
 	$(document).ready(function(){
 		
 		$('#modifyStudentLecture').click(function(){
+			
+			$('#lectureNoHelper').text('');
+			$('#memberIdHelper').text('');
+			$('#studentLectureJobHelper').text('');
+			$('#studentLectureLegistrationDateHelper').text('');
+			
 			if($('#memberId').val() == '-1') {
-				alert('학생을 선택하세요');
+				$('#lectureNoHelper').text('강의를 선택하세요');
+				$('#lectureNoHelper').focus('');
+			} else if($('#memberId').val() == '-1') {
+				$('#memberIdHelper').text('학생을 선택하세요');
+				$('#memberIdHelper').focus();
 			} else if($('#studentLectureJob').val() == '-1') {
-				alert('취업 여부를 선택하세요');
+				$('#studentLectureJobHelper').text('취업 여부를 선택하세요');
+				$('#studentLectureJobHelper').focus();
 			} else if($('#studentLectureLegistrationDate').val() == '') {
-				alert('등록일을 입력하세요');
+				$('#studentLectureLegistrationDateHelper').text('등록일을 입력하세요');
+				$('#studentLectureLegistrationDateHelper').focus();
 			} else {
 				$('#modifyForm').submit();
 			}
@@ -73,6 +85,8 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 				                      	</c:if>
                            			</c:forEach>
                        		   </select>
+                       		   <span id="lectureNoHelper" class="helper" style="color: red;"></span>
+                       		   <br>
                                학생 : <select name="memberId" id="memberId" class="form-control">
                                			<option value="-1">학생 선택</option>
                                			<c:forEach var ="s" items="${ studentTotalList }">
@@ -84,6 +98,8 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 					                      	</c:if>
                                			</c:forEach>
                               		 </select>
+                              		 <span id="memberIdHelper" class="helper" style="color: red;"></span>
+                              		 <br>
                                취업 여부 : <select name="studentLectureJob" id="studentLectureJob" class="form-control">
 		                               		<option value="-1">취업 여부 선택</option>
 		                               		<c:if test="${ studentLectureOne.studentLectureJob == 'Y' }">
@@ -95,7 +111,11 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 	                              				<option value="N" selected>N</option>
 					                      	</c:if>
 	                              	    </select>
+	                              	    <span id="studentLectureJobHelper" class="helper" style="color: red;"></span>
+	                              	    <br>
                                등록일 : <input type="date" name="studentLectureLegistrationDate" class="form-control" id="studentLectureLegistrationDate" value="${ studentLectureOne.studentLectureLegistrationDate }">
+                               		  <span id="studentLectureLegistrationDateHelper" class="helper" style="color: red;"></span>
+                               		  <br>
                                수료일 : <input type="date" name="studentLectureEndDate" class="form-control" id="studentLectureEndDate" value="${ studentLectureOne.studentLectureEndDate }">
                                전체 성적 : <input type="number" name="studentLectureScore" class="form-control" id="studentLectureScore" value="${ studentLectureOne.studentLectureScore }">
                             </div>

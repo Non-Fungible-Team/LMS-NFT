@@ -26,12 +26,20 @@
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		
 		$('#updateLectureSchedule').click(function(){
+			
+			$('#lectureScheduleDateHelper').text('');
+			$('#lectureScheduleStartDateHelper').text('');
+			$('#lectureScheduleEndDateHelper').text('');
+			
 			if($('#lectureScheduleDate').val() == '') {
-				alert('날짜를 입력하세요');
+				$('#lectureScheduleDateHelper').text('날짜를 입력하세요');
+				$('#lectureScheduleDateHelper').focus();
 			} else if($('#lectureScheduleStartDate').val() == '') {
-				alert('수업 시작 시간을 입력하세요');
+				$('#lectureScheduleStartDateHelper').text('수업 시작 시간을 입력하세요');
+				$('#lectureScheduleStartDateHelper').focus();
 			} else if($('#lectureScheduleEndDate').val() == '') {
-				alert('수업 종료 시간을 입력하세요');
+				$('#lectureScheduleEndDateHelper').text('수업 종료 시간을 입력하세요');
+				$('#lectureScheduleEndDateHelper').focus();
 			} else {
 				$('#updateForm').submit();
 			}
@@ -60,8 +68,13 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
                             <div class="form-group">
                             	<input type="hidden" name="lectureNo" id="lectureNo" value="${ lectureScheduleOne.lectureNo }">
                                날짜 : <input type="date" name="lectureScheduleDate" id="lectureScheduleDate" class="form-control" value="${ lectureScheduleOne.lectureScheduleDate }">
+                               <span id="lectureScheduleDateHelper" class="helper" style="color: red;"></span>
+                               <br>
                                수업 시작 시간 : <input type="time" name="lectureScheduleStartDate" id="lectureScheduleStartDate" class="form-control" value="${ lectureScheduleOne.lectureScheduleStartDate }">
+                               <span id="lectureScheduleStartDateHelper" class="helper" style="color: red;"></span>
+                               <br>
                                수업 종료 시간 : <input type="time" name="lectureScheduleEndDate" id="lectureScheduleEndDate" class="form-control" value="${ lectureScheduleOne.lectureScheduleEndDate }">
+                               <span id="lectureScheduleEndDateHelper" class="helper" style="color: red;"></span>
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="updateLectureSchedule">
                           		<i class="fas fa-check"></i> 입력

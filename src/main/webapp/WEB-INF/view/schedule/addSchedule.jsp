@@ -26,12 +26,20 @@
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		
 		$('#addSchedule').click(function(){
+			
+			$('#scheduleTitleHelper').text('');
+			$('#scheduleContentHelper').text('');
+			$('#scheduleDateHelper').text('');
+			
 			if($('#scheduleTitle').val() == '') {
-				alert('제목를 입력하세요');
+				$('#scheduleTitleHelper').text('제목를 입력하세요');
+				$('#scheduleTitleHelper').focus('');
 			} else if($('#scheduleContent').val() == '') {
-				alert('내용을 입력하세요');
+				$('#scheduleContentHelper').text('내용을 입력하세요');
+				$('#scheduleContentHelper').focus('');
 			} else if($('#scheduleDate').val() == '') {
-				alert('날짜를 입력하세요');
+				$('#scheduleDateHelper').text('날짜를 입력하세요');
+				$('#scheduleDateHelper').focus('');
 			} else {
 				$('#addForm').submit();
 			}
@@ -59,9 +67,15 @@ data-sidebartype="full"  data-sidebar-position="fixed" data-header-position="fix
 		            	<form method="post" id="addForm" class="mt-4" action="${pageContext.request.contextPath}/manager/schedule/addScheduleAction">
                             <div class="form-group">
                                제목 : <input type="text" name="scheduleTitle" id="scheduleTitle" class="form-control">
+                               <span id="scheduleTitleHelper" class="helper" style="color: red;"></span>
+                               <br>
                                작성자 : <input type="text" name="scheduleMemberId" id="scheduleMemberId" class="form-control" value="${ sessionLoginMember.memberId }" readonly="readonly">
                                내용 : <textarea name="scheduleContent" id="scheduleContent" rows="5" cols="33" class="form-control"></textarea>
+                               <span id="scheduleContentHelper" class="helper" style="color: red;"></span>
+                               <br>
                                날짜 : <input type="date" name="scheduleDate" id="scheduleDate" class="form-control">
+                               <span id="scheduleDateHelper" class="helper" style="color: red;"></span>
+                               <br>
                             </div>
                             <button type="button" class="btn btn-outline-success btn-rounded" id="addSchedule">
                           		<i class="fas fa-check"></i> 입력
