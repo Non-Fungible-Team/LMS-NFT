@@ -23,6 +23,27 @@
 		$('document').ready(function(){
 	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		});
+		
+		new Chart(document.getElementById("doughnut-chart"), {
+		    type: 'doughnut',
+		    data: {
+		      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+		      datasets: [
+		        {
+		          label: "Population (millions)",
+		          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+		          data: [2478,5267,734,784,433]
+		        }
+		      ]
+		    },
+		    options: {
+		      title: {
+		        display: true,
+		        text: 'Predicted world population (millions) in 2050'
+		      }
+		    }
+		});
+		
   	</script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -37,7 +58,6 @@
 							<div class="card-body">
 								<h4 class="card-title">수강목록</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
 										<thead>
 											<tr>
@@ -109,6 +129,14 @@
 										</form>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">강사별 강의시간 통계 차트</h4>
+								<div id="morris-donut-chart"></div>
 							</div>
 						</div>
 					</div>
