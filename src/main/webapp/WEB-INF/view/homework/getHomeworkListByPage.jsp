@@ -249,6 +249,8 @@ getCntGraph();
 									    </div>
 									    </c:if>
 									</div>
+									<br>
+									<h4 class="card-title">과제 통계</h4>
 									<div class="row">
 									<div class="col-lg-6 col-md-6">
 									    <div class="card">
