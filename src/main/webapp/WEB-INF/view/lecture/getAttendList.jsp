@@ -34,30 +34,65 @@
 			var url = '${pageContext.request.contextPath}/rest/manager/lecture/getAttendStatusChart?lectureNo=' + ${lectureNo}; 
 			console.log(url);
 			
+			// 차트에서 사용할 모델(데이터)로 가공
+			var chartDataAverage = []; // 전체 날짜에 따른 본인의 출석률
+			var chartDataCnt = []; // 본인의 출석 날짜 수
+			var chartDataTotalCnt = []; // 총 진행된 출석 날짜 수
+			var chartDataMemberId = []; // 학생 아이디
+			var strRGBA2 = []; // 차트의 랜덤 색상
+			
 			$.ajax({
 				type:'get'
 				, url: url
 				, success: function(data){ // 백엔드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
 					console.log(data);
-					var attendStatusCnt = data[1].attendStatusCnt;
-					var attendStatusAverage = data[1].attendStatusAverage;
-					var memberId = data[1].memberId;
-					console.log(attendStatusCnt);
-					console.log(attendStatusAverage);
-					console.log(memberId);
+					console.log(data.length);
+					//console.log(data[1].attendStatusTotalCnt);
+					
+					for(var i = 0; i < data.length; i++){
+						// 차트 랜덤 색상
+						var RGB_1 = Math.floor(Math.random() * (255 + 1))
+						var RGB_2 = Math.floor(Math.random() * (255 + 1))
+						var RGB_3 = Math.floor(Math.random() * (255 + 1))
+						var strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.3)'
+						
+						var attendStatusCnt = data[i].attendStatusCnt;
+						var attendStatusAverage = data[i].attendStatusAverage;
+						var attendStatusTotalCnt = data[i].attendStatusTotalCnt;
+						var memberId = data[i].studentName;
+						console.log(attendStatusCnt);
+						console.log(attendStatusAverage);
+						console.log(attendStatusTotalCnt);
+						console.log(memberId);
+						
+						chartDataCnt.push([attendStatusCnt]);
+						chartDataAverage.push([attendStatusAverage]);
+						chartDataTotalCnt.push([attendStatusTotalCnt]);
+						chartDataMemberId.push([memberId]);
+						strRGBA2.push([strRGBA]);
+					}
+					
+					console.log(chartDataCnt);
+					console.log(chartDataAverage);
+					console.log(chartDataTotalCnt);
+					console.log(chartDataMemberId);
+					console.log(strRGBA2);
+					
+					chartDataTotalCnt = Math.max.apply(null, chartDataTotalCnt);
+					console.log(chartDataTotalCnt);
 					
 					new Chart("bar-chart-horizontal", {
-							type:"horizontalBar"
-							, data:{
-								labels:[memberId]
-								, datasets:[{
-								label:"출석"
-								, backgroundColor:["#22ca80","#e83e8c","#5f76e8","#fdc16a","#343a40",]
-								, data: [attendStatusAverage]}]
-								},
-								options:{legend:{display:0}
-								, title:{display:1,text:" 총 진행된 출석 날짜 " + attendStatusCnt +"일"}}
-					});		
+						type:"horizontalBar"
+						, data:{
+							labels:chartDataMemberId
+							, datasets:[{
+							label:"출석"
+							, backgroundColor: strRGBA2
+							, data: chartDataAverage}]
+							},
+							options:{legend:{display:0}
+							, title:{display:1,text:" 총 진행된 출석 날짜 " + chartDataTotalCnt +"일"}}
+					});
 				}
 			});
 		}
