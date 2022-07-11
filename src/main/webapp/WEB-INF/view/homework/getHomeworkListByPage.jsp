@@ -30,66 +30,7 @@
 	$('document').ready(function(){
 	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 	    
-	    getGraph();
-	    
-	    function getGraph(){
-	    	var url = '${pageContext.request.contextPath}/rest/all/homework/getHomeworkChart'
-	    	
-	    	var chartLectureName = [];
-	    	var chartScore = [];
-	    	var chartLecutreNo = [];
-	    	$.ajax({
-	    		type:'get'
-	    		,url: url
-	    		,success: function(data){
-	    			console.log(data);
-	    			var lectureName = [];
-	    			var score = [];
-	    			
-	    			for(var i =0; i<data.length; i++){
-	    				chartLectureName.push(data[i].lectureName);
-	    				chartScore.push(data[i].score);
-	    				
-	    			}
-	    		}
-	    	});
-	    	
-	    	var borderColor =[];
-			borderColor.push('rgb(153, 102, 255)');
-			borderColor.push('rgb(255, 99, 132)');
-			borderColor.push('rgb(153, 102, 255)');
-			borderColor.push('rgb(54, 162, 235)');
-			
-			var data = {
-					labels: chartLectureName,
-					datasets: [
-						{
-					    label: 'score',
-					     data: chartScore,
-					     borderColor: borderColor,
-					     backgroundColor: borderColor
-			  			}
-					]
-				};
-				new Chart("homeworkChart", {
-					type: 'bar',
-					data: data,
-					options: {
-						responsive: true,
-						plugins: {
-							legend: {
-								display : false  			    	  
-							},
-							title: {
-								display: true,
-								text: '강의별 과제 점수'
-							}
-						}
-					}
-				});	
-	    } 
-	    
-	    getCntGraph();
+getCntGraph();
 	    
 	    function getCntGraph(){
 	    	var url = '${pageContext.request.contextPath}/rest/all/homework/getHomeworkCntChart'
@@ -114,10 +55,10 @@
 	    	});
 	    	
 	    	var borderColor =[];
-			borderColor.push('rgb(153, 102, 255)');
-			borderColor.push('rgb(255, 99, 132)');
-			borderColor.push('rgb(153, 102, 255)');
-			borderColor.push('rgb(54, 162, 235)');
+			borderColor.push('rgba(153, 102, 255, 0.5)');
+			borderColor.push('rgba(255, 99, 132, 0.5)');
+			borderColor.push('rgba(153, 102, 255, 0.5)');
+			borderColor.push('rgba(54, 162, 235, 0.5)');
 			
 			var data = {
 					labels: chartLectureName,
@@ -147,15 +88,69 @@
 					}
 				});	
 	    }
+	    
+	    getGraph();
+	    
+	    function getGraph(){
+	    	var url = '${pageContext.request.contextPath}/rest/all/homework/getHomeworkChart'
+	    	
+	    	var chartLectureName = [];
+	    	var chartScore = [];
+	    	var chartLecutreNo = [];
+	    	$.ajax({
+	    		type:'get'
+	    		,url: url
+	    		,success: function(data){
+	    			console.log(data);
+	    			var lectureName = [];
+	    			var score = [];
+	    			
+	    			for(var i =0; i<data.length; i++){
+	    				chartLectureName.push(data[i].lectureName);
+	    				chartScore.push(data[i].score);
+	    				
+	    			}
+	    		}
+	    	});
+	    	
+	    	var borderColor =[];
+			borderColor.push('rgba(153, 102, 255, 0.5)');
+			borderColor.push('rgba(255, 99, 132, 0.5)');
+			borderColor.push('rgba(153, 102, 255, 0.5)');
+			borderColor.push('rgba(54, 162, 235, 0.5)');
+			
+			var data = {
+					labels: chartLectureName,
+					datasets: [
+						{
+					    label: 'score',
+					     data: chartScore,
+					     borderColor: borderColor,
+					     backgroundColor: borderColor
+			  			}
+					]
+				};
+				new Chart("homeworkChart", {
+					type: 'bar',
+					data: data,
+					options: {
+						responsive: true,
+						plugins: {
+							legend: {
+								display : false  			    	  
+							},
+							title: {
+								display: true,
+								text: '강의별 과제 평균 점수'
+							}
+						}
+					}
+				});	
+	    } 
+	    
+	    
 	 
 	});
-</script>
-<script type="text/javascript">
-$('document').ready(function(){
-	
-	
-});
-
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
