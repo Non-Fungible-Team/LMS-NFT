@@ -56,8 +56,8 @@
 													
 													<c:forEach var="l" items="${studentLectureList}" varStatus="status">
 														<tr>
-															<!-- 배열로 값을 묶어서 -> controller -->
-															<td><input type="hi" name="attendList[${status.index}].lectureNo" value="${l.lectureNo}"></td>
+															<!-- 리스트로 값을 묶어서 -> controller -->
+															<td><input type="hidden" name="attendList[${status.index}].lectureNo" value="${l.lectureNo}"></td>
 															<td><input type="text" name="attendList[${status.index}].attendDate" value="${attendDate}" readonly="readonly" style="border: none;"></td>
 															<td><input type="text" name="attendList[${status.index}].lectureName" value="${l.lectureName}" readonly="readonly" style="border: none;"></td>
 															<td><input type="text" name="attendList[${status.index}].memberId" value="${l.memberId}" readonly="readonly" style="border: none;"></td>
