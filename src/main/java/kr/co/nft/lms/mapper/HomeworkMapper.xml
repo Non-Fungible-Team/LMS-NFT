@@ -312,5 +312,33 @@
 		WHERE 
 			homework_submit_no = #{homeworkSubmitNo}
 	</update>
+	
+	<!-- Chart -->
+	<select id="selectHomeworkChart"
+			resultType="map">
+			SELECT 
+				h.lecture_no lectureNo	
+				,l.lecture_name lectureName 
+				,AVG(hs.homework_submit_score) score 
+			FROM homework h
+			JOIN homework_submit hs
+			ON h.homework_no = hs.homework_no
+			JOIN lecture l
+			ON h.lecture_no = l.lecture_no
+			GROUP BY h.lecture_no
+	
+	</select>
+	
+	<select id="selectHomeworkCntChart"
+			resultType="map">
+			SELECT h.lecture_no lectureNo
+					,l.lecture_name lectureName
+					,COUNT(h.homework_no) cnt 
+			FROM homework h
+			JOIN lecture l
+			ON h.lecture_no = l.lecture_no
+			GROUP BY h.lecture_no
+	
+	</select>
 
 </mapper>

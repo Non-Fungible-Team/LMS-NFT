@@ -20,11 +20,148 @@
 <script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- chart.js -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 </head>
 <script>
 	$('document').ready(function(){
 	    $("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+	    
+	    getGraph();
+	    
+	    function getGraph(){
+	    	var url = '${pageContext.request.contextPath}/rest/all/homework/getHomeworkChart'
+	    	
+	    	var chartLectureName = [];
+	    	var chartScore = [];
+	    	var chartLecutreNo = [];
+	    	$.ajax({
+	    		type:'get'
+	    		,url: url
+	    		,success: function(data){
+	    			console.log(data);
+	    			var lectureName = [];
+	    			var score = [];
+	    			
+	    			for(var i =0; i<data.length; i++){
+	    				lectureName = data[i].lectureName;
+	    				score = data[i].score;
+	    				
+	    				chartLectureName.push([lectureName]);
+	    				chartScore.push([score]);
+	    				
+	    			}
+	    		}
+	    	});
+	    	
+	    	var borderColor =[];
+			borderColor.push('rgb(153, 102, 255)');
+			borderColor.push('rgb(255, 99, 132)');
+			borderColor.push('rgb(153, 102, 255)');
+			borderColor.push('rgb(54, 162, 235)');
+			
+			var data = {
+					labels: chartLectureName,
+					datasets: [
+						{
+					    label: 'score',
+					     data: chartScore,
+					     borderColor: borderColor,
+					     backgroundColor: borderColor,
+			  			}
+					]
+				};
+				new Chart("homeworkChart", {
+					type: 'bar',
+					data: data,
+					options: {
+						responsive: true,
+						plugins: {
+							legend: {
+								display : false  			    	  
+							},
+							title: {
+								display: true,
+								text: '강의별 과제 점수'
+							}
+						}
+					}
+				});	
+	    } 
+	    
+	    getCntGraph();
+	    
+	    function getCntGraph(){
+	    	var url = '${pageContext.request.contextPath}/rest/all/homework/getHomeworkCntChart'
+	    	
+	    	var chartLectureName = [];
+	    	var chartCnt = [];
+	    	var chartLecutreNo = [];
+	    	$.ajax({
+	    		type:'get'
+	    		,url: url
+	    		,success: function(data){
+	    			console.log(data);
+	    			var lectureName = [];
+	    			var cnt = [];
+	    			
+	    			for(var i =0; i<data.length; i++){
+	    				lectureName = data[i].lectureName;
+	    				cnt = data[i].cnt;
+	    				
+	    				chartLectureName.push([lectureName]);
+	    				chartCnt.push([cnt]);
+	    				
+	    			}
+	    		}
+	    	});
+	    	
+	    	var borderColor =[];
+			borderColor.push('rgb(153, 102, 255)');
+			borderColor.push('rgb(255, 99, 132)');
+			borderColor.push('rgb(153, 102, 255)');
+			borderColor.push('rgb(54, 162, 235)');
+			
+			var data = {
+					labels: chartLectureName,
+					datasets: [
+						{
+					    label: 'cnt',
+					     data: chartCnt,
+					     borderColor: borderColor,
+					     backgroundColor: borderColor,
+			  			}
+					]
+				};
+				new Chart("homeworkCntChart", {
+					type: 'bar',
+					data: data,
+					options: {
+						responsive: true,
+						plugins: {
+							legend: {
+								display : false  			    	  
+							},
+							title: {
+								display: true,
+								text: '강의별 과제 수'
+							}
+						}
+					}
+				});	
+	    }
+	 
 	});
+</script>
+<script type="text/javascript">
+$('document').ready(function(){
+	
+	
+});
+
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -42,6 +179,7 @@
 									<input type="button" class="btn btn-outline-success btn-rounded" style="float: right" value="목록">
 								</a>
 								<div class="mt-2" style="height: auto; width: auto;">
+								
 									<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 									<div class="table-responsive">
 										<table id="zero_config" class="table table-striped table-bordered">
@@ -122,6 +260,23 @@
 									    </div>
 									    </c:if>
 									</div>
+									<div class="row">
+									<div class="col-lg-6 col-md-6">
+									    <div class="card">
+									        <div class="card-body">
+												<canvas id="homeworkCntChart" style=none; width="300" height="230"></canvas>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6">
+									    <div class="card">
+									        <div class="card-body">
+												<canvas id="homeworkChart" style=none; width="300" height="230"></canvas>
+											</div>
+										</div>
+									</div>
+								</div>
+									
 								</div>
 							</div>
 						</div>
