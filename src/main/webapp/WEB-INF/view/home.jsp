@@ -50,10 +50,10 @@
 				});
 		
 				const borderColor =[];
-				borderColor.push('rgb(153, 102, 255)');
-				borderColor.push('rgb(255, 99, 132)');
-				borderColor.push('rgb(153, 102, 255)');
-				borderColor.push('rgb(54, 162, 235)');
+				borderColor.push('rgba(153, 102, 255, 0.5)');
+				borderColor.push('rgba(255, 99, 132, 0.5)');
+				borderColor.push('rgba(153, 102, 255, 0.5)');
+				borderColor.push('rgba(54, 162, 235, 0.5)');
 		
 				const data = {
 					labels: labels,
