@@ -82,6 +82,9 @@ public interface MemberMapper {
 	
 	// -------------- 개인 정보 수정 ------------------ // 
 	
+	// 이미 사진 등록한 사용자가 사진을 삭제하고 재등록 하는 경우
+	int deleteMemberPhoto(Member member);
+	
 	// 비밀번호 변경시 비밀번호 이력 테이블 함께 변경 
 	int updatePwHistory(Member member);
 	

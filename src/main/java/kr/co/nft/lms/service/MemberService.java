@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -256,7 +258,10 @@ public class MemberService {
 	}
 	
 	// Member, Student, Member_Photo 테이블 활용하여 학생 정보 수정 
-	public int modifyStudent(AddStudent modifyStudent) {
+	public int modifyStudent(AddStudent modifyStudent
+							, MemberPhoto memberPhoto
+							, MemberUploadPhoto memberUploadPhoto
+							, HttpServletRequest request) {
 		// 매개 변수 확인 
 		log.debug(A.Z+"[MemberService.getStudentOne.param] modifyStudent : "+modifyStudent+A.R);
 		// mapper 요청 결과 저장할 변수 초기화 
@@ -273,8 +278,113 @@ public class MemberService {
 		Student student = modelMapper.map(modifyStudent, Student.class);
 		row = memberMapper.updateStudentByStudentVo(student);
 		
+		String path = request.getServletContext().getRealPath("uploadFile/memberPhoto/studentPhoto/");
+		log.debug(A.Z+"[MemberService.modifyStudent]  : path "+path+A.R);
+		// 사진이 이미 포함되어 있는데 사진을 수정하려고 하는 경우 삭제 후 생성 과정 추가 
+		if(memberPhoto.getMemberId() != null) {
+			if(memberUploadPhoto.getMemberPhotoOne() != null && memberUploadPhoto.getMemberPhotoOne().getSize() > 0 && row == 1) {
+				log.debug(A.Z+"[MemberService.modifyStudent]  : "+"사진을 수정하려고 합니다."+A.R);
+				row = -1;
+				
+				row = memberMapper.deleteMemberPhoto(member);
+				log.debug(A.Z+"[MemberService.modifyStudent]  : "+"MEMBER_PHOTO 테이블 레코드가 삭제되었습니다."+A.R);
+				
+				File file = new File(path+memberPhoto.getPhotoName());
+				log.debug(A.Z+"[MemberService.modifyStudent] file : "+file+A.R);
+				file.delete();
+				
+				// 파일을 업로드했고, 파일 사이즈가 0보다 크다면 
+				if(memberUploadPhoto.getMemberPhotoOne() != null && memberUploadPhoto.getMemberPhotoOne().getSize() > 0) {
+					log.debug(A.Z+"[MemberService.modifyStudent]  : "+"첨부된 파일이 있습니다. 사진을 처음 등록하는 사용자입니다."+A.R);
+					
+					// MEMBERPHOTO 테이블 필드에 레코드를 넣기 위해 참조 타입 변수 선언 
+					memberPhoto = new MemberPhoto();
+					
+					// 파일을 저장할 때 사용할 중복되지 않는 새로운 이름 필요 
+					String photoOriginName = memberUploadPhoto.getMemberPhotoOne().getOriginalFilename();
+					
+					// originName에서 마지막 문자열 위치 
+					// 확장자만 뽑아온다 
+					String ext = photoOriginName.substring(photoOriginName.lastIndexOf("."));
+					
+					// 파일을 저장할 때 사용할 중복되지 않는 새로운 이름 필요 (UUID API 사용)
+					String filename = UUID.randomUUID().toString();
+					// 파일 이름은 UUID API로 새로 정한 이름과 확장자명을 합한 이름으로 하겠다 
+					filename =filename + ext; 
+					
+					// MEMBERPHOTO 테이블 필드에 레코드를 집어넣는다.
+					memberPhoto.setMemberId(member.getMemberId());
+					memberPhoto.setPhotoName(filename);
+					memberPhoto.setPhotoOriginName(photoOriginName);
+					memberPhoto.setPhotoType(memberUploadPhoto.getMemberPhotoOne().getContentType());
+					memberPhoto.setPhotoSize(memberUploadPhoto.getMemberPhotoOne().getSize());
+					// 값이 제대로 들어갔는지 확인 
+					log.debug(A.Z+"[MemberService.addMemberPhoto]  memberPhoto : "+memberPhoto+A.R);
+					
+					// 사진이 잘 등록되었는지 확인 
+					int rowOfInsertMemberPhoto = memberMapper.insertMemberPhoto(memberPhoto);
+					log.debug(A.Z+"[MemberService.addMemberPhoto]  rowOfInsertMemberPhoto : "+rowOfInsertMemberPhoto+A.R);
+								
+					try {
+						// multipart 안의 파일을 저장 장치로 저장 
+						memberUploadPhoto.getMemberPhotoOne().transferTo(new File(path+filename));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						// 새로운 예외 발생 시켜야지만 @Transactional 작동
+						// RuntimeException은 예외 처리를 하지 않아도 컴파일된다 
+						throw new RuntimeException();
+					} 
+				}
+			}
+		} 
+		// 기존에 포함된 사진이 없는 경우 
+		else {
+			// 파일을 업로드했고, 파일 사이즈가 0보다 크다면 
+			if(memberUploadPhoto.getMemberPhotoOne() != null && memberUploadPhoto.getMemberPhotoOne().getSize() > 0 && row == 1) {
+				log.debug(A.Z+"[MemberService.modifyStudent]  : "+"첨부된 파일이 있습니다. 사진을 처음 등록하는 사용자입니다."+A.R);
+				
+				// MEMBERPHOTO 테이블 필드에 레코드를 넣기 위해 참조 타입 변수 선언 
+				memberPhoto = new MemberPhoto();
+				
+				// 파일을 저장할 때 사용할 중복되지 않는 새로운 이름 필요 
+				String photoOriginName = memberUploadPhoto.getMemberPhotoOne().getOriginalFilename();
+				
+				// originName에서 마지막 문자열 위치 
+				// 확장자만 뽑아온다 
+				String ext = photoOriginName.substring(photoOriginName.lastIndexOf("."));
+				
+				// 파일을 저장할 때 사용할 중복되지 않는 새로운 이름 필요 (UUID API 사용)
+				String filename = UUID.randomUUID().toString();
+				// 파일 이름은 UUID API로 새로 정한 이름과 확장자명을 합한 이름으로 하겠다 
+				filename =filename + ext; 
+				
+				// MEMBERPHOTO 테이블 필드에 레코드를 집어넣는다.
+				memberPhoto.setMemberId(member.getMemberId());
+				memberPhoto.setPhotoName(filename);
+				memberPhoto.setPhotoOriginName(photoOriginName);
+				memberPhoto.setPhotoType(memberUploadPhoto.getMemberPhotoOne().getContentType());
+				memberPhoto.setPhotoSize(memberUploadPhoto.getMemberPhotoOne().getSize());
+				// 값이 제대로 들어갔는지 확인 
+				log.debug(A.Z+"[MemberService.addMemberPhoto]  memberPhoto : "+memberPhoto+A.R);
+				
+				// 사진이 잘 등록되었는지 확인 
+				int rowOfInsertMemberPhoto = memberMapper.insertMemberPhoto(memberPhoto);
+				log.debug(A.Z+"[MemberService.addMemberPhoto]  rowOfInsertMemberPhoto : "+rowOfInsertMemberPhoto+A.R);
+							
+				try {
+					// multipart 안의 파일을 저장 장치로 저장 
+					memberUploadPhoto.getMemberPhotoOne().transferTo(new File(path+filename));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					// 새로운 예외 발생 시켜야지만 @Transactional 작동
+					// RuntimeException은 예외 처리를 하지 않아도 컴파일된다 
+					throw new RuntimeException();
+				} 
+			}
+		}
 		return row;
-		
 	}
 	
 	/*
