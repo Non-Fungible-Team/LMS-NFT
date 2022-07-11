@@ -28,6 +28,15 @@ public class SurveyController {
 	@Autowired private SurveyService surveyService;
 	@Autowired private LectureService lectureService;
 	
+	@PostMapping("/manager/survey/updateSurvey")
+	public String updateSurvey(Survey survey) {
+		int row = surveyService.updateSurvey(survey);
+		log.debug(A.D+"[SurveyController.updateSurvey] row : "+ row +A.R);
+		
+		return "redirect:/all/survey/getSurveyListByPage";
+	}
+	
+	
 	@GetMapping("/manager/survey/updateSurveyForm")
 	public String updateSurveyForm(Survey survey, Model model, HttpSession session
 			,@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
@@ -44,7 +53,7 @@ public class SurveyController {
 		log.debug(A.D+"[SurveyController.insertSurvey] loginMember : " + loginMember +A.R);
 		log.debug(A.D+"[SurveyController.insertSurvey] selectQuestion : " + selectQuestion + A.R); // 디버깅
 		
-		model.addAttribute("QuestionList",selectQuestion.get("QuestionList"));
+		model.addAttribute("questionList",selectQuestion.get("questionList"));
 		model.addAttribute("surveyQuestion",selectQuestion.get("surveyQuestion"));
 		model.addAttribute("survey",selectQuestion.get("survey"));
 		model.addAttribute("loginMember",loginMember);
@@ -86,7 +95,7 @@ public class SurveyController {
 		
 		int row = surveyService.updateQuestionList(surveyQuestionList);
 		log.debug(A.D+"[SurveyController.updateSurveyQuestionList] row : "+ row + A.R); // 디버깅
-		return "redirect:survey/getSurveyQuestionListByPage";
+		return "redirect:/manager/survey/getSurveyQuestionListByPage";
 	}
 	
 	@GetMapping("/manager/survey/insertSurvey") // 설문조사 추가 (설문조사 질문도 같이)

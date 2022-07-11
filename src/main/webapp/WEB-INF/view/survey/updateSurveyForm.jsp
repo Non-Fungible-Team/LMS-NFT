@@ -13,7 +13,6 @@
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <title>Non-Fungible LMS</title>
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
@@ -30,113 +29,153 @@ $(document).ready(function(){
 	
 	var url = '${pageContext.request.contextPath}/rest/manager/survey/updateSurveyForm?surveyNo=${surveyNo}';
 	
-
-	$.ajax({
-		type:'get'
-		,url: url
-		,success: function(data){
-			console.log(data);
-			var surveyQuestion = [data.surveyQuestion];
-			console.log(surveyQuestion[0].length);
-			var l = surveyQuestion[0].length+1;
-			console.log(surveyQuestion[0].length+1);
-			appendCount = surveyQuestion[0].length+1;
-			console.log(appendCount);
-			
-			$('#multipleSurvey').click(function(){
-				if (appendCount >= 11) return; 
-					//jquery api 사용
+	update();
+	
+	function update(){
+		$.ajax({
+			type:'get'
+			,url: url
+			,success: function(data){
+				console.log(data);
+				var surveyQuestion = [data.surveyQuestion];
+				console.log(surveyQuestion[0].length);
+				var l = surveyQuestion[0].length+1;
+				console.log(surveyQuestion[0].length+1);
+				appendCount = surveyQuestion[0].length+1;
+				console.log(appendCount);
 					
-					appendCountList = appendCount-1;
-					console.log(appendCountList);
-					$('#surveyQuestionForm').append("<form id='addQuestion"+appendCount+"'><table><tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>"+appendCount+"번 질문 항목</td><td><select name='surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionContent'></td><td><button type='button' data-value='"+appendCount+"' class='addsurvayQuestion'>질문추가</button></td></tr></table></form>");
-					appendCount++;
-					console.log(appendCount);
-			});
-			
-			$('#shortSurvey').click(function(){
-				if (appendCount >= 11) return;
-					//jquery api 사용
-					
-					appendCountList = appendCount-1;
-					console.log(appendCountList);
-					$('#surveyQuestionForm').append("<form id='addQuestion"+appendCount+"'><table><tr><td>질문"+appendCount+"번<input type='hidden' name='surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>"+appendCount+"번 질문 항목</td><td><select name='surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionContent'></td><td><button type='button' data-value='"+appendCount+"' class='addsurvayQuestion'>질문 추가</button></td></tr></table></form>");
-					appendCount++;
-					console.log(appendCount);
-			});
-			
-			$('#deleteTypeButton').click(function(){
 				
-				if(appendCount < surveyQuestion[0].length+2) {
+				
+				$('#multipleSurvey').click(function(){
 					
-					appendCountList = appendCount-1;
-					var r = appendCount-2;
-					console.log("r="+r);
-					var form1 = $("#updateSurveyQuestion"+r).serialize();
-					console.log(form1);
-					var url2 = '${pageContext.request.contextPath}/rest/manager/survey/updateSurveyQuestion';
-					$.ajax({
-						type: "post"
-						,url: url2
-						,data: form1
-						,dataType: 'json'
-						,success: function(a) {
-							console.log(a);
-						}
-					});
-					$('#surveyQuestionForm2 table:last').remove();
-					appendCount--;
-					appendCountList--;
-					console.log(appendCount);
-					console.log(appendCountList);
+					if (appendCount >= 11) return; 
+						//jquery api 사용
+						
+						appendCountList = appendCount-1;
+						console.log(appendCountList);
+						$('#surveyQuestionForm').append("<form id='addQuestion"+appendCount+"'><table><tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionNo' id='surveyQuestionNo"+appendCount+"' value='"+appendCount+"'></td><td><input type='hidden' name='surveyNo' value='${surveyNo}'> </td></tr><tr><td>"+appendCount+"번 질문 항목</td><td><select name='surveyQuestionListNo' id='surveyQuestionListNo"+appendCount+"'><option value='0'>항목선택</option><c:forEach var='ql' items='${questionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionContent' id='surveyQuestionContent"+appendCount+"'></td><td><button type='button' data-value='"+appendCount+"' class='addSurvayQuestion'>질문 추가</button></td></tr></table></form>");
+						appendCount++;
+						console.log(appendCount);
+						addSurvayQuestionButton();
+				});
+				
+				$('#shortSurvey').click(function(){
 					
-					if(appendCount <= 0) {
-						appendCount = 1;
-						appendCountList = 0;
-					}
-				} else if(appendCount > surveyQuestion[0].length+1) {
-					appendCountList = appendCount-1;
-					$('#surveyQuestionForm table:last').remove();
-					appendCount--;
-					appendCountList--;
-					console.log(appendCount);
-					console.log(appendCountList);
-				}
-			});
-			
-				$('.addsurvayQuestion').click(function(){
-					var v = $(this).data('value');
-					console.log(v);
+					if (appendCount >= 11) return;
+						//jquery api 사용
+						
+						appendCountList = appendCount-1;
+						console.log(appendCountList);
+						$('#surveyQuestionForm').append("<form id='addQuestion"+appendCount+"'><table><tr><td>질문"+appendCount+"번<input type='hidden' name='surveyQuestionNo' id='surveyQuestionNo"+appendCount+"'value='"+appendCount+"'></td><td><input type='hidden' name='surveyNo' value='${surveyNo}'></td></tr><tr><td>"+appendCount+"번 질문 항목</td><td><select name='surveyQuestionListNo' id='surveyQuestionListNo"+appendCount+"'><option value='0'>항목선택</option><c:forEach var='ql' items='${questionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionContent' id='surveyQuestionContent"+appendCount+"'></td><td><button type='button' data-value='"+appendCount+"' class='addSurvayQuestion'>질문 추가</button></td></tr></table></form>");
+						appendCount++;
+						console.log(appendCount);
+						addSurvayQuestionButton();
+				});
+				
+				$('#deleteTypeButton').click(function(){
 					
-					var url3 = '${pageContext.request.contextPath}/rest/manager/survey/addSurveyQuestion';
-					var form2 = $("#addQuestion"+v).serialize();
-					var url4 = '${pageContext.request.contextPath}/rest/manager/survey/selectAddSurveyQuestion?surveyNo=${surveyNo}&surveyQuestionNo='+v;
-					console.log(form2);
-					
+					if(appendCount < surveyQuestion[0].length+2) {
+						
+						appendCountList = appendCount-1;
+						var r = appendCount-2;
+						console.log("r="+r);
+						var form1 = $("#updateSurveyQuestion"+r).serialize();
+						console.log(form1);
+						var url2 = '${pageContext.request.contextPath}/rest/manager/survey/updateSurveyQuestion';
 						$.ajax({
 							type: "post"
-							,url: url3
-							,data: form2
+							,url: url2
+							,data: form1
 							,dataType: 'json'
-							,success: function(b){
-								console.log("생성 성공");
-								console.log(b);
-								
-								$.ajax({
-									type: "get"
-									,url: url4
-									,success: function(c){
-											console.log(c)
-									}
-								});
-								$('#surveyQuestionForm table:last').remove();
+							,success: function(a) {
+								console.log(a);
 							}
 						});
+						$('#surveyQuestionForm2 table:last').remove();
+						appendCount--;
+						appendCountList--;
+						console.log(appendCount);
+						console.log(appendCountList);
+						
+						if(appendCount <= 0) {
+							appendCount = 1;
+							appendCountList = 0;
+						}
+					} else if(appendCount > surveyQuestion[0].length+1) {
+						appendCountList = appendCount-1;
+						$('#surveyQuestionForm table:last').remove();
+						appendCount--;
+						appendCountList--;
+						console.log(appendCount);
+						console.log(appendCountList);
+					}
 				});
-		}
-	});
-	
-
+				function addSurvayQuestionButton(){
+					$('.addSurvayQuestion').click(function(){
+						var v = $(this).data('value');
+						console.log("v= "+v);
+						console.log("l= "+l);
+						var url3 = '${pageContext.request.contextPath}/rest/manager/survey/addSurveyQuestion';
+						var form2 = $("#addQuestion"+v).serialize();
+						
+						if($('#surveyQuestionListNo'+l).val()==0){
+							$('#qestionFormHelper').text('질문 항목을 선택 해 주세요');
+							
+						}else if($('#surveyQuestionContent'+l).val()==''){
+							$('#qestionFormHelper').text('질문 내용을 입력 해 주세요');
+							
+						}else{
+							if(v==l){
+								$('#qestionFormHelper').text('');
+								$.ajax({
+									type: "post"
+									,url: url3
+									,data: form2
+									,dataType: 'json'
+									,success: function(b){
+										console.log("생성 성공");
+										console.log(b);
+										
+										$('#surveyQuestionForm table:first').remove();
+										
+										var url4 = '${pageContext.request.contextPath}/rest/manager/survey/selectAddSurveyQuestion?surveyNo=${surveyNo}&surveyQuestionNo='+v;
+										console.log(form2);
+										
+										$.ajax({
+											type: "get"
+											,url: url4
+											,success: function(c){
+												console.log(c);
+												var content = [c.surveyQuestion[0].surveyQuestionContent];
+												console.log("질문내용"+content);
+												var type = [c.surveyQuestion[0].surveyQuestionType];
+												console.log("질문분류"+type);
+												var questionNo = [c.surveyQuestion[0].surveyQuestionNo];
+												console.log("질문번호"+questionNo);
+												var index = questionNo-1;
+												console.log("인덱스번호"+index);
+												
+												$('#surveyQuestionForm2').append("<form method='post'action='${pageContext.request.contextPath}/rest/manager/survey/updateSurveyQuestion?surveyQuestionNo="+questionNo+"' id='updateSurveyQuestion"+index+"'><table><tr><td colspan='2'>질문 "+questionNo+"번 <input type='hidden' name='surveyQuestionNo' value='"+questionNo+"'></td></tr><tr><td>질문 항목</td><td><select name='surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${questionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionType' value='"+type+"' readonly></td></tr><tr><td>"+questionNo+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionContent' value='"+content+"'></td></tr><tr><td><input type='hidden' name='surveyNo' value='${surveyNo}'></td></tr></table></form>");
+												
+												l++;
+												
+											}
+										});
+									}
+								});
+							}else {
+								$('#qestionFormHelper').text(v+'번 문제를 추가할 수 없습니다 '+l+'번 문제부터 추가해주세요');
+							}
+						}
+						
+						
+						
+					});
+				};
+				
+			}
+		});
+	}
 	
 	$('#updateQuestionList').click(function(){
 		if($('#surveyTitle').val() == '') {
@@ -226,10 +265,11 @@ $(document).ready(function(){
 											name="deleteTypeButton">삭제</button>
 										<div>&nbsp;</div>
 										
-										<form method="post" id="updateSurvey">
+										<form method="post" id="updateSurvey" action="${pageContext.request.contextPath}/manager/survey/updateSurvey">
 											<table>
 												<tr>
 													<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
+													<td><input type="hidden" name="surveyNo" value="${surveyNo}">
 												</tr>
 												<tr>
 													<td>설문조사 제목</td>
@@ -288,7 +328,7 @@ $(document).ready(function(){
 														<td><select
 															name='surveyQuestionListNo'>
 																<option>항목선택</option>
-																<c:forEach var='ql' items='${QuestionList}'>
+																<c:forEach var='ql' items='${questionList}'>
 																	<option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option>
 																</c:forEach>
 														</select> <input type='text'
@@ -299,7 +339,6 @@ $(document).ready(function(){
 														<td>${sq.surveyQuestionNo}번 질문 내용입력</td>
 														<td><input type='text'
 															name='surveyQuestionContent' value='${sq.surveyQuestionContent}'></td>
-														<td><button type='button' id=''>수정</button></td>
 													</tr>
 													<tr>
 														<td>
@@ -310,47 +349,7 @@ $(document).ready(function(){
 											</form>
 										</c:forEach>
 										</div>
-											<form method='post'
-												action='${pageContext.request.contextPath}/rest/manager/survey/updateSurveyQuestion?surveyQuestionNo=${sq.surveyQuestionNo}'
-												id='updateSurveyQuestion${status.index}'>
-												<table>
-													<tr>
-														<td colspan='2'>질문 ${sq.surveyQuestionNo}번 <input
-															type='text'
-															name='surveyQuestionNo'
-															value='${sq.surveyQuestionNo}'>
-														</td>
-													</tr>
-													<tr>
-														<td>질문 항목</td>
-														<td><select
-															name='surveyQuestionListNo'>
-																<option>항목선택</option>
-																<c:forEach var='ql' items='${QuestionList}'>
-																	<option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option>
-																</c:forEach>
-														</select> <input type='text'
-															name='surveyQuestionType'
-															value='${sq.surveyQuestionType}' readonly></td>
-													</tr>
-													<tr>
-														<td>${sq.surveyQuestionNo}번 질문 내용입력</td>
-														<td><input type='text'
-															name='surveyQuestionContent' value='${sq.surveyQuestionContent}'></td>
-														<td><button type='button' id=''>수정</button></td>
-													</tr>
-													<tr>
-														<td>
-															<input type='hidden' name='surveyNo' value='${sq.surveyNo}'>
-														</td>
-													</tr>
-												</table>
-											</form>
-												
-										<div id="surveyQuestionForm">
-										
-										<span id="qestionFormHelper" class="helper"></span></div>
-											
+										<div id='surveyQuestionForm'><span id='qestionFormHelper' class='helper'></span></div>
 									</div>
 								</div>
 							</div>
@@ -372,7 +371,5 @@ $(document).ready(function(){
     <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
     <script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/dist/js/pages/chartjs/chartjs.init.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/libs/chart.js/dist/Chart.min.js"></script>
 </body>
 </html>
