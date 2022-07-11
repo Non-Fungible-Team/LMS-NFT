@@ -47,11 +47,8 @@
 	    			var score = [];
 	    			
 	    			for(var i =0; i<data.length; i++){
-	    				lectureName = data[i].lectureName;
-	    				score = data[i].score;
-	    				
-	    				chartLectureName.push([lectureName]);
-	    				chartScore.push([score]);
+	    				chartLectureName.push(data[i].lectureName);
+	    				chartScore.push(data[i].score);
 	    				
 	    			}
 	    		}
@@ -70,7 +67,7 @@
 					    label: 'score',
 					     data: chartScore,
 					     borderColor: borderColor,
-					     backgroundColor: borderColor,
+					     backgroundColor: borderColor
 			  			}
 					]
 				};
@@ -109,11 +106,8 @@
 	    			var cnt = [];
 	    			
 	    			for(var i =0; i<data.length; i++){
-	    				lectureName = data[i].lectureName;
-	    				cnt = data[i].cnt;
-	    				
-	    				chartLectureName.push([lectureName]);
-	    				chartCnt.push([cnt]);
+	    				chartLectureName.push(data[i].lectureName);
+	    				chartCnt.push(data[i].cnt);
 	    				
 	    			}
 	    		}
