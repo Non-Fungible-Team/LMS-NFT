@@ -11,6 +11,7 @@
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <title>Non-Fungible LMS</title>
+
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -18,46 +19,45 @@
 <script src="${pageContext.request.contextPath}/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/assets/libs/morris.js/morris.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
 </head>
 	<script>
 		$('document').ready(function(){
 	    	$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
-		});
 		
 		//chart
-		
-		getGraph();
-		
+		getGraph(); //그래프 가져오기
 		function getGraph() {
-			var url :'${pageContext.request.contextPath}/restrest/manager/getTeacherLectureChart'; //차트 메소드 맵핑주소
+			var url ='${pageContext.request.contextPath}/rest/manager/getTeacherLectureChart'; //차트 메소드 맵핑주소
 			console.log(url);
-			$.ajax(){
+			$.ajax({
 				type:'get' 
 				,url : url
 				,success: function(data) { //백앤드 응답 문자열을 자바스크립트 객체로 변환 후 매개값 입력됨
 					console.log(data);
-				var teacherLectureTime = [data.teacherLectureTime]
+					var teacherLectureChart = data.teacherLectureChart; //리스트로 풀기
+					console.log(teacherLectureChart);
+					var dataSet =[];
+					var colors =[];
+					for(var i =0; i < teacherLectureChart.length;i=i+1){
+						dataSet.push({label:teacherLectureChart[i].teacherName,value:teacherLectureChart[i].totalTime});
+						colors.push();
+					}
+					console.log(dataSet)
+					Morris.Donut({
+				        element: 'morris-donut-chart',
+				        data: dataSet,
+				        resize: true,
+				        colors:['#5f76e8', '#01caf1', '#8fa0f3']
+				    });
 				}
-			}
+			});
 		}
 		
-		  Morris.Donut({
-		        element: 'morris-donut-chart',
-		        data: [{
-		            label: "Download Sales",
-		            value: 12,
-
-		        }, {
-		            label: "In-Store Sales",
-		            value: 30
-		        }, {
-		            label: "Mail-Order Sales",
-		            value: 20
-		        }],
-		        resize: true,
-		        colors:['#5f76e8', '#01caf1', '#8fa0f3']
-		    });
 		
+		});
   	</script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -72,7 +72,7 @@
 							<div class="card-body">
 								<h4 class="card-title">수강목록</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
-									<table id="zero_config" class="table table-striped table-bordered no-wrap">
+									<table id="zero_config" class="table table-striped table-bordered table-sm">
 										<thead>
 											<tr>
 												<th>강의번호</th>
@@ -172,5 +172,9 @@
 	<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
 	<script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
+	    <!--Morris JavaScript -->
+    <script src="${pageContext.request.contextPath}/assets/libs/raphael/raphael.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/libs/morris.js/morris.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dist/js/pages/morris/morris-data.js"></script>
 
 </html>

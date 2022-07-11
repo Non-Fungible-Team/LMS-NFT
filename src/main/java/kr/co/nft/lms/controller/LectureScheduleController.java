@@ -248,10 +248,10 @@ public class LectureScheduleController {
 	@GetMapping("/manager/lecture/addAttend")
 	public String addAttend(Model model
 						,@RequestParam(name ="attendDate") String attendDate
-						,@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo
+						,@RequestParam(name = "lectureNo", defaultValue = "0") int lectureNo //홈에서 바로들어왔을경우
 						,HttpSession session) {
 		log.debug(A.W +"[LectureScheduleController.manager.lecture.addAttend.param] model(controller실행) : " + model +A.R);
-		//lectureNo를 못받았을 경우 session에 lectureNo 요청
+		//lectureNo를 못받았을 경우 session에 lectureNo 요청 /전체 강의목록 강의선택해서 들어왔을경우
 		if(lectureNo==0) {
 			lectureNo = (int)session.getAttribute("sessionLectureNo");
 		}

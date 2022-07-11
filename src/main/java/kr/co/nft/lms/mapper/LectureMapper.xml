@@ -380,6 +380,7 @@
 			resultType="java.util.Map">
 	SELECT 
 		memberId
+		,CONCAT(t.teacherName,'(', t.memberId,')') teacherName
 		, SUM(totaltime) totalTime
 		, COUNT(t.totaltime) cnt
 	FROM 
@@ -388,10 +389,13 @@
 			, tl.member_id memberId
 			,ls.lecture_schedule_start_date
 			, ls.lecture_schedule_end_date
+			,t.teacher_name teacherName
 			,TIMESTAMPDIFF(HOUR,ls.lecture_schedule_start_date,ls.lecture_schedule_end_date) totaltime
 		FROM teacher_lecture tl
 		INNER JOIN lecture_schedule ls 
 		ON tl.lecture_no = ls.lecture_no
+		INNER JOIN teacher t
+		ON t.member_id = tl.member_id
 		) t
 	GROUP BY memberId
 	</select>

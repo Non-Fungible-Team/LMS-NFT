@@ -34,7 +34,6 @@ public class LectureRestController {
 		
 		Map<String,Object> returnMap = lectureService.getTeacherLectureChart();
 		log.debug(A.W +"[LectureRestController.getTeacherLectureChart.returnMap] returnMap "+returnMap +A.R);
-		
 		return returnMap;	
 	}
 
