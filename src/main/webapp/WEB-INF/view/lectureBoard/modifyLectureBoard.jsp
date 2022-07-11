@@ -50,7 +50,7 @@
 			});
 			
 			//파일 하나 삭제
-			$('.removeFileOne').click(function(){
+			$('.removeLectureBoardFileOne').click(function(){
 				var url = $(this).data('value');
 				var index = $(this).data('index');
 				console.log(index);

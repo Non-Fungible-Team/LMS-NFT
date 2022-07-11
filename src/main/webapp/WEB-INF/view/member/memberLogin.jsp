@@ -30,18 +30,18 @@
 			<br>
 			 <ul class="nav nav-tabs" role="tablist">
 			  <li class="nav-item">
-			     <a class="nav-link active" data-toggle="tab" href="#student">학생</a>
+			     <a class="nav-link " data-toggle="tab" href="#student">학생</a>
 			  </li>
 			  <li class="nav-item">
 			   <a class="nav-link" data-toggle="tab" href="#teacher">강사</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" data-toggle="tab" href="#manager">운영자</a>
+			    <a class="nav-link active" data-toggle="tab" href="#manager">운영자</a>
 			  </li>
 			</ul>
 			<!-- Tab panes -->
 			<div class="tab-content">
-				<div id="student" class="container tab-pane active">
+				<div id="student" class="container tab-pane fade">
 					<br>
 					<h3>학생</h3>
 					<form class="mt-4" id="loginForm" method="post" action="${pageContext.request.contextPath}/login">
@@ -95,7 +95,7 @@
 					</form>
 				</div>
 
-				<div id="manager" class="container tab-pane fade">
+				<div id="manager" class="container tab-pane active">
 					<br>
 					<h3>운영자</h3>
 					<form class="mt-4" id="loginForm" method="post" action="${pageContext.request.contextPath}/login">

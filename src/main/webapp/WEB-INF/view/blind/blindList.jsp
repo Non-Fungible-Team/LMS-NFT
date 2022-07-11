@@ -92,7 +92,7 @@
 								
 								<!-- suggestBlindList -->
 								<div class="card-body">
-									<h4 class="card-title">공지 블라인드(삭제) 목록</h4>
+									<h4 class="card-title">건의 블라인드(삭제) 목록</h4>
 									<table id="zero_config" class="table table-striped table-bordered">
 										<thead>
 											<tr>

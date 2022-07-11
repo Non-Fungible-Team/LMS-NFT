@@ -408,6 +408,16 @@
 			INNER JOIN survey_question_list AS ql
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			WHERE sq.survey_no = #{surveyNo}
-			AND sq.survey_question_no = #{survey_question_no}
+			AND sq.survey_question_no = #{surveyQuestionNo}
 		</select>
+		
+		<update id="updateSurvey"
+				parameterType="kr.co.nft.lms.vo.Survey">
+			UPDATE survey SET survey_title = #{surveyTitle}
+							,survey_content = #{surveyContent}
+							,survey_update_date = NOW()
+							,survey_startline_date = #{surveyStartlineDate}
+							,survey_deadline_date = #{surveyDeadlineDate}
+			WHERE survey_no = #{surveyNo};
+		</update>
 </mapper>

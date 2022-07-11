@@ -34,7 +34,7 @@ $(document).ready(function(){
 			//jquery api 사용
 			
 			appendCountList = appendCount-1;
-			$('#surveyQuestionForm').append("<table><tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr></table>");
+			$('#surveyQuestionForm').append("<table class='table table-striped table-bordered no-wrap'><tr><td colspan='2'>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='객관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><textarea rows='10' cols='10' class='form-control' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></textarea></td></tr></table>");
 			appendCount++;
 	});
 	
@@ -42,7 +42,7 @@ $(document).ready(function(){
 		if (appendCount >= 11) return;
 			//jquery api 사용
 			appendCountList = appendCount-1;
-			$('#surveyQuestionForm').append("<table><tr><td>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></td></tr></table>");
+			$('#surveyQuestionForm').append("<table class='table table-striped table-bordered no-wrap'><tr><td>질문 "+appendCount+"번<input type='hidden' name='surveyQuestionList["+appendCountList+"].surveyQuestionNo' value='"+appendCount+"'></td></tr><tr><td>질문 항목"+appendCount+"</td><td><select name='surveyQuestionList["+appendCountList+"].surveyQuestionListNo'><option>항목선택</option><c:forEach var='ql' items='${QuestionList}'><option value='${ql.surveyQuestionListNo}'>${ql.surveyQuestionListName}</option></c:forEach></select><input type='text' name='surveyQuestionList["+appendCountList+"].surveyQuestionType' value='주관식' readonly></td></tr><tr><td>"+appendCount+"번 질문 내용입력</td><td><textarea rows='10' cols='10' class='form-control' name='surveyQuestionList["+appendCountList+"].surveyQuestionContent'></textarea></td></tr></table>");
 			appendCount++;
 	});
 	
@@ -135,15 +135,16 @@ $(document).ready(function(){
 								<div class="mt-2" style="height:auto; width:auto;">
 									<div class="card-body">
 										<h1 class="card-title">설문조사 생성</h1>
-										<table id="zero_config" class="table table-striped table-bordered">
-											<tr><td>설문조사 항목 타입 선택</td></tr>
-											<tr>
-												<td>
-													<button type="button" id="multipleSurvey" name="multipleSurvey" class="btn btn-info">객관식 문제 추가</button>
-													<button type="button" id="shortSurvey" name="shortSurvey" class="btn btn-info">주관식 문제 추가</button>
-													<button type="button" id="deleteTypeButton" name="deleteTypeButton" class="btn btn-info">삭제</button>
-												</td>
-											</tr>
+										<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class='btn btn-outline-success' style='float: right'>이전으로</a>
+										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<tr>
+											<td>설문조사 항목 타입 선택</td>
+											<td>
+												<button class="btn btn-outline-info btn-rounded" id="multipleSurvey" name="multipleSurvey">객관식 문제 추가</button>
+												<button class="btn btn-outline-info btn-rounded" id="shortSurvey" name="shortSurvey">주관식 문제 추가</button>
+												<button class="btn btn-outline-danger" id="deleteTypeButton"name="deleteTypeButton">삭제</button>
+											</td>
+										</tr>
 										</table>
 										<div>&nbsp;</div>
 	
@@ -151,14 +152,17 @@ $(document).ready(function(){
 										<form method="post"
 											action="${pageContext.request.contextPath}/manager/survey/insertSurvey"
 											id="insertSurvey">
-											<table>
+											<table class="table table-striped table-bordered no-wrap">
 												<tr>
-													<td><input type="hidden" name="memberId" value="${loginMember.memberId}"></td>
+													
 												</tr>
 												<tr>
 													<td>설문조사 제목</td>
-													<td><input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
-														<span id="surveyTitleHelper" class="helper"></span></td>
+													<td>
+														<input type="text" name="surveyTitle" id="surveyTitle" class="form-control">
+														<span id="surveyTitleHelper" class="helper"></span>
+														<input type="hidden" name="memberId" value="${loginMember.memberId}">
+													</td>
 												</tr>
 												<tr>
 													<td>강의명</td>

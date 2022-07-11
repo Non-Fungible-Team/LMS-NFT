@@ -491,12 +491,18 @@ public class MemberController {
 	@PostMapping("/all/modifyStudent")
 	public String modifyStudent(HttpSession session
 								, AddStudent modifyStudent
-								, MemberPhoto memberPhoto) {
+								, MemberPhoto memberPhoto
+								, MemberUploadPhoto memberUploadPhoto
+								, HttpServletRequest request) {
 		// 매개변수 내용 확인  
+		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+		log.debug(A.Z+"[MemberController.modifyStudent.param] loginMember : "+loginMember+A.R);
 		log.debug(A.Z+"[MemberController.modifyStudent.param] modifyStudent : "+modifyStudent+A.R);
+		// 사진 고유 이름 나옴. photoOriginName 
+		log.debug(A.Z+"[MemberController.modifyStudent.param] memberPhoto : "+memberPhoto+A.R);
 		
 		// 학생 수정 정보 update 요청 
-		int row = memberService.modifyStudent(modifyStudent);
+		int row = memberService.modifyStudent(modifyStudent, memberPhoto, memberUploadPhoto, request);
 		log.debug(A.Z+"[MemberController.modifyStudent] row : "+row+A.R);
 		
 		if(row == 0) {

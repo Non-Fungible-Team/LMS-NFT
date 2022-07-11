@@ -40,8 +40,7 @@
 									<table id="zero_config" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>출석 날짜</th>
-												<th>강의 번호</th>
+												<th>출석 날짜</th>								
 												<th>강의명</th>
 												<th>출석 상태</th>
 												<th>사유</th>
@@ -51,7 +50,6 @@
 										<c:forEach var="a" items="${studentAttendList}">
 											<tr>
 												<td>${a.attendDate}</td>
-												<td>${a.lectureNo}</td>
 												<td>${a.lectureName}</td>
 												<td>${a.attendStatus}</td>
 												<td>${a.attendReason}</td>
