@@ -403,7 +403,7 @@ public class LectureController {
 	}
 		
 	//6.강사_강의 목록
-	@GetMapping("/manager/lecture/getTeacherrLectureByPage")
+	@GetMapping("/manager/lecture/getTeacherLectureByPage")
 	public String getManagerLectureByPage(Model model
 					,@RequestParam(name = "currentPage",defaultValue = "1") int currentPage  // 디폴트값 설정, 자동형변환
 					,@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage) {
@@ -423,7 +423,7 @@ public class LectureController {
 		log.debug(A.W +"[LectureController.getLectureByPage.model] model.currentPage : " +map.get("currentPage") +A.R);
 		log.debug(A.W +"[LectureController.getLectureByPage.model] model.lastPage : " +map.get("lastPage") +A.R);
 			
-		return "/lecture/getManagerLectureByPage"; //jsp로 이동
+		return "/lecture/getTeacherLectureByPage"; //jsp로 이동
 
 		}
 	

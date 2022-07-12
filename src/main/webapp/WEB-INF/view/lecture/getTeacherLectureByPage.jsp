@@ -57,7 +57,7 @@
 										</tbody>
 									</table>
 									<div>
-										<form method="get" action="${pageContext.request.contextPath}/manager/lecture/getManagerLectureByPage">
+										<form method="get" action="${pageContext.request.contextPath}/manager/lecture/getTeacherLectureByPage">
 											<c:if test="${currentPage>10}">
 												<button type="submit" value="${currentPage-10}" name="currentPage" class="btn btn-secondary">이전목록</button>
 											</c:if>
