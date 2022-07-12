@@ -200,7 +200,8 @@ getCntGraph();
 														<tr>
 	<%-- 														<td>${h.homeworkNo}</td> --%>
 															<td>${h.lectureNo}</td>
-															<td style="text-overflow: ellipsis; white-space: nowrap; max-width:600px;"><a href="${pageContext.request.contextPath}/all/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
+<!-- 															 style="text-overflow: ellipsis; white-space: nowrap; max-width:600px;" -->
+															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
 															<td>${h.teacherId }</td>
 															<td>${h.homeworkStartDate} ~ ${h.homeworkEndDate }</td>
 															<c:if test="${sessionLoginMember.memberLevel == 5}">
