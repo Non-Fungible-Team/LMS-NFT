@@ -135,6 +135,12 @@ getCntGraph();
 					data: data,
 					options: {
 						responsive: true,
+						scales: {
+                            y: {
+                                 suggestedMin: 0,
+                                 suggestedMax: 100
+                             }
+                        },
 						plugins: {
 							legend: {
 								display : false  			    	  
@@ -255,14 +261,14 @@ getCntGraph();
 									<div class="col-lg-6 col-md-6">
 									    <div class="card">
 									        <div class="card-body">
-												<canvas id="homeworkCntChart" style=none; width="300" height="230"></canvas>
+												<canvas id="homeworkCntChart" width="300" height="230"></canvas>
 											</div>
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6">
 									    <div class="card">
 									        <div class="card-body">
-												<canvas id="homeworkChart" style=none; width="300" height="230"></canvas>
+												<canvas id="homeworkChart" width="300" height="230"></canvas>
 											</div>
 										</div>
 									</div>
