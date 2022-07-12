@@ -12,7 +12,6 @@
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
 <!-- CSS 링크 -->
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/dist/css/style.min.css" rel="stylesheet">
 <title>Insert title here</title>
@@ -82,7 +81,7 @@
 								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/getStudentOne?memberId=${sessionLoginMember.memberId}">
 								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> 개인 정보 확인</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그 아웃</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그아웃</a>
 								<div class="dropdown-divider"></div>
 							</c:if>	
 							
@@ -91,7 +90,7 @@
 								<div class="dropdown-divider"></div>
 								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> 개인 정보 확인</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그 아웃</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그아웃</a>
 								<div class="dropdown-divider"></div>
 							</c:if>
 							
@@ -100,7 +99,7 @@
 								<a class="dropdown-item" href="${pageContext.request.contextPath}/manager/getManagerOne?memberId=${sessionLoginMember.memberId}">
 								<i data-feather="user" class="svg-icon mr-2 ml-1"></i> 개인 정보 확인</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그 아웃</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/all/logout"><i data-feather="power" class="svg-icon mr-2 ml-1"></i> 로그아웃</a>
 								<div class="dropdown-divider"></div>
 								</div>
 							</c:if>
@@ -131,6 +130,8 @@
 						<li class="nav-small-cap"><span class="hide-menu">${sessionLecture.lectureName}</span></li>
 						<!-- 강의 게시판 -->
 						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/lectureBoard/getLectureBoardListByPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">강의게시판</span></a></li>
+						<!-- 수강생 목록 강사이상이어야 볼 수 있음-->
+						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/getStudentLectureByPage" aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">수강생 목록</span></a></li>
 						<!-- 강의 시간표 -->
 						<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/all/lecture/getLectureScheduleListByLectureNo" aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Lecture schedule</span></a></li>
 						<!-- 출석 -->
