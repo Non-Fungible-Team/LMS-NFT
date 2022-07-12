@@ -145,7 +145,7 @@
 			member_id
 			, level_history_new_level
 			, level_history_reason
-			, member_id2
+			, editor
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
@@ -169,7 +169,7 @@
 			member_id
 			, level_history_new_level
 			, level_history_reason
-			, member_id2
+			, editor
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
@@ -200,7 +200,7 @@
 			member_id
 			, level_history_new_level
 			, level_history_reason
-			, member_id2
+			, editor
 			, level_history_update_date
 		) VALUES (
 			#{memberId}
@@ -239,19 +239,16 @@
 			parameterType="kr.co.nft.lms.vo.Member"	>
 		UPDATE pw_history SET 
 			pw_history_date = NOW()
-			, pw_history_new_pw = #{memberPw}
+			, pw_history_new_pw = password(#{memberPw})
 		WHERE member_id = #{memberId}
 	</update>
 
 	<update id="updateMembePw"
 			parameterType="kr.co.nft.lms.vo.Member"	>
 		UPDATE member SET
-			member_pw = #{memberPw}
+			member_pw = password(#{memberPw})
 			, member_pw_update_date = NOW()
 			, member_update_date = NOW()
-			<if test="memberLevel lt 0">
-				member_level = #{memberLevel}+10
-			</if>
 		WHERE member_id = #{memberId} 
 	</update>
 
@@ -294,8 +291,8 @@
 	<update id="updateManagerByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_pw = #{memberPw}
-			, member_phone_no = #{memberPhoneNo} 
+			<!-- member_pw = #{memberPw} -->
+			member_phone_no = #{memberPhoneNo} 
 		WHERE member_id = #{memberId} 		
 	</update>
 	
@@ -313,8 +310,8 @@
 	<update id="updateTeacherByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
 		UPDATE member SET 
-			member_pw = #{memberPw}
-			, member_phone_no = #{memberPhoneNo} 
+			<!-- member_pw = #{memberPw}  -->
+			member_phone_no = #{memberPhoneNo} 
 		WHERE member_id = #{memberId} 		
 	</update>
 	
