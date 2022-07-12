@@ -121,6 +121,10 @@ public class MemberController {
 	
 	// ------------------ 개인 정보 휴면(삭제) 처리 ------------------ //
 	
+	// 시행착오가 있었음.
+	// 하나의 컨트롤러에 하나의 서비스만 오도록 해야함. 
+	// 휴면(삭제) 부분 빼고는 수정  
+	
 	// 운영자 휴면 처리 ( 삭제 대체 ) 
 	@PostMapping("/manager/freezeManager")
 	public String removeManager(HttpSession session
@@ -272,29 +276,32 @@ public class MemberController {
 	
 	// ------------------ 개인 정보 수정 ------------------ //
 	
-	// 휴면 계정 또는 사용자가 비밀번호를 변경하고자 하는 경우
+	// 3개월 이상 비밀번호를 변경하지 않은 사용자 계정 또는 사용자가 비밀번호를 변경하고자 하는 경우
 	@PostMapping("/all/modifyMemberPassword")
 	public String modifyMemberPassword(HttpSession session
 								, Member member) {
 		// 세션에서 아이디와 레벨은 계속 가져온다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		// 매개변수 확인 
+		log.debug(A.Z+"[MemberController.modifyPassword.param] loginMember : "+loginMember+A.R);
 		log.debug(A.Z+"[MemberController.modifyPassword.param] member : "+member+A.R);
 		
-		int row = memberService.modifyMemberPassword(member);
+		int row = memberService.modifyMemberPassword(loginMember);
 		log.debug(A.Z+"[MemberController.modifyMemberPassword] row : "+row+A.R);
 		
 		// 최종 입력 실패 -> 수정 페이지 또는 휴면 계정 전용 페이지로 이동 
-		if(row == 0 && member.getMemberLevel() > 3) {
+		if(row == 0 && loginMember.getMemberLevel() > 3) {
 			return "/member/login"; // 테스트 
-		} else if(row == 0 && member.getMemberLevel() < 0) {
+		} 
+		/*
+		else if(row == 0 && member.getMemberPwUpdateDate() > 0) {
 			return "/member/login"; // 테스트 
 		}
-		
+		*/
 		return "/member/login";
 	}
 	
-	// 휴면 계정 또는 사용자가 비밀번호를 변경하고자 하는 경우 
+	// 3개월 이상 비밀번호를 변경하지 않은 사용자 또는 사용자가 비밀번호를 변경하고자 하는 경우 
 	@GetMapping("/all/modifyMemberPassword")
 	public String modifyMemberPassword(HttpSession session
 								, Model model
@@ -302,186 +309,105 @@ public class MemberController {
 		// 세션에서 아이디와 레벨은 계속 가져온다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		// 매개 변수가 잘 들어왔는지 확인 
+		log.debug(A.Z+"[MemberController.modifyPassword.param] loginMember : "+loginMember+A.R);
 		log.debug(A.Z+"[MemberController.modifyPassword.param] member : "+member+A.R);
 		
 		// 비밀번호 변경 페이지로 이동 
 		return "/member/modifyMemberPassword";
 	}
 	
-	// 운영자 정보 수정 
+	// 운영자 정보 수정 POST 
 	@PostMapping("/manager/modifyManager")
 	public String modifyManager(HttpSession session
-								, HttpServletRequest request
-								, Member member
-								, Manager manager
-								, MemberPhoto memberPhoto
-								, MemberUploadPhoto memberUploadPhoto) {
-		
-		// 매개변수가 잘 들어왔는지 확인 
-		// 운영자 정보 수정시 MEMBER 테이블에 수정해야 할 내용 받기 
-		log.debug(A.Z+"[MemberController.modifyManager.param] member : "+member+A.R);
-		// 운영자 정보 수정시  MANAGER 테이블에 수정해야 할 내용 받기 
-		log.debug(A.Z+"[MemberController.modifyManager.param]  manager : "+manager+A.R);
-		log.debug(A.Z+"[MemberController.modifyManager.param] memberPhoto : "+memberPhoto+A.R);
-		// 운영자 정보 수정시 MEMBERPHOTO 테이블에 수정해야 할 내용 받기
-		log.debug(A.Z+"[MemberController.modifyManager.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
-		
-		// 사진을 업로드하면 저장되는 경로 설정 
-		URL pathUrl = this.getClass().getResource("/static/");
-		log.debug(A.Z+"[MemberController.modifyManager] pathUrl : "+pathUrl+A.R);
-		
-		String path = pathUrl.getPath()+"/uploadFile/memberPhoto/managerPhoto/";
-		log.debug(A.Z+"[MemberController.modifyManager] path : "+path+A.R);
-		
-		// 세션에서 아이디와 레벨은 계속 가져온다 
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		
-		// modifyManager.jsp 페이지에서 파일 받은 내용 확인 
-		MultipartFile managerPhoto = memberUploadPhoto.getMemberPhotoOne();
-		log.debug(A.Z+"[MemberController.modifyManager.param] managerPhoto : "+managerPhoto+A.R);
-		
-		// 파일이 들어왔고 파일 사이즈가 0보다 크면 
-		if(managerPhoto != null && managerPhoto.getSize() > 0) {
-			// 파일이 들어온 내용을 확인 
-			log.debug(A.Z+"[MemberController.modifyManager] managerPhoto : "+managerPhoto+A.R);
-		}
-		
-		// 사용자 사진 업로드 
-		memberService.addMemberPhoto(member, memberPhoto, memberUploadPhoto, path);
-		
-		// 운영자 정보가 바뀌었는지 확인 
-		// 멤버 테이블에 변경 내용이 반영되었는지 확인 
-	    int rowOfMember = memberService.modifyManager(member);
-	    log.debug(A.Z+"[MemberController.modifyManager] rowOfMember : "+rowOfMember+A.R);
-	    // 운영자 테이블에 변경 내용이 반영되었는지 확인 
-	    int rowOfManager = memberService.modifyManager(manager);
-	    log.debug(A.Z+"[MemberController.modifyManager] rowOfManager : "+rowOfManager+A.R);
-		
-	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아간다  
-	    return "redirect:/manager/getManagerOne";
+				, AddManager modifyManager
+				, MemberPhoto memberPhoto
+				, MemberUploadPhoto memberUploadPhoto
+				, HttpServletRequest request) {
+	// 매개변수 내용 확인  
+	Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+	log.debug(A.Z+"[MemberController.modifyManager.param] loginMember : "+loginMember+A.R);
+	log.debug(A.Z+"[MemberController.modifyManager.param] modifyManager : "+modifyManager+A.R);
+	// 사진 고유 이름 나옴. photoOriginName 
+	log.debug(A.Z+"[MemberController.modifyManager.param] memberPhoto : "+memberPhoto+A.R);
+	
+	// 강사 수정 정보 update 요청 
+	int row = memberService.modifyManager(modifyManager, memberPhoto, memberUploadPhoto, request);
+	log.debug(A.Z+"[MemberController.modifyManager] row : "+row+A.R);
+	
+	// Service Layer에서 try, catch로 감싸고 row값을 줘야 row값을 받을 수 있다.
+	// 현재는 오류 페이지만 나오게 되어 있음. 
+	if(row == 0) {
+		return "redirect:/manager/modifyManager";
 	}
 	
-	// 운영자 정보 수정 
+	return "redirect:/manager/getManagerOne";
+	}
+	
+	// 운영자 정보 수정 GET 
 	@GetMapping("/manager/modifyManager")
 	public String modifyManager(HttpSession session
-								, @RequestParam(value="memberId") String memberId
 								, Model model) {
-		// 매개 변수 확인 
-		log.debug(A.Z+"[MemberController.modifyManager.param] memberId : "+memberId+A.R);
+		
 		// 세션 매개 변수 확인 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		log.debug(A.Z+"[MemberController.modifyManager] loginMember : "+loginMember+A.R);
-		
-		// 계정 정보 없으면 로그인 실패 
-		if(memberId == null) {
-			log.debug(A.Z+"MemberController.modifyManager : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
-		}
 
 		// 운영자의 상세 정보를 가져온다 
-		// VO 두개를 합쳐야 한 운영자의 정보가 나온다 
-		Manager getManagerOneByManagerVo = memberService.getManagerOneReturnManagerVo(loginMember);
-		log.debug(A.Z+"[MemberController.modifyManager] getManagerOneByManagerVo : "+getManagerOneByManagerVo+A.R);
+		// 서비스는 한개만 사용 
+		// 운영자 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+		Map<String, Object> returnMap = memberService.getManagerOne(loginMember);
 		
-		Member getManagerOneByMemberVo = memberService.getManagerOneReturnMemberVo(loginMember);
-		log.debug(A.Z+"[MemberController.modifyManager] getManagerOneByMemberVo : "+getManagerOneByMemberVo+A.R);
-		
-		// 이동하려는 뷰 페이지에 해당하는 데이터들을 보낸다 
-		model.addAttribute("getManagerOneByManagerVo", getManagerOneByManagerVo);
-		model.addAttribute("getManagerOneByMemberVo", getManagerOneByMemberVo);
-		
-		// 세션에 로그인 사용자 정보와 과목 번호를 보낸다 
-		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
+		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
+		model.addAttribute("managerOne",returnMap);
+				
 		// 해당하는 뷰 페이지로 이동 
 		return "/member/modifyManager";
 	}
 	
-	// 강사 정보 수정 
+	// 강사 정보 수정 POST 
 	@PostMapping("/teacher/modifyTeacher")
-	public String modifyTeacher(HttpSession session
-								, HttpServletRequest request
-								, Member member
-								, Teacher teacher
-								, MemberPhoto memberPhoto
-								, MemberUploadPhoto memberUploadPhoto) {
-		
-		// 매개변수가 잘 들어왔는지 확인 
-		// 강사 정보 수정시 MEMBER 테이블에 수정해야 할 내용 받기 
-		log.debug(A.Z+"[MemberController.modifyTeacher.param] member : "+member+A.R);
-		// 강사 정보 수정시  TEACHER 테이블에 수정해야 할 내용 받기 
-		log.debug(A.Z+"[MemberController.modifyTeacher.param]  teacher : "+teacher+A.R);
-		log.debug(A.Z+"[MemberController.modifyTeacher.param] memberPhoto : "+memberPhoto+A.R);
-		// 강사 정보 수정시 MEMBERPHOTO 테이블에 수정해야 할 내용 받기
-		log.debug(A.Z+"[MemberController.modifyTeacher.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
-		
-		// 사진을 업로드하면 저장되는 경로 설정 
-		String path = request.getServletContext().getRealPath("/memberPhoto/teacherPhoto/");
-		log.debug(A.Z+"[MemberController.modifyTeacher.param] path : "+path+A.R);
-		
-		// 세션에서 아이디와 레벨은 계속 가져온다 
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		
-		// modifyTeacher.jsp 페이지에서 파일 받은 내용 확인 
-		MultipartFile teacherPhoto = memberUploadPhoto.getMemberPhotoOne();
-		log.debug(A.Z+"[MemberController.modifyTeacher.param] teacherPhoto : "+teacherPhoto+A.R);
-		
-		// 파일이 들어왔고 파일 사이즈가 0보다 크면 
-		if(teacherPhoto != null && teacherPhoto.getSize() > 0) {
-			// 파일이 들어온 내용을 확인 
-			log.debug(A.Z+"[MemberController.modifyTeacher] teacherPhoto : "+teacherPhoto+A.R);
-		}
-		
-		// 사용자 사진 업로드 
-		memberService.addMemberPhoto(member, memberPhoto, memberUploadPhoto, path);
-		
-		// 강사 정보가 바뀌었는지 확인 
-		// 멤버 테이블에 변경 내용이 반영되었는지 확인 
-	    int rowOfMember = memberService.modifyTeacher(member);
-	    log.debug(A.Z+"[MemberController.modifyTeacher] rowOfMember : "+rowOfMember+A.R);
-	    // 학생 테이블에 변경 내용이 반영되었는지 확인 
-	    int rowOfTeacher = memberService.modifyTeacher(teacher);
-	    log.debug(A.Z+"[MemberController.modifyTeacher] rowOfTeacher : "+rowOfTeacher+A.R);
-		
-	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아간다  
-	    return "redirect:/teacher/getTeacherOne";
+	public String modifyStudent(HttpSession session
+				, AddTeacher modifyTeacher
+				, MemberPhoto memberPhoto
+				, MemberUploadPhoto memberUploadPhoto
+				, HttpServletRequest request) {
+	// 매개변수 내용 확인  
+	Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+	log.debug(A.Z+"[MemberController.modifyTeacher.param] loginMember : "+loginMember+A.R);
+	log.debug(A.Z+"[MemberController.modifyTeacher.param] modifyTeacher : "+modifyTeacher+A.R);
+	// 사진 고유 이름 나옴. photoOriginName 
+	log.debug(A.Z+"[MemberController.modifyTeacher.param] memberPhoto : "+memberPhoto+A.R);
+	
+	// 강사 수정 정보 update 요청 
+	int row = memberService.modifyTeacher(modifyTeacher, memberPhoto, memberUploadPhoto, request);
+	log.debug(A.Z+"[MemberController.modifyTeacher] row : "+row+A.R);
+	
+	// Service Layer에서 try, catch로 감싸고 row값을 줘야 row값을 받을 수 있다.
+	// 현재는 오류 페이지만 나오게 되어 있음. 
+	if(row == 0) {
+		return "redirect:/teacher/modifyTeacher";
 	}
 	
-	// 강사 정보 수정 
+	return "redirect:/teacher/getTeacherOne";
+	}
+	
+	// 강사 정보 수정 GET 
 	@GetMapping("/teacher/modifyTeacher")
 	public String modifyTeacher(HttpSession session
-								, @RequestParam(value="memberId") String memberId
 								, Model model) {
-		// 매개 변수 확인 
-		log.debug(A.Z+"[MemberController.modifyTeacher.param] memberId : "+memberId+A.R);
+		
 		// 세션 매개 변수 확인 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		log.debug(A.Z+"[MemberController.modifyTeacher] loginMember : "+loginMember+A.R);
-		
-		// 계정 정보 없으면 로그인 실패 
-		if(memberId == null) {
-			log.debug(A.Z+"MemberController.modifyTeacher : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
-		}
 
 		// 강사의 상세 정보를 가져온다 
-		// VO 두개를 합쳐야 한 강사의 정보가 나온다 
-		Teacher getTeacherOneByTeacherVo = memberService.getTeacherOneReturnTeacherVo(loginMember);
-		log.debug(A.Z+"[MemberController.modifyTeacher] getTeacherOneByTeacherVo : "+getTeacherOneByTeacherVo+A.R);
-		Member getTeacherOneByMemberVo = memberService.getTeacherOneReturnMemberVo(loginMember);
-		log.debug(A.Z+"[MemberController.modifyTeacher] getTeacherOneByMemberVo : "+getTeacherOneByMemberVo+A.R);
+		// 서비스는 한개만 사용 
+		// 강사 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+		Map<String, Object> returnMap = memberService.getTeacherOne(loginMember);
 		
-		// 이동하려는 뷰 페이지에 해당하는 데이터들을 보낸다 
-		model.addAttribute("getTeacherOneByTeacherVo", getTeacherOneByTeacherVo);
-		model.addAttribute("getTeacherOneByMemberVo", getTeacherOneByMemberVo);
-		
-		// 세션에 로그인 사용자 정보와 과목 번호를 보낸다 
-		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
+		// 뷰 페이지 getStudentOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
+		model.addAttribute("teacherOne",returnMap);
+				
 		// 해당하는 뷰 페이지로 이동 
 		return "/member/modifyTeacher";
 	}
@@ -511,58 +437,6 @@ public class MemberController {
 		
 		return "redirect:/all/getStudentOne";
 	}
-	
-	/*
-	// 학생 정보 수정 POST 
-	@PostMapping("/all/modifyStudent")
-	public String modifyStudent(HttpSession session
-								, HttpServletRequest request
-								, Member member
-								, Student student
-								, MemberPhoto memberPhoto
-								, MemberUploadPhoto memberUploadPhoto) {
-		
-		// 매개변수가 잘 들어왔는지 확인 
-		// 학생 정보 수정시 MEMBER 테이블에 수정해야 할 내용 받기 
-		log.debug(A.Z+"[MemberController.modifyStudent.param] member : "+member+A.R);
-		// 학생 정보 수정시 STUDENT 테이블에 수정해야 할 내용 받기 
-		log.debug(A.Z+"[MemberController.modifyStudent.param] student : "+student+A.R);
-		log.debug(A.Z+"[MemberController.modifyStudent.param] memberPhoto : "+memberPhoto+A.R);
-		// // 학생 정보 수정시 MEMBERPHOTO 테이블에 수정해야 할 내용 받기
-		log.debug(A.Z+"[MemberController.modifyStudent.param] memberUploadPhoto : "+memberUploadPhoto+A.R);
-		
-		// 사진을 업로드하면 저장되는 경로 설정 
-		String path = request.getServletContext().getRealPath("/memberPhoto/");
-		log.debug(A.Z+"[MemberController.modifyStudent.param] path : "+path+A.R);
-		
-		// 세션에서 아이디와 레벨은 계속 가져온다 
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		
-		// modifyStudent.jsp 페이지에서 파일 받은 내용 확인 
-		MultipartFile studentPhoto = memberUploadPhoto.getMemberPhotoOne();
-		log.debug(A.Z+"[MemberController.modifyStudent.param] studentPhoto : "+studentPhoto+A.R);
-		
-		// 파일이 들어왔고 파일 사이즈가 0보다 크면 
-		if(studentPhoto != null && studentPhoto.getSize() > 0) {
-			// 파일이 들어온 내용을 확인 
-			log.debug(A.Z+"[MemberController.modifyStudent] studentPhoto : "+studentPhoto+A.R);
-		}
-		
-		// 사용자 사진 업로드 
-		memberService.addMemberPhoto(member, memberPhoto, memberUploadPhoto, path);
-		
-		// 학생 정보가 바뀌었는지 확인 
-		// 멤버 테이블에 변경 내용이 반영되었는지 확인 
-	    int rowOfMember = memberService.modifyStudent(member);
-	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfMember : "+rowOfMember+A.R);
-	    // 학생 테이블에 변경 내용이 반영되었는지 확인 
-	    int rowOfStudent = memberService.modifyStudent(student);
-	    log.debug(A.Z+"[MemberController.modifyStudent] rowOfStudent : "+rowOfStudent+A.R);
-		
-	    // redirect 사용하면 Controller 상에 매핑된 주소를 찾아간다  
-	    return "redirect:/all/getStudentOne";
-	}
-	*/
 	
 	// 학생 정보 수정 GET 
 	@GetMapping("/all/modifyStudent")

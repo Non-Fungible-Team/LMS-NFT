@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
-<title>학생 정보 수정</title>
+<title>강사 정보 수정</title>
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
@@ -51,54 +51,57 @@
 												<tr>
 													<td>강사 아이디</td>
 													<td>
-														<input type="text" name="memberId" id="memberId" value="${loginMember.memberId}" readonly="readonly">
+														<input type="text" name="memberId" id="memberId" value="${sessionLoginMember.memberId}" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
 													<td>강사 이름</td>
 													<td>
-														<input type="text" name="teacherName" id="teacherName" value="${getTeacherOneByTeacherVo.teacherName}">
+														<input type="text" name="teacherName" id="teacherName" value="${teacherOne.teacherName}">
 													</td>
 												</tr>
-												<tr>
-													<td>비밀번호</td>
-													<td>
-														<input type="text" name="memberPw" id="memberPw" value="${getTeacherOneByMemberVo.memberPw}">
-													</td>
-												</tr>
+												
 												<tr>
 													<td>생일</td>
 													<td>
-														<input type="date" name="teacherBirth" id="teacherBirth" value="${getTeacherOneByTeacherVo.teacherBirth}">
+														<input type="date" name="teacherBirth" id="teacherBirth" value="${teacherOne.teacherBirth}">
 													</td>
 												</tr>
 												<tr>
 													<td>성별</td>
-													<td>
-														<input type="radio" value="M" name="teacherGender" class="gender">남 
-														<input type="radio" value="F" name="teacherGender" class="gender">여 
-													</td>
+													<c:if test="${teacherOne.teacherGender=='M'}">
+														<td>
+															<input type="radio" value="M" name="teacherGender" class="gender" checked>남 
+															<input type="radio" value="F" name="teacherGender" class="gender">여 
+														</td>
+													</c:if>
+													<c:if test="${teacherOne.teacherGender=='F'}">
+														<td>
+															<input type="radio" value="M" name="teacherGender" class="gender" >남 
+															<input type="radio" value="F" name="teacherGender" class="gender" checked>여 
+														</td>
+													</c:if>
 												</tr>
 												<tr>
 													<td>이메일</td>
 													<td>
-														<input type="text" name="teacherEmail" id="teacherEmail" value="${getTeacherOneByTeacherVo.teacherEmail}">
+														<input type="text" name="teacherEmail" id="teacherEmail" value="${teacherOne.teacherEmail}">
 													</td>
 												</tr>
 												<tr>
 													<td>입사일</td>
 													<td>
-														<input type="text" name="teacherEntryDate" id="teacherEntryDate" value="${getTeacherOneByTeacherVo.teacherEntryDate}">
+														<input type="text" name="teacherEntryDate" id="teacherEntryDate" value="${teacherOne.teacherEntryDate}">
 													</td>
 												</tr>
 												<tr>
 													<td>담당 과목</td>
 													<td>
-														<input type="text" name="teacherSubject" id="teacherSubject" value="${getTeacherOneByTeacherVo.teacherSubject}">
+														<input type="text" name="teacherSubject" id="teacherSubject" value="${teacherOne.teacherSubject}">
 													</td>
 												</tr>
 												<tr>
-													<td>학생 사진</td>
+													<td>강사 사진</td>
 													<td>
 														<input type="file" id="memberPhotoOne" name="memberPhotoOne">
 														<span id="teacherPhotoSection"></span>
@@ -107,7 +110,7 @@
 												<tr>
 													<td>휴대전화</td>
 													<td>
-														<input type="text" name="memberPhoneNo" id="memberPhoneNo" value="${getTeacherOneByMemberVo.memberPhoneNo}">
+														<input type="text" name="memberPhoneNo" id="memberPhoneNo" value="${teacherOne.memberPhoneNo}">
 													</td>
 												</tr>
 												<tr>
@@ -118,6 +121,7 @@
 											</table>
 										<div>
 											<a href="${pageContext.request.contextPath}/login" class="btn btn-rounded btn-outline-primary">로그인 페이지</a>
+											<a href="${pageContext.request.contextPath}/all/modifyMemberPassword" class="btn btn-rounded btn-outline-primary">비밀번호 변경</a>
 										</div>
 									</form>
 										</div>

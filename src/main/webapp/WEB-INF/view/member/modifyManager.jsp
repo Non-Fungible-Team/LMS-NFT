@@ -34,7 +34,7 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>강사 정보 수정</h1>
+				<h1>운영자 정보 수정</h1>
 				<!-- main화면 body start -->
 
 				<!-- 첫번쨰 문단 -->
@@ -51,44 +51,47 @@
 												<tr>
 													<td>운영자 아이디</td>
 													<td>
-														<input type="text" name="memberId" id="memberId" value="${loginMember.memberId}" readonly="readonly">
+														<input type="text" name="memberId" id="memberId" value="${sessionLoginMember.memberId}" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
 													<td>운영자 이름</td>
 													<td>
-														<input type="text" name="managerName" id="managerName" value="${getManagerOneByManagerVo.managerName}">
+														<input type="text" name="managerName" id="managerName" value="${managerOne.managerName}">
 													</td>
 												</tr>
-												<tr>
-													<td>비밀번호</td>
-													<td>
-														<input type="text" name="memberPw" id="memberPw" value="${getManagerOneByMemberVo.memberPw}">
-													</td>
-												</tr>
+												
 												<tr>
 													<td>생일</td>
 													<td>
-														<input type="date" name="managerBirth" id="managerBirth" value="${getManagerOneByManagerVo.managerBirth}">
+														<input type="date" name="managerBirth" id="managerBirth" value="${managerOne.managerBirth}">
 													</td>
 												</tr>
 												<tr>
 													<td>성별</td>
-													<td>
-														<input type="radio" value="M" name="managerGender" class="gender">남 
-														<input type="radio" value="F" name="managerGender" class="gender">여 
-													</td>
+													<c:if test="${managerOne.managerGender=='M'}">
+														<td>
+															<input type="radio" value="M" name="managerGender" class="gender" checked>남 
+															<input type="radio" value="F" name="managerGender" class="gender">여 
+														</td>
+													</c:if>
+													<c:if test="${managerOne.managerGender=='F'}">
+														<td>
+															<input type="radio" value="M" name="managerGender" class="gender" >남 
+															<input type="radio" value="F" name="managerGender" class="gender" checked>여 
+														</td>
+													</c:if>
 												</tr>
 												<tr>
 													<td>이메일</td>
 													<td>
-														<input type="text" name="managerEmail" id="managerEmail" value="${getManagerOneByManagerVo.managerEmail}">
+														<input type="text" name="managerEmail" id="managerEmail" value="${managerOne.managerEmail}">
 													</td>
 												</tr>
 												<tr>
 													<td>입사일</td>
 													<td>
-														<input type="date" name="managerEntryDate" id="managerEntryDate" value="${getManagerOneByManagerVo.managerEntryDate}">
+														<input type="date" name="managerEntryDate" id="managerEntryDate" value="${managerOne.managerEntryDate}">
 													</td>
 												</tr>
 												<tr>
@@ -101,12 +104,13 @@
 												<tr>
 													<td>휴대전화</td>
 													<td>
-														<input type="text" name="memberPhoneNo" id="memberPhoneNo" value="${getManagerOneByMemberVo.memberPhoneNo}">
+														<input type="text" name="memberPhoneNo" id="memberPhoneNo" value="${managerOne.memberPhoneNo}">
 													</td>
 												</tr>
 												<tr>
 													<td colspan="2">
 														<button type = "submit" id="submit"  class="btn btn-rounded btn-outline-success">운영자 정보 수정</button>
+														<a href="${pageContext.request.contextPath}/all/modifyMemberPassword" class="btn btn-rounded btn-outline-primary">비밀번호 변경</a>
 													</td>
 												</tr>
 											</table>
