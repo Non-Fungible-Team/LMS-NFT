@@ -81,7 +81,7 @@ $('#').trigger('click');
 											<tr>
 												<td class="table-light">${examOne.examNo}</td>
 												<td class="table-light">${examOne.examTitle}</td>
-												<td class="table-light">${examOne.examNo}</td>
+												<td class="table-light">${examOne.examCount}</td>
 												<td class="table-light">${examOne.examMaxScore}</td>
 												<td class="table-light">${examOne.examStartDate}</td>
 												<td class="table-light">${examOne.examEndDate}</td>
