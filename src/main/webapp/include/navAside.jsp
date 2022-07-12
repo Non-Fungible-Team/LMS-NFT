@@ -176,13 +176,7 @@
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class="sidebar-link"><span class="hide-menu"> 질문 관리 리스트 </span></a></li>
 							</ul></li>
-						<li class="list-divider"></li>
-						<li class="nav-small-cap"><span class="hide-menu">사이트 관리자 기능</span></li>
-						<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/blind/blindList" class="sidebar-link"><span class="hide-menu"> 삭제된 게시판 관리 </span></a></li>
-							<ul aria-expanded="false" class="collapse  first-level base-level-line">
-								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class="sidebar-link"><span class="hide-menu"> 블라인드된 게시판 관리 </span></a></li>
-								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu"> 신고된 게시판 관리 </span></a></li>
-							</ul></li>
+						<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/blind/blindList" class="sidebar-link"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu"> 삭제된 게시판 관리 </span></a></li>
 					</c:if>
 					<!-- 관리자 메뉴 끝 -->
 				</ul>
@@ -200,8 +194,6 @@
     <script src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
     <script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
