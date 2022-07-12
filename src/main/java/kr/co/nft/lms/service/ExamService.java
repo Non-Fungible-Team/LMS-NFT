@@ -169,13 +169,15 @@ public class ExamService {
 	
 	// 답안 제출
 	public int submitExamAnswer(ExamAnswer examAnswer) {
-			log.debug(A.C + "[ExamService.submitExamAnswer.param] examAnswer :"+ examAnswer + A.R);
-			return examMapper.insertExamAnswer(examAnswer);
-	}
-	// 채점
-	public int modifyExamScore(ExamAnswer examAnswer) {
-		log.debug(A.C + "[ExamService.modifyExamScore.param] examAnswer :"+ examAnswer + A.R);
-		return examMapper.updateExamScore(examAnswer);
+			log.debug(A.C + "[ExamService.submitExamAnswer.param] examAnswerList :"+ examAnswer + A.R);
+			
+			int row = 0;
+			for (ExamAnswer e : examAnswer.getExmaAnswerList()) {
+				row= row+ examMapper.insertExamAnswer(e);
+			}
+//			examMapper.updateExamAnswer(examAnswer);
+			return row;
+			
 	}
 	
 	// 답안 상세보기
@@ -197,6 +199,14 @@ public class ExamService {
 		log.debug(A.C + "[ExamService.examScoreOneList.Mapper] returnMap : " + returnMap + A.R);
 		returnMap.put("examScoreOneList",examScoreOneList);
 		return returnMap;
+	}
+	
+	// chart
+	public List<Map<String, Object>> selectExamChart() {
+		List<Map<String, Object>> examChartList = examMapper.selectExamChart();
+		log.debug(A.C + "[ExamService.examChartList.Mapper] examChartList : " + examChartList + A.R);
+		
+		return examChartList;
 	}
 	
 	

@@ -117,7 +117,7 @@
 										,#{examType}
 										,NOW()
 										,NOW()
-			);	
+			);
 	</insert>
 <!-- 보기 등록  -->
 	<insert id="insertExamExample"
@@ -128,7 +128,11 @@
 								,example_content
 								,example_create_date
 								,example_update_date
-			) VALUES( 	#{examNo}
+			) VALUES
+			
+			<if test='examType="객관식"'> 
+			(
+						#{examNo}
 						,#{examQuestionNo}
 						,1
 						,#{exampleOneContent}
@@ -156,8 +160,8 @@
 						,NOW()
 						,NOW()
 			)
+			</if>
 	</insert>
-	
 <!-- 시험 수정  -->
 	<update id="updateExam"
 			parameterType="kr.co.nft.lms.vo.Exam">
@@ -193,7 +197,6 @@
 		WHERE exam_no = #{examNo}
 	</update>
 	
-	
 <!-- 		시험 삭제 -->
 	<delete id="deleteExam"
 			parameterType="int">
@@ -201,7 +204,6 @@
 			WHERE exam_no = #{examNo}
 	</delete>
 	
-
 <!-- 시험 응시 (학생) -->
 <!-- 		시험 답안 제출 -->
 	<insert id="insertExamAnswer"
@@ -219,11 +221,10 @@
 							,#{examAnswer}
 							,NOW()
 							,NOW()		
-			);
-		</insert>
-	
-<!-- 	채점 		 -->
-	<update id="updateExamScore"
+			)
+	</insert>
+<!-- 		채점     -->
+	<update id="updateExamAnswer"
 			parameterType="kr.co.nft.lms.vo.ExamAnswer">
 			UPDATE 		exam_answer ea
 			JOIN 		exam_question eq
@@ -235,7 +236,6 @@
 			ELSE 		0
 			END;
 	</update>
-	
 <!-- 시험확인 리스트  -->	
 	<select id="selectExamScoreListByPage"
 			parameterType="java.util.Map"
@@ -252,7 +252,7 @@
 			LEFT JOIN 	exam e
 			ON 			ea.exam_no = e.exam_no 
 			WHERE 		eq.exam_correct_answer=ea.exam_answer
-			GROUP BY 	eq.exam_no
+			GROUP BY 	ea.member_id
 			ORDER BY 	eq.exam_no ASC
 			LIMIT 		#{beginRow}, #{rowPerPage};
 	</select>
@@ -264,7 +264,6 @@
 		FROM 	exam_answer
 		WHERE 	member_id='student'
 	</select>
-			
 			
 <!-- 제출 시험 상세보기 		 	 -->
 <!--  제출 답안 상세보기  -->
@@ -278,8 +277,39 @@
 			FROM exam_answer ea
 			WHERE ea.exam_no= #{examNo} and ea.exam_question_no = #{examQuestionNo} and ea.member_id = 'student'
 	</select>
-		
 	
-
+<!-- 	chart -->
+	<select id="selectExamChart"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+			SELECT 	a.examNo examNo
+					,a.examTitle exmaTitle
+					,a.memberId memberId
+					,a.examScore examScore
+					,(SELECT cast(AVG(a.examScore) AS dec(10,0)) examScoreAvg
+						FROM (SELECT 		eq.exam_no 									examNo
+											,e.exam_title 								examTitle
+											,ea.member_id 								memberId
+											,SUM(eq.exam_point) AS 						examScore						
+								FROM 		exam_question eq 
+								LEFT JOIN 	exam_answer ea
+								ON  		eq.exam_no=ea.exam_no AND eq.exam_question_no=ea.exam_question_no
+								LEFT JOIN 	exam e
+								ON 			ea.exam_no = e.exam_no 
+								WHERE 		eq.exam_correct_answer=ea.exam_answer
+								GROUP BY 	ea.member_id) a)  AS examScoreAvg
+					FROM (SELECT 		eq.exam_no 									examNo
+											,e.exam_title 								examTitle
+											,ea.member_id 								memberId
+											,SUM(eq.exam_point) AS 						examScore						
+								FROM 		exam_question eq 
+								LEFT JOIN 	exam_answer ea
+								ON  		eq.exam_no=ea.exam_no AND eq.exam_question_no=ea.exam_question_no
+								LEFT JOIN 	exam e
+								ON 			ea.exam_no = e.exam_no 
+								WHERE 		eq.exam_correct_answer=ea.exam_answer
+								GROUP BY 	ea.member_id) a
+					GROUP BY memberId
+	</select>
 </mapper>
 	

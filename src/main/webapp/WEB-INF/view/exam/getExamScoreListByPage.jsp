@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16"	href="${pageContext.request.contextPath}/assets/images/favicon.png">
-<title>시험 점수 리스트</title>
+<title>Non-Fungible LMS</title>
 <!-- CSS 링크 -->
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css"	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -21,15 +21,69 @@
 <script	src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script	src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"> </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 </head>
 <script>
-	$('document')
-			.ready(
-					function() {
-						$("#navAside")
-								.load(
-										'${pageContext.request.contextPath}/include/navAside.jsp');
-					});
+	$('document').ready(function(){
+		$("#navAside").load(
+				'${pageContext.request.contextPath}/include/navAside.jsp');
+		
+
+		getGraph();
+
+		function getGraph(){
+			var url = '${pageContext.request.contextPath}/rest/all/exam/getExamChart';
+			
+			var chartMemberId = [];
+			var chartExamScore = [];
+			var chartExamScoreAvg = [];
+			$.ajax({
+				type:'get'
+				,url: url
+				,success: function(data){ 
+					console.log(data);
+					for(var i=0; i<data.length; i++){
+						memberId = data[i].memberId;
+						examScore = data[i].examScore;
+						examScoreAvg = data[i].examScoreAvg;
+						
+						chartMemberId.push([memberId]);
+						chartExamScore.push([examScore]);
+						chartExamScoreAvg.push([examScoreAvg]);
+						}
+					}
+				});
+						
+			var data = {
+					labels: chartMemberId,
+					datasets: [{
+							label:'점수',
+							data:chartExamScore,
+							fill: false,
+							borderColor:['rgb(255, 99, 132)'
+								,'rgb(67,116, 216)'],
+							backgroundColor:['rgba(255, 99, 132, 0.2)',
+								'rgba(67, 116, 216, 0.2)'],
+							borderWidth: 1
+							}]
+			}
+			
+				new Chart("myChart", {
+						type:"bar"
+						,data: data,
+							options:{
+								responsive: true,
+				                scales: {
+				                	 y: {
+				                         suggestedMin: 0,
+				                         suggestedMax: 100
+				                     }
+				                }
+				}});
+			}
+	});
 </script>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical"
@@ -65,7 +119,7 @@
 											<c:forEach var="e" items="${examScoreList}">
 												<tr>
 													<c:if test="${loginMember.memberLevel == 4 && loginMember.memberId == e.memberId}">
-															<td>${e.examNo}</td>
+															<td>${e.examNo+1}</td>
 															<td>${e.examTitle}</td>
 															<td>${e.memberId}</td>
 															<td>${e.examScore}</td>
@@ -74,7 +128,7 @@
 															<td><a href="${pageContext.request.contextPath}/all/exam/getExamScoreOne?examNo=${e.examNo}&memberId=${e.memberId}">상세보기</a></td>
 													</c:if>
 													<c:if test="${loginMember.memberLevel==5}">
-															<td>${e.examNo}</td>
+															<td>${e.examNo+1}</td>
 															<td>${e.examTitle}</td>
 															<td>${e.memberId}</td>
 															<td>${e.examScore}</td>
@@ -86,6 +140,15 @@
 											</c:forEach>
 										</tbody>
 									</table>
+									<div class="row">
+										<div class="col-lg-6 col-md-6">
+											<div class="card">
+												<div class="card-body">
+													<canvas id="myChart" style="none" width="100" height="100"></canvas>
+												</div>
+											</div>
+										</div>
+									</div>
 									<form method="get"
 										action="${pageContext.request.contextPath}/all/exam/getExamScoreListByPage">
 										<c:if test="${currentPage>1}">
@@ -127,16 +190,17 @@
 		</div>
 	</div>
 </body>
-<script	src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
-<script	src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-<script	src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
-<script	src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
-<script	src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
-<script	src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/sidebarmenu.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/custom.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/c3/d3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+<script src="${pageContext.request.contextPath}/dist/js/pages/dashboards/dashboard1.min.js"></script>
 </html>

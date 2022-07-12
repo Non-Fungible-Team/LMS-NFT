@@ -13,7 +13,7 @@
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${pageContext.request.contextPath}/assets/images/favicon.png">
-<title>getExamOne</title>
+<title>Non-Fungible LMS</title>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css"	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -94,7 +94,7 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td class="table-light"><input type="hidden" name="examQuestionNo" id="examQuestionNo" value="${examQuestionOneList.examQuestionNo}">${examQuestionOneList.examQuestionNo}</td>
+													<td class="table-light"><input type="hidden" name="examAnswer[${status.count}].examQuestionNo" id="examQuestionNo" value="${examQuestionOneList.examQuestionNo}">${examQuestionOneList.examQuestionNo}</td>
 													<td class="table-light">${examQuestionOneList.examContent}</td>
 													<td class="table-light">${examQuestionOneList.examPoint}</td>
 													<td class="table-light">${examQuestionOneList.examType}</td>
@@ -118,7 +118,7 @@
 															</c:forEach>
 														</table>
 													</td>
-													<td><input type="text" name="examAnswer" id="examAnswer"></td>
+													<td><input type="text" name="examAnswer[${status.count}].examAnswer" id="examAnswer"></td>
 												</tr>
 											</tbody>
 										</table>

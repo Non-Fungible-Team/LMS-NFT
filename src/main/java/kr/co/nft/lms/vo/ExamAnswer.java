@@ -1,5 +1,7 @@
 package kr.co.nft.lms.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -11,5 +13,6 @@ public class ExamAnswer {
 	private int examScore;
 	private String examAnswerStartDate;
 	private String examAnswerEndDate;
+	private List<ExamAnswer> exmaAnswerList;
 
 }

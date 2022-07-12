@@ -11,7 +11,7 @@
 <link rel="stylesheet"	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16"	href="${pageContext.request.contextPath}/assets/images/favicon.png">
-<title>시험 리스트</title>
+<title>Non-Fungible LMS</title>
 <!-- CSS 링크 -->
 <link	href="${pageContext.request.contextPath}/assets/extra-libs/c3/c3.min.css"	rel="stylesheet">
 <link	href="${pageContext.request.contextPath}/assets/libs/chartist/dist/chartist.min.css"	rel="stylesheet">
@@ -73,7 +73,7 @@
 <!-- 													강사 페이지 -->
 <!-- 													강사 페이지 -->
 													<c:if test="${sessionLoginMember.memberLevel==5 && sessionLoginMember.memberId == e.memberId && sessionLectureNo== e.lectureNo}">
-														<td>${e.examNo}</td>
+														<td>${e.examNo+1}</td>
 														<td>${e.examTitle}</td>
 														<td>${e.examCount}</td>
 														<td>${e.examMaxScore}</td>
@@ -85,7 +85,7 @@
 <!-- 													학생 페이지 -->
 <!-- 													학생 페이지 -->
 													<c:if test="${sessionLoginMember.memberLevel == 4 && sessionLectureNo== e.lectureNo}">
-														<td>${e.examNo}</td>
+														<td>${e.examNo+1}</td>
 														<td>${e.examTitle}</td>
 														<td>${e.examCount}</td>
 														<td>${e.examMaxScore}</td>

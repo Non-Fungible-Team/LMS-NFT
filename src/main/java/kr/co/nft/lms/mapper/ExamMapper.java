@@ -6,9 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.nft.lms.vo.Exam;
+import kr.co.nft.lms.vo.ExamAnswer;
 import kr.co.nft.lms.vo.ExamExample;
 import kr.co.nft.lms.vo.ExamQuestion;
-import kr.co.nft.lms.vo.ExamAnswer;
 
 @Mapper
 public interface ExamMapper {
@@ -48,18 +48,21 @@ public interface ExamMapper {
 	
 	
 //  시험 점수 확인
-	// 시험문제 리스트
-	List<Exam> selectExamScoreListByPage(Map<String, Object> map);
-	
 	// 확인 리스트 수 
 	int countExamScore();
+	
+	// 시험문제 리스트
+	List<Exam> selectExamScoreListByPage(Map<String, Object> map);
 		
 	// 시험 응시
 	int insertExamAnswer(ExamAnswer examAnswer);
 	// 채점
-	int updateExamScore(ExamAnswer examAnswer);
+	int updateExamAnswer(ExamAnswer examAnswer);
 	
 	// 답안 상세보기
 	List<Exam> selectExamScoreOne(int examNo,int examQuestionNo);
+	
+	//chart
+	List<Map<String,Object>> selectExamChart();
 	
 }

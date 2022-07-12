@@ -41,4 +41,5 @@ public class Exam {
 	private int examQuestionListExampleNo;
 	private String examQuestionListExampleContent;
 	private List<Exam> examQuestionList;
+	private List<Exam> examChartList;
 }

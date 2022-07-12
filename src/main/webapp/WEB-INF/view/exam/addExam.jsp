@@ -21,7 +21,7 @@
 <script	src="${pageContext.request.contextPath}/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script	src="${pageContext.request.contextPath}/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>문제등록</title>
+<title>Non-Fungible LMS</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -30,10 +30,10 @@
 		
 		var appendCount = 1;
 		var appendCountList = 0;
-		var appendCountExample1List = 0;
-		var appendCountExample21List = appendCountExample1List+1;
-		var appendCountExample31List = appendCountExample1List+2;
-		var appendCountExample41List = appendCountExample1List+3;
+// 		var appendCountExample1List = 0;
+// 		var appendCountExample21List = appendCountExample1List+1;
+// 		var appendCountExample31List = appendCountExample1List+2;
+// 		var appendCountExample41List = appendCountExample1List+3;
 // 		객관식 문제 추가
 		$('#addExamMultiQuestion').click(function() {
 			if (appendCount >= 20)	return;

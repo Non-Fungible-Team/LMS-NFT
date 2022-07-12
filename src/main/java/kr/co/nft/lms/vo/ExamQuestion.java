@@ -11,6 +11,7 @@ public class ExamQuestion {
 	private String examContent;
 	private String examCorrectAnswer;
 	private int examPoint;
+	private int examQuestionContent;
 	private String examType;
 	private String examQuestionCreateDate;
 	private String examQuestionUpdateDate;

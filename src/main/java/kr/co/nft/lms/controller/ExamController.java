@@ -1,5 +1,6 @@
 package kr.co.nft.lms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -181,30 +182,14 @@ public class ExamController {
 			log.debug(A.C + "[ExamController.submitExamAnswer.param] exam: " + examAnswer + A.R);
 			
 			int row = examService.submitExamAnswer(examAnswer);
-			log.debug(A.C + "[ExamController.submitExamAnswer.param] row: " + row + A.R);
 			if(row ==1) {
-				log.debug(A.C +"ExamController.submitExamAnswer 답안 제출 성공"+A.R);
+				log.debug(A.C +"ExamController.addExam 시험 입력 성공"+A.R);
 			} else {
-				log.debug(A.C +"ExamController.submitExamAnswer 답안 제출 실패"+A.R);
+				log.debug(A.C +"ExamController.addExam 시험 입력 실패"+A.R);
 			}
 			return "redirect:/exam/getExamScoreListByPage";
 			
 		}
-//		// 채점
-//		@PostMapping("/student/exam/submitExamAnswer")
-//		public String modifyExamScore(ExamAnswer examAnswer) {
-//			log.debug(A.C + "[ExamController.modifyExamScore.param] exam: " + examAnswer + A.R);
-//			
-//			int row = examService.modifyExamScore(examAnswer);
-//			log.debug(A.C + "[ExamController.modifyExamScore.param] row: " + row + A.R);
-//			if(row ==1) {
-//				log.debug(A.C +"ExamController.modifyExamScore 답안 제출 성공"+A.R);
-//			} else {
-//				log.debug(A.C +"ExamController.modifyExamScore 답안 제출 실패"+A.R);
-//			}
-//			return "redirect:/exam/getExamScoreListByPage";
-//			
-//		}
 		
 		// 제출 답안 상세보기
 		@GetMapping("/all/exam/getExamScoreOne")
