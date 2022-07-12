@@ -49,52 +49,52 @@
 												<td>운영자 사진</td>
 												<td>
 												<!-- 경로  ${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName} 이와같이 작성하면 파일 못찾음 -->
-													<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
-														<img height="100" width="100" src="${pageContext.request.contextPath}/uploadFile/memberPhoto/managerPhoto/${getMemberPhoto.photoName}">
+													<c:if test="${managerOne.photoType=='image/jpg' || managerOne.photoType== 'image/png' || managerOne.photoType == 'image/jpeg' }">
+														<img height="200" width="200" src="${pageContext.request.contextPath}/uploadFile/memberPhoto/managerPhoto/${managerOne.photoName}">
 													</c:if>
-													<a href="${pageContext.request.contextPath}/uploadFile/memberPhoto/managerPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
-														${getMemberPhoto.photoOriginName}
+													<a href="${pageContext.request.contextPath}/uploadFile/memberPhoto/managerPhoto/${managerOne.photoName}" download="${managerOne.photoOriginName}">
+														${managerOne.photoOriginName}
 													</a>
 												</td>
 											</tr>
 											<tr>
 												<td>아이디</td>
-												<td>${loginMember.memberId}</td>
+												<td>${sessionLoginMember.memberId}</td>
 											</tr>
 											<tr>
 												<td>운영자 이름</td>
-												<td>${getManagerOneByManagerVo.managerName}</td>
+												<td>${managerOne.managerName}</td>
 											</tr>
 											<tr>
 												<td>생일</td>
-												<td>${getManagerOneByManagerVo.managerBirth}</td>
+												<td>${managerOne.managerBirth}</td>
 											</tr>
 											<tr>
 												<td>성별</td>
-												<td>${getManagerOneByManagerVo.managerGender}</td>
+												<td>${managerOne.managerGender}</td>
 											</tr>
 											<tr>
 												<td>이메일</td>
-												<td>${getManagerOneByManagerVo.managerEmail}</td>
+												<td>${managerOne.managerEmail}</td>
 											</tr>
 											<tr>
 												<td>입사일</td>
-												<td>${getManagerOneByManagerVo.managerEntryDate}</td>
+												<td>${managerOne.managerEntryDate}</td>
 											</tr>
 											<tr>
 												<td>휴대전화</td>
-												<td>${getManagerOneByMemberVo.memberPhoneNo}</td>
+												<td>${managerOne.memberPhoneNo}</td>
 											</tr>
 											<tr>
 												<td>마지막 로그인 날짜</td>
-												<td>${getManagerOneByMemberVo.memberLastLoginDate}</td>
+												<td>${managerOne.memberLastLoginDate}</td>
 											</tr>
 										</table>
 									</div>
 									<div>
-										<a href="${pageContext.request.contextPath}/manager/modifyManager?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-info">운영자 정보 수정</a>
+										<a href="${pageContext.request.contextPath}/manager/modifyManager?memberId=${sessionLoginMember.memberId}" class="btn btn-rounded btn-outline-info">운영자 정보 수정</a>
 										<span></span>
-										<a href="${pageContext.request.contextPath}/manager/freezeManager?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-danger">운영자 정보 삭제</a>
+										<a href="${pageContext.request.contextPath}/manager/freezeManager?memberId=${sessionLoginMember.memberId}" class="btn btn-rounded btn-outline-danger">운영자 정보 삭제</a>
 									</div>
 								</div>
 							</div>

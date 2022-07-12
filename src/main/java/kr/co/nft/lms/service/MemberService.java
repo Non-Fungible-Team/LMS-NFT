@@ -412,6 +412,32 @@ public class MemberService {
 	// --------------------------------------- // 
 	// 상세보기 
 	
+	// MEMBER, Teacher 테이블에서 학생 정보 상세 조회 
+	public Map<String, Object> getManagerOne(Member member) {
+		
+		log.debug(A.Z+"[MemberService.getManagerOne.param] member : "+member+A.R);
+		// 강사 상세보기 리턴값 받을 변수 선언 
+		Map<String, Object> map = new HashMap<>();
+		
+		map = memberMapper.selectManagerOne(member);
+		log.debug(A.Z+"[MemberService.selectManagerOne] map : "+map+A.R);
+		
+		return map;
+	}
+	
+	// MEMBER, Teacher 테이블에서 학생 정보 상세 조회 
+	public Map<String, Object> getTeacherOne(Member member) {
+		
+		log.debug(A.Z+"[MemberService.getStudentOne.param] member : "+member+A.R);
+		// 강사 상세보기 리턴값 받을 변수 선언 
+		Map<String, Object> map = new HashMap<>();
+		
+		map = memberMapper.selectTeacherOne(member);
+		log.debug(A.Z+"[MemberService.selectTeachertOne] map : "+map+A.R);
+		
+		return map;
+	}
+	
 	// MEMBER, STUDENT 테이블에서 학생 정보 상세 조회 
 	public Map<String, Object> getStudentOne(Member member) {
 		

@@ -34,7 +34,7 @@
 			, teacher.teacher_birth teacherBirth
 			, teacher.teacher_gender teacherGender 
 			, teacher.teacher_email teacherEmail 
-			, teacher.address_detail addressDetail <!-- addr_detail로 고쳐야 함 --> 
+			, teacher.address_detail addrDetail <!-- addr_detail로 고쳐야 함 --> 
 		FROM teacher
 		INNER JOIN member
 		ON teacher.member_id = member.member_id 
@@ -94,7 +94,7 @@
 			, manager_birth managerBirth
 			, manage_gender managerGender
 			, manager_email managerEmail
-			, address_detail addressDetail
+			, address_detail addrDetail
 		FROM manager	
 	</select>
 
@@ -372,6 +372,68 @@
 	</select>
 	<!-- 위에 내용 표시 -->	
 	
+	<select id="selectManagerOne"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="java.util.Map">
+		SELECT 
+			member.member_id memberId 
+			, member.member_pw_update_date memberPwUpdateDate 
+			, member.member_phone_no memberPhoneNo
+			, member.member_level memberLevel 
+			, member.member_last_login_date memberLastLoginDate 
+			, member.member_create_date memberCreateDate 
+			, member.member_update_date memberUpdateDate 
+			, manager.manager_entry_date managerEntryDate
+			, manager.manager_name managerName
+			, manager.manager_birth managerBirth
+			, manager.manager_gender managerGender
+			, manager.manager_email managerEmail
+			, manager.addr_detail addrDetail
+			, member_photo.photo_name photoName 
+			, member_photo.photo_origin_name photoOriginName 
+			, member_photo.photo_type photoType
+			, member_photo.photo_size photoSize 
+			, member_photo.photo_create_date photoCreateDate 
+			, member_photo.photo_update_date photoUpdateDate
+		FROM member 
+		INNER JOIN manager 
+		ON member.member_id = manager.member_id
+		LEFT JOIN member_photo 
+		ON member.member_id = member_photo.member_id
+		WHERE member.member_id = #{memberId}
+	</select>
+	
+	<select id="selectTeacherOne"
+			parameterType="kr.co.nft.lms.vo.Member"
+			resultType="java.util.Map">
+		SELECT 
+			member.member_id memberId 
+			, member.member_pw_update_date memberPwUpdateDate 
+			, member.member_phone_no memberPhoneNo
+			, member.member_level memberLevel 
+			, member.member_last_login_date memberLastLoginDate 
+			, member.member_create_date memberCreateDate 
+			, member.member_update_date memberUpdateDate 
+			, teacher.teacher_entry_date teacherEntryDate
+			, teacher.teacher_name teacherName
+			, teacher.teacher_birth teacherBirth
+			, teacher.teacher_gender teacherGender
+			, teacher.teacher_email teacherEmail
+			, teacher.addr_detail addrDetail
+			, member_photo.photo_name photoName 
+			, member_photo.photo_origin_name photoOriginName 
+			, member_photo.photo_type photoType
+			, member_photo.photo_size photoSize 
+			, member_photo.photo_create_date photoCreateDate 
+			, member_photo.photo_update_date photoUpdateDate
+		FROM member 
+		INNER JOIN teacher 
+		ON member.member_id = teacher.member_id
+		LEFT JOIN member_photo 
+		ON member.member_id = member_photo.member_id
+		WHERE member.member_id = #{memberId}
+	</select>
+	
 	<select id="selectStudentOne"
 			parameterType="kr.co.nft.lms.vo.Member"
 			resultType="java.util.Map">
@@ -547,10 +609,9 @@
 			, #{studentGender}
 			, #{studentEmail}
 			, CONCAT(#{roadAddr}, ', ', #{addrDetail})
-			<!-- , #{addressDetail} -->
+			<!-- , #{addrDetail} -->
 		)
 	</insert>
-	
 	
 	<insert id="insertMemberByMemberVo"
 			parameterType="kr.co.nft.lms.vo.Member">
@@ -577,10 +638,7 @@
 		
 	</insert>
 
-				
 
-
-	
 	<insert id="insertAddressByAddressVo"
 			parameterType="kr.co.nft.lms.vo.Address">
 			

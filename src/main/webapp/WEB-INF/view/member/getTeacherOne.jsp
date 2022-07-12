@@ -49,53 +49,53 @@
 												<td>강사 사진</td>
 												<td>
 												<!-- 경로  ${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName} 이와같이 작성하면 파일 못찾음 -->
-													<c:if test="${getMemberPhoto.photoType=='image/jpg' || getMemberPhoto.photoType== 'image/png' || getMemberPhoto.photoType == 'image/jpeg' }">
-														<img src="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}">
+													<c:if test="${teacherOne.photoType=='image/jpg' || teacherOne.photoType== 'image/png' || teacherOne.photoType == 'image/jpeg' }">
+														<img src="${pageContext.request.contextPath}/uploadFile/memberPhoto/teacherPhoto/${getMemberPhoto.photoName}" width="200" height="200">
 													</c:if>
-													<a href="${pageContext.request.contextPath}/memberPhoto/${getMemberPhoto.photoName}" download="${getMemberPhoto.photoOriginName}">
-														${getMemberPhoto.photoOriginName}
+													<a href="${pageContext.request.contextPath}/uploadFile/memberPhoto/teacherPhoto/${teacherOne.photoName}" download="${teacherOne.photoOriginName}">
+														${teacherOne.photoOriginName}
 													</a>
 												</td>
 											</tr>
 											<tr>
 												<td>아이디</td>
-												<td>${loginMember.memberId}</td>
+												<td>${sessionLoginMember.memberId}</td>
 											</tr>
 											<tr>
 												<td>강사 이름</td>
-												<td>${getTeacherOneByTeacherVo.teacherName}</td>
+												<td>${teacherOne.teacherName}</td>
 											</tr>
 											<tr>
 												<td>생일</td>
-												<td>${getTeacherOneByTeacherVo.teacherBirth}</td>
+												<td>${teacherOne.teacherBirth}</td>
 											</tr>
 											<tr>
 												<td>성별</td>
-												<td>${getTeacherOneByTeacherVo.teacherGender}</td>
+												<td>${teacherOne.teacherGender}</td>
 											</tr>
 											<tr>
 												<td>이메일</td>
-												<td>${getTeacherOneByTeacherVo.teacherEmail}</td>
+												<td>${teacherOne.teacherEmail}</td>
 											</tr>
 											<tr>
 												<td>입사일</td>
-												<td>${getTeacherOneByTeacherVo.teacherEntryDate}</td>
+												<td>${teacherOne.teacherEntryDate}</td>
 											</tr>
 											
 											<tr>
 												<td>휴대전화</td>
-												<td>${getTeacherOneByMemberVo.memberPhoneNo}</td>
+												<td>${teacherOne.memberPhoneNo}</td>
 											</tr>
 											<tr>
 												<td>마지막 로그인 날짜</td>
-												<td>${getTeacherOneByMemberVo.memberLastLoginDate}</td>
+												<td>${teacherOne.memberLastLoginDate}</td>
 											</tr>
 										</table>
 									</div>
 									<div>
-										<a href="${pageContext.request.contextPath}/teacher/modifyTeacher?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-info">강사 정보 수정</a>
+										<a href="${pageContext.request.contextPath}/teacher/modifyTeacher?memberId=${sessionLoginMember.memberId}" class="btn btn-rounded btn-outline-info">강사 정보 수정</a>
 										<span></span>
-										<a href="${pageContext.request.contextPath}/teacher/freezeTeacher?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-danger">강사 정보 삭제</a>
+										<a href="${pageContext.request.contextPath}/teacher/freezeTeacher?memberId=${sessionLoginMember.memberId}" class="btn btn-rounded btn-outline-danger">강사 정보 삭제</a>
 									</div>
 								</div>
 							</div>

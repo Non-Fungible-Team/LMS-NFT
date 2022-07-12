@@ -122,8 +122,16 @@ public interface MemberMapper {
 	
 	// -------------- 상세 보기 ------------------ //  
 	
+	// Member, Teacher 테이블 활용하여 강사 상세보기 
+	Map<String, Object> selectManagerOne(Member member);
+	
+	// Member, Teacher 테이블 활용하여 강사 상세보기 
+	Map<String, Object> selectTeacherOne(Member member);
+	
 	// Member, Student 테이블 활용하여 학생 상세보기 
 	Map<String, Object> selectStudentOne(Member member);
+	
+	// 아래 코드는 시행착오 //
 	
 	// Member 테이블 활용하여 운영자 상세보기 
 	Member selectManagerOneByMemberVo(Member member);

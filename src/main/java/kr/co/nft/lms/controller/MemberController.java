@@ -587,82 +587,37 @@ public class MemberController {
 	
 	// ------------------ 상세보기 ------------------ //
 	
-	// 운영자 상세보기 
-	// 세션 받음 
-	@GetMapping("/manager/getManagerOne")
-	public String getManagerOne(HttpSession session
-								, Model model) {
-		// 세션에서 받아온 참조 변수 Member의 ID, LEVEL 필드를 받는다 
-		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
-		log.debug(A.Z+"[MemberController.getManagerOne.param] loginMember : "+loginMember+A.R);
-
-		// 계정 정보 없으면 로그인 실패 
-		if(loginMember == null) {
-			log.debug(A.Z+"MemberController.getManagerOne : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
+	// 운영자 상세보기 GET 
+		@GetMapping("/manager/getManagerOne")
+		public String getManagerOne(HttpSession session
+									, Model model) {
+			Member loginMember = (Member)session.getAttribute("sessionLoginMember");
+			log.debug(A.Z+"[MemberController.getManagerOne.param] loginMember : "+loginMember+A.R);
+				
+			// 운영자 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+			Map<String, Object> returnMap = memberService.getManagerOne(loginMember);
+			
+			// 뷰 페이지 getTeacherOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
+			model.addAttribute("managerOne",returnMap);
+					
+			return "/member/getManagerOne";
 		}
-		
-		// 운영자 개인의 정보를 띄우기 위해 Member, Manager, MemberPhoto 테이블에서 거의 모든 필드들을 가져온다 
-		Manager getManagerOneByManagerVo = memberService.getManagerOneReturnManagerVo(loginMember);
-		log.debug(A.Z+"[MemberController.getManagerOne] getManagerOneByManagerVo : "+getManagerOneByManagerVo+A.R);
-		
-		Member getManagerOneByMemberVo = memberService.getManagerOneReturnMemberVo(loginMember);
-		log.debug(A.Z+"[MemberController.getManagerOne] getManagerOneByMemberVo : "+getManagerOneByMemberVo+A.R);
-		
-		MemberPhoto getMemberPhoto = memberService.getMemberPhoto(loginMember);
-		log.debug(A.Z+"[MemberController.getManagerOne] getMemberPhoto : "+getMemberPhoto+A.R);
-		
-		// 뷰 페이지 getTeacherOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
-		model.addAttribute("getManagerOneByManagerVo", getManagerOneByManagerVo);
-		model.addAttribute("getManagerOneByMemberVo", getManagerOneByMemberVo);
-		model.addAttribute("getMemberPhoto", getMemberPhoto);
-		
-		// 세션으로 로그인한 유저의 정보와 과목 번호를 넘긴다 
-		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
-		return "/member/getManagerOne";
-	}
 	
-	// 강사 상세보기 
-	// 세션 받음 
+	// 강사 상세보기 GET 
 	@GetMapping("/teacher/getTeacherOne")
 	public String getTeacherOne(HttpSession session
 								, Model model) {
-		// 세션에서 받아온 참조 변수 Member의 ID, LEVEL 필드를 받는다 
 		Member loginMember = (Member)session.getAttribute("sessionLoginMember");
 		log.debug(A.Z+"[MemberController.getTeacherOne.param] loginMember : "+loginMember+A.R);
-
-		// 계정 정보 없으면 로그인 실패 
-		if(loginMember == null) {
-			log.debug(A.Z+"MemberController.getTeacherOne : "+"로그인 실패"+A.R);
-			// member/memberLogin.jsp 
-			return "/member/memberLogin";
-		}
-		
-		// 강사 개인의 정보를 띄우기 위해 Member, Teacher, MemberPhoto 테이블에서 거의 모든 필드들을 가져온다 
-		Teacher getTeacherOneByTeacherVo = memberService.getTeacherOneReturnTeacherVo(loginMember);
-		log.debug(A.Z+"[MemberController.getTeacherOne] getTeacherOneByTeacherVo : "+getTeacherOneByTeacherVo+A.R);
-		
-		Member getTeacherOneByMemberVo = memberService.getTeacherOneReturnMemberVo(loginMember);
-		log.debug(A.Z+"[MemberController.getTeacherOne] getTeacherOneByMemberVo : "+getTeacherOneByMemberVo+A.R);
-		
-		MemberPhoto getMemberPhoto = memberService.getMemberPhoto(loginMember);
-		log.debug(A.Z+"[MemberController.getTeacherOne] getMemberPhoto : "+getMemberPhoto+A.R);
+			
+		// 학생 한명의 정보를 가져오기 위해 하나의 서비스 호출 
+		Map<String, Object> returnMap = memberService.getTeacherOne(loginMember);
 		
 		// 뷰 페이지 getTeacherOne.jsp 페이지로 참조 변수 인스턴스들을 넘긴다. 
-		model.addAttribute("getTeacherOneByTeacherVo", getTeacherOneByTeacherVo);
-		model.addAttribute("getTeacherOneByMemberVo", getTeacherOneByMemberVo);
-		model.addAttribute("getMemberPhoto", getMemberPhoto);
-		
-		// 세션으로 로그인한 유저의 정보와 과목 번호를 넘긴다 
-		session.setAttribute("loginMember", loginMember);
-		session.setAttribute("sessionLectureNo", 0);
-		
+		model.addAttribute("teacherOne",returnMap);
+				
 		return "/member/getTeacherOne";
 	}
-	
 	
 	// 학생 상세보기 GET 
 	@GetMapping("/all/getStudentOne")

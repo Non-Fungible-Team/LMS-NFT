@@ -102,9 +102,9 @@
 										</table>
 									</div>
 									<div>
-										<a href="${pageContext.request.contextPath}/all/modifyStudent?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-info">학생 정보 수정</a>
+										<a href="${pageContext.request.contextPath}/all/modifyStudent?memberId=${sessionLoginMember.memberId}" class="btn btn-rounded btn-outline-info">학생 정보 수정</a>
 										<span></span>
-										<a href="${pageContext.request.contextPath}/all/freezeStudent?memberId=${loginMember.memberId}" class="btn btn-rounded btn-outline-danger">학생 정보 삭제</a>
+										<a href="${pageContext.request.contextPath}/all/freezeStudent?memberId=${sessionLoginMember.memberId}" class="btn btn-rounded btn-outline-danger">학생 정보 삭제</a>
 									</div>
 								</div>
 							</div>
