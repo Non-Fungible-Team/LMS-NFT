@@ -322,13 +322,6 @@ $('document').ready(function(){
 													</td>
 												</tr>
 												<tr>
-													<td>담당 과목</td>
-													<td>
-														<input type="text" id="teacherSubject" name="teacherSubject" > 
-														<span id="teacherSubjectHelper" class="helper"></span>
-													</td>
-												</tr>
-												<tr>
 													<td>전화번호</td>
 													<td>
 														<input type="text" id="memberPhoneNo" name="memberPhoneNo" >

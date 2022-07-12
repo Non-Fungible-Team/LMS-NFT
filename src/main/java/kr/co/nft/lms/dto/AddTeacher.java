@@ -9,7 +9,7 @@ public class AddTeacher {
 	private String teacherName;
 	private String teacherBirth;
 	private String teacherGender;
-	private String teacherEmailId;
+	private String teacherEmail;
 	private String teacherEntryDate;
 	private String teacherSubject;
 	private String memberPhoneNo;
