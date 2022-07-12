@@ -164,10 +164,12 @@
 								<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/getLectureByPage" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">전체 강의 관리</span></a></li>
 								<li class="sidebar-item"><a class="sidebar-link" href="${pageContext.request.contextPath}/teacher/lecture/subjectList" aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu">과목 관리</span></a></li>
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/teacher/lecture/getLectureRoomList" class="sidebar-link"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu"> 강의실 목록 관리 </span></a></li>
+								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getTeacherLectureByPage" class="sidebar-link"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu"> 강사 별 강의 목록 </span></a></li>
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/lecture/getStudentLectureAllByPage" class="sidebar-link"><i data-feather="tag" class="feather-icon"></i><span class="hide-menu"> 전체 강의 별 학생 목록 </span></a></li>
 							</ul></li>
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">회원 관리</span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
+									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu">가입 승인 대기자 목록</span></a></li>
 									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu"> 운영자 목록</span></a></li>
 									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getTeacherByPage" class="sidebar-link"><span class="hide-menu"> 강사 목록</span></a></li>
 									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getStudentByPage" class="sidebar-link"><span class="hide-menu"> 학생 목록</span></a></li>
@@ -176,7 +178,7 @@
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 								<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/survey/getSurveyQuestionListByPage" class="sidebar-link"><span class="hide-menu"> 질문 관리 리스트 </span></a></li>
 							</ul></li>
-						<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/blind/blindList" class="sidebar-link"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu"> 삭제된 게시판 관리 </span></a></li>
+						<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/blind/blindList" class="sidebar-link"><i class="fas fa-eye-slash"></i><span class="hide-menu"> 삭제된 게시판 관리 </span></a></li>
 					</c:if>
 					<!-- 관리자 메뉴 끝 -->
 				</ul>
