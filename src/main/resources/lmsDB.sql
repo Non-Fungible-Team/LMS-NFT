@@ -37,17 +37,15 @@ CREATE TABLE IF NOT EXISTS `attend` (
   `member_id` varchar(100) NOT NULL,
   `lecture_no` int(11) NOT NULL,
   `attend_date` date NOT NULL,
-  `attend_start` datetime NOT NULL,
-  `attend_end` datetime NOT NULL,
   `attend_status` enum('출석','지각','결석','병결','공결') NOT NULL,
-  `attend_reason` text NOT NULL,
+  `attend_reason` text DEFAULT '사유',
   `attend_create_date` datetime NOT NULL,
   `attend_update_date` datetime NOT NULL,
   PRIMARY KEY (`member_id`,`lecture_no`,`attend_date`),
   KEY `FK_attend_lecture_schedule` (`attend_date`),
-  KEY `FK_attend_lecture_schedule_2` (`lecture_no`),
-  CONSTRAINT `FK_attend_lecture_schedule` FOREIGN KEY (`attend_date`) REFERENCES `lecture_schedule` (`lecture_schedule_date`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_attend_lecture_schedule_2` FOREIGN KEY (`lecture_no`) REFERENCES `lecture_schedule` (`lecture_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_attend_lecture_schedule2` (`lecture_no`,`attend_date`),
+  CONSTRAINT `FK_attend_lecture` FOREIGN KEY (`lecture_no`) REFERENCES `lecture` (`lecture_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_attend_student` FOREIGN KEY (`member_id`) REFERENCES `student` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -59,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `board` (
   `board_content` varchar(255) NOT NULL,
   `board_category` enum('공지','건의','강의') NOT NULL,
   `member_id` varchar(100) NOT NULL,
-  `board_privilege` varchar(100) NOT NULL,
+  `board_privilege` int(11) NOT NULL DEFAULT 0,
   `board_blind` enum('Y','N') NOT NULL,
   `board_create_date` datetime NOT NULL,
   `board_update_date` datetime NOT NULL,
   PRIMARY KEY (`board_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -88,19 +86,18 @@ CREATE TABLE IF NOT EXISTS `board_file` (
   `board_file_name` varchar(100) NOT NULL,
   `board_file_origin_name` varchar(100) NOT NULL,
   `board_file_type` varchar(100) NOT NULL,
-  `board_file_size` int(11) NOT NULL,
+  `board_file_size` bigint(20) NOT NULL,
   PRIMARY KEY (`board_file_no`),
   KEY `FK_board_file_board` (`board_no`),
   CONSTRAINT `FK_board_file_board` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 lms.comment 구조 내보내기
 CREATE TABLE IF NOT EXISTS `comment` (
-  `comment_no` int(11) NOT NULL,
+  `comment_no` int(11) NOT NULL AUTO_INCREMENT,
   `board_no` int(11) NOT NULL,
-  `comment_title` varchar(100) NOT NULL,
   `comment_content` text NOT NULL,
   `comment_blind` enum('Y','N') NOT NULL,
   `member_id` varchar(100) NOT NULL,
@@ -109,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`comment_no`),
   KEY `FK_comment_board` (`board_no`),
   CONSTRAINT `FK_comment_board` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -126,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `exam_create_date` datetime NOT NULL,
   `exam_update_date` datetime NOT NULL,
   PRIMARY KEY (`exam_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -136,9 +133,9 @@ CREATE TABLE IF NOT EXISTS `exam_answer` (
   `exam_question_no` int(11) NOT NULL,
   `member_id` varchar(100) NOT NULL,
   `exam_answer` varchar(100) NOT NULL,
-  `exam_score` int(11) NOT NULL,
-  `exam_start_date` datetime NOT NULL,
-  `exam_end_date` datetime NOT NULL,
+  `exam_score` int(11) DEFAULT NULL,
+  `exam_answer_start_date` datetime NOT NULL,
+  `exam_answer_end_date` datetime NOT NULL,
   PRIMARY KEY (`exam_no`,`exam_question_no`,`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -165,9 +162,10 @@ CREATE TABLE IF NOT EXISTS `exam_question` (
   `exam_correct_answer` varchar(100) NOT NULL,
   `exam_point` int(11) NOT NULL,
   `exam_type` varchar(100) NOT NULL,
-  `exam_create_date` datetime NOT NULL,
-  `exam_update_date` datetime NOT NULL,
-  PRIMARY KEY (`exam_no`,`exam_question_no`)
+  `exam_question_create_date` datetime NOT NULL,
+  `exam_question_update_date` datetime NOT NULL,
+  PRIMARY KEY (`exam_no`,`exam_question_no`),
+  CONSTRAINT `FK_exam_question_exam` FOREIGN KEY (`exam_no`) REFERENCES `exam` (`exam_no`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -184,37 +182,42 @@ CREATE TABLE IF NOT EXISTS `homework` (
   `homework_create_date` datetime NOT NULL,
   `homework_update_date` datetime NOT NULL,
   PRIMARY KEY (`homework_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 lms.homework_submit 구조 내보내기
 CREATE TABLE IF NOT EXISTS `homework_submit` (
-  `homework_submit_no` int(11) NOT NULL,
+  `homework_submit_no` int(11) NOT NULL AUTO_INCREMENT,
   `homework_no` int(11) NOT NULL,
   `member_id` varchar(100) NOT NULL,
   `homework_submit_title` varchar(100) NOT NULL,
   `homework_submit_content` text NOT NULL,
-  `homework_submit_score` int(11) NOT NULL,
-  `homework_submit_feedback` varchar(255) NOT NULL,
+  `homework_submit_score` int(11) DEFAULT NULL,
+  `homework_submit_feedback` varchar(255) DEFAULT NULL,
   `homework_submit_create_date` datetime NOT NULL,
   `homework_submit_update_date` datetime NOT NULL,
-  PRIMARY KEY (`homework_submit_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`homework_submit_no`),
+  KEY `FK_homework_submit_homework` (`homework_no`),
+  CONSTRAINT `FK_homework_submit_homework` FOREIGN KEY (`homework_no`) REFERENCES `homework` (`homework_no`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 lms.homework_submit_file 구조 내보내기
 CREATE TABLE IF NOT EXISTS `homework_submit_file` (
-  `homework_submit_file_no` int(11) NOT NULL,
+  `homework_submit_file_no` int(11) NOT NULL AUTO_INCREMENT,
   `homework_submit_no` int(11) NOT NULL,
+  `homework_submit_file_name` varchar(100) NOT NULL,
   `homework_submit_file_original` varchar(100) NOT NULL,
   `homework_submit_file_size` int(11) NOT NULL,
   `homework_submit_file_type` varchar(100) NOT NULL,
   `homework_submit_file_create_date` datetime NOT NULL,
   `homework_submit_file_update_date` datetime NOT NULL,
-  PRIMARY KEY (`homework_submit_file_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`homework_submit_file_no`),
+  KEY `FK_homework_submit_file_homework_submit` (`homework_submit_no`),
+  CONSTRAINT `FK_homework_submit_file_homework_submit` FOREIGN KEY (`homework_submit_no`) REFERENCES `homework_submit` (`homework_submit_no`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -228,12 +231,15 @@ CREATE TABLE IF NOT EXISTS `lecture` (
   `lecture_create_date` datetime NOT NULL,
   `lecture_update_date` datetime NOT NULL,
   `lecture_room_name` varchar(100) NOT NULL,
+  `lecture_writer` varchar(100) NOT NULL,
   PRIMARY KEY (`lecture_no`),
   KEY `FK_lecture_lecture_room` (`lecture_room_name`),
   KEY `FK_lecture_subject` (`subject_no`),
+  KEY `FK3_lecture_writer` (`lecture_writer`),
+  CONSTRAINT `FK3_lecture_writer` FOREIGN KEY (`lecture_writer`) REFERENCES `manager` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_lecture_lecture_room` FOREIGN KEY (`lecture_room_name`) REFERENCES `lecture_room` (`lecture_room_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_lecture_subject` FOREIGN KEY (`subject_no`) REFERENCES `subject` (`subject_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -277,10 +283,10 @@ CREATE TABLE IF NOT EXISTS `lecture_room` (
 
 -- 테이블 lms.lecture_schedule 구조 내보내기
 CREATE TABLE IF NOT EXISTS `lecture_schedule` (
-  `lecture_schedule_date` date NOT NULL,
   `lecture_no` int(11) NOT NULL,
-  `lecture_schedule_start_date` datetime NOT NULL,
-  `lecture_schedule_end_date` datetime NOT NULL,
+  `lecture_schedule_date` date NOT NULL,
+  `lecture_schedule_start_date` time NOT NULL,
+  `lecture_schedule_end_date` time NOT NULL,
   `lecture_schedule_create_date` datetime NOT NULL,
   PRIMARY KEY (`lecture_schedule_date`,`lecture_no`),
   KEY `FK_lecture_schedule_lecture` (`lecture_no`),
@@ -292,11 +298,11 @@ CREATE TABLE IF NOT EXISTS `lecture_schedule` (
 -- 테이블 lms.level_history 구조 내보내기
 CREATE TABLE IF NOT EXISTS `level_history` (
   `member_id` varchar(100) NOT NULL,
+  `level_history_update_date` datetime NOT NULL,
   `level_history_new_level` int(11) DEFAULT NULL,
   `level_history_reason` varchar(255) DEFAULT NULL,
-  `member_id2` varchar(100) DEFAULT NULL,
-  `level_history_update_date` datetime NOT NULL,
-  PRIMARY KEY (`member_id`),
+  `editor` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`member_id`,`level_history_update_date`) USING BTREE,
   CONSTRAINT `FK_level_history_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -309,25 +315,10 @@ CREATE TABLE IF NOT EXISTS `manager` (
   `manager_name` varchar(100) NOT NULL,
   `manager_birth` date NOT NULL,
   `manager_gender` enum('M','F') NOT NULL,
-  `manager_email` varchar(100) NOT NULL,
-  `photo_no` int(11) DEFAULT NULL,
-  `address_detail` varchar(100) DEFAULT NULL,
+  `manager_email` varchar(100) DEFAULT NULL,
+  `addr_detail` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`member_id`),
-  KEY `FK_manager_member_photo` (`photo_no`),
-  CONSTRAINT `FK_manager_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_manager_member_photo` FOREIGN KEY (`photo_no`) REFERENCES `member_photo` (`photo_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 lms.manager_lecture 구조 내보내기
-CREATE TABLE IF NOT EXISTS `manager_lecture` (
-  `lecture_no` int(11) NOT NULL,
-  `member_id` varchar(100) NOT NULL,
-  PRIMARY KEY (`lecture_no`,`member_id`),
-  KEY `FK_manager_lecture_manager` (`member_id`),
-  CONSTRAINT `FK_manager_lecture_lecture` FOREIGN KEY (`lecture_no`) REFERENCES `lecture` (`lecture_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_manager_lecture_manager` FOREIGN KEY (`member_id`) REFERENCES `manager` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_manager_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -361,14 +352,15 @@ CREATE TABLE IF NOT EXISTS `member_board` (
 
 -- 테이블 lms.member_photo 구조 내보내기
 CREATE TABLE IF NOT EXISTS `member_photo` (
-  `photo_no` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` varchar(100) NOT NULL,
   `photo_name` varchar(100) DEFAULT NULL,
   `photo_origin_name` varchar(100) DEFAULT NULL,
   `photo_type` varchar(100) DEFAULT NULL,
-  `photo_size` int(11) DEFAULT NULL,
+  `photo_size` bigint(20) DEFAULT NULL,
   `photo_create_date` datetime DEFAULT NULL,
   `photo_update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`photo_no`)
+  PRIMARY KEY (`member_id`),
+  CONSTRAINT `FK_member_photo_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -385,9 +377,9 @@ CREATE TABLE IF NOT EXISTS `notice` (
 -- 테이블 lms.pw_history 구조 내보내기
 CREATE TABLE IF NOT EXISTS `pw_history` (
   `member_id` varchar(100) NOT NULL,
-  `pw_history_new_pw` varchar(255) DEFAULT NULL,
   `pw_history_date` datetime NOT NULL,
-  PRIMARY KEY (`member_id`),
+  `pw_history_new_pw` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`member_id`,`pw_history_date`) USING BTREE,
   CONSTRAINT `FK_pw_history_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -423,8 +415,8 @@ CREATE TABLE IF NOT EXISTS `report_comment` (
   `report_comment_create_date` datetime NOT NULL,
   `report_comment_update_date` datetime NOT NULL,
   PRIMARY KEY (`report_comment_no`) USING BTREE,
-  KEY `FK_comment_report_comment` (`comment_no`),
-  CONSTRAINT `FK_comment_report_comment` FOREIGN KEY (`comment_no`) REFERENCES `comment` (`comment_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_report_comment_comment` (`comment_no`),
+  CONSTRAINT `FK_report_comment_comment` FOREIGN KEY (`comment_no`) REFERENCES `comment` (`comment_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -473,7 +465,7 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   `schedule_create_date` datetime NOT NULL,
   `schedule_update_date` datetime NOT NULL,
   PRIMARY KEY (`schedule_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -485,12 +477,9 @@ CREATE TABLE IF NOT EXISTS `student` (
   `student_birth` date DEFAULT NULL,
   `student_gender` enum('M','F') DEFAULT NULL,
   `student_email` varchar(100) DEFAULT NULL,
-  `photo_no` int(11) DEFAULT NULL,
-  `address_detail` varchar(100) DEFAULT NULL,
+  `addr_detail` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`member_id`),
-  KEY `FK_student_member_photo` (`photo_no`),
-  CONSTRAINT `FK_student_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_student_member_photo` FOREIGN KEY (`photo_no`) REFERENCES `member_photo` (`photo_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_student_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
@@ -499,10 +488,10 @@ CREATE TABLE IF NOT EXISTS `student` (
 CREATE TABLE IF NOT EXISTS `student_lecture` (
   `lecture_no` int(11) NOT NULL,
   `member_id` varchar(100) NOT NULL,
-  `student_lecture_job` varchar(100) NOT NULL,
-  `student_lecture_legistration_date` datetime NOT NULL,
-  `student_lecture_end_date` datetime NOT NULL,
-  `student_lecture_score` int(11) NOT NULL,
+  `student_lecture_job` enum('Y','N') NOT NULL,
+  `student_lecture_legistration_date` date NOT NULL,
+  `student_lecture_end_date` date DEFAULT NULL,
+  `student_lecture_score` int(11) DEFAULT NULL,
   PRIMARY KEY (`lecture_no`,`member_id`),
   KEY `FK_student_lecture_student` (`member_id`),
   CONSTRAINT `FK_student_lecture_lecture` FOREIGN KEY (`lecture_no`) REFERENCES `lecture` (`lecture_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -519,7 +508,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `subject_create_date` datetime NOT NULL,
   `subject_update_date` datetime NOT NULL,
   PRIMARY KEY (`subject_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -527,8 +516,8 @@ CREATE TABLE IF NOT EXISTS `subject` (
 CREATE TABLE IF NOT EXISTS `suggest` (
   `board_no` int(11) NOT NULL,
   `root` int(11) DEFAULT NULL,
-  `board_secret` enum('Y','N') NOT NULL,
-  `board_status` varchar(100) NOT NULL,
+  `suggest_secret` enum('Y','N') NOT NULL,
+  `suggest_status` varchar(100) NOT NULL,
   KEY `FK_suggest_board` (`board_no`),
   CONSTRAINT `FK_suggest_board` FOREIGN KEY (`board_no`) REFERENCES `board` (`board_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -544,49 +533,50 @@ CREATE TABLE IF NOT EXISTS `survey` (
   `survey_update_date` datetime NOT NULL,
   `survey_startline_date` date NOT NULL,
   `survey_deadline_date` date NOT NULL,
-  `lecture_no` int(11) DEFAULT NULL,
-  `member_id` varchar(100) DEFAULT NULL,
+  `lecture_no` int(11) NOT NULL,
+  `member_id` varchar(100) NOT NULL,
   PRIMARY KEY (`survey_no`),
-  KEY `FK_survey_manager_lecture` (`lecture_no`),
-  KEY `FK_survey_manager_lecture_2` (`member_id`),
-  CONSTRAINT `FK_survey_manager_lecture` FOREIGN KEY (`lecture_no`) REFERENCES `manager_lecture` (`lecture_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_survey_manager_lecture_2` FOREIGN KEY (`member_id`) REFERENCES `manager_lecture` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  KEY `FK_survey_lecture` (`lecture_no`),
+  KEY `FK_survey_manager` (`member_id`),
+  CONSTRAINT `FK_survey_lecture` FOREIGN KEY (`lecture_no`) REFERENCES `lecture` (`lecture_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_survey_manager` FOREIGN KEY (`member_id`) REFERENCES `manager` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 lms.survey_multiple_answer 구조 내보내기
 CREATE TABLE IF NOT EXISTS `survey_multiple_answer` (
+  `survey_multiple_answer_no` int(11) NOT NULL AUTO_INCREMENT,
   `survey_question_no` int(11) NOT NULL,
   `survey_no` int(11) NOT NULL,
   `member_id` varchar(100) NOT NULL,
-  `survey_multiple_answer_content` int(11) DEFAULT NULL,
-  `survey_multiple_answer_create_date` datetime DEFAULT NULL,
-  `survey_multiple_answer_update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`survey_question_no`,`survey_no`,`member_id`),
-  KEY `FK_survey_multiple_answer_survey_question_2` (`survey_no`),
+  `survey_answer_type` enum('객관식','주관식') NOT NULL,
+  `survey_multiple_answer_content` int(11) NOT NULL,
+  `survey_multiple_answer_create_date` datetime NOT NULL,
+  `survey_multiple_answer_update_date` datetime NOT NULL,
+  PRIMARY KEY (`survey_multiple_answer_no`,`survey_question_no`,`survey_no`,`member_id`) USING BTREE,
   KEY `FK_survey_multiple_answer_student` (`member_id`),
+  KEY `FK_survey_multiple_answer_survey` (`survey_no`),
   CONSTRAINT `FK_survey_multiple_answer_student` FOREIGN KEY (`member_id`) REFERENCES `student` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_survey_multiple_answer_survey_question` FOREIGN KEY (`survey_question_no`) REFERENCES `survey_question` (`survey_question_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_survey_multiple_answer_survey_question_2` FOREIGN KEY (`survey_no`) REFERENCES `survey_question` (`survey_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_survey_multiple_answer_survey` FOREIGN KEY (`survey_no`) REFERENCES `survey` (`survey_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 lms.survey_question 구조 내보내기
 CREATE TABLE IF NOT EXISTS `survey_question` (
-  `survey_question_no` int(11) NOT NULL AUTO_INCREMENT,
-  `survey_no` int(11) DEFAULT NULL,
+  `survey_no` int(11) NOT NULL,
+  `survey_question_no` int(11) NOT NULL,
   `survey_question_list_no` int(11) NOT NULL,
+  `survey_question_content` varchar(100) NOT NULL,
   `survey_question_type` enum('주관식','객관식') NOT NULL,
   `survey_question_create_date` datetime NOT NULL,
   `survey_question_update_date` datetime NOT NULL,
-  PRIMARY KEY (`survey_question_no`),
-  KEY `FK_survey_question_survey` (`survey_no`),
+  PRIMARY KEY (`survey_no`,`survey_question_no`,`survey_question_list_no`) USING BTREE,
   KEY `FK_survey_question_survey_question_list` (`survey_question_list_no`),
   CONSTRAINT `FK_survey_question_survey` FOREIGN KEY (`survey_no`) REFERENCES `survey` (`survey_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_survey_question_survey_question_list` FOREIGN KEY (`survey_question_list_no`) REFERENCES `survey_question_list` (`survey_question_list_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -594,29 +584,30 @@ CREATE TABLE IF NOT EXISTS `survey_question` (
 CREATE TABLE IF NOT EXISTS `survey_question_list` (
   `survey_question_list_no` int(11) NOT NULL AUTO_INCREMENT,
   `survey_question_list_name` varchar(100) NOT NULL,
-  `survey_question_list_content` varchar(255) DEFAULT NULL,
+  `survey_question_list_content` varchar(255) NOT NULL,
   `survey_question_list_create_date` datetime NOT NULL,
   `survey_question_list_update_date` datetime NOT NULL,
   PRIMARY KEY (`survey_question_list_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 lms.survey_short_answer 구조 내보내기
 CREATE TABLE IF NOT EXISTS `survey_short_answer` (
-  `survey_no` int(11) NOT NULL,
+  `survey_short_answer_no` int(11) NOT NULL AUTO_INCREMENT,
   `survey_question_no` int(11) NOT NULL,
+  `survey_no` int(11) NOT NULL,
   `member_id` varchar(100) NOT NULL,
-  `survey_short_answer_content` text DEFAULT NULL,
-  `survey_short_answer_create_date` datetime DEFAULT NULL,
-  `survey_short_answer_update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`survey_question_no`,`survey_no`,`member_id`),
-  KEY `FK_survey_short_answer_survey_question_2` (`survey_no`),
+  `survey_answer_type` enum('객관식','주관식') NOT NULL,
+  `survey_short_answer_content` text NOT NULL,
+  `survey_short_answer_create_date` datetime NOT NULL,
+  `survey_short_answer_update_date` datetime NOT NULL,
+  PRIMARY KEY (`survey_short_answer_no`,`survey_question_no`,`survey_no`,`member_id`) USING BTREE,
   KEY `FK_survey_short_answer_student` (`member_id`),
+  KEY `FK_survey_short_answer_survey` (`survey_no`),
   CONSTRAINT `FK_survey_short_answer_student` FOREIGN KEY (`member_id`) REFERENCES `student` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_survey_short_answer_survey_question` FOREIGN KEY (`survey_question_no`) REFERENCES `survey_question` (`survey_question_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_survey_short_answer_survey_question_2` FOREIGN KEY (`survey_no`) REFERENCES `survey_question` (`survey_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_survey_short_answer_survey` FOREIGN KEY (`survey_no`) REFERENCES `survey` (`survey_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -624,23 +615,19 @@ CREATE TABLE IF NOT EXISTS `survey_short_answer` (
 CREATE TABLE IF NOT EXISTS `teacher` (
   `member_id` varchar(100) NOT NULL,
   `teacher_entry_date` date DEFAULT NULL,
-  `teacher_subject` varchar(100) DEFAULT NULL,
   `teacher_name` varchar(100) DEFAULT NULL,
   `teacher_birth` date DEFAULT NULL,
   `teacher_gender` enum('M','F') DEFAULT NULL,
   `teacher_email` varchar(100) DEFAULT NULL,
-  `photo_no` int(11) NOT NULL,
-  `address_detail` varchar(100) DEFAULT NULL,
+  `addr_detail` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`member_id`),
-  KEY `FK_teacher_member_photo` (`photo_no`),
-  CONSTRAINT `FK_teacher_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_teacher_member_photo` FOREIGN KEY (`photo_no`) REFERENCES `member_photo` (`photo_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_teacher_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
--- 테이블 lms.teacher_lecutre 구조 내보내기
-CREATE TABLE IF NOT EXISTS `teacher_lecutre` (
+-- 테이블 lms.teacher_lecture 구조 내보내기
+CREATE TABLE IF NOT EXISTS `teacher_lecture` (
   `member_id` varchar(100) NOT NULL,
   `lecture_no` int(11) NOT NULL,
   PRIMARY KEY (`member_id`,`lecture_no`),
