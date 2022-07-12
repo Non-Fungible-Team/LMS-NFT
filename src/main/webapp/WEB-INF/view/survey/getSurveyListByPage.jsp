@@ -41,8 +41,8 @@
 			,url: url
 			,success: function(data){
 				console.log(data);
-				var surveyList = [data.surveyList];
-				var l = surveyList[0].length;
+				var surveyListt = [data.surveyListt];
+				var l = surveyListt[0].length;
 				console.log("l="+l);
 				$(".surveyAtag").click(function(){
 					var v = $(this).data('value');
@@ -51,23 +51,16 @@
 					console.log("v= "+v);
 					console.log("s= "+s);
 					console.log("d= "+d);
-					
-					for(var i=1; i<l; i++){
-						
-						
-						console.log("i= "+i);
-						if(dateString >= s && dateString <= d){
-							$("#getsurveyOneS"+i).submit();
-						}else {
-							$('#surveyHelper').text('설문조사 기간이 아닙니다');
-						}
-					
+					console.log("dateString"+dateString);
+					if(dateString >= s && dateString <= d){
+						$('#surveyHelper').text('');
+						$('#getsurveyOneS'+v).submit();
+					}else {
+						$('#surveyHelper').text('설문조사 기간이 아닙니다');
 					}
 				})
 			}
 		});
-		
-		
 	});
 </script>
 <style>
@@ -103,13 +96,14 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="sv" items="${surveyList}">
+											<c:forEach var="sv" items="${surveyList}" varStatus="status">
 												<tr>
 													<td>${sv.surveyNo}</td>
 													<c:if test="${sessionLoginMember.memberLevel==4}">
 														<td>
-															<form action="${pageContext.request.contextPath}/student/survey/getSurveyOneS?surveyNo=${sv.surveyNo}" id="getsurveyOneS${sv.surveyNo}">
-																<a href="#" onclick="return false;"data-value="${sv.surveyNo}" data-startline="${sv.surveyStartlineDate}" data-deadline="${sv.surveyDeadlineDate}" class="surveyAtag">${sv.surveyTitle}</a>
+															<form method="get" action="${pageContext.request.contextPath}/student/survey/getSurveyOneS?surveyNo=${sv.surveyNo}" id="getsurveyOneS${status.index}">
+																<input type ="hidden" value="${sv.surveyNo}" name="surveyNo">
+																<a href="#" onclick="return false;"data-value="${status.index}" data-startline="${sv.surveyStartlineDate}" data-deadline="${sv.surveyDeadlineDate}" class="surveyAtag">${sv.surveyTitle}</a>
 															</form>
 														</td>
 													</c:if>

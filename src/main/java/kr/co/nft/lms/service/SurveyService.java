@@ -227,11 +227,11 @@ public class SurveyService {
 	}
 	public Map<String,Object> selectSurveyList(int lectureNo){
 		
-		List<Map<String, Object>> surveyList = surveyMapper.selectSurveyList(lectureNo);
-		log.debug(A.D+"[SurveyService.selectSurveyList] surveyList : " + surveyList + A.R);
+		List<Map<String, Object>> surveyListt = surveyMapper.selectSurveyList(lectureNo);
+		log.debug(A.D+"[SurveyService.selectSurveyList] surveyList : " + surveyListt + A.R);
 		
 		Map<String,Object> returnMap = new HashMap<>();
-		returnMap.put("surveyList", surveyList);
+		returnMap.put("surveyListt", surveyListt);
 		log.debug(A.D+"[SurveyService.selectSurveyList] returnMap : " + returnMap + A.R);
 		
 		return returnMap;

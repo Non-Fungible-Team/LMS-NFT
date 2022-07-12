@@ -13,26 +13,31 @@ import kr.co.nft.lms.vo.SurveyQuestionList;
 
 @Mapper
 public interface SurveyMapper {
+	
+	// --------- 테이블에 값 추가 --------- //
+	
 	// 설문조사 생성
 	int insertSurvey(Survey survey);
 	
 	// 설문조사 질문 리스트 생성
 	int insertSurveyQuestionList(SurveyQuestionList surveyQuestionList);
-	
+		
 	// 설문조사 질문 생성
 	int insertSurveyQuestion(SurveyQuestion surveyQuestion);
 	
-	// 설문조사 질문 리스트 목록 (제목과 내용만 페이징 없음)
-	List<Map<String, Integer>> selectSurveyQuestionList();
+	// 설문조사 객관식 답변 등록
+	int insertSurveyMultipleAnswer(SurveyAnswer surveyMultipleAnswer);
+	
+	// 설문조사 주관식 답변 등록
+	int insertSurveyShortAnswer(SurveyAnswer surveyShortAnswer);
+	
+	// --------- 페이지 ---------- //
 	
 	// 설문조사 질문 리스트 페이지
 	List<Map<String, Integer>> selectSurveyQuestionListByPage(Map<String, Integer> map);
-	
+		
 	// 설문조사 리스트 페이지 카운트
 	int countSurveyList();
-	
-	// 설문조사 리스트 (페이징 없는거)
-	List<Map<String, Object>> selectSurveyList(int lectureNo);
 	
 	// 전체 설문조사 페이지 (이너조인) (리스트 형식)
 	List<Map<String,Object>> selectSurveyListByPage(Map<String, Integer> map);
@@ -43,18 +48,25 @@ public interface SurveyMapper {
 	// 설문조사 상세보기
 	Survey getSurveyOne(int surveyNo);
 	
+	
+	// 설문조사 질문 리스트 목록 (제목과 내용만 페이징 없음)
+	List<Map<String, Integer>> selectSurveyQuestionList();
+	
+	
+	
+	
+	
 	// 설문조사 상세보기(이너조인)
 	List<Map<String,Object>> getSurveyQuestionList(int surveyNo);
 	
-	// 설문조사 객관식 답변 등록
-	int insertSurveyMultipleAnswer(SurveyAnswer surveyMultipleAnswer);
 	
-	// 설문조사 주관식 답변 등록
-	int insertSurveyShortAnswer(SurveyAnswer surveyShortAnswer);
 	
 	// 전체 설문조사 답변 확인 (리스트형식으로 레프트 조인)
 	List<Map<String,Object>> getMultipleSurveyAnswer(); //객관식
 	List<Map<String,Object>> getShortSurveyAnswer(); //주관식
+	
+	
+	// -------- ajax용 -------- //
 	
 	// 설문조사 질문별 점수평균 (double값 뱉음)
 	List<SurveyMultipleAnswer> getAnswerAverage();
@@ -73,6 +85,10 @@ public interface SurveyMapper {
 	
 	// 설문조사 과목별 차트 만들 때 객관식을 카운트
 	List<Map<String, Object>> lectureQuestionListCount(int lectureNo);
+	
+	// 설문조사 리스트 (페이징 없는거)
+	List<Map<String, Object>> selectSurveyList(int lectureNo);
+	
 	
 	// 과목별 설문조사 답변 확인 (리스트형식으로 레프트 조인)
 	List<Map<String,Object>> getLectureMultipleSurveyAnswer(int lectureNo); //객관식
