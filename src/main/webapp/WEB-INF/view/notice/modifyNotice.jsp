@@ -133,7 +133,7 @@
 											<tr>
 							    				<th>내용</th>
 								    			<td height= 500px>
-								    				<textarea rows="20" Cols="10" name="noticeContent" id="modifyNoticeContent" class="form-control">${notice.noticeContent}</textarea>
+								    				<textarea rows="20" Cols="10" name="noticeContent" id="modifyNoticeContent" class="form-control"><c:out value="${content}" />${notice.noticeContent}</textarea>
 								    				<span id="modifyNoticeContentHelper" class="helper"></span>
 								    			</td>
 								    		</tr>

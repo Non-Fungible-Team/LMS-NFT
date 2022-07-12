@@ -118,8 +118,8 @@
 						    		<tr>
 						    			<th>내용</th>
 						    			<td height= 500px>
-						    				<textarea rows="20" Cols="10" name="noticeContent" id="noticeContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
-						    				<span id="noticeContentHelper" class="helper"></span>
+					    					<textarea rows="20" Cols="10" name="noticeContent" id="noticeContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+					    					<span id="noticeContentHelper" class="helper"></span>
 						    			</td>
 						    		</tr>
 						    		<tr>
