@@ -32,7 +32,7 @@ public interface SurveyMapper {
 	int countSurveyList();
 	
 	// 설문조사 리스트 (페이징 없는거)
-	List<Map<String, Integer>> selectSurveyList(Map<String, Integer> map);
+	List<Map<String, Object>> selectSurveyList(int lectureNo);
 	
 	// 전체 설문조사 페이지 (이너조인) (리스트 형식)
 	List<Map<String,Object>> selectSurveyListByPage(Map<String, Integer> map);

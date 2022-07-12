@@ -3,6 +3,8 @@ package kr.co.nft.lms.rest;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.nft.lms.service.SurveyService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Lecture;
 import kr.co.nft.lms.vo.SurveyQuestion;
 import lombok.extern.slf4j.Slf4j;
 
@@ -82,5 +85,13 @@ public class SurveyRestController {
 		
 		return returnMap;
 		
+	}
+	
+	@GetMapping("/rest/all/survey/getSurveyListByPage")
+	public Map<String,Object> selectSurveyList(@RequestParam(name="lectureNo") int lectureNo){
+		
+		Map<String,Object> returnMap = surveyService.selectSurveyList(lectureNo);
+		
+		return returnMap;
 	}
 }

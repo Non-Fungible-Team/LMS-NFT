@@ -225,6 +225,17 @@ public class SurveyService {
 		return surveyMapper.insertSurveyQuestionList(surveyQuestionList);
 		
 	}
+	public Map<String,Object> selectSurveyList(int lectureNo){
+		
+		List<Map<String, Object>> surveyList = surveyMapper.selectSurveyList(lectureNo);
+		log.debug(A.D+"[SurveyService.selectSurveyList] surveyList : " + surveyList + A.R);
+		
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("surveyList", surveyList);
+		log.debug(A.D+"[SurveyService.selectSurveyList] returnMap : " + returnMap + A.R);
+		
+		return returnMap;
+	}
 	
 	public Map<String,Object> getSurveyListByPage(int currentPage, int rowPerPage, Lecture lecture) {
 		int beginRow = (currentPage - 1)*rowPerPage;

@@ -23,8 +23,58 @@
 <script>
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
+		var today = new Date();
+
+		var year = today.getFullYear();
+		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		var day = ('0' + today.getDate()).slice(-2);
+
+		var dateString = year + '-' + month  + '-' + day;
+		console.log(dateString);
+		
+		console.log("lectureNo"+${lectureNo});
+		
+		var url='${pageContext.request.contextPath}/rest/all/survey/getSurveyListByPage?lectureNo=${lectureNo}'
+				
+		$.ajax({
+			type:'get'
+			,url: url
+			,success: function(data){
+				console.log(data);
+				var surveyList = [data.surveyList];
+				var l = surveyList[0].length;
+				console.log("l="+l);
+				$(".surveyAtag").click(function(){
+					var v = $(this).data('value');
+					var s = $(this).data('startline');
+					var d = $(this).data('deadline');
+					console.log("v= "+v);
+					console.log("s= "+s);
+					console.log("d= "+d);
+					
+					for(var i=1; i<l; i++){
+						
+						
+						console.log("i= "+i);
+						if(dateString >= s && dateString <= d){
+							$("#getsurveyOneS"+i).submit();
+						}else {
+							$('#surveyHelper').text('설문조사 기간이 아닙니다');
+						}
+					
+					}
+				})
+			}
 		});
+		
+		
+	});
 </script>
+<style>
+	    .helper {
+	    	color : #FF0000;
+	    }
+	</style>
 </head>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -38,6 +88,7 @@
 								<div class="mt-2" style="height:auto; width:auto;">
 									<div class="card-body">
 										<h1 class="card-title">${sessionLecture.lectureName} 설문조사</h1>
+										<span id="surveyHelper" class="helper"></span>
 								            <table id="zero_config" class="table table-striped table-bordered">
 										<thead>
 											<tr>
@@ -56,7 +107,11 @@
 												<tr>
 													<td>${sv.surveyNo}</td>
 													<c:if test="${sessionLoginMember.memberLevel==4}">
-														<td><a href="${pageContext.request.contextPath}/student/survey/getSurveyOneS?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
+														<td>
+															<form action="${pageContext.request.contextPath}/student/survey/getSurveyOneS?surveyNo=${sv.surveyNo}" id="getsurveyOneS${sv.surveyNo}">
+																<a href="#" onclick="return false;"data-value="${sv.surveyNo}" data-startline="${sv.surveyStartlineDate}" data-deadline="${sv.surveyDeadlineDate}" class="surveyAtag">${sv.surveyTitle}</a>
+															</form>
+														</td>
 													</c:if>
 													<c:if test="${sessionLoginMember.memberLevel>5}">
 														<td><a href="${pageContext.request.contextPath}/manager/survey/getSurveyOneM?surveyNo=${sv.surveyNo}">${sv.surveyTitle}</a></td>
