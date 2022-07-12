@@ -52,7 +52,6 @@
 				                                <th>강의번호</th>
 				                                <th>강의이름</th>
 												<th>제목</th>
-												<th>내용</th>
 												<th>작성자ID</th>
 												<th>생성날짜</th>
 				                            </tr>
@@ -64,7 +63,6 @@
 														<td>${sessionLecture.lectureNo}</td>
 														<td>${sessionLecture.lectureName}</td>
 														<td><a href="${pageContext.request.contextPath}/all/lectureBoard/getLectureBoardOne?lectureBoardNo=${lb.lectureBoardNo}">${lb.lectureBoardTitle}</a></td>
-														<td>${lb.lectureBoardContent}</td>
 														<td>${lb.memberId}</td>
 														<td>${lb.lectureBoardCreateDate}</td>
 													</tr>

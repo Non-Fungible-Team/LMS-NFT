@@ -77,7 +77,9 @@
 										</tr>
 										<tr>
 											<th>내용</th>
-											<td>${suggest.suggestContent}</td>
+											<td>
+												<textarea rows="20" Cols="10" name="suggestContent" id="suggestContent" class="form-control" placeholder="내용을 입력해 주세요." readonly="readonly">${suggest.suggestContent}</textarea>
+											</td>
 										</tr>
 										<tr>
 											<th>작성자ID</th>

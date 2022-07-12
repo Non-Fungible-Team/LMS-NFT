@@ -97,7 +97,9 @@
 									</tr>
 									<tr>
 										<th>내용</th>
-										<td>${lectureBoard.lectureBoardContent}</td>
+										<td>
+											<textarea rows="20" Cols="10" name="lectureBoardContent" id="lectureBoardContent" class="form-control" placeholder="내용을 입력해 주세요." readonly="readonly">${lectureBoard.lectureBoardContent}</textarea>
+										</td>
 									</tr>
 									<tr>
 										<th>블라인드여부</th>

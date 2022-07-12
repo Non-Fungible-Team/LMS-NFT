@@ -60,7 +60,9 @@
 									</tr>
 									<tr>
 										<th>내용</th>
-										<td>${notice.noticeContent}</td>
+										<td>
+											<textarea rows="20" Cols="10" name="noticeContent" id="noticeContent" class="form-control" placeholder="내용을 입력해 주세요." readonly="readonly">${notice.noticeContent}</textarea>
+										</td>
 									</tr>
 									<tr>
 										<th>블라인드여부</th>
