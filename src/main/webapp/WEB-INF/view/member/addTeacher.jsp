@@ -211,7 +211,7 @@ $('document').ready(function(){
 				const email = $("#teacherEmailId").val();
 				const middle = $("#middleEmail").text();
 				const address = $("#emailUrl").val();
-				$("#teacherEmailId").val(email+middle+address);
+				$("#teacherEmail").val(email+middle+address);
 		        
 	            // 유효성 검사 및 추가 주소 정보 입력 완료 후 submit
 				$('#signUpTeacher').submit();
@@ -294,6 +294,7 @@ $('document').ready(function(){
 															<option value="daum.net">다음</option>
 															<option value="gmail.com">지메일</option>
 														</select> 
+														<input type="hidden" id="teacherEmail" name="teacherEmail">
 														<span id="teacherEmailIdHelper" class="helper"></span>
 													</td>
 												</tr>

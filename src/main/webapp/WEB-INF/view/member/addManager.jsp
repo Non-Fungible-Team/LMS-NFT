@@ -211,7 +211,7 @@ $('document').ready(function(){
 				const email = $("#managerEmailId").val();
 				const middle = $("#middleEmail").text();
 				const address = $("#emailUrl").val();
-				$("#managerEmailId").val(email+middle+address);
+				$("#managerEmail").val(email+middle+address);
 		        
 	            // 유효성 검사 및 추가 주소 정보 입력 완료 후 submit
 				$('#signUpManager').submit();
@@ -294,6 +294,7 @@ $('document').ready(function(){
 															<option value="daum.net">다음</option>
 															<option value="gmail.com">지메일</option>
 														</select> 
+														<input type="hidden" id="managerEmail" name="managerEmail">
 														<span id="managerEmailIdHelper" class="helper"></span>
 													</td>
 												</tr>
