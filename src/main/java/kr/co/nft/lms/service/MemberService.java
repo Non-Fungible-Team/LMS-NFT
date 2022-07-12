@@ -855,6 +855,88 @@ public class MemberService {
 		return row;
 	}
 	
+	// --------------------------------------- //
+	// 회원 가입 승인 대기자 목록
+	public Map<String, Object> approvalMember(int studentCurrentPage, int studentRowPerPage,int teacherCurrentPage, int teacherRowPerPage,int managerCurrentPage, int managerRowPerPage) {
+		//요청값 디버깅
+		log.debug(A.E+"[MemberService.approvalMember] studentCurrentPage : "+studentCurrentPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] studentRowPerPage : "+studentRowPerPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] teacherCurrentPage : "+teacherCurrentPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] teacherRowPerPage : "+teacherRowPerPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] managerCurrentPage : "+managerCurrentPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] managerRowPerPage : "+managerRowPerPage+A.R);		
+		
+		
+		//회원가입 대기 학생 리스트 출력
+		Map<String,Object> studentMap = new HashMap<>();
+		studentMap.put("startRow", (studentCurrentPage - 1) * studentRowPerPage);
+		studentMap.put("rowPerPage", studentRowPerPage);
+		studentMap.put("memberLevel", 1);
+		List<Student> studentList = memberMapper.selectStudentByPage(studentMap);
+		int studentTotalCount = memberMapper.selectStudentTotalCountByMemberLevel(studentMap);
+		int studentLastPage = ((studentTotalCount - 1) / studentRowPerPage + 1);
+		//회원가입 대기 강사 리스트 출력
+		Map<String,Object> teacherMap = new HashMap<>();
+		teacherMap.put("startRow", (teacherCurrentPage - 1) * teacherRowPerPage);
+		teacherMap.put("rowPerPage", teacherRowPerPage);
+		teacherMap.put("memberLevel", 2);
+		List<Teacher> teacherList = memberMapper.selectTeacherByPage(teacherMap);
+		int teacherTotalCount = memberMapper.selectTeacherTotalCountByMemberLevel(teacherMap);
+		int teacherLastPage = ((teacherTotalCount - 1) / teacherRowPerPage + 1);
+		//회원가입 대기 운영자 리스트 출력
+		Map<String,Object> managerMap = new HashMap<>();
+		managerMap.put("startRow", (managerCurrentPage - 1) * managerRowPerPage);
+		managerMap.put("rowPerPage", managerRowPerPage);
+		managerMap.put("memberLevel", 3);
+		List<Manager> managerList = memberMapper.selectManagerByPage(managerMap);
+		int managerTotalCount = memberMapper.selectManagerTotalCountByMemberLevel(managerMap);
+		int managerLastPage = ((managerTotalCount - 1) / managerRowPerPage + 1);
+		
+		log.debug(A.E+"[MemberService.approvalMember] studentList : "+studentList+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] studentLastPage : "+studentLastPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] teacherList : "+teacherList+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] teacherLastPage : "+teacherLastPage+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] managerList : "+managerList+A.R);
+		log.debug(A.E+"[MemberService.approvalMember] managerLastPage : "+managerLastPage+A.R);
+		//모델값 저장
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("studentList", studentList);
+		returnMap.put("studentLastPage", studentLastPage);
+		returnMap.put("teacherList", teacherList);
+		returnMap.put("teacherLastPage", teacherLastPage);
+		returnMap.put("managerList", managerList);
+		returnMap.put("managerLastPage", managerLastPage);
+		return returnMap;
+	}
+	//회원 가입 승인
+	public int approvalMemberAction(String memberId,int memberLevel,String editor) {
+		//요청값 디버깅
+		log.debug(A.E+"[MemberService.approvalMemberAction] memberId : "+memberId+A.R);
+		log.debug(A.E+"[MemberService.approvalMemberAction] memberLevel : "+memberLevel+A.R);
+		log.debug(A.E+"[MemberService.approvalMemberAction] editor : "+editor+A.R);
+		//가입승인(레벨값 변경)
+		//vo.Member에 데이터 저장
+		Member member = new Member();
+		member.setMemberId(memberId);
+		member.setMemberLevel(memberLevel+3);
+		int row= memberMapper.updateMemberLevel(member);
+		//vo.levelHistory에 변경이력 저장
+		LevelHistory levelHistory = new LevelHistory();
+		//변경된 회원 아이디
+		levelHistory.setMemberId(memberId);
+		//변경된 레벨
+		levelHistory.setLevelHistoryNewLevel(memberLevel+3);
+		//변경자
+		levelHistory.setEditor(editor);
+		//변경 원인
+		levelHistory.setLevelHistoryReason("가입승인");
+		//이력테이블에 레벨 변경 내역 저장
+		
+		row = row + memberMapper.insertLevelHistory(levelHistory);
+		//결과 리턴 0이면 둘다 실패
+		return row;
+	}	
+	
 //	
 //	// Teacher 테이블에 들어가는 강사 회원 가입 
 //	public int addTeacher(Teacher teacher) {

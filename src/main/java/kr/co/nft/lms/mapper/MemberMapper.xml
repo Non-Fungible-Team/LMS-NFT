@@ -23,7 +23,37 @@
 			count(*)		
 		FROM teacher
 	</select>
-	
+<!-- 멤버레벨에 따른 카운터 부분 -->	
+	<select id="selectStudentTotalCountByMemberLevel"
+			parameterType="java.util.Map"
+			resultType="int">
+		SELECT 
+			count(*)		
+		FROM student s
+		INNER JOIN member m
+		ON m.member_id = s.member_id
+		WHERE m.member_level = #{memberLevel}
+	</select>
+	<select id="selectTeacherTotalCountByMemberLevel"
+			parameterType="java.util.Map"
+			resultType="int">
+		SELECT 
+			count(*)		
+		FROM teacher t
+		INNER JOIN member m
+		ON m.member_id = t.member_id
+		WHERE m.member_level = #{memberLevel}
+	</select>
+	<select id="selectManagerTotalCountByMemberLevel"
+			parameterType="java.util.Map"
+			resultType="int">
+		SELECT 
+			count(*)		
+		FROM manager ma
+		INNER JOIN member m
+		ON m.member_id = ma.member_id
+		WHERE m.member_level = #{memberLevel}
+	</select>
 	<select id="selectTeacherByPage"
 			parameterType="java.util.Map"
 			resultType="kr.co.nft.lms.vo.Teacher">
@@ -34,10 +64,22 @@
 			, teacher.teacher_birth teacherBirth
 			, teacher.teacher_gender teacherGender 
 			, teacher.teacher_email teacherEmail 
-			, teacher.address_detail addrDetail <!-- addr_detail로 고쳐야 함 --> 
+			, teacher.addr_detail addrDetail
+			, member.member_pw_update_date memberPwUpdateDate
+			, member.member_phone_no memberPhoneNo
+			, member.member_level memberLevel
+			, member.member_pw_update_date memberPwUpdateDate
+			, member.member_create_date memberCreateDate
+			, member.member_update_date memberUpdateDate
+			, member.member_last_login_date memberLastLoginDate
 		FROM teacher
 		INNER JOIN member
 		ON teacher.member_id = member.member_id 
+		<where>
+			<if test="memberLevel != null">
+			member.member_level=#{memberLevel}
+			</if> 
+		</where>		
 		ORDER BY member.member_create_date DESC 
 		LIMIT #{startRow}, #{rowPerPage} 
 	</select>
@@ -60,9 +102,57 @@
 			, student.student_gender studentGender
 			, student.student_email studentEmail
 			, student.addr_detail addrDetail
+			, member.member_pw_update_date memberPwUpdateDate
+			, member.member_phone_no memberPhoneNo
+			, member.member_level memberLevel
+			, member.member_pw_update_date memberPwUpdateDate
+			, member.member_create_date memberCreateDate
+			, member.member_update_date memberUpdateDate
+			, member.member_last_login_date memberLastLoginDate			
 		FROM student
 		INNER JOIN member
-		ON student.member_id = member.member_id 
+		ON student.member_id = member.member_id
+		<where>
+			<if test="memberLevel != null">
+			member.member_level=#{memberLevel}
+			</if> 
+		</where>
+		ORDER BY member.member_create_date DESC 
+		LIMIT #{startRow}, #{rowPerPage} 
+	</select>
+	<select id="selectManagerTotalCount"
+			resultType="int">
+		SELECT 
+			count(*)		
+		FROM student
+	</select>
+	
+	<select id="selectManagerByPage"
+			parameterType="java.util.Map"
+			resultType="kr.co.nft.lms.vo.Manager">
+		SELECT 
+			manager.member_id memberId
+			, manager.manager_entry_date managerEntryDate 
+			, manager.manager_name managerName
+			, manager.manager_birth managerBirth
+			, manager.manager_gender managerGender
+			, manager.manager_email managerEmail
+			, manager.addr_detail addrDetail
+			, member.member_pw_update_date memberPwUpdateDate
+			, member.member_phone_no memberPhoneNo
+			, member.member_level memberLevel
+			, member.member_pw_update_date memberPwUpdateDate
+			, member.member_create_date memberCreateDate
+			, member.member_update_date memberUpdateDate
+			, member.member_last_login_date memberLastLoginDate			
+		FROM manager
+		INNER JOIN member
+		ON manager.member_id = member.member_id 
+		<where>
+			<if test="memberLevel != null">
+			member.member_level=#{memberLevel}
+			</if> 
+		</where>		
 		ORDER BY member.member_create_date DESC 
 		LIMIT #{startRow}, #{rowPerPage} 
 	</select>
@@ -95,7 +185,9 @@
 			, manage_gender managerGender
 			, manager_email managerEmail
 			, address_detail addrDetail
-		FROM manager	
+			
+		FROM manager
+		
 	</select>
 
 	<select id="selectStudentList"
@@ -123,6 +215,12 @@
 			, addr_detail addrDetail
 		FROM teacher	
 	</select>
+		<update id="updateMemberLevel"
+					parameterType="kr.co.nft.lms.vo.Member">
+		UPDATE member 
+		SET member_level = #{memberLevel}
+		WHERE member_id = #{memberId}
+	</update>
 	
 	<!-- 목록 뽑기 -->
 	
@@ -686,7 +784,12 @@
 			,editor
 		) VALUES (
 			#{memberId}
+			<if test="levelHistoryUpdateDate!=null">
 			, #{levelHistoryUpdateDate}
+			</if>
+			<if test="levelHistoryUpdateDate==null">
+			, NOW()
+			</if>
 			, #{levelHistoryNewLevel}
 		<if test="levelHistoryReason != null">
 			,#{levelHistoryReason}

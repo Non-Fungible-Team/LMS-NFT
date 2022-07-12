@@ -25,19 +25,29 @@ public interface MemberMapper {
 	// 지역별 학생 수 차트 뽑기
 	List<Address> selectStudentProvinceList();
 	
+
 	// -------------- 운영자가 보는 목록 뽑기 ------------------ //
-	
+	// 학생 테이블 전체 행 개수 출력  
+	int selectStudentTotalCount();
 	// 강사 테이블 전체 행 개수 출력 
 	int selectTeacherTotalCount();
 	
+	
 	// 강사 테이블 필드 뽑기 
 	List<Teacher> selectTeacherByPage(Map<String, Object> map);
+	//전체 행의 수
+	int selectTeacherTotalCountByMemberLevel(Map<String,Object> map);
+
+	// 운영자 테이블 필드 뽑기 
+	List<Manager> selectManagerByPage(Map<String, Object> map);
+	//전체 행의 수
+	int selectManagerTotalCountByMemberLevel(Map<String,Object> map);
 	
-	// 학생 테이블 전체 행 개수 출력  
-	int selectStudentTotalCount();
 	
 	// 학생 테이블 필드 뽑기 
 	List<Student> selectStudentByPage(Map<String, Object> map);
+	//전체 행의 수
+	int selectStudentTotalCountByMemberLevel(Map<String,Object> map);
 	
 	// -------------- 목록 뽑기 ------------------ //
 	// ~에서 사용함. 
@@ -47,7 +57,7 @@ public interface MemberMapper {
 	
 	// 관리자 전체 리스트
 	List<Manager> selectManagerList();
-	
+
 	// 학생 전체 리스트
 	List<Student> selectStudentList();
 	
@@ -171,6 +181,8 @@ public interface MemberMapper {
 	// address Vo 필드 활용하여 address 테이블 기입 
 	int insertAddressByAddressVo(Address address);
 	
+	//----------멤버아이디에 따른 멤버 레벨 변경------------//
+	int updateMemberLevel(Member member);
 	// -----------------비밀번호 변경 이력 테이블---------------------- //  
 	int insertPwHistory(PwHistory pwHistory);
 	// -----------------회원 레벨 변경 이력 테이블---------------------- //  

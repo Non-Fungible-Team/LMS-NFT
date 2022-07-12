@@ -1,6 +1,6 @@
 package kr.co.nft.lms.controller;
 
-import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,19 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.nft.lms.dto.AddManager;
 import kr.co.nft.lms.dto.AddStudent;
 import kr.co.nft.lms.dto.AddTeacher;
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
-import kr.co.nft.lms.vo.Manager;
 import kr.co.nft.lms.vo.Member;
 import kr.co.nft.lms.vo.MemberPhoto;
 import kr.co.nft.lms.vo.MemberUploadPhoto;
-import kr.co.nft.lms.vo.Student;
-import kr.co.nft.lms.vo.Teacher;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -621,7 +617,57 @@ public class MemberController {
 		// 학생 회원 가입 페이지 양식으로 이동 
 		return "/member/addStudent";
 	}
-	
+	// ------------------ 회원가입 대기 목록 및 승인 부분 ------------------ //
+		@GetMapping("/manager/member/approvalMember")
+		public String approvalMember(@RequestParam(value="studentCurrentPage",defaultValue = "1") int studentCurrentPage
+				,@RequestParam(value="studentRowPerPage",defaultValue = "5") int studentRowPerPage
+				,@RequestParam(value="teacherCurrentPage",defaultValue = "1") int teacherCurrentPage
+				,@RequestParam(value="teacherRowPerPage",defaultValue = "5") int teacherRowPerPage
+				,@RequestParam(value="managerCurrentPage",defaultValue = "1") int managerCurrentPage
+				,@RequestParam(value="managerRowPerPage",defaultValue = "5") int managerRowPerPage
+				,Model model) {
+			//요청값 디버깅
+			log.debug(A.E+"[MemberController.approvalMember.param] studentCurrentPage : "+studentCurrentPage+A.R);
+			log.debug(A.E+"[MemberController.approvalMember.param] studentRowPerPage : "+studentRowPerPage+A.R);
+			log.debug(A.E+"[MemberController.approvalMember.param] teacherCurrentPage : "+teacherCurrentPage+A.R);
+			log.debug(A.E+"[MemberController.approvalMember.param] teacherRowPerPage : "+teacherRowPerPage+A.R);
+			log.debug(A.E+"[MemberController.approvalMember.param] managerCurrentPage : "+managerCurrentPage+A.R);
+			log.debug(A.E+"[MemberController.approvalMember.param] managerRowPerPage : "+managerRowPerPage+A.R);
+			//service.approvalMember에 모델 값 요청
+			Map<String,Object> returnMap = new HashMap<>();
+			returnMap = memberService.approvalMember(studentCurrentPage, studentRowPerPage, teacherCurrentPage, teacherRowPerPage, managerCurrentPage, managerRowPerPage);
+			//모델값 attribute
+			model.addAttribute("studentList", returnMap.get("studentList"));
+			model.addAttribute("studentLastPage", returnMap.get("studentLastPage"));
+			model.addAttribute("teacherList", returnMap.get("teacherList"));
+			model.addAttribute("teacherLastPage", returnMap.get("teacherLastPage"));
+			model.addAttribute("managerList", returnMap.get("managerList"));
+			model.addAttribute("managerLastPage", returnMap.get("managerLastPage"));
+			model.addAttribute("studentCurrentPage", studentCurrentPage);
+			model.addAttribute("teacherCurrentPage", teacherCurrentPage);
+			model.addAttribute("managerCurrentPage", managerCurrentPage);
+			return "/member/approvalMember";
+		}
+		@GetMapping("/manager/member/approvalMemberAction")
+		//가입 승인 기능
+		public String approvalMemberAction(@RequestParam(value="memberId") String memberId
+				,@RequestParam(value="memberLevel") int memberLevel
+				,HttpSession session) {
+			//요청값 디버깅
+			log.debug(A.E+"[MemberController.approvalMemberAction.param] managerRowPerPage : "+memberId+A.R);
+			log.debug(A.E+"[MemberController.approvalMemberAction.param] memberLevel : "+memberLevel+A.R);
+			//세션에 로그인 정보 요청
+			Member loginMember =(Member)session.getAttribute("sessionLoginMember");
+			//서비스에 승인 요청
+			int row = memberService.approvalMemberAction(memberId, memberLevel,(String)loginMember.getMemberId());
+			if (row ==0) {
+				log.debug(A.E+"[MemberController.approvalMemberAction] 승인 실패  "+A.R);
+			}
+			log.debug(A.E+"[MemberController.approvalMemberAction] 승인 성공  "+A.R);
+			
+			
+			return "redirect:/manager/member/approvalMember";
+		}	
 	// ------------------ 로그인 / 로그아웃 ------------------ // 
 	
 	// 휴면 처리 계정 접속시 휴면 계정임을 보여주는 페이지로 이동시킴 
