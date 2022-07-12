@@ -119,14 +119,14 @@
 											<div id="teacherList"></div>
 										</select>
 									</div>
-							</form>
 							</div>
 							<!-- 작성자 -->
-							<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId }">
+							<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId}">
+
 							<button type="button" id="addLectureBtn" class="btn btn-outline-success btn-rounded">
 								<i class="fas fa-check"></i>강의 입력
 							</button>
-							
+							</form>							
 						</div>
 					</div>
 				</div>

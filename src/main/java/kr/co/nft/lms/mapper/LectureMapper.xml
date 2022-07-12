@@ -196,8 +196,7 @@
 		INNER JOIN student s
 		ON sl.member_id = s.member_id
 		WHERE sl.lecture_no = #{lectureNo}
-		ORDER BY
-		sl.lecture_No ASC, studentLectureLegistrationDate DESC
+		ORDER BY s.student_name ASC
 	</select>
 	
 	<select id="selectStudentLectureAll" parameterType="java.util.Map"

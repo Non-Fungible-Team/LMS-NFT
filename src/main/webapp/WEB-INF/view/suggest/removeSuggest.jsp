@@ -49,7 +49,7 @@
 					            <h4 class="card-title">건의사항 삭제(블라인드)</h4>
 					            <div class="mt-2" style="height:auto; width:auto;">
 									<form id="removeSuggestForm" action="${pageContext.request.contextPath}/all/suggest/removeSuggest" method="post">
-										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<table id="zero_config" class="table table-striped table-bordered">
 											<tr>
 												<th>번호</th>
 												<td><input type="text" name="suggestNo" id="removeSuggestNo" class="form-control" value="${suggest.suggestNo}" readonly="readonly"></td>

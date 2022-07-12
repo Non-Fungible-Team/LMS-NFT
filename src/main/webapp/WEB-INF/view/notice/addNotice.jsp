@@ -100,7 +100,7 @@
 							</div>
 			            <div class="mt-2" style="height:auto; width:100%;">
 			            	<form id="addNoticeForm" action="${pageContext.request.contextPath}/manager/notice/addNotice" method="post" enctype="multipart/form-data">
-				            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
+				            	<table id="zero_config" class="table table-striped table-bordered">
 									<tr>
 						    			<th>제목</th>
 						    			<td>

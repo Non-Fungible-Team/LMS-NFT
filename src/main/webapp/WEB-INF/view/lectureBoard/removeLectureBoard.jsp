@@ -49,7 +49,7 @@
 				            <h4 class="card-title">강의게시글 삭제(블라인드)</h4>
 				            <div class="mt-2" style="height:auto; width:auto;">
 								<form id="removeLectureBoardForm" action="${pageContext.request.contextPath}/teacher/lectureBoard/removeLectureBoard" method="post">
-									<table id="zero_config" class="table table-striped table-bordered no-wrap">
+									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
 											<th>강의게시글 번호</th>
 											<td><input type="text" name="lectureBoardNo" id="removeLectureBoardNo" class="form-control" value="${lectureBoard.lectureBoardNo}" readonly="readonly"></td>

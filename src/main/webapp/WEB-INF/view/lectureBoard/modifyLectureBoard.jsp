@@ -115,7 +115,7 @@
 					            </div>
 					            <div class="mt-2" style="height:auto; width:auto;">
 									<form id="modifyLectureBoardForm" action="${pageContext.request.contextPath}/teacher/lectureBoard/modifyLectureBoard?lectureBoardNo=${lectureBoard.lectureBoardNo}" method="post" enctype="multipart/form-data" >
-										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<table id="zero_config" class="table table-striped table-bordered">
 											
 											<tr>
 												<th>강의번호</th>

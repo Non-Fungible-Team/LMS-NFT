@@ -49,7 +49,7 @@
 				            <h4 class="card-title">공지사항 삭제(블라인드)</h4>
 				            <div class="mt-2" style="height:auto; width:auto;">
 								<form id="removeNoticeForm" action="${pageContext.request.contextPath}/manager/notice/removeNotice" method="post">
-									<table id="zero_config" class="table table-striped table-bordered no-wrap">
+									<table id="zero_config" class="table table-striped table-bordered">
 										<tr>
 											<th>번호</th>
 											<td><input type="text" name="noticeNo" id="removeNoticeNo" class="form-control" value="${notice.noticeNo}" readonly="readonly"></td>
