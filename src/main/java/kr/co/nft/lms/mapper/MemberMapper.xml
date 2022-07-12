@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.nft.lms.mapper.MemberMapper">
 
+	<!-- 지역별 학생 수 차트 뽑기 -->
+	<select id="selectStudentProvinceList"
+			resultType="kr.co.nft.lms.vo.Address">
+		SELECT 
+			province
+			, COUNT(*)
+		FROM address
+		INNER JOIN student 
+		ON address.member_id = student.member_id
+		WHERE province IS NOT NULL 
+		GROUP BY address.province
+	</select>
+
 	<!-- 운영자가 보는 목록 뽑기 -->
 	
 	<select id="selectTeacherTotalCount"
@@ -483,7 +496,7 @@
 			, manager_birth
 			, manager_gender
 			, manager_email 
-			, address_detail 
+			, addr_detail 
 		) VALUES (
 			#{memberId}
 			, #{managerEntryDate}
@@ -504,7 +517,7 @@
 			, teacher_birth
 			, teacher_gender
 			, teacher_email 
-			, address_detail 
+			, addr_detail 
 		) VALUES (
 			#{memberId}
 			, #{teacherEntryDate}

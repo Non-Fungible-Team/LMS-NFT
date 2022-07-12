@@ -1,17 +1,23 @@
 package kr.co.nft.lms.rest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.nft.lms.mapper.MemberMapper;
 import kr.co.nft.lms.service.MemberService;
 import kr.co.nft.lms.util.A;
+import kr.co.nft.lms.vo.Address;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -20,6 +26,17 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberRestController {
 	
 	@Autowired MemberService memberService;
+	
+	@GetMapping("/getStudentProvinceList") 
+	public String getStudentProvinceList(Model model
+										, HttpSession session) {
+		// 매개 변수 확인 
+		log.debug(A.Z+"[MemberRestController.getStudentProvinceList.param] model : "+model+A.R);
+		
+		List<Address> studentProvinceList = memberService.getStudentProvince();
+		
+		return "/member/getStudentProvinceList";
+	}
 	
 	@PostMapping("/idCheck")
 	public String idCheck(@RequestParam(value="memberId") String memberId) {

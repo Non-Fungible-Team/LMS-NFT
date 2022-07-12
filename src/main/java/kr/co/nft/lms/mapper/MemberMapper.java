@@ -20,6 +20,11 @@ import kr.co.nft.lms.vo.Teacher;
 @Mapper
 public interface MemberMapper {
 	
+	// -------------- 차트 뽑기 ------------------ //
+	
+	// 지역별 학생 수 차트 뽑기
+	List<Address> selectStudentProvinceList();
+	
 	// -------------- 운영자가 보는 목록 뽑기 ------------------ //
 	
 	// 강사 테이블 전체 행 개수 출력 

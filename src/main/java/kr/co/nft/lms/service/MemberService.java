@@ -42,6 +42,16 @@ public class MemberService {
 	private ModelMapper modelMapper;
 	
 	// --------------------------------------- //
+	public List<Address> getStudentProvince() {
+		
+		// 지역별 학생 목록 뽑기 
+		List<Address> studentProvinceList = memberMapper.selectStudentProvinceList();
+		log.debug(A.Z+"[MemberService.getStudentProvince] studentProvinceList : "+studentProvinceList+A.R);
+		
+		return studentProvinceList;
+	}
+	
+	// --------------------------------------- //
 	
 	// 강사 목록 뽑기 
 	public Map<String, Object> getTeacherByPage(int currentPage, int rowPerPage) {

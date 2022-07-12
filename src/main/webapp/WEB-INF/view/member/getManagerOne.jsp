@@ -22,7 +22,7 @@
 </head>
 <script>
 	$('document').ready(function() {
-		$("#navAside").load('${pageContext.request.contextPath}/include/navAsideTeacher.jsp');
+		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		});
 </script>
 <body>
