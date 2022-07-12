@@ -41,7 +41,7 @@
 				            	<a href="${pageContext.request.contextPath}/all/notice/getNoticeListByPage">
 									<input type="button" class="btn btn-info" style="float: right" value="목록으로">
 								</a>
-								<c:if test="${sessionLoginMember.memberLevel >= 6 }">
+								<c:if test="${sessionLoginMember.memberLevel >= 6 && sessionLoginMember.memberId == notice.memberId}">
 				            		<a href="${pageContext.request.contextPath}/manager/notice/modifyNotice?noticeNo=${notice.noticeNo}">
 				            			<input type="button" class="btn btn-outline-success" style="float: right" value="공지사항 내용 수정">
 				            		</a>
@@ -49,7 +49,7 @@
 							</div>
 	
 				            <div class="mt-2" style="height:auto; width:auto;">
-				            	<table id="zero_config" class="table table-striped table-bordered no-wrap">
+				            	<table id="zero_config" class="table table-striped table-bordered">
 				            		<tr>
 										<th>번호</th>
 										<td>${notice.noticeNo}</td>

@@ -64,7 +64,7 @@
 									</div>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<form id="addSuggestForm" action="${pageContext.request.contextPath}/all/suggest/addSuggest" method="post">
-										<table id="zero_config" class="table table-striped table-bordered no-wrap">
+										<table id="zero_config" class="table table-striped table-bordered">
 											<c:if test="${root != null}">
 												<tr>
 													<th>질문 게시판번호</th>
