@@ -103,7 +103,7 @@ $(document).ready(function() {
 									</c:forEach>
 									<h4>주관식 답변 통계</h4>
 									<table id="zero_config"
-										class="table table-striped table-bordered no-wrap">
+										class="table table-striped table-bordered">
 										<c:forEach var="qs" items="${shortAnswer}">
 											<c:if test="${qs.surveyAnswerType=='주관식'}">
 												<td>${qs.surveyQuestionListName}</td>

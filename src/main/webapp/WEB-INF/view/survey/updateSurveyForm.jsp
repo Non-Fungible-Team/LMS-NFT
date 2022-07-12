@@ -36,12 +36,12 @@ $(document).ready(function(){
 			type:'get'
 			,url: url
 			,success: function(data){
-				console.log("data"+data);
+				console.log(data);
 				var surveyQuestion = [data.surveyQuestion]; // 업데이트 창을 띄울때 동적 데이터를 사용할 것들을 넣어둠
 				
 				console.log("surveyQuestion[0].length"+surveyQuestion[0].length);
 				var l = surveyQuestion[0].length+1; // 문제의 갯수 저장
-				console.log("l"+l);
+				console.log("l="+l);
 				appendCount = l; //문제 생성, 삭제 시 카운트를 셀 변수에 값을 줌
 				console.log("appendCount"+appendCount);
 					
@@ -90,7 +90,7 @@ $(document).ready(function(){
 							,data: form1
 							,dataType: 'json'
 							,success: function(a) {
-								console.log("a"+a);
+								console.log(a);
 							}
 						});
 						$('#surveyQuestionForm2 table:last').remove(); // 가장 마지막 테이블을 지워줌
@@ -136,7 +136,7 @@ $(document).ready(function(){
 									,dataType: 'json'
 									,success: function(b){
 										console.log("생성 성공");
-										console.log("b"+b);
+										console.log(b);
 										
 										$('#surveyQuestionForm table:first').remove(); // 생성 폼의 첫번째 삭제
 										
@@ -148,7 +148,7 @@ $(document).ready(function(){
 											type: "get"
 											,url: url4
 											,success: function(c){
-												console.log("c"+c);
+												console.log(c);
 												var content = [c.surveyQuestion[0].surveyQuestionContent]; //질문내용 넣어줌
 												console.log("질문내용"+content);
 												var type = [c.surveyQuestion[0].surveyQuestionType]; // 질문분류 넣어줌

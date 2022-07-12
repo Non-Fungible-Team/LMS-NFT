@@ -257,6 +257,7 @@
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			INNER JOIN survey_short_answer AS ss 
 			ON sq.survey_question_no = ss.survey_question_no AND sq.survey_no = ss.survey_no
+			WHERE NOT ss.survey_short_answer_content = ''
 			GROUP BY sq.survey_question_list_no;
 			
 		</select>
@@ -510,7 +511,7 @@
 			ON sq.survey_question_list_no = ql.survey_question_list_no
 			INNER JOIN survey_short_answer AS ss 
 			ON sq.survey_question_no = ss.survey_question_no AND sq.survey_no = ss.survey_no
-			WHERE s.lecture_no = #{lectureNo}
+			WHERE s.lecture_no = #{lectureNo} AND NOT ss.survey_short_answer_content = ''
 			GROUP BY sq.survey_question_list_no;
 			
 		</select>
