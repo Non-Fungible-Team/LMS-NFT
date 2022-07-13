@@ -22,6 +22,13 @@
 <script>
 
 </script>
+
+<style>
+.helper {
+	color: #FF0000;
+}
+</style>
+
 </head>
 <body>
 	<div class="main-wrapper container">
@@ -47,6 +54,7 @@
 					<form class="mt-4" id="loginForm" method="post" action="${pageContext.request.contextPath}/login">
 						<input type="hidden" name="memberLevel" value="4">
 						<div class="row">
+							
 							<div class="col-lg-12">
 								<div class="form-group">
 									<label class="text-dark" >ID</label> 

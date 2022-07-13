@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberScheduler {
 	@Autowired MemberService memberService;
 	
-	@Scheduled(cron = "0 0 12 1 3 *")
+	@Scheduled(cron = "0 0 12 * * ?")
 	public void modifyDormantMember() {
 		int row = memberService.modifyDormantMember();
 		if ( row > 0 ) {
