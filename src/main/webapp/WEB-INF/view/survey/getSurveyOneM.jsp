@@ -24,9 +24,36 @@
 	$('document').ready(function() {
 		$("#navAside").load('${pageContext.request.contextPath}/include/navAside.jsp');
 		
+		var today = new Date();
+
+		var year = today.getFullYear();
+		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		var day = ('0' + today.getDate()).slice(-2);
+
+		var dateString = year + '-' + month  + '-' + day;
+		console.log(dateString);
 		
+		var sn = ${surveyOne.surveyNo}
+		
+		
+		$(".surveyAtag").click(function(){
+			var s = $(this).data('startline');
+			console.log("s= "+s);
+			console.log("dateString"+dateString);
+			if(dateString < s){
+				$('#surveyHelper').text('');
+				$('#updateSurveyForm').submit();
+			}else {
+				$('#surveyHelper').text('설문조사 기간입니다');
+			}
+		})
 	});
 </script>
+<style>
+	    .helper {
+	    	color : #FF0000;
+	    }
+	</style>
 </head>
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -38,9 +65,13 @@
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
 								<h1 class="card-title">설문조사 상세보기</h1>
+								<span id="surveyHelper" class="helper"></span>
 								<div class="mt-2" style="height:auto; width:auto;">
-									<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage" class="btn btn-outline-success">이전으로</a>
-									<a href="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" class="btn btn-outline-info btn-rounded">수정</a>
+									<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage?lectureNo=${surveyOne.lectureNo}" class='btn btn-outline-success'>이전으로</a>
+									<form method="get" action="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" id="updateSurveyForm">
+									<input type ="hidden" value="${surveyOne.surveyNo}" name="surveyNo">
+									<a href="#" onclick="return false;" class="surveyAtag btn btn-outline-info btn-rounded" data-deadline="${surveyOne.surveyDeadlineDate}">수정</a>
+									</form>
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
 										<tr>
 											<td>공지 번호</td>
