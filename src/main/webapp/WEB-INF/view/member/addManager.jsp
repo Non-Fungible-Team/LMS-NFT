@@ -250,7 +250,7 @@ $('document').ready(function(){
 												<tr>
 													<td>운영진 아이디</td>
 													<td>
-														<input type="text" id="memberId" name="memberId" value="manager1" readonly="readonly"> 
+														<input type="text" id="memberId" name="memberId" readonly="readonly"> 
 														<span id="memberIdHelper" class="helper"></span>
 													</td>
 												</tr>
