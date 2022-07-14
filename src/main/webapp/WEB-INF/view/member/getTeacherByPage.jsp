@@ -31,16 +31,12 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>템플릿 구조 예시</h1>
-				<!-- main화면 body start -->
-
-				<!-- 첫번쨰 문단 -->
 				<div class="container p-5 my-5 border">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">수강목록</h4>
+									<h4 class="card-title">강사 목록</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 										<table id="zero_config" class="table table-striped table-bordered">
@@ -73,10 +69,11 @@
 								</div>
 							</div>
 						</div>
-						<!-- 첫번쨰 끝 -->
-	<div>
-		<a href="${pageContext.request.contextPath}/manager/getTeacherByPage?currentPage=${currentPage-1}">이전</a>
-		<a href="${pageContext.request.contextPath}/manager/getTeacherByPage?currentPage=${currentPage+1}">다음</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="${pageContext.request.contextPath}/manager/getTeacherByPage?currentPage=${currentPage-1}">이전</a> <a href="${pageContext.request.contextPath}/manager/getTeacherByPage?currentPage=${currentPage+1}">다음</a>
 	</div>
 </body>
 <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
