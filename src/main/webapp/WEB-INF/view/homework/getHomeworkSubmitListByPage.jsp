@@ -69,7 +69,7 @@
 														<c:if test="${not empty hs.homeworkSubmitScore && not empty hs.homeworkSubmitFeedback }">
 															<td><i class="fas fa-check">완료</i></td>
 														</c:if>
-														<c:if test="${empty hs.homeworkSubmitScore && empty hs.homeworkSubmitFeedback }">
+														<c:if test="${empty hs.homeworkSubmitScore || empty hs.homeworkSubmitFeedback }">
 															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitOne?homeworkSubmitNo=${hs.homeworkSubmitNo}">채점</a></td>
 														</c:if>
 													</tr>

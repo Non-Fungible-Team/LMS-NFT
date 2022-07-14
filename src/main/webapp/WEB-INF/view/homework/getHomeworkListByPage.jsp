@@ -185,7 +185,7 @@ getCntGraph();
 														<th style="text-align:center">과제</th>
 														<th style="text-align:center">작성자</th>
 														<th style="text-align:center">제출 기간</th>
-														<c:if test="${sessionLoginMember.memberLevel == 5}">
+														<c:if test="${sessionLoginMember.memberLevel == 5 || sessionLoginMember.memberLevel == 6}">
 														<th style="text-align:center">제출과제 목록</th>
 														</c:if>
 														<c:if test="${sessionLoginMember.memberLevel == 4}">
@@ -204,7 +204,7 @@ getCntGraph();
 															<td><a href="${pageContext.request.contextPath}/all/homework/getHomeworkOne?homeworkNo=${h.homeworkNo}">${h.homeworkTitle }</a></td>
 															<td>${h.teacherId }</td>
 															<td>${h.homeworkStartDate} ~ ${h.homeworkEndDate }</td>
-															<c:if test="${sessionLoginMember.memberLevel == 5}">
+															<c:if test="${sessionLoginMember.memberLevel == 5 || sessionLoginMember.memberLevel == 6}">
 																<td style="text-align:center"><a href="${pageContext.request.contextPath}/all/homework/getHomeworkSubmitListByPage?homeworkNo=${h.homeworkNo}">목록</a></td>
 															</c:if>
 															<c:if test="${sessionLoginMember.memberLevel == 4 && empty h.homeworkSubmitNo}">
