@@ -56,7 +56,7 @@
 													<c:forEach var="n" items="${noticeBlindList}">
 														<tr>
 															<td>${n.noticeNo}</td>
-															<td><a href="${pageContext.request.contextPath}/all/notice/getNoticeOne?noticeNo=${n.noticeNo}">${n.noticeTitle}</a></td>
+															<td>${n.noticeTitle}</td>
 															<td>${n.privilegeName}</td>
 															<td>${n.memberId}</td>
 															<td>${n.noticeCreateDate}</td>
@@ -115,13 +115,13 @@
 																<c:if test="${s.root != 0}">
 																	┗【Re:】
 																</c:if>
-																<a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a>
+																${s.suggestTitle}
 															</c:if>
 															<c:if test="${sessionLoginMember.memberLevel < 6 && s.suggestSecret =='Y' && sessionLoginMember.memberId != s.memberId}">
 																<c:if test="${s.root != 0}">
 																	┗【Re:】
 																</c:if>
-																<div>비밀글입니다.</div>
+																비밀글입니다.
 															</c:if>
 																
 														</td>
@@ -160,13 +160,12 @@
 								<!-- lectureBoardBlindList -->
 					        	<div class="card-body">
 			            			<h4 class="card-title">강의 게시판</h4>
-				            		<table id="zero_config" class="table table-striped table-bordered no-wrap">
+				            		<table id="zero_config" class="table table-striped table-bordered">
 				            			<thead>
 				                            <tr>
 				                                <th>강의번호</th>
 				                                <th>강의이름</th>
 												<th>제목</th>
-												<th>내용</th>
 												<th>작성자ID</th>
 												<th>생성날짜</th>
 				                            </tr>
@@ -177,8 +176,7 @@
 													<tr>
 														<td>${sessionLecture.lectureNo}</td>
 														<td>${sessionLecture.lectureName}</td>
-														<td><a href="${pageContext.request.contextPath}/all/lectureBoard/getLectureBoardOne?lectureBoardNo=${lb.lectureBoardNo}">${lb.lectureBoardTitle}</a></td>
-														<td>${lb.lectureBoardContent}</td>
+														<td>${lb.lectureBoardTitle}</td>
 														<td>${lb.memberId}</td>
 														<td>${lb.lectureBoardCreateDate}</td>
 													</tr>
