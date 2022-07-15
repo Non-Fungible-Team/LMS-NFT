@@ -118,13 +118,16 @@
 														<td>${s.suggestNo}</td>
 														<td>${s.suggestStatus}</td>
 														<td>
-															<c:if test="${sessionLoginMember.memberLevel>=6 || sessionLoginMember.memberId == s.memberId || sessionLoginMember.memberLevel < 6 && s.suggestSecret =='N'}">
+															<c:if test="${not empty myRoot && myRoot != s.root }">
+																<c:set var ="myRoot" value=""/>
+															</c:if>
+															<c:if test="${sessionLoginMember.memberLevel>=6 || sessionLoginMember.memberId == s.memberId || s.suggestSecret =='N'|| not empty myRoot && myRoot == s.root}">
 																<c:if test="${s.root != 0}">
 																	┗【Re:】
 																</c:if>
 																<a href="${pageContext.request.contextPath}/all/suggest/getSuggestOne?suggestNo=${s.suggestNo}">${s.suggestTitle}</a>
 															</c:if>
-															<c:if test="${sessionLoginMember.memberLevel < 6 && s.suggestSecret =='Y' && sessionLoginMember.memberId != s.memberId}">
+															<c:if test="${s.suggestSecret =='Y' && sessionLoginMember.memberLevel < 6 && sessionLoginMember.memberId != s.memberId && empty myRoot || not empty myRoot && myRoot != s.root }">
 																<c:if test="${s.root != 0}">
 																	┗【Re:】
 																</c:if>
@@ -135,6 +138,10 @@
 														<td>${s.memberId}</td>
 														<td>${s.suggestSecret}</td>
 														<td>${s.suggestCreateDate}</td>
+														<c:if test="${sessionLoginMember.memberLevel < 6 && s.memberId == sessionLoginMember.memberId}">
+															<c:set var="myRoot" value="${s.suggestNo}" />
+														</c:if>
+														
 													</tr>
 												</c:forEach>
 											</tr>
