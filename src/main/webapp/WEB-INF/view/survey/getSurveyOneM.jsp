@@ -70,7 +70,7 @@
 									<a href="${pageContext.request.contextPath}/all/survey/getSurveyListByPage?lectureNo=${surveyOne.lectureNo}" class='btn btn-outline-success'>이전으로</a>
 									<form method="get" action="${pageContext.request.contextPath}/manager/survey/updateSurveyForm?surveyNo=${surveyOne.surveyNo}" id="updateSurveyForm">
 									<input type ="hidden" value="${surveyOne.surveyNo}" name="surveyNo">
-									<a href="#" onclick="return false;" class="surveyAtag btn btn-outline-info btn-rounded" data-deadline="${surveyOne.surveyDeadlineDate}">수정</a>
+									<a href="#" onclick="return false;" class="surveyAtag btn btn-outline-info btn-rounded" data-startline="${surveyOne.surveyStartlineDate}">수정</a>
 									</form>
 									<table id="zero_config" class="table table-striped table-bordered no-wrap">
 										<tr>
