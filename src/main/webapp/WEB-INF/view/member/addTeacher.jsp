@@ -157,10 +157,10 @@ $('document').ready(function(){
 		} else if($('#teacherEmailId').val()=='' || $('#emailUrl').val()=='') {
 			$('#teacherEmailHelper').text('이메일을 입력하세요');
 			$('#teacherEmailId').focus();
-		} else if($('#teacherEntryDate'.val()=='')) {
+		} else if($('#teacherEntryDate').val()=='') {
 			$('#teacherEntryDateHelper').text('입사일을 선택하세요');
 			$('#teacherEntryDate').focus();	
-		} else if($('#teacherSubject'.val()=='')) {
+		} else if($('#teacherSubject').val()=='') {
 			$('#teacherSubjectHelper').text('담당 과목을 입력하세요');
 			$('#teacherSubject').focus();	
 		} else if($('#memberPhoneNo').val()=='') {
@@ -280,8 +280,8 @@ $('document').ready(function(){
 												<tr>
 													<td>성별</td>
 													<td>
-														<input type="radio" value="M" name="teacherGender" class="gender">남 
-														<input type="radio" value="F" name="teacherGender" class="gender">여 
+														<input type="radio" value="M" name="teacherGender" class="teacherGender">남 
+														<input type="radio" value="F" name="teacherGender" class="teacherGender">여 
 														<span id="teacherGenderHelper" class="helper"></span>
 													</td>
 												</tr>
@@ -340,7 +340,7 @@ $('document').ready(function(){
 												<tr>
 													<td colspan="2">
 														<!-- 폼 text, radio, checkbox 공백이 있는지 체크 -->
-														<button type="submit" id="signUp">강사 회원가입</button>
+														<button type="button" id="signUp">강사 회원가입</button>
 														<button type="reset">입력 내용 초기화</button>
 													</td>
 									            </tr>

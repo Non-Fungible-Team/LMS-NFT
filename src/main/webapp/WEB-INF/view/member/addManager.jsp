@@ -157,10 +157,10 @@ $('document').ready(function(){
 		} else if($('#managerEmailId').val()=='' || $('#emailUrl').val()=='') {
 			$('#managerEmailHelper').text('이메일을 입력하세요');
 			$('#managerEmailId').focus();
-		} else if($('#managerEntryDate'.val()=='')) {
+		} else if($('#managerEntryDate').val()=='') {
 			$('#managerEntryDateHelper').text('입사일을 선택하세요');
 			$('#managerEntryDate').focus();	
-		} else if($('#managerSubject'.val()=='')) {
+		} else if($('#managerSubject').val()=='') {
 			$('#managerSubjectHelper').text('담당 과목을 입력하세요');
 			$('#managerSubject').focus();	
 		} else if($('#memberPhoneNo').val()=='') {
@@ -280,8 +280,8 @@ $('document').ready(function(){
 												<tr>
 													<td>성별</td>
 													<td>
-														<input type="radio" value="M" name="managerGender" class="gender">남 
-														<input type="radio" value="F" name="managerGender" class="gender">여 
+														<input type="radio" value="M" name="managerGender" class="managerGender">남 
+														<input type="radio" value="F" name="managerGender" class="managerGender">여 
 														<span id="managerGenderHelper" class="helper"></span>
 													</td>
 												</tr>
@@ -340,7 +340,7 @@ $('document').ready(function(){
 												<tr>
 													<td colspan="2">
 														<!-- 폼 text, radio, checkbox 공백이 있는지 체크 -->
-														<button type="submit" id="signUp">운영진 회원가입</button>
+														<button type="button" id="signUp">운영진 회원가입</button>
 														<button type="reset">입력 내용 초기화</button>
 													</td>
 									            </tr>
