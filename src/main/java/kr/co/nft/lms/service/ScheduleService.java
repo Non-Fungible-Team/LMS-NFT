@@ -35,7 +35,7 @@ public class ScheduleService {
 			year = now.get(Calendar.YEAR);
 		}
 		if(month == -1) { // null 값으로 기본값인 -1이 들어왔을 때, 현재 월
-			month = now.get(Calendar.MONTH);
+			month = now.get(Calendar.MONTH)+1;
 		}
 		if(month == 0) { // 0이 넘어올 시, 작년(year-1) 12월
 			month = 12;
