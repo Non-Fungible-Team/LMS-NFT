@@ -38,7 +38,7 @@
 		$('#addExamMultiQuestion').click(function() {
 			if (appendCount >= 20)	return;
 			appendCountList = appendCount-1;
-			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='1'>보기 1번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleOneContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='2'>보기 2번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleTwoContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='3'>보기 3번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleThreeContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='4'>보기 4번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleFourContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='객관식'>객관식</td></tr></table><br>");
+			$('#questionSection').append("<table id='zero_config' class='table table-striped table-bordered'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><textarea rows='5' cols='30' class='form-control' name='examQuestionList["+appendCountList+"].examContent'></textarea></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='1'>보기 1번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleOneContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='2'>보기 2번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleTwoContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='3'>보기 3번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleThreeContent'></td></tr><tr><td><input type='hidden' name='examQuestionList["+appendCountList+"].exampleNo' value='4'>보기 4번</td><td><input type='text' name='examQuestionList["+appendCountList+"].exampleFourContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='객관식'>객관식</td></tr></table><br>");
 				appendCount++;
 				appendCountExample1List = appendCountExample1List +4;
 			});
@@ -46,7 +46,7 @@
 		$('#addExamShortQuestion').click(function() {
 			if (appendCount >= 20)	return;
 			appendCountList = appendCount-1;
-			$('#questionSection').append("<table border='1'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><input type='text' name='examQuestionList["+appendCountList+"].examContent'></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='주관식'>주관식</td></tr></table><br>");
+			$('#questionSection').append("<table id='zero_config' class='table table-striped table-bordered'><tr><td>문제 번호  "+ appendCount +"번<input type='hidden' name='examQuestionList["+appendCountList+"].examQuestionNo' value='"+appendCount+"'></td></tr><tr><td>문제 내용</td><td><textarea rows='5' cols='30' class='form-control' name='examQuestionList["+appendCountList+"].examContent'></textarea></td></tr><tr><td>문제 답안</td><td><input type='text' name='examQuestionList["+appendCountList+"].examCorrectAnswer'></td></tr><tr><td>배점</td><td><input type='text' name='examQuestionList["+appendCountList+"].examPoint'></td></tr><tr><td>문제 타입</td><td><input type='hidden' name='examQuestionList["+appendCountList+"].examType' value='주관식'>주관식</td></tr></table><br>");
 				appendCount++;
 			});
 // 		문제 삭제
@@ -139,7 +139,7 @@
 					<div class="col-lg-12 col-md-12">
 						<div class="card">
 							<div class="card-body">
-								<h4 class="card-title">과제 입력</h4>
+								<h4 class="card-title">시험 입력</h4>
 								<div class="mt-2" style="height: auto; width: auto;">
 									<form method="post" id="addExam"
 										action="${pageContext.request.contextPath}/teacher/exam/addExam">
@@ -174,10 +174,8 @@
 												<td><input type="datetime-local" class="form-control" name="examEndDate" id="examEndDate">
 												<span id="examEndDateHelper" class="helper"></span></td>
 											</tr>
-											<tr>
-												<td id="questionSection"><span id="questionSectionHelper" class="helper"></span></td>
-											</tr>
 										</table>
+												<div id="questionSection"><span id="questionSectionHelper" class="helper"></span></div>
 											<button type="button" class="btn btn-outline-success btn-rounded" id="addExamMultiQuestion" name="addExamMultiQuestion">
 												<i class="fas fa-check"></i>객관식 문제 추가
 											</button>

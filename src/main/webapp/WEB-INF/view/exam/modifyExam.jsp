@@ -93,9 +93,9 @@
 											</tr>
 											<tr>
 												<td>시험 문제 내용 :</td>
-												<td><input type="text" name="examContent"
-													id="examContent" class="form-control"
-													value="${examQuestion.examContent}"></td>
+												<td>
+													<textarea rows="5" cols="20" name="examContent" id="examContent" class="form-control" value="${examQuestion.examContent}"></textarea>
+												</td>
 											</tr>
 											<tr>
 												<td>시험 문제 답안 :</td>
