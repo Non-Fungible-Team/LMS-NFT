@@ -7,7 +7,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 반응형 웹 -->
-<!-- 반응형 웹 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <!-- title icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon.png">
@@ -31,10 +30,6 @@
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>템플릿 구조 예시</h1>
-				<!-- main화면 body start -->
-
-				<!-- 첫번쨰 문단 -->
 				<div class="container p-5 my-5 border">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
@@ -42,9 +37,8 @@
 								<div class="card-body">
 									<h4 class="card-title">수강목록</h4>
 									<div class="mt-2" style="height: auto; width: auto;">
-										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 										<table id="zero_config" class="table table-striped table-bordered">
-	
+
 											<thead>
 												<tr>
 													<th>아이디</th>
@@ -74,10 +68,13 @@
 								</div>
 							</div>
 						</div>
-						<!-- 첫번쨰 끝 -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div>
-		<a href="${pageContext.request.contextPath}/manager/getStudentByPage?currentPage=${currentPage-1}">이전</a>
-		<a href="${pageContext.request.contextPath}/manager/getStudentByPage?currentPage=${currentPage+1}">다음</a>
+		<a href="${pageContext.request.contextPath}/manager/getStudentByPage?currentPage=${currentPage-1}">이전</a> <a href="${pageContext.request.contextPath}/manager/getStudentByPage?currentPage=${currentPage+1}">다음</a>
 	</div>
 </body>
 <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>

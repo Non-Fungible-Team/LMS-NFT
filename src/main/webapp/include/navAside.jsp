@@ -70,7 +70,7 @@
 						<a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
 						<img src="${pageContext.request.contextPath}/assets/images/member.png" alt="user" class="rounded-circle" width="40"> 
 						<span class="ml-2 d-none d-lg-inline-block">
-							<span>환영합니다,</span> 
+							<span>환영합니다, </span> 
 							<span class="text-dark">${sessionLoginMember.memberId} 님</span> 
 							<i data-feather="chevron-down" class="svg-icon"></i>
 						</span>
@@ -170,7 +170,7 @@
 						<li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false"><i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">회원 관리</span></a>
 							<ul aria-expanded="false" class="collapse  first-level base-level-line">
 									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/member/approvalMember" class="sidebar-link"><span class="hide-menu">가입 승인 대기자 목록</span></a></li>
-									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu"> 운영자 목록</span></a></li>
+									<%-- <li class="sidebar-item"><a href="${pageContext.request.contextPath}/emptyPage" class="sidebar-link"><span class="hide-menu"> 운영자 목록</span></a></li> --%>
 									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getTeacherByPage" class="sidebar-link"><span class="hide-menu"> 강사 목록</span></a></li>
 									<li class="sidebar-item"><a href="${pageContext.request.contextPath}/manager/getStudentByPage" class="sidebar-link"><span class="hide-menu"> 학생 목록</span></a></li>
 							</ul></li>
