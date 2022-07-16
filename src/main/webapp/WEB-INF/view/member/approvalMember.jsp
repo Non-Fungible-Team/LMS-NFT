@@ -113,11 +113,11 @@
 												</tr>
 											</thead>
 											<tbody>
-													<c:forEach var="t" items="${teachList}">
+													<c:forEach var="t" items="${teacherList}">
 														<tr>
 															<td>${t.memberId}</td>
-															<td>${t.studentName}</td>
-															<td>${t.studentEmail}</td>
+															<td>${t.teacherName}</td>
+															<td>${t.teacherEmail}</td>
 															<td>${t.addrDetail}</td>
 															<td>${t.memberCreateDate}</td>
 															<td>
@@ -176,8 +176,8 @@
 												<c:forEach var="m" items="${managerList}">
 													<tr>
 														<td>${m.memberId}</td>
-														<td>${m.studentName}</td>
-														<td>${m.studentEmail}</td>
+														<td>${m.managerName}</td>
+														<td>${m.managerEmail}</td>
 														<td>${m.addrDetail}</td>
 														<td>${m.memberCreateDate}</td>
 														<td>
