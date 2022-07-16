@@ -50,14 +50,15 @@
 				<ul class="navbar-nav float-left mr-auto ml-3 pl-1"><!-- nav 왼쪽 여백용 -->
 	            <!-- 강의를 선택 안했을 시 표시 -->
 		            <c:if test="${empty sessionLecture}">
-		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">기능확인을 원하시면 수강목록에서 java 기초부터 웹개발 마스터(1)를 선택해주세요.</h3>
+		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">강의를 선택 해주세요.</h3>
 		            </c:if>
 		            <c:if test="${not empty sessionLecture }">
 		                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">${sessionLecture.lectureName}</h3>
+		               
 		                <div class="d-flex align-items-center">
 		                    <nav aria-label="breadcrumb">
-		                        <ol class="breadcrumb m-0 p-0">
-		                            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/all/lectureNoController">클릭시 강의 선택이 초기화 됩니다.</a>
+		                        <ol class="breadcrumb m-0 p-0"> 
+		                            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/all/lectureNoController" style="text-decoration: underline; font-size: 13px">[클릭시 강의 선택이 초기화 됩니다.]</a>
 		                            </li>
 		                        </ol>
 		                    </nav>
