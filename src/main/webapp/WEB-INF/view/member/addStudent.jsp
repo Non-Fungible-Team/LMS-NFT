@@ -287,7 +287,7 @@ table {
 												<tr>
 													<td>이메일</td>
 													<td>
-														<input type="text" id="studentEmailId" name="studentEmailId" value="stud3">
+														<input type="text" id="studentEmailId" name="studentEmailId">
 														<span id="middleEmail">@</span>
 														<select id="emailUrl" name="emailUrl">
 															<option value="">::선택::</option>

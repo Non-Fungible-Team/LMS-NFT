@@ -88,7 +88,7 @@
 		<!-- main화면 body start -->
 		<div class="container p-5 my-5">
 			<div class="row">
-				<div class="col-lg-10 col-md-6">
+				<div class="col-lg-12 col-md-12">
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">강의 삽입</h4>
