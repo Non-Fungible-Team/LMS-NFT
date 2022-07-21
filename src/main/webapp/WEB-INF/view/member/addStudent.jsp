@@ -318,6 +318,12 @@ table {
 												<tr>
 													<td>최종 학력</td>
 													<td>
+														<select id="studentEducation" name="studentEducation">
+															<option value=" ">학력 선택</option>
+															<option value="고등학교 졸업">고등학교 졸업</option>
+															<option value="대학교 졸업(2,3년제)">대학교 졸업(2,3년제)</option>
+															<option value="대학교 졸업(4년제)">대학교 졸업(4년제)</option>
+														</select>
 														<input type="text" id="studentEducation" name="studentEducation" value="대졸"> 
 														<span id="studentEducationHelper" class="helper"></span>
 													</td>
