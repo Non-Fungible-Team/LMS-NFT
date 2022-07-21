@@ -291,9 +291,9 @@ table {
 														<span id="middleEmail">@</span>
 														<select id="emailUrl" name="emailUrl">
 															<option value="">::선택::</option>
-															<option value="naver.com">네이버</option>
-															<option value="daum.net">다음</option>
-															<option value="gmail.com">지메일</option>
+															<option value="naver.com">naver.com</option>
+															<option value="daum.net">daum.net</option>
+															<option value="gmail.com">gmail.com</option>
 														</select> 
 														<input type="hidden" id="studentEmail" name="studentEmail">
 														<span id="studentEmailIdHelper" class="helper"></span>
