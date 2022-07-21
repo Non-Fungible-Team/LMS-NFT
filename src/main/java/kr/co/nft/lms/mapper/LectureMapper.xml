@@ -24,7 +24,7 @@
 		ON t.member_id = tl.member_id
 		INNER JOIN lecture_room lr
 		ON l.lecture_room_name = lr.lecture_room_name
-		ORDER BY lecture_start_date desc
+		ORDER BY lecture_start_date asc
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<!-- 1-1. 수강 중인 강의목록 보기(학생) -->

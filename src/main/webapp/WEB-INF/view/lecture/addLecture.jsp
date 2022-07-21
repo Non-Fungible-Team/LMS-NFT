@@ -83,50 +83,46 @@
 
 <body>
 	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-		<!-- header include(네비게이션바) -->
 		<div id="navAside"></div>
-		<!-- main화면 body start -->
-		<div class="container p-5 my-5">
-			<div class="row">
-				<div class="col-lg-12 col-md-12">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">강의 삽입</h4>
-							<div style="height: auto;">
-								<form class="mt-4" method="post" id="addLectureForm" action="${pageContext.request.contextPath}/manager/lecture/addLecture">
-									<div class="form-group">
-										<div>
-											과목명 <select id="subjectName" name="subjectNo">
-												<option value=" ">과목 선택</option>
-												<c:forEach var="s" items="${subjectList}">
-													<option value="${s.subjectNo}">${s.subjectName}</option>
-												</c:forEach>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">강의 삽입</h4>
+								<div style="height: auto;">
+									<form class="mt-4" method="post" id="addLectureForm" action="${pageContext.request.contextPath}/manager/lecture/addLecture">
+										<div class="form-group">
+											<div>
+												과목명 <select id="subjectName" name="subjectNo">
+													<option value=" ">과목 선택</option>
+													<c:forEach var="s" items="${subjectList}">
+														<option value="${s.subjectNo}">${s.subjectName}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<br> 강의명 <input type="text" id="lectureName" name="lectureName" class="form-control" placeholder="강의명 입력해주세요"> <br> 개강일 <input type="date" id="lectureStartDate" class="form-control" name="lectureStartDate"> <br> 수료일 <input type="date" id="lectureEndDate"
+												class="form-control" name="lectureEndDate"> <br>
+											<button type="button" id="checkLecture" class="btn btn-primary">기간내 사용가능한 강사,강의실 검색</button>
+											<!-- 검색시, 강사, 강의실 리스트가 들어갈 자리 -->
+											강의실 <select id="lectureRoom" name="lectureRoomName">
+												<option value=" ">강의실 선택</option>
+												<div id="lectureRoomList"></div>
+											</select> 강사 <select id="teacherList" name="memberId">
+												<option value=" ">강사 선택</option>
+												<div id="teacherList"></div>
 											</select>
 										</div>
-										<br> 강의명 <input type="text" id="lectureName" name="lectureName" class="form-control" placeholder="강의명 입력해주세요"> 
-										<br> 개강일 <input type="date" id="lectureStartDate" class="form-control" name="lectureStartDate"> 
-										<br> 수료일 <input type="date" id="lectureEndDate" class="form-control" name="lectureEndDate">
-										<br> <button type="button" id="checkLecture" class="btn btn-primary">기간내 사용가능한 강사,강의실 검색</button>
-										<!-- 검색시, 강사, 강의실 리스트가 들어갈 자리 -->
-										강의실 
-										<select id="lectureRoom" name="lectureRoomName">
-											<option value=" ">강의실 선택</option>
-											<div id="lectureRoomList"></div>
-										</select> 
-										강사 
-										<select id="teacherList" name="memberId">
-											<option value=" ">강사 선택</option>
-											<div id="teacherList"></div>
-										</select>
-									</div>
-							</div>
-							<!-- 작성자 -->
-							<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId}">
+								</div>
+								<!-- 작성자 -->
+								<input type="hidden" id="lectureWriter" name="lectureWriter" class="form-control" value="${sessionLoginMember.memberId}">
 
-							<button type="button" id="addLectureBtn" class="btn btn-outline-success btn-rounded">
-								<i class="fas fa-check"></i>강의 입력
-							</button>
-							</form>							
+								<button type="button" id="addLectureBtn" class="btn btn-outline-success btn-rounded">
+									<i class="fas fa-check"></i>강의 입력
+								</button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>

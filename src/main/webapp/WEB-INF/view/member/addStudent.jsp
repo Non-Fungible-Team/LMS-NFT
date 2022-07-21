@@ -231,17 +231,12 @@ table {
 		<div id="navAside"></div>
 		<div class="page-wrapper">
 			<div class="container-fluid">
-				<h1>학생 회원가입</h1>
-				<!-- main화면 body start -->
-
-				<!-- 첫번쨰 문단 -->
-				<div class="container p-5 my-5 border">
 					<div class="row">
-						<div class="col-lg-12 col-md-12">
+						<div class="col-lg-6 col-md-6">
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">학생 회원 가입</h4>
-									<div class="mt-2" style="height: auto; width: auto;">
+									<div class="mt-2" style="height: auto;">
 										<!-- 테이블 넣는곳, 테이블 색깔 변경 ->class만 변경 -->
 										<form id="signUpStudent" method="post" action="${pageContext.request.contextPath}/addStudent">
 											<table id="zero_config" class="table table-striped table-bordered">
@@ -356,7 +351,6 @@ table {
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 <script src="${pageContext.request.contextPath}/dist/js/app-style-switcher.js"></script>
 <script src="${pageContext.request.contextPath}/dist/js/feather.min.js"></script>
