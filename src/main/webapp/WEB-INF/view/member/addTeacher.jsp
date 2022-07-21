@@ -311,6 +311,7 @@ $('document').ready(function(){
 														<select id="addrList" name="roadAddr">
 														<option value="">주소검색을 해주세요</option>
 														</select>
+														<br>
 														상세주소 : <input type = "text" name = "addrDetail">
 													</td>
 												</tr>

@@ -312,6 +312,7 @@ table {
 														<select id="addrList" name="roadAddr">
 														<option value="">주소검색을 해주세요</option>
 														</select>
+														<br>
 														상세주소 : <input type = "text" name = "addrDetail">
 													</td>
 												</tr>
@@ -324,13 +325,12 @@ table {
 															<option value="대학교 졸업(2,3년제)">대학교 졸업(2,3년제)</option>
 															<option value="대학교 졸업(4년제)">대학교 졸업(4년제)</option>
 														</select>
-														<input type="text" id="studentEducation" name="studentEducation" value="대졸"> 
 														<span id="studentEducationHelper" class="helper"></span>
 													</td>
 												</tr>
 												<tr>
 													<td>전화번호</td>
-													<td><input type="text" id="memberPhoneNo" name="memberPhoneNo" value="010-1234-1234">
+													<td><input type="text" id="memberPhoneNo" name="memberPhoneNo">
 														<span id="memberPhoneNoHelper" class="helper"></span></td>
 												</tr>
 												<div>
